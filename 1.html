@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BCS403 – OOP with Java | Complete Answers</title>
+<style>
+/* ── GOOGLE FONTS ── */
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=Nunito+Sans:wght@400;600;700;800&display=swap');
+
+/* ── VARIABLES ── */
+:root {
+  --ink: #12192c;
+  --paper: #ffffff;
+  --soft: #f5f4f0;
+  --accent: #c0392b;
+  --blue: #1a5276;
+  --green: #1a6b3a;
+  --gold: #b7860b;
+  --border: #d5d0c8;
+  --code-bg: #1e2130;
+  --code-fg: #c9d1d9;
+  --mark2: #fef9e7;
+  --mark2b: #f0c040;
+  --mark7: #eafaf1;
+  --mark7b: #27ae60;
+  --booster: #eaf4fb;
+  --boosterb: #2980b9;
+}
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── BASE ── */
+body {
+  font-family: 'Nunito Sans', 'Segoe UI', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 13.5px;
+  line-height: 1.7;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ─────────────── COVER ─────────────── */
+.cover {
+  background: var(--ink);
+  color: #fff;
+  padding: 48px 44px 40px;
+  text-align: center;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.cover-tag {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  padding: 4px 14px;
+  border-radius: 2px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+.cover h1 {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+.cover h1 span { color: #f0c040; }
+.cover-sub { font-size: 12.5px; opacity: 0.7; margin-top: 6px; }
+.cover-meta {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 26px;
+  flex-wrap: wrap;
+}
+.cover-meta div {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+  padding: 9px 18px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+.cover-meta div strong {
+  display: block;
+  font-size: 15px;
+  color: #f0c040;
+  font-family: 'DM Mono', monospace;
+}
+
+/* ─────────────── SECTION HEADER ─────────────── */
+.sec-header {
+  background: var(--ink);
+  color: #fff;
+  padding: 11px 36px;
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+  page-break-after: avoid;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.sec-header .badge {
+  background: var(--accent);
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px;
+  padding: 3px 10px;
+  border-radius: 2px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+/* ─────────────── QUESTION BLOCK ─────────────── */
+.qblock {
+  margin: 18px 32px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  page-break-inside: avoid;
+  overflow: hidden;
+}
+.qblock-hdr {
+  padding: 10px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 13px;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.q2 .qblock-hdr { background: var(--mark2); border-bottom: 2px solid var(--mark2b); }
+.q7 .qblock-hdr { background: var(--mark7); border-bottom: 2px solid var(--mark7b); }
+.mbadge {
+  flex-shrink: 0;
+  min-width: 36px;
+  height: 22px;
+  border-radius: 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-family: 'DM Mono', monospace;
+  font-weight: 600;
+  margin-top: 1px;
+}
+.q2 .mbadge { background: var(--mark2b); color: #5a3e00; }
+.q7 .mbadge { background: var(--mark7b); color: #fff; }
+
+.ans { padding: 16px 20px; background: #fff; }
+
+/* ─────────────── CONCEPT BOOSTER ─────────────── */
+.booster {
+  background: var(--booster);
+  border-left: 4px solid var(--boosterb);
+  padding: 10px 16px;
+  margin-top: 12px;
+  border-radius: 0 4px 4px 0;
+  font-size: 13px;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.booster-lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--boosterb);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+/* ─────────────── TYPOGRAPHY ─────────────── */
+h3 {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 13px 0 5px;
+  page-break-after: avoid;
+}
+h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--blue);
+  margin: 10px 0 4px;
+  border-bottom: 1px dotted var(--border);
+  padding-bottom: 2px;
+  page-break-after: avoid;
+}
+p { margin-bottom: 7px; }
+ul, ol { padding-left: 20px; margin-bottom: 7px; }
+li { margin-bottom: 3px; }
+strong { color: #12192c; }
+em { color: var(--accent); font-style: normal; font-weight: 700; }
+.kw {
+  display: inline-block;
+  background: var(--ink);
+  color: #fff;
+  font-family: 'DM Mono', monospace;
+  font-size: 10.5px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin: 1px 1px;
+}
+code {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  background: #f0ede6;
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--accent);
+}
+
+/* ─────────────── CODE BLOCKS ─────────────── */
+pre {
+  background: var(--code-bg);
+  color: var(--code-fg);
+  padding: 14px 18px;
+  border-radius: 5px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11.5px;
+  line-height: 1.65;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin: 9px 0;
+  page-break-inside: avoid;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ─────────────── TABLES ─────────────── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 9px 0;
+  font-size: 12.5px;
+  page-break-inside: avoid;
+}
+th {
+  background: var(--ink);
+  color: #fff;
+  padding: 7px 11px;
+  text-align: left;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+td {
+  padding: 6px 11px;
+  border: 1px solid var(--border);
+  vertical-align: top;
+}
+tr:nth-child(even) td {
+  background: #f8f7f3;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ─────────────── DIAGRAM ─────────────── */
+.dia {
+  background: #f5f4f0;
+  border: 1px dashed var(--border);
+  padding: 12px 18px;
+  border-radius: 4px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11.5px;
+  line-height: 1.85;
+  margin: 9px 0;
+  white-space: pre;
+  overflow-x: auto;
+  page-break-inside: avoid;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ─────────────── DIVIDER (both options label) ─────────────── */
+.opt-label {
+  background: var(--soft);
+  border-left: 4px solid var(--gold);
+  padding: 6px 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin: 14px 0 8px;
+  page-break-after: avoid;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ─────────────── FOOTER ─────────────── */
+.footer {
+  background: var(--ink);
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  margin-top: 36px;
+  font-size: 11px;
+  font-family: 'DM Mono', monospace;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ═══════════════ PRINT STYLES ═══════════════ */
+@media print {
+  @page {
+    size: A4;
+    margin: 15mm 14mm 15mm 14mm;
+  }
+
+  body {
+    font-size: 11.5px;
+    line-height: 1.6;
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  /* Force color backgrounds to print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* Prevent orphan headings */
+  h3, h4, .qblock-hdr, .sec-header, .opt-label {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  /* Keep code & tables together */
+  pre, table, .dia, .booster {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Keep question header with its answer */
+  .qblock-hdr + .ans {
+    page-break-before: avoid;
+    break-before: avoid;
+  }
+
+  .qblock {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin: 14px 18px;
+  }
+
+  /* Section headers never at bottom of page */
+  .sec-header {
+    page-break-before: auto;
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  /* Don't break inside answer body for short blocks */
+  .ans {
+    page-break-inside: auto;
+  }
+
+  pre {
+    font-size: 10px;
+    padding: 10px 14px;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  code { font-size: 10.5px; }
+
+  table { font-size: 11px; }
+
+  .cover { padding: 32px 30px 28px; }
+  .cover h1 { font-size: 26px; }
+
+  .dia {
+    font-size: 10px;
+    white-space: pre-wrap;
+  }
+
+  .footer { margin-top: 20px; }
+
+  /* Remove link underlines */
+  a { text-decoration: none; color: inherit; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════ COVER ══════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-tag">AKTU · B.Tech · SEM IV · 2023-24</div>
+  <h1>Object Oriented Programming<br><span>with Java</span></h1>
+  <p class="cover-sub">Subject Code: BCS403 &nbsp;|&nbsp; Complete Question &amp; Answer Guide &nbsp;|&nbsp; All Sections · All Questions</p>
+  <div class="cover-meta">
+    <div><strong>70</strong>Total Marks</div>
+    <div><strong>3 HRS</strong>Duration</div>
+    <div><strong>ALL</strong>Questions Answered</div>
+    <div><strong>BOTH</strong>Options Included</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ SECTION A ══════════════════════════════════ -->
+<div class="sec-header">
+  SECTION A — Attempt All Questions in Brief
+  <span class="badge">2 Marks Each · 7 × 2 = 14</span>
+</div>
+
+<!-- ── Q1a ── -->
+<div class="qblock q2">
+  <div class="qblock-hdr"><span class="mbadge">2M</span>Q1(a) — Describe JVM and Byte Code in Java Architecture.</div>
+  <div class="ans">
+    <h4>JVM — Java Virtual Machine</h4>
+    <p><em>JVM</em> is an abstract computing machine that provides a <strong>runtime environment</strong> to execute Java byte code. It is <strong>platform-specific</strong> (different JVM binaries for Windows, Linux, macOS) but makes Java programs platform-independent. Responsibilities: class loading → byte code verification → interpretation / JIT compilation → garbage collection.</p>
+    <h4>Byte Code</h4>
+    <p><em>Byte code</em> is the <strong>intermediate, platform-neutral code</strong> generated by the Java compiler (<code>javac</code>) from <code>.java</code> source files, stored in <code>.class</code> files. It is NOT native machine code; the JVM converts it to native instructions at runtime.</p>
+    <div class="dia">  .java  ──javac──►  .class (Byte Code)  ──JVM──►  Machine Code
+(Source)             (Platform Neutral)        (Platform Specific)</div>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>Byte code is a <strong>universal recipe</strong>. The Java compiler writes the recipe once; each platform's JVM "cooks" it according to local kitchen rules — hence <em>"Write Once, Run Anywhere."</em></div>
+  </div>
+</div>
+
+<!-- ── Q1b ── -->
+<div class="qblock q2">
+  <div class="qblock-hdr"><span class="mbadge">2M</span>Q1(b) — Define the concept of Classes and Objects in Java with a suitable example.</div>
+  <div class="ans">
+    <h4>Class</h4>
+    <p>A <em>class</em> is a <strong>blueprint/template</strong> that defines attributes (fields) and behaviour (methods) for its objects. It is a logical entity with no memory allocated until an object is created.</p>
+    <h4>Object</h4>
+    <p>An <em>object</em> is a <strong>real-world instance</strong> of a class, created using the <code>new</code> keyword. Each object has its own state (field values) and identity.</p>
+    <pre>class Car {
+    String brand;   // field
+    int speed;
+    void display() {
+        System.out.println(brand + " at " + speed + " km/h");
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Car c = new Car();   // object
+        c.brand = "Toyota"; c.speed = 120;
+        c.display();         // Toyota at 120 km/h
+    }
+}</pre>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>A class is like an <strong>architectural blueprint</strong>; objects are the actual houses built from it. Many houses (objects) can be built from one blueprint (class), each with its own colour and size.</div>
+  </div>
+</div>
+
+<!-- ── Q1c ── -->
+<div class="qblock q2">
+  <div class="qblock-hdr"><span class="mbadge">2M</span>Q1(c) — Explain Interfaces in Java with suitable example.</div>
+  <div class="ans">
+    <h4>Interface</h4>
+    <p>An <em>interface</em> is a <strong>100% abstract type</strong> (before Java 8) that defines a contract — what a class must do, not how. It contains abstract methods (and from Java 8, <code>default</code> and <code>static</code> methods). A class <code>implements</code> an interface. Java supports <strong>multiple interface implementation</strong>.</p>
+    <pre>interface Drawable {
+    void draw();   // abstract method
+}
+class Circle implements Drawable {
+    public void draw() { System.out.println("Drawing Circle"); }
+}
+public class Main {
+    public static void main(String[] args) {
+        Drawable d = new Circle();
+        d.draw();   // Drawing Circle
+    }
+}</pre>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>An interface is like a <strong>job description</strong>: it specifies requirements without detailing how to do the job. Any class that "implements" it promises to fulfil those capabilities.</div>
+  </div>
+</div>
+
+<!-- ── Q1d ── -->
+<div class="qblock q2">
+  <div class="qblock-hdr"><span class="mbadge">2M</span>Q1(d) — Describe all the keywords used for Exception Handling in Java.</div>
+  <div class="ans">
+    <table>
+      <tr><th>Keyword</th><th>Purpose</th></tr>
+      <tr><td><span class="kw">try</span></td><td>Encloses the code that may throw an exception.</td></tr>
+      <tr><td><span class="kw">catch</span></td><td>Handles the specific exception thrown inside the <code>try</code> block.</td></tr>
+      <tr><td><span class="kw">finally</span></td><td>Always executes (exception or not); used for cleanup (closing resources).</td></tr>
+      <tr><td><span class="kw">throw</span></td><td>Explicitly throws an exception object from inside a method.</td></tr>
+      <tr><td><span class="kw">throws</span></td><td>Declares in the method signature that the method may throw certain exceptions.</td></tr>
+    </table>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div><strong>try</strong> = seatbelt, <strong>catch</strong> = airbag, <strong>finally</strong> = mandatory post-accident report, <strong>throw</strong> = driver reporting the incident, <strong>throws</strong> = road sign warning passengers of danger ahead.</div>
+  </div>
+</div>
+
+<!-- ── Q1e ── -->
+<div class="qblock q2">
+  <div class="qblock-hdr"><span class="mbadge">2M</span>Q1(e) — Describe various states achieved by the thread in its life cycle.</div>
+  <div class="ans">
+    <p>A Java thread passes through <strong>5 states</strong>:</p>
+    <ol>
+      <li><em>New</em> — Thread object created; <code>start()</code> not yet called.</li>
+      <li><em>Runnable</em> — <code>start()</code> called; eligible for CPU scheduling.</li>
+      <li><em>Running</em> — Scheduler picks it; <code>run()</code> is executing.</li>
+      <li><em>Blocked / Waiting / Timed-Waiting</em> — Thread paused due to <code>sleep()</code>, <code>wait()</code>, I/O, or lock wait.</li>
+      <li><em>Terminated (Dead)</em> — <code>run()</code> has completed normally or due to exception.</li>
+    </ol>
+    <div class="dia">  New ──start()──► Runnable ◄──────────────────────────┐
+                          │                                   │
+                    (CPU schedules)                   (re-scheduled)
+                          │                                   │
+                       Running ──(sleep/wait/lock/I-O)──► Blocked/Waiting
+                          │
+                  (run() completes)
+                          ▼
+                     Terminated</div>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>Thread life cycle is like an employee: Hired (New) → Ready at desk (Runnable) → Working (Running) → On break (Blocked) → Retired (Terminated).</div>
+  </div>
+</div>
+
+<!-- ── Q1f ── -->
+<div class="qblock q2">
+  <div class="qblock-hdr"><span class="mbadge">2M</span>Q1(f) — Write a Java program to create an ArrayList&lt;String&gt; with five items and display all elements using forEach method.</div>
+  <div class="ans">
+    <pre>import java.util.ArrayList;
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayList&lt;String&gt; fruits = new ArrayList&lt;&gt;();
+        fruits.add("Apple");
+        fruits.add("Banana");
+        fruits.add("Mango");
+        fruits.add("Orange");
+        fruits.add("Grapes");
+
+        // forEach with lambda expression
+        fruits.forEach(fruit -&gt; System.out.println(fruit));
+    }
+}
+/* Output:
+   Apple
+   Banana
+   Mango
+   Orange
+   Grapes */</pre>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div><code>forEach()</code> is an <strong>internal iterator</strong> (Java 8+). You just provide what to do with each element via a lambda; the collection handles the loop internally — cleaner than a traditional <code>for</code> loop.</div>
+  </div>
+</div>
+
+<!-- ── Q1g ── -->
+<div class="qblock q2">
+  <div class="qblock-hdr"><span class="mbadge">2M</span>Q1(g) — Explain the concept of Sealed Classes in Java with suitable example.</div>
+  <div class="ans">
+    <h4>Sealed Classes (Java 17+)</h4>
+    <p>A <em>sealed class</em> restricts which other classes can <strong>extend or implement</strong> it, using the <span class="kw">sealed</span> keyword and a <code>permits</code> clause. Permitted subclasses must be declared <code>final</code>, <code>sealed</code>, or <code>non-sealed</code>.</p>
+    <pre>sealed class Shape permits Circle, Rectangle, Triangle { }
+
+final class Circle    extends Shape { double radius; }
+final class Rectangle extends Shape { double length, width; }
+final class Triangle  extends Shape { double base, height; }
+// Any class NOT listed in permits → COMPILE ERROR if it tries to extend Shape</pre>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>Sealed classes are a <strong>VIP club with a strict guest list</strong>. Only classes named in <code>permits</code> may join — no uninvited subclasses. Useful for fixed domain hierarchies (shapes, result types, AST nodes).</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ SECTION B ══════════════════════════════════ -->
+<div class="sec-header">
+  SECTION B — Attempt Any Three (All Five Answered Below)
+  <span class="badge">7 Marks Each · 7 × 3 = 21</span>
+</div>
+
+<!-- ── Q2a ── -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q2(a) — Explain Abstraction and Abstract Classes in Java. Describe abstract method. Demonstrate with a suitable example.</div>
+  <div class="ans">
+    <h3>1. Abstraction</h3>
+    <p><em>Abstraction</em> is an OOP principle that <strong>hides implementation details</strong> and exposes only the essential features. It reduces complexity and increases reusability. In Java achieved via <strong>Abstract Classes</strong> (partial abstraction) and <strong>Interfaces</strong> (full abstraction).</p>
+
+    <h3>2. Abstract Class</h3>
+    <p>Declared with the <span class="kw">abstract</span> keyword. <strong>Cannot be instantiated</strong> directly. May have abstract methods (no body) and concrete methods (with body). Can have constructors, static methods, fields.</p>
+
+    <h3>3. Abstract Method</h3>
+    <p>A method with <strong>no body</strong>. Subclasses <strong>must override</strong> it. Syntax: <code>abstract returnType methodName();</code></p>
+
+    <h3>4. Abstract Class vs Interface</h3>
+    <table>
+      <tr><th>Feature</th><th>Abstract Class</th><th>Interface</th></tr>
+      <tr><td>Instantiation</td><td>No</td><td>No</td></tr>
+      <tr><td>Methods</td><td>Abstract + Concrete</td><td>Abstract (+ default/static Java 8+)</td></tr>
+      <tr><td>Constructor</td><td>Yes</td><td>No</td></tr>
+      <tr><td>Multiple inheritance</td><td>No (single extends)</td><td>Yes (multiple implements)</td></tr>
+      <tr><td>Fields</td><td>Any type</td><td>Only public static final</td></tr>
+    </table>
+
+    <h3>5. Example</h3>
+    <pre>abstract class Animal {
+    String name;
+    Animal(String name) { this.name = name; }   // constructor allowed
+
+    abstract void sound();       // abstract — no body, must override
+
+    void breathe() {             // concrete method
+        System.out.println(name + " breathes oxygen.");
+    }
+}
+
+class Dog extends Animal {
+    Dog(String n) { super(n); }
+    @Override
+    void sound() { System.out.println(name + " says: Woof!"); }
+}
+
+class Cat extends Animal {
+    Cat(String n) { super(n); }
+    @Override
+    void sound() { System.out.println(name + " says: Meow!"); }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Animal a1 = new Dog("Rex");
+        Animal a2 = new Cat("Whiskers");
+        a1.sound();    // Rex says: Woof!
+        a2.sound();    // Whiskers says: Meow!
+        a1.breathe();  // Rex breathes oxygen.
+    }
+}</pre>
+
+    <h3>6. Key Rules</h3>
+    <ul>
+      <li>A class with even one abstract method must be declared abstract.</li>
+      <li>Subclass must implement ALL abstract methods, else it too must be abstract.</li>
+      <li>Abstract classes can have constructors, static, and final methods.</li>
+    </ul>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>An abstract class is a <strong>generic job role</strong>: "Vehicle" says every vehicle must <code>move()</code>, but doesn't specify how a Car vs Boat moves. Each subclass fills in the actual logic, while sharing common functionality (e.g., <code>fuelUp()</code>).</div>
+  </div>
+</div>
+
+<!-- ── Q2b ── -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q2(b) — Describe the ways to create threads in Java. Also explain which method is more suitable.</div>
+  <div class="ans">
+    <h3>Method 1: Extending Thread Class</h3>
+    <p>Create a class extending <code>java.lang.Thread</code> and override <code>run()</code>.</p>
+    <pre>class MyThread extends Thread {
+    public void run() {
+        System.out.println("Thread: " + Thread.currentThread().getName());
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        MyThread t1 = new MyThread();
+        MyThread t2 = new MyThread();
+        t1.start();  t2.start();
+    }
+}</pre>
+
+    <h3>Method 2: Implementing Runnable Interface ✅ (Preferred)</h3>
+    <p>Implement <code>java.lang.Runnable</code> and pass instance to <code>Thread</code> constructor.</p>
+    <pre>class MyRunnable implements Runnable {
+    public void run() {
+        System.out.println("Runnable: " + Thread.currentThread().getName());
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Thread t1 = new Thread(new MyRunnable());
+        Thread t2 = new Thread(new MyRunnable());
+        t1.start();  t2.start();
+    }
+}</pre>
+
+    <h3>Method 3: Lambda Expression (Java 8+)</h3>
+    <pre>public class Main {
+    public static void main(String[] args) {
+        Thread t = new Thread(() -&gt;
+            System.out.println("Lambda thread: " + Thread.currentThread().getName())
+        );
+        t.start();
+    }
+}</pre>
+
+    <h3>Method 4: Callable + ExecutorService (returns result)</h3>
+    <pre>import java.util.concurrent.*;
+public class Main {
+    public static void main(String[] args) throws Exception {
+        Callable&lt;String&gt; task = () -&gt; "Result from Callable thread";
+        ExecutorService es = Executors.newSingleThreadExecutor();
+        Future&lt;String&gt; f = es.submit(task);
+        System.out.println(f.get());  // Result from Callable thread
+        es.shutdown();
+    }
+}</pre>
+
+    <h3>Comparison</h3>
+    <table>
+      <tr><th>Feature</th><th>Extending Thread</th><th>Implementing Runnable</th></tr>
+      <tr><td>Multiple inheritance</td><td>❌ Blocked</td><td>✅ Can extend another class too</td></tr>
+      <tr><td>Code reuse</td><td>Less</td><td>More (same Runnable shared)</td></tr>
+      <tr><td>OOP separation</td><td>Violates</td><td>Follows</td></tr>
+      <tr><td>Preferred</td><td>No</td><td>Yes</td></tr>
+    </table>
+
+    <h3>Most Suitable: Runnable Interface</h3>
+    <p>Implementing <code>Runnable</code> is preferred because Java doesn't support multiple class inheritance — extending <code>Thread</code> blocks further inheritance. Also separates the <strong>task</strong> from the <strong>thread management</strong>.</p>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div><code>Runnable</code> is the <strong>task description</strong>; <code>Thread</code> is the <strong>worker</strong>. You can hand the same task to different workers. When you extend <code>Thread</code>, worker and task are one inseparable entity — inflexible and tightly coupled.</div>
+  </div>
+</div>
+
+<!-- ── Q2c ── -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q2(c) — Explain Functional Interfaces in Java. Describe Lambda Expressions with the help of Functional Interfaces.</div>
+  <div class="ans">
+    <h3>1. Functional Interface</h3>
+    <p>An interface with <strong>exactly one abstract method</strong>. Annotated with <code>@FunctionalInterface</code> (optional but recommended). Java 8 introduced them to enable lambda expressions.</p>
+    <p><strong>Built-in examples:</strong> <code>Runnable</code>, <code>Comparable</code>, and from <code>java.util.function</code>: <code>Predicate&lt;T&gt;</code>, <code>Function&lt;T,R&gt;</code>, <code>Consumer&lt;T&gt;</code>, <code>Supplier&lt;T&gt;</code>.</p>
+
+    <h3>2. Lambda Expression</h3>
+    <p>A concise way to represent an <strong>anonymous function</strong> (implementation of a functional interface).</p>
+    <p><strong>Syntax:</strong> <code>(parameters) -&gt; { body }</code></p>
+
+    <h3>3. Custom Functional Interface + Lambda</h3>
+    <pre>@FunctionalInterface
+interface MathOperation {
+    int operate(int a, int b);  // single abstract method
+}
+public class Main {
+    public static void main(String[] args) {
+        MathOperation add      = (a, b) -&gt; a + b;
+        MathOperation multiply = (a, b) -&gt; a * b;
+        System.out.println("Add:      " + add.operate(5, 3));       // 8
+        System.out.println("Multiply: " + multiply.operate(5, 3));  // 15
+    }
+}</pre>
+
+    <h3>4. Built-in Functional Interfaces</h3>
+    <pre>import java.util.function.*;
+public class Demo {
+    public static void main(String[] args) {
+        Predicate&lt;Integer&gt; isEven  = n -&gt; n % 2 == 0;
+        Function&lt;String,Integer&gt; len = s -&gt; s.length();
+        Consumer&lt;String&gt; greet     = s -&gt; System.out.println("Hello, " + s);
+        Supplier&lt;Double&gt; rand      = () -&gt; Math.random();
+
+        System.out.println(isEven.test(4));    // true
+        System.out.println(len.apply("Java")); // 4
+        greet.accept("World");                 // Hello, World
+        System.out.println(rand.get());        // random number
+    }
+}</pre>
+
+    <h3>5. Anonymous Class vs Lambda</h3>
+    <table>
+      <tr><th>Approach</th><th>Code</th></tr>
+      <tr><td>Anonymous class</td><td><code>new Runnable() { public void run() { ... } }</code></td></tr>
+      <tr><td>Lambda</td><td><code>() -&gt; { ... }</code></td></tr>
+    </table>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>Lambda is <strong>syntactic sugar</strong> for implementing a functional interface. Instead of a verbose anonymous class, you write a clean one-liner. Tell Java: <em>"Here is exactly what to do — skip the class boilerplate."</em></div>
+  </div>
+</div>
+
+<!-- ── Q2d ── -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q2(d) — Describe Collections Framework in Java with hierarchy diagram. Explain List, Set and Queue interfaces.</div>
+  <div class="ans">
+    <h3>1. Collections Framework</h3>
+    <p>The <em>Java Collections Framework (JCF)</em> provides a unified architecture for storing, retrieving, and manipulating groups of objects. Located in <code>java.util</code>.</p>
+
+    <h3>2. Hierarchy Diagram</h3>
+    <div class="dia">                  Iterable (Interface)
+                        │
+                  Collection (Interface)
+            ┌───────────┼────────────┐
+           List         Set        Queue
+            │            │           │
+     ┌──────┴──┐   ┌─────┴────┐   LinkedList
+ ArrayList LinkedList HashSet  TreeSet  PriorityQueue
+  Vector   Stack  LinkedHashSet (SortedSet)
+  Stack
+
+  ─ ─ ─ ─ Map (separate — does NOT extend Collection) ─ ─ ─ ─
+  HashMap   TreeMap   LinkedHashMap   Hashtable</div>
+
+    <h3>3. List Interface</h3>
+    <p><strong>Ordered</strong> collection that <strong>allows duplicates</strong>. Elements accessed by index.</p>
+    <ul>
+      <li><strong>ArrayList</strong> — Dynamic array; fast random access O(1); slow mid-insert O(n).</li>
+      <li><strong>LinkedList</strong> — Doubly linked; fast insert/delete O(1); slow access O(n).</li>
+      <li><strong>Vector</strong> — Thread-safe ArrayList (legacy).</li>
+    </ul>
+    <pre>List&lt;String&gt; list = new ArrayList&lt;&gt;();
+list.add("A"); list.add("B"); list.add("A");
+System.out.println(list);  // [A, B, A]  ← duplicates allowed, ordered</pre>
+
+    <h3>4. Set Interface</h3>
+    <p>Collection that <strong>does NOT allow duplicates</strong>. No guaranteed order (except sorted/linked variants).</p>
+    <ul>
+      <li><strong>HashSet</strong> — No order; O(1) avg operations.</li>
+      <li><strong>LinkedHashSet</strong> — Insertion order maintained.</li>
+      <li><strong>TreeSet</strong> — Sorted natural order; O(log n).</li>
+    </ul>
+    <pre>Set&lt;Integer&gt; set = new HashSet&lt;&gt;();
+set.add(3); set.add(1); set.add(2); set.add(1);  // 2nd 1 ignored
+System.out.println(set);  // [1, 2, 3]</pre>
+
+    <h3>5. Queue Interface</h3>
+    <p>Follows <strong>FIFO (First In, First Out)</strong>. Used for task scheduling.</p>
+    <ul>
+      <li><strong>LinkedList</strong> — General-purpose Queue.</li>
+      <li><strong>PriorityQueue</strong> — Dequeued by natural / custom priority.</li>
+    </ul>
+    <pre>Queue&lt;String&gt; q = new LinkedList&lt;&gt;();
+q.offer("First"); q.offer("Second"); q.offer("Third");
+System.out.println(q.poll()); // First  ← FIFO</pre>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div><strong>List</strong> = notebook (ordered, allows repeats). <strong>Set</strong> = passport stamps (no duplicates). <strong>Queue</strong> = bank counter line (FIFO). Pick the right structure based on your data's access needs!</div>
+  </div>
+</div>
+
+<!-- ── Q2e ── -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q2(e) — Explain the difference between Dependency Injection (DI) and Inversion of Control (IoC) in Spring.</div>
+  <div class="ans">
+    <h3>1. Inversion of Control (IoC)</h3>
+    <p><em>IoC</em> is a <strong>design principle</strong> where control of object creation and lifecycle is <strong>transferred from the programmer to a framework</strong> (Spring container). Instead of your code creating objects, the framework creates and manages them.</p>
+    <p><strong>Traditional:</strong> <code>UserService s = new UserService();</code> — programmer controls creation.<br>
+    <strong>IoC:</strong> Spring creates <code>UserService</code>; you just declare it.</p>
+
+    <h3>2. Dependency Injection (DI)</h3>
+    <p><em>DI</em> is the <strong>implementation mechanism of IoC</strong>. Spring automatically <strong>injects required dependencies</strong> into a bean, rather than the bean creating them.</p>
+
+    <h3>3. Types of DI</h3>
+    <table>
+      <tr><th>Type</th><th>How</th><th>Annotation</th></tr>
+      <tr><td>Constructor Injection</td><td>Via constructor parameter</td><td><code>@Autowired</code> on constructor</td></tr>
+      <tr><td>Setter Injection</td><td>Via setter method</td><td><code>@Autowired</code> on setter</td></tr>
+      <tr><td>Field Injection</td><td>Directly into field</td><td><code>@Autowired</code> on field</td></tr>
+    </table>
+
+    <h3>4. Code Example</h3>
+    <pre>// Tightly coupled (WITHOUT DI)
+class OrderService {
+    PaymentService ps = new PaymentService(); // hardcoded dependency
+}
+
+// Loosely coupled (WITH Spring DI — Constructor Injection)
+@Component
+class PaymentService {
+    public void pay() { System.out.println("Payment processed"); }
+}
+
+@Component
+class OrderService {
+    private final PaymentService paymentService;
+
+    @Autowired    // Spring injects PaymentService automatically
+    public OrderService(PaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
+    public void placeOrder() { paymentService.pay(); }
+}</pre>
+
+    <h3>5. Key Differences</h3>
+    <table>
+      <tr><th>Aspect</th><th>IoC</th><th>DI</th></tr>
+      <tr><td>Nature</td><td>Design Principle</td><td>Design Pattern (IoC implementation)</td></tr>
+      <tr><td>Scope</td><td>Broader concept</td><td>Specific technique</td></tr>
+      <tr><td>Who manages objects</td><td>Spring Container</td><td>Spring injects deps into beans</td></tr>
+      <tr><td>Goal</td><td>Reduce coupling</td><td>Provide dependencies automatically</td></tr>
+    </table>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div><strong>IoC</strong> = <em>"Don't call us, we'll call you"</em> — the framework runs the show. <strong>DI</strong> = how it does it: when your class needs a service, Spring delivers it automatically — like <strong>pizza delivery</strong> vs driving to the store yourself.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ SECTION C ══════════════════════════════════ -->
+<div class="sec-header">
+  SECTION C — Q3: Both Options Answered
+  <span class="badge">7 Marks · Attempt One</span>
+</div>
+
+<!-- ── Q3a ── -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q3(a) — Illustrate Polymorphism and its types. Differentiate run-time vs compile-time polymorphism. Demonstrate method overriding with Shape and Rectangle.</div>
+  <div class="ans">
+    <h3>1. Polymorphism</h3>
+    <p><em>Polymorphism</em> (Greek: "many forms") allows a <strong>single interface or method name to behave differently</strong> based on the object or arguments. It is a fundamental OOP pillar.</p>
+
+    <h3>2. Types</h3>
+    <h4>A) Compile-Time Polymorphism (Static / Method Overloading)</h4>
+    <p>Resolved at <strong>compile time</strong>. Same method name, different parameter list.</p>
+    <pre>class Calculator {
+    int add(int a, int b)          { return a + b; }
+    double add(double a, double b) { return a + b; }
+    int add(int a, int b, int c)   { return a + b + c; }
+}</pre>
+
+    <h4>B) Run-Time Polymorphism (Dynamic / Method Overriding)</h4>
+    <p>Resolved at <strong>runtime via dynamic method dispatch</strong>. Parent reference holds child object; overridden child method is called.</p>
+
+    <h3>3. Comparison</h3>
+    <table>
+      <tr><th>Feature</th><th>Compile-Time</th><th>Run-Time</th></tr>
+      <tr><td>Also called</td><td>Static / Overloading</td><td>Dynamic / Overriding</td></tr>
+      <tr><td>Resolved at</td><td>Compile time</td><td>Runtime</td></tr>
+      <tr><td>Achieved by</td><td>Method overloading</td><td>Method overriding</td></tr>
+      <tr><td>Inheritance needed</td><td>No</td><td>Yes</td></tr>
+      <tr><td>Performance</td><td>Faster</td><td>Slightly slower (dispatch)</td></tr>
+    </table>
+
+    <h3>4. Example — Shape, Rectangle, Method Overriding</h3>
+    <pre>class Shape {
+    void displayArea() {
+        System.out.println("Shape: area not defined.");
+    }
+}
+
+class Rectangle extends Shape {
+    double length, width;
+    Rectangle(double l, double w) { length = l; width = w; }
+
+    @Override
+    void displayArea() {
+        System.out.println("Rectangle Area = " + (length * width));
+    }
+}
+
+class Circle extends Shape {
+    double radius;
+    Circle(double r) { radius = r; }
+
+    @Override
+    void displayArea() {
+        System.out.printf("Circle Area = %.2f%n", Math.PI * radius * radius);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Shape s;
+
+        s = new Rectangle(5, 3);
+        s.displayArea();   // Rectangle Area = 15.0   ← runtime dispatch
+
+        s = new Circle(4);
+        s.displayArea();   // Circle Area = 50.27
+    }
+}</pre>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>Run-time polymorphism is like a <strong>universal remote</strong> — the same button (method call) operates a TV, AC, or fan (different objects) differently at runtime. The JVM decides which "channel" to tune to based on the actual object type.</div>
+  </div>
+</div>
+
+<!-- ── Q3b ── -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q3(b) — Illustrate Constructors and their types in Java. Write class Student and create two objects using all-argument constructor.</div>
+  <div class="ans">
+    <h3>1. Constructor</h3>
+    <p>A <em>constructor</em> is a special method with the <strong>same name as the class</strong> and <strong>no return type</strong>. Called automatically when an object is created with <code>new</code>. Purpose: initialize object fields at creation time.</p>
+
+    <h3>2. Types of Constructors</h3>
+    <h4>A) Default Constructor</h4>
+    <p>Provided by Java automatically if no constructor is defined. Initialises fields to defaults (0, null, false).</p>
+    <pre>class Box { int w; }  // Java auto-provides: Box() {}</pre>
+
+    <h4>B) No-Argument Constructor (Explicit)</h4>
+    <pre>class Box { int w; Box() { w = 10; } }</pre>
+
+    <h4>C) Parameterized Constructor</h4>
+    <pre>class Box { int w; Box(int w) { this.w = w; } }</pre>
+
+    <h4>D) Copy Constructor</h4>
+    <pre>class Box { int w; Box(Box b) { this.w = b.w; } }</pre>
+
+    <h3>3. Student Class with All-Argument Constructor</h3>
+    <pre>class Student {
+    int    rollNumber;
+    String name;
+    String branch;
+    String email;
+
+    // All-argument constructor
+    Student(int rollNumber, String name, String branch, String email) {
+        this.rollNumber = rollNumber;
+        this.name       = name;
+        this.branch     = branch;
+        this.email      = email;
+    }
+
+    void display() {
+        System.out.println("Roll No : " + rollNumber);
+        System.out.println("Name    : " + name);
+        System.out.println("Branch  : " + branch);
+        System.out.println("Email   : " + email);
+        System.out.println("----------------------------");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Student s1 = new Student(101, "Aarav Sharma", "CSE", "aarav@aktu.ac.in");
+        Student s2 = new Student(102, "Priya Singh",  "IT",  "priya@aktu.ac.in");
+        s1.display();
+        s2.display();
+    }
+}
+/* Output:
+Roll No : 101
+Name    : Aarav Sharma
+Branch  : CSE
+Email   : aarav@aktu.ac.in
+----------------------------
+Roll No : 102
+Name    : Priya Singh
+Branch  : IT
+Email   : priya@aktu.ac.in */</pre>
+
+    <h3>4. Constructor Chaining</h3>
+    <p>Use <code>this()</code> to call another constructor in the same class, or <code>super()</code> to call the parent constructor — promotes code reuse.</p>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>A constructor is like a <strong>car factory assembly line</strong> — when you order (create) a car, you specify colour, model, engine (arguments) and it rolls out built with those exact specs from the very start.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ Q4 ══════════════════════════════════ -->
+<div class="sec-header">
+  SECTION C — Q4: Both Options Answered
+  <span class="badge">7 Marks · Attempt One</span>
+</div>
+
+<!-- ── Q4a ── -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q4(a) — Differentiate between Checked and Unchecked Exceptions. Write a Java program to demonstrate ArithmeticException handling.</div>
+  <div class="ans">
+    <h3>1. Exception Hierarchy</h3>
+    <div class="dia">             Throwable
+            /          \
+         Error        Exception
+                     /           \
+         RuntimeException    Checked Exceptions
+         (Unchecked)         (IOException, SQLException…)</div>
+
+    <h3>2. Checked Exceptions</h3>
+    <p>Checked at <strong>compile time</strong>. Compiler <strong>forces</strong> you to handle them (try-catch) or declare with <code>throws</code>.</p>
+    <p><strong>Examples:</strong> <code>IOException</code>, <code>FileNotFoundException</code>, <code>SQLException</code>, <code>ClassNotFoundException</code></p>
+
+    <h3>3. Unchecked Exceptions</h3>
+    <p>Occur at <strong>runtime</strong>; compiler does NOT enforce handling. Extend <code>RuntimeException</code>.</p>
+    <p><strong>Examples:</strong> <code>ArithmeticException</code>, <code>NullPointerException</code>, <code>ArrayIndexOutOfBoundsException</code></p>
+
+    <h3>4. Comparison Table</h3>
+    <table>
+      <tr><th>Feature</th><th>Checked</th><th>Unchecked</th></tr>
+      <tr><td>Compiler checks</td><td>✅ Yes</td><td>❌ No</td></tr>
+      <tr><td>Must handle/declare</td><td>Yes</td><td>Optional</td></tr>
+      <tr><td>Extends</td><td>Exception (not RuntimeException)</td><td>RuntimeException</td></tr>
+      <tr><td>Cause</td><td>External factors (file, DB, network)</td><td>Programming errors/bugs</td></tr>
+      <tr><td>Example</td><td>IOException</td><td>ArithmeticException</td></tr>
+    </table>
+
+    <h3>5. Program — ArithmeticException</h3>
+    <pre>public class ExceptionDemo {
+    static int divide(int a, int b) {
+        return a / b;   // may throw ArithmeticException: / by zero
+    }
+
+    public static void main(String[] args) {
+        int[][] pairs = {{10, 2}, {8, 0}, {15, 3}, {7, 0}};
+
+        for (int[] p : pairs) {
+            try {
+                int result = divide(p[0], p[1]);
+                System.out.println(p[0] + " / " + p[1] + " = " + result);
+            } catch (ArithmeticException e) {
+                System.out.println("Error: " + e.getMessage()
+                                 + " [" + p[0] + " / " + p[1] + "]");
+            } finally {
+                System.out.println("finally block executed.");
+            }
+        }
+        System.out.println("Program ends normally.");
+    }
+}
+/* Output:
+10 / 2 = 5
+finally block executed.
+Error: / by zero [8 / 0]
+finally block executed.
+15 / 3 = 5
+finally block executed.
+Error: / by zero [7 / 0]
+finally block executed.
+Program ends normally. */</pre>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div><strong>Checked exceptions</strong> are like mandatory vehicle insurance — society (the compiler) mandates you plan for foreseeable risks. <strong>Unchecked exceptions</strong> are accidents from reckless driving — they're programming bugs to fix, not just catch.</div>
+  </div>
+</div>
+
+<!-- ── Q4b ── -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q4(b) — Differentiate: (1) Character Streams vs Byte Streams, and (2) wait() vs notify()</div>
+  <div class="ans">
+    <div class="opt-label">Part 1 — Character Streams vs Byte Streams</div>
+    <table>
+      <tr><th>Feature</th><th>Byte Streams</th><th>Character Streams</th></tr>
+      <tr><td>Unit</td><td>8-bit bytes</td><td>16-bit Unicode characters</td></tr>
+      <tr><td>Base classes</td><td><code>InputStream</code>, <code>OutputStream</code></td><td><code>Reader</code>, <code>Writer</code></td></tr>
+      <tr><td>Key classes</td><td><code>FileInputStream</code>, <code>FileOutputStream</code></td><td><code>FileReader</code>, <code>FileWriter</code></td></tr>
+      <tr><td>Best for</td><td>Binary data (images, audio, video)</td><td>Text data (UTF-8, Unicode text)</td></tr>
+      <tr><td>Internationalisation</td><td>Not ideal</td><td>✅ Fully supports Unicode</td></tr>
+    </table>
+    <pre>// Byte Stream — binary file copy
+FileInputStream  fis = new FileInputStream("image.png");
+FileOutputStream fos = new FileOutputStream("copy.png");
+int b;
+while ((b = fis.read()) != -1) fos.write(b);
+fis.close(); fos.close();
+
+// Character Stream — text file read
+FileReader fr = new FileReader("notes.txt");
+int ch;
+while ((ch = fr.read()) != -1) System.out.print((char) ch);
+fr.close();</pre>
+
+    <div class="opt-label">Part 2 — wait() vs notify()</div>
+    <table>
+      <tr><th>Feature</th><th>wait()</th><th>notify()</th></tr>
+      <tr><td>Purpose</td><td>Releases lock and makes thread wait</td><td>Wakes up one waiting thread</td></tr>
+      <tr><td>Lock released?</td><td>✅ Yes — immediately</td><td>❌ No — released after sync block</td></tr>
+      <tr><td>Thread state</td><td>Running → Waiting</td><td>Waiting → Runnable</td></tr>
+      <tr><td>Defined in</td><td><code>Object</code> class</td><td><code>Object</code> class</td></tr>
+      <tr><td>Must be in</td><td>synchronized block</td><td>synchronized block</td></tr>
+      <tr><td>Variant</td><td><code>wait(timeout)</code></td><td><code>notifyAll()</code> — wakes all</td></tr>
+    </table>
+    <pre>class Shared {
+    boolean ready = false;
+
+    synchronized void produce() throws InterruptedException {
+        System.out.println("Produced. Waiting for consumer...");
+        wait();                      // releases lock and waits
+        System.out.println("Resumed after notify.");
+    }
+
+    synchronized void consume() {
+        System.out.println("Consuming...");
+        ready = true;
+        notify();                    // wakes one waiting thread
+    }
+}</pre>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div><code>wait()</code> = chef puts dish in oven and <strong>sits down</strong> (releases kitchen). <code>notify()</code> = oven timer rings, telling one waiting chef: <em>"Kitchen free, come back!"</em> — enables safe producer-consumer coordination.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ Q5 ══════════════════════════════════ -->
+<div class="sec-header">
+  SECTION C — Q5: Both Options Answered
+  <span class="badge">7 Marks · Attempt One</span>
+</div>
+
+<!-- ── Q5a ── -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q5(a) — Explain Java Stream API. Describe Intermediate and Terminal operations. Write program to print sum of even numbers from ArrayList of 1–10.</div>
+  <div class="ans">
+    <h3>1. Java Stream API (Java 8+)</h3>
+    <p>A <em>Stream</em> is a <strong>sequence of elements</strong> from a source (collection, array) supporting <strong>functional-style aggregate operations</strong>. Streams are <strong>lazy</strong> (nothing executes until a terminal op is called), don't store data, and can be parallelised.</p>
+
+    <h3>2. Stream Pipeline</h3>
+    <div class="dia">  Source (Collection / Array / I-O)
+          │
+  [Intermediate Operations]  — lazy, return Stream, 0 or more
+     filter(), map(), sorted(), distinct(), limit(), flatMap()…
+          │
+  [Terminal Operation]  — eager, triggers pipeline, exactly 1
+     collect(), forEach(), reduce(), count(), sum(), min(), max()…</div>
+
+    <h3>3. Intermediate Operations</h3>
+    <table>
+      <tr><th>Operation</th><th>Description</th></tr>
+      <tr><td><code>filter(Predicate)</code></td><td>Select elements matching condition</td></tr>
+      <tr><td><code>map(Function)</code></td><td>Transform each element</td></tr>
+      <tr><td><code>sorted()</code></td><td>Sort elements</td></tr>
+      <tr><td><code>distinct()</code></td><td>Remove duplicates</td></tr>
+      <tr><td><code>limit(n)</code></td><td>Truncate to first n elements</td></tr>
+    </table>
+
+    <h3>4. Terminal Operations</h3>
+    <table>
+      <tr><th>Operation</th><th>Description</th></tr>
+      <tr><td><code>collect()</code></td><td>Collect into List, Set, Map, etc.</td></tr>
+      <tr><td><code>forEach()</code></td><td>Perform action on each element</td></tr>
+      <tr><td><code>reduce()</code></td><td>Aggregate to single value</td></tr>
+      <tr><td><code>count()</code></td><td>Number of elements</td></tr>
+      <tr><td><code>sum() / min() / max()</code></td><td>Numeric summaries</td></tr>
+    </table>
+
+    <h3>5. Program — Sum of Even Numbers from 1 to 10</h3>
+    <pre>import java.util.ArrayList;
+import java.util.stream.IntStream;
+
+public class StreamDemo {
+    public static void main(String[] args) {
+        // Create ArrayList with 1 to 10
+        ArrayList&lt;Integer&gt; numbers = new ArrayList&lt;&gt;();
+        IntStream.rangeClosed(1, 10).forEach(numbers::add);
+
+        // Stream pipeline: filter evens → sum
+        int sumOfEvens = numbers.stream()
+                .filter(n -&gt; n % 2 == 0)       // Intermediate
+                .mapToInt(Integer::intValue)    // Intermediate
+                .sum();                          // Terminal
+
+        System.out.println("Sum of even numbers (1-10) = " + sumOfEvens);
+        // Output: Sum of even numbers (1-10) = 30  (2+4+6+8+10)
+
+        System.out.print("Even numbers: ");
+        numbers.stream()
+               .filter(n -&gt; n % 2 == 0)
+               .forEach(n -&gt; System.out.print(n + " "));
+        // Output: Even numbers: 2 4 6 8 10
+    }
+}</pre>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>Stream pipeline is a <strong>factory assembly line</strong>: raw parts (data) enter, pass through processing stations (intermediate ops), and the finished product rolls out at the end (terminal op). The line only starts when the last station is ready — that's lazy evaluation!</div>
+  </div>
+</div>
+
+<!-- ── Q5b ── -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q5(b) — Compare and contrast switch-case statement with switch-expression in Java. Explain with suitable examples.</div>
+  <div class="ans">
+    <h3>1. Traditional switch-case Statement</h3>
+    <p>Available since Java 1.0. Uses <code>case</code>, <code>break</code>, and <code>default</code> labels. Problems: <strong>fall-through</strong> behaviour, verbose syntax, cannot be used as an expression.</p>
+    <pre>int day = 3;
+String name;
+switch (day) {
+    case 1: name = "Monday";    break;
+    case 2: name = "Tuesday";   break;
+    case 3: name = "Wednesday"; break;
+    case 4: name = "Thursday";  break;
+    case 5: name = "Friday";    break;
+    default: name = "Weekend";  break;
+}
+System.out.println(name); // Wednesday
+
+// Fall-through example (classic bug):
+switch (day) {
+    case 1:
+    case 2: System.out.println("Early week"); break; // fall-through from 1 to 2
+    default: break;
+}</pre>
+
+    <h3>2. Switch Expression (Java 14+ Standard)</h3>
+    <p>Uses <strong>arrow syntax (<code>-&gt;</code>)</strong>. Is an <strong>expression</strong> (has a return value). <strong>No fall-through</strong>. Compiler enforces exhaustiveness for expressions. Multiple labels per case supported.</p>
+    <pre>int day = 3;
+String name = switch (day) {    // switch is now an expression
+    case 1 -&gt; "Monday";
+    case 2 -&gt; "Tuesday";
+    case 3 -&gt; "Wednesday";
+    case 4 -&gt; "Thursday";
+    case 5 -&gt; "Friday";
+    default -&gt; "Weekend";
+};
+System.out.println(name);  // Wednesday</pre>
+
+    <h4>Switch Expression with yield (multi-line case block)</h4>
+    <pre>int score = 85;
+String grade = switch (score / 10) {
+    case 10, 9 -&gt; "A+";    // multiple labels
+    case 8 -&gt; {
+        System.out.println("Good performance!");
+        yield "A";           // yield returns value from block
+    }
+    case 7 -&gt; "B";
+    case 6 -&gt; "C";
+    default -&gt; "F";
+};
+System.out.println("Grade: " + grade); // Grade: A</pre>
+
+    <h3>3. Comparison Table</h3>
+    <table>
+      <tr><th>Feature</th><th>switch-case (Traditional)</th><th>switch Expression (New)</th></tr>
+      <tr><td>Java version</td><td>Since Java 1.0</td><td>Standard from Java 14</td></tr>
+      <tr><td>Fall-through</td><td>✅ Yes (break needed)</td><td>❌ No (each arm independent)</td></tr>
+      <tr><td>Returns value</td><td>❌ Statement only</td><td>✅ Yes — it is an expression</td></tr>
+      <tr><td>Syntax</td><td>Verbose (<code>case X: ... break;</code>)</td><td>Concise (<code>case X -&gt; value;</code>)</td></tr>
+      <tr><td>Multiple labels</td><td>Requires stacking cases</td><td><code>case 1, 2, 3 -&gt;</code></td></tr>
+      <tr><td>Compiler check</td><td>No exhaustiveness warning</td><td>Enforces for expressions</td></tr>
+      <tr><td>Multi-line case</td><td>Normal block</td><td><code>{ ... yield value; }</code></td></tr>
+    </table>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>Old <code>switch</code> is a <strong>long IF-ELSE chain with booby traps</strong> (fall-through). New <code>switch</code> expression is a <strong>clean lookup table</strong> — ask a question, get a direct guaranteed answer. Safer, more readable, and can be assigned to a variable.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ Q6 ══════════════════════════════════ -->
+<div class="sec-header">
+  SECTION C — Q6: Both Options Answered
+  <span class="badge">7 Marks · Attempt One</span>
+</div>
+
+<!-- ── Q6a ── -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q6(a) — Describe LinkedList in Java. Describe any five methods with example.</div>
+  <div class="ans">
+    <h3>1. LinkedList</h3>
+    <p><em>LinkedList</em> in <code>java.util</code> implements both <code>List</code> and <code>Deque</code> interfaces. Internally uses a <strong>doubly-linked list</strong> — each node holds data and references to both the next and previous nodes.</p>
+    <div class="dia">  null ← [prev|"Apple"|next] ↔ [prev|"Banana"|next] ↔ [prev|"Cherry"|next] → null
+            (head)                                                      (tail)</div>
+    <p><strong>Strengths:</strong> O(1) insertion/deletion at head/tail.<br>
+    <strong>Weakness:</strong> O(n) random access (no index-based jump).</p>
+
+    <h3>2. Five Methods with Example</h3>
+    <pre>import java.util.LinkedList;
+
+public class LLDemo {
+    public static void main(String[] args) {
+        LinkedList&lt;String&gt; list = new LinkedList&lt;&gt;();
+
+        // 1. add(E e) — appends element to end of list
+        list.add("Banana");
+        list.add("Cherry");
+        list.add("Elderberry");
+        System.out.println("After add():      " + list);
+        // [Banana, Cherry, Elderberry]
+
+        // 2. addFirst(E e) — inserts element at the beginning
+        list.addFirst("Apple");
+        System.out.println("After addFirst(): " + list);
+        // [Apple, Banana, Cherry, Elderberry]
+
+        // 3. addLast(E e) — appends element at the end
+        list.addLast("Fig");
+        System.out.println("After addLast():  " + list);
+        // [Apple, Banana, Cherry, Elderberry, Fig]
+
+        // 4. remove(int index) — removes element at given index
+        list.remove(2);   // removes "Cherry" (index 2)
+        System.out.println("After remove(2):  " + list);
+        // [Apple, Banana, Elderberry, Fig]
+
+        // 5. get(int index) — returns element at specified index
+        String elem = list.get(1);
+        System.out.println("get(1): " + elem);   // Banana
+
+        // Extra useful methods:
+        System.out.println("size(): " + list.size());            // 4
+        System.out.println("contains(Apple): " + list.contains("Apple")); // true
+        System.out.println("peek(): " + list.peek());            // Apple (head, no remove)
+        System.out.println("poll(): " + list.poll());            // Apple (removes head)
+        System.out.println("After poll(): " + list);            // [Banana, Elderberry, Fig]
+    }
+}</pre>
+
+    <h3>3. Method Summary</h3>
+    <table>
+      <tr><th>Method</th><th>Description</th><th>Time</th></tr>
+      <tr><td><code>add(e)</code></td><td>Append to tail</td><td>O(1)</td></tr>
+      <tr><td><code>addFirst(e)</code></td><td>Insert at head</td><td>O(1)</td></tr>
+      <tr><td><code>addLast(e)</code></td><td>Insert at tail</td><td>O(1)</td></tr>
+      <tr><td><code>remove(index)</code></td><td>Remove by position</td><td>O(n)</td></tr>
+      <tr><td><code>get(index)</code></td><td>Retrieve by position</td><td>O(n)</td></tr>
+    </table>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>LinkedList is like a <strong>chain of train compartments</strong> — attaching or removing a compartment at either end is quick. But finding the 50th seat means walking through all previous compartments. Use it when <strong>insertions/deletions outweigh lookups</strong>.</div>
+  </div>
+</div>
+
+<!-- ── Q6b ── -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q6(b) — Describe HashMap in Java. Describe any five methods with example.</div>
+  <div class="ans">
+    <h3>1. HashMap</h3>
+    <p><em>HashMap</em> (<code>java.util</code>) stores data as <strong>key-value pairs</strong>. Uses <strong>hashing</strong> to compute bucket index for O(1) average-case operations. Allows <strong>one null key</strong> and multiple null values. Does <strong>not maintain insertion order</strong>. Not thread-safe.</p>
+    <div class="dia">  Key → hashCode() → bucket index → Bucket Array
+  ┌───┬─────────────────────────────────────────┐
+  │ 0 │ null                                    │
+  │ 1 │ ("Alice" → 90)                          │
+  │ 2 │ ("Bob" → 85) → ("Eve" → 78)  ← collision│
+  │ 3 │ ("Charlie" → 92)                        │
+  └───┴─────────────────────────────────────────┘</div>
+
+    <h3>2. Five Methods with Example</h3>
+    <pre>import java.util.HashMap;
+import java.util.Map;
+
+public class HMDemo {
+    public static void main(String[] args) {
+        HashMap&lt;String, Integer&gt; scores = new HashMap&lt;&gt;();
+
+        // 1. put(K, V) — inserts OR updates a key-value mapping
+        scores.put("Alice", 90);
+        scores.put("Bob",   85);
+        scores.put("Charlie", 92);
+        scores.put("Alice", 95);   // updates Alice's score (duplicate key)
+        System.out.println("After put: " + scores);
+
+        // 2. get(K) — returns value for key, or null if absent
+        int aliceScore = scores.get("Alice");
+        System.out.println("Alice score: " + aliceScore);  // 95
+
+        // 3. containsKey(K) — checks if key exists
+        System.out.println("Has Bob: " + scores.containsKey("Bob"));  // true
+        System.out.println("Has Eve: " + scores.containsKey("Eve"));  // false
+
+        // 4. remove(K) — removes the mapping for the given key
+        scores.remove("Bob");
+        System.out.println("After remove Bob: " + scores);
+
+        // 5. entrySet() — iterate all key-value pairs
+        System.out.println("\nAll entries:");
+        for (Map.Entry&lt;String, Integer&gt; e : scores.entrySet()) {
+            System.out.println("  " + e.getKey() + " → " + e.getValue());
+        }
+
+        // Extra:
+        System.out.println("size(): " + scores.size());
+        System.out.println("getOrDefault: " + scores.getOrDefault("Dave", 0));
+    }
+}</pre>
+
+    <h3>3. Method Summary</h3>
+    <table>
+      <tr><th>Method</th><th>Description</th><th>Time</th></tr>
+      <tr><td><code>put(k,v)</code></td><td>Insert or update key-value pair</td><td>O(1) avg</td></tr>
+      <tr><td><code>get(k)</code></td><td>Retrieve value by key</td><td>O(1) avg</td></tr>
+      <tr><td><code>containsKey(k)</code></td><td>Check if key exists</td><td>O(1) avg</td></tr>
+      <tr><td><code>remove(k)</code></td><td>Delete entry by key</td><td>O(1) avg</td></tr>
+      <tr><td><code>entrySet()</code></td><td>Iterate all key-value pairs</td><td>O(n)</td></tr>
+    </table>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>HashMap is like a <strong>dictionary</strong> — look up a word (key) and instantly get its definition (value). Hashing lets Java jump directly to the right "page" instead of reading from page 1 every time — O(1) magic!</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ Q7 ══════════════════════════════════ -->
+<div class="sec-header">
+  SECTION C — Q7: Both Options Answered
+  <span class="badge">7 Marks · Attempt One</span>
+</div>
+
+<!-- ── Q7a ── -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q7(a) — Describe: (1) Spring Container, (2) Spring Bean Life Cycle</div>
+  <div class="ans">
+    <div class="opt-label">Part 1 — Spring Container (IoC Container)</div>
+    <p>The <em>Spring Container</em> is the <strong>core of the Spring Framework</strong>. It creates objects (beans), injects dependencies, configures them, and manages their complete lifecycle — all based on configuration metadata (XML, annotations, or Java config).</p>
+
+    <h4>Two Main Types</h4>
+    <table>
+      <tr><th>Container</th><th>Description</th></tr>
+      <tr><td><code>BeanFactory</code></td><td>Basic container; lazy initialisation; lightweight; less feature-rich.</td></tr>
+      <tr><td><code>ApplicationContext</code></td><td>Advanced (extends BeanFactory); eager init; supports events, i18n, AOP. <strong>Most used.</strong></td></tr>
+    </table>
+
+    <div class="dia">  ┌─────────────────────────────────────────┐
+  │         Spring IoC Container            │
+  │                                         │
+  │  Config (XML / Annotations / Java)      │
+  │       ↓ Bean Definitions                │
+  │  [Bean A] ←─DI─→ [Bean B] ←─DI─→ [C]  │
+  └─────────────────────────────────────────┘</div>
+    <pre>@Configuration
+public class AppConfig {
+    @Bean
+    public UserService userService() { return new UserService(); }
+}
+// Bootstrap
+ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+UserService us = ctx.getBean(UserService.class);</pre>
+
+    <div class="opt-label">Part 2 — Spring Bean Life Cycle</div>
+    <p>A <em>Spring bean</em> goes through the following lifecycle stages managed by the container:</p>
+    <div class="dia">  1.  Instantiation          → Container creates bean via constructor
+  2.  Populate Properties   → Dependencies injected (DI)
+  3.  BeanNameAware          → setBeanName(id) called
+  4.  BeanFactoryAware       → setBeanFactory() called
+  5.  ApplicationContextAware→ setApplicationContext() called
+  6.  BeanPostProcessor      → postProcessBeforeInitialization()
+  7.  @PostConstruct         → custom init method
+  8.  InitializingBean       → afterPropertiesSet()
+  9.  BeanPostProcessor      → postProcessAfterInitialization()
+  ─────────── Bean is READY and in use ───────────
+  10. @PreDestroy            → custom cleanup method
+  11. DisposableBean         → destroy()</div>
+    <pre>@Component
+public class MyBean implements InitializingBean, DisposableBean {
+
+    @PostConstruct
+    public void init() {
+        System.out.println("@PostConstruct — initialising resources");
+    }
+
+    @Override
+    public void afterPropertiesSet() {
+        System.out.println("afterPropertiesSet() — post-init logic");
+    }
+
+    @PreDestroy
+    public void cleanup() {
+        System.out.println("@PreDestroy — releasing resources");
+    }
+
+    @Override
+    public void destroy() {
+        System.out.println("destroy() — final cleanup");
+    }
+}</pre>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>Spring container is a <strong>smart factory manager</strong> — it hires workers (beans), equips them with tools (DI), trains them (init), puts them to work, and ensures they clean their workspace before leaving (destroy). You write the job description; Spring runs the entire HR department.</div>
+  </div>
+</div>
+
+<!-- ── Q7b ── -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q7(b) — Describe: (1) Spring Boot Framework and its benefits, (2) RESTful API with Spring Boot</div>
+  <div class="ans">
+    <div class="opt-label">Part 1 — Spring Boot Framework</div>
+    <p><em>Spring Boot</em> is an <strong>opinionated, convention-over-configuration</strong> extension of the Spring Framework that simplifies creating <strong>stand-alone, production-ready</strong> Spring applications with minimal setup.</p>
+
+    <h4>Key Features</h4>
+    <ul>
+      <li><strong>Auto-configuration</strong> — Automatically configures components based on classpath jars.</li>
+      <li><strong>Embedded Server</strong> — Ships with Tomcat/Jetty; run as <code>java -jar app.jar</code>, no WAR deployment.</li>
+      <li><strong>Starter POMs</strong> — Pre-bundled dependency groups (e.g., <code>spring-boot-starter-web</code>).</li>
+      <li><strong>Spring Initializr</strong> — Web-based project bootstrapper (<a href="https://start.spring.io">start.spring.io</a>).</li>
+      <li><strong>Actuator</strong> — Built-in health, metrics, and monitoring endpoints.</li>
+    </ul>
+
+    <h4>Benefits</h4>
+    <table>
+      <tr><th>Benefit</th><th>Description</th></tr>
+      <tr><td>Rapid development</td><td>Minimal boilerplate; project running in minutes</td></tr>
+      <tr><td>No XML config</td><td>Annotation and Java-based configuration</td></tr>
+      <tr><td>Embedded server</td><td>No external Tomcat setup required</td></tr>
+      <tr><td>Microservices ready</td><td>Easy to build and deploy independent services</td></tr>
+      <tr><td>Production features</td><td>Built-in health checks and metrics</td></tr>
+    </table>
+
+    <pre>// Minimal Spring Boot Application
+@SpringBootApplication   // = @Configuration + @EnableAutoConfiguration + @ComponentScan
+public class MyApp {
+    public static void main(String[] args) {
+        SpringApplication.run(MyApp.class, args);
+        // Embedded Tomcat starts on port 8080
+    }
+}</pre>
+
+    <div class="opt-label">Part 2 — RESTful API with Spring Boot</div>
+    <p><em>REST (Representational State Transfer)</em> is an architectural style for web services using HTTP methods (GET, POST, PUT, DELETE) to perform CRUD on resources. Spring Boot provides <code>@RestController</code> to build REST APIs easily.</p>
+
+    <h4>HTTP Method Mapping</h4>
+    <table>
+      <tr><th>HTTP Method</th><th>Annotation</th><th>CRUD Operation</th></tr>
+      <tr><td>GET</td><td><code>@GetMapping</code></td><td>Read / Retrieve</td></tr>
+      <tr><td>POST</td><td><code>@PostMapping</code></td><td>Create</td></tr>
+      <tr><td>PUT</td><td><code>@PutMapping</code></td><td>Update</td></tr>
+      <tr><td>DELETE</td><td><code>@DeleteMapping</code></td><td>Delete</td></tr>
+    </table>
+
+    <pre>import org.springframework.web.bind.annotation.*;
+import java.util.*;
+
+@RestController                    // @Controller + @ResponseBody
+@RequestMapping("/api/students")
+public class StudentController {
+
+    private Map&lt;Integer, String&gt; db = new HashMap&lt;&gt;();
+
+    // GET all students
+    @GetMapping
+    public Map&lt;Integer, String&gt; getAll() { return db; }
+
+    // GET student by ID
+    @GetMapping("/{id}")
+    public String getById(@PathVariable int id) {
+        return db.getOrDefault(id, "Student not found");
+    }
+
+    // POST — create student
+    @PostMapping
+    public String add(@RequestParam int id, @RequestParam String name) {
+        db.put(id, name);
+        return "Student added: " + name;
+    }
+
+    // PUT — update student
+    @PutMapping("/{id}")
+    public String update(@PathVariable int id, @RequestParam String name) {
+        db.put(id, name);
+        return "Updated student " + id + " to " + name;
+    }
+
+    // DELETE — remove student
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable int id) {
+        db.remove(id);
+        return "Deleted student " + id;
+    }
+}
+// Endpoints:
+// GET    http://localhost:8080/api/students
+// GET    http://localhost:8080/api/students/1
+// POST   http://localhost:8080/api/students?id=1&amp;name=Aarav
+// PUT    http://localhost:8080/api/students/1?name=Sharma
+// DELETE http://localhost:8080/api/students/1</pre>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>Spring Boot is a <strong>fully-furnished apartment</strong> — Spring gives you the land and bricks; Boot moves you in with furniture already set up. REST API is the <strong>intercom system</strong> — clients request specific actions (GET/POST/DELETE) and you respond over a standard HTTP/JSON channel.</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  BCS403 · Object Oriented Programming with Java &nbsp;|&nbsp; AKTU SEM IV 2023-24
+  &nbsp;|&nbsp; All 7 Questions · Both Options · Complete Answers
+  &nbsp;|&nbsp; Good luck in your exam! 🎯
+</div>
+
+</body>
+</html>

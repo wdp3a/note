@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AKTU Java &amp; OOP | Complete Exam Answers</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=Nunito+Sans:wght@400;600;700;800&display=swap');
+
+:root {
+  --ink: #12192c;
+  --paper: #ffffff;
+  --soft: #f5f4f0;
+  --accent: #c0392b;
+  --blue: #1a5276;
+  --green: #1a6b3a;
+  --gold: #b7860b;
+  --border: #d5d0c8;
+  --code-bg: #1e2130;
+  --code-fg: #c9d1d9;
+  --mark2: #fef9e7;
+  --mark2b: #f0c040;
+  --mark7: #eafaf1;
+  --mark7b: #27ae60;
+  --booster: #eaf4fb;
+  --boosterb: #2980b9;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito Sans', 'Segoe UI', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 13.5px;
+  line-height: 1.7;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* COVER */
+.cover {
+  background: var(--ink);
+  color: #fff;
+  padding: 48px 44px 40px;
+  text-align: center;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.cover-tag {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  padding: 4px 14px;
+  border-radius: 2px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+.cover h1 {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+.cover h1 span { color: #f0c040; }
+.cover-sub { font-size: 12.5px; opacity: 0.7; margin-top: 6px; }
+.cover-meta {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 26px;
+  flex-wrap: wrap;
+}
+.cover-meta div {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+  padding: 9px 18px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+.cover-meta div strong {
+  display: block;
+  font-size: 15px;
+  color: #f0c040;
+  font-family: 'DM Mono', monospace;
+}
+
+/* SECTION HEADER */
+.sec-header {
+  background: var(--ink);
+  color: #fff;
+  padding: 11px 36px;
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+  page-break-after: avoid;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.sec-header .badge {
+  background: var(--accent);
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px;
+  padding: 3px 10px;
+  border-radius: 2px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+/* QUESTION BLOCK */
+.qblock {
+  margin: 18px 32px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  page-break-inside: avoid;
+  overflow: hidden;
+}
+.qblock-hdr {
+  padding: 10px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 13px;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.q2 .qblock-hdr { background: var(--mark2); border-bottom: 2px solid var(--mark2b); }
+.q7 .qblock-hdr { background: var(--mark7); border-bottom: 2px solid var(--mark7b); }
+.mbadge {
+  flex-shrink: 0;
+  min-width: 36px;
+  height: 22px;
+  border-radius: 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-family: 'DM Mono', monospace;
+  font-weight: 600;
+  margin-top: 1px;
+}
+.q2 .mbadge { background: var(--mark2b); color: #5a3e00; }
+.q7 .mbadge { background: var(--mark7b); color: #fff; }
+
+.ans { padding: 16px 20px; background: #fff; }
+
+/* CONCEPT BOOSTER */
+.booster {
+  background: var(--booster);
+  border-left: 4px solid var(--boosterb);
+  padding: 10px 16px;
+  margin-top: 12px;
+  border-radius: 0 4px 4px 0;
+  font-size: 13px;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.booster-lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--boosterb);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+/* TYPOGRAPHY */
+h3 {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 13px 0 5px;
+  page-break-after: avoid;
+}
+h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--blue);
+  margin: 10px 0 4px;
+  border-bottom: 1px dotted var(--border);
+  padding-bottom: 2px;
+  page-break-after: avoid;
+}
+p { margin-bottom: 7px; }
+ul, ol { padding-left: 20px; margin-bottom: 7px; }
+li { margin-bottom: 3px; }
+strong { color: #12192c; }
+em { color: var(--accent); font-style: normal; font-weight: 700; }
+.kw {
+  display: inline-block;
+  background: var(--ink);
+  color: #fff;
+  font-family: 'DM Mono', monospace;
+  font-size: 10.5px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin: 1px 1px;
+}
+code {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  background: #f0ede6;
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--accent);
+}
+
+/* CODE BLOCKS */
+pre {
+  background: var(--code-bg);
+  color: var(--code-fg);
+  padding: 14px 18px;
+  border-radius: 5px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11.5px;
+  line-height: 1.65;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin: 9px 0;
+  page-break-inside: avoid;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* TABLES */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 9px 0;
+  font-size: 12.5px;
+  page-break-inside: avoid;
+}
+th {
+  background: var(--ink);
+  color: #fff;
+  padding: 7px 11px;
+  text-align: left;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+td {
+  padding: 6px 11px;
+  border: 1px solid var(--border);
+  vertical-align: top;
+}
+tr:nth-child(even) td {
+  background: #f8f7f3;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* DIAGRAM */
+.dia {
+  background: #f5f4f0;
+  border: 1px dashed var(--border);
+  padding: 12px 18px;
+  border-radius: 4px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11.5px;
+  line-height: 1.85;
+  margin: 9px 0;
+  white-space: pre;
+  overflow-x: auto;
+  page-break-inside: avoid;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* OPT LABEL */
+.opt-label {
+  background: var(--soft);
+  border-left: 4px solid var(--gold);
+  padding: 6px 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin: 14px 0 8px;
+  page-break-after: avoid;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* FOOTER */
+.footer {
+  background: var(--ink);
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  margin-top: 36px;
+  font-size: 11px;
+  font-family: 'DM Mono', monospace;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+@media print {
+  @page { size: A4; margin: 15mm 14mm 15mm 14mm; }
+  body { font-size: 11.5px; line-height: 1.6; background: #fff !important; color: #000 !important; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+  h3, h4, .qblock-hdr, .sec-header, .opt-label { page-break-after: avoid; break-after: avoid; }
+  pre, table, .dia, .booster { page-break-inside: avoid; break-inside: avoid; }
+  .qblock-hdr + .ans { page-break-before: avoid; break-before: avoid; }
+  .qblock { page-break-inside: avoid; break-inside: avoid; margin: 14px 18px; }
+  .sec-header { page-break-before: auto; page-break-after: avoid; break-after: avoid; }
+  pre { font-size: 10px; padding: 10px 14px; white-space: pre-wrap; word-break: break-word; }
+  code { font-size: 10.5px; }
+  table { font-size: 11px; }
+  .cover { padding: 32px 30px 28px; }
+  .cover h1 { font-size: 26px; }
+  .dia { font-size: 10px; white-space: pre-wrap; }
+  .footer { margin-top: 20px; }
+  a { text-decoration: none; color: inherit; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ COVER ══════════ -->
+<div class="cover">
+  <div class="cover-tag">AKTU · B.Tech · Java &amp; OOP · Exam Preparation</div>
+  <h1>Java &amp; Object Oriented<br><span>Programming</span></h1>
+  <p class="cover-sub">Complete Question &amp; Answer Guide &nbsp;|&nbsp; 2-Mark Questions · 7-Mark Questions · All Answered</p>
+  <div class="cover-meta">
+    <div><strong>10</strong>2-Mark Qs</div>
+    <div><strong>10</strong>7-Mark Qs</div>
+    <div><strong>20</strong>Total Questions</div>
+    <div><strong>ALL</strong>Answered</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ SECTION A — 2-MARK ══════════════════════════════════ -->
+<div class="sec-header">
+  SECTION A — 2-Mark Questions
+  <span class="badge">Precise · Concept-Driven · Exam-Ready</span>
+</div>
+
+<!-- Q1 -->
+<div class="qblock q2">
+  <div class="qblock-hdr"><span class="mbadge">2M</span>Q1 — Differentiate between an Object and a Class with a real-world example.</div>
+  <div class="ans">
+    <h4>Class — The Blueprint</h4>
+    <p>A <em>class</em> is a <strong>template/blueprint</strong> that defines attributes (fields) and behaviour (methods). It is a logical construct — no memory is allocated when a class is declared.</p>
+    <h4>Object — The Instance</h4>
+    <p>An <em>object</em> is a <strong>real-world instance</strong> of a class, created using the <code>new</code> keyword. Each object occupies heap memory and has its own state.</p>
+    <table>
+      <tr><th>Aspect</th><th>Class</th><th>Object</th></tr>
+      <tr><td>Definition</td><td>Blueprint / Template</td><td>Instance of a class</td></tr>
+      <tr><td>Memory</td><td>No memory at declaration</td><td>Allocated on heap at runtime</td></tr>
+      <tr><td>Creation</td><td><code>class Car { }</code></td><td><code>Car c = new Car();</code></td></tr>
+      <tr><td>Real-world</td><td>Architectural blueprint</td><td>The actual house built</td></tr>
+    </table>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>A <strong>class</strong> is a cookie-cutter mold; an <strong>object</strong> is every actual cookie made from it. One mold (class) can produce unlimited cookies (objects), each with its own topping (state).</div>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="qblock q2">
+  <div class="qblock-hdr"><span class="mbadge">2M</span>Q2 — Describe the primary differences between Abstract Classes and Interfaces in Java.</div>
+  <div class="ans">
+    <table>
+      <tr><th>Feature</th><th>Abstract Class</th><th>Interface</th></tr>
+      <tr><td>Methods</td><td>Abstract + Concrete</td><td>Abstract (+ default/static from Java 8)</td></tr>
+      <tr><td>Variables</td><td>Any type (instance vars)</td><td>Only <code>public static final</code> constants</td></tr>
+      <tr><td>Inheritance</td><td>Single (<code>extends</code>)</td><td>Multiple (<code>implements</code>)</td></tr>
+      <tr><td>Constructor</td><td>Can have constructors</td><td>Cannot have constructors</td></tr>
+      <tr><td>Use Case</td><td>Partial implementation / IS-A</td><td>Pure contract / CAN-DO capability</td></tr>
+    </table>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>An <strong>abstract class</strong> is a partially built house — some rooms done, some left for subclasses. An <strong>interface</strong> is a contract: "you must have these rooms" with no construction at all. Use abstract class for shared code; interface for capability contracts.</div>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="qblock q2">
+  <div class="qblock-hdr"><span class="mbadge">2M</span>Q3 — Explain the specific roles of the JVM, JDK, and JRE.</div>
+  <div class="ans">
+    <table>
+      <tr><th>Component</th><th>Full Form</th><th>Role</th></tr>
+      <tr><td><span class="kw">JVM</span></td><td>Java Virtual Machine</td><td>Executes bytecode; platform-specific engine providing WORA (Write Once, Run Anywhere).</td></tr>
+      <tr><td><span class="kw">JRE</span></td><td>Java Runtime Environment</td><td>JVM + core class libraries. Allows <strong>running</strong> compiled Java programs. No compiler included.</td></tr>
+      <tr><td><span class="kw">JDK</span></td><td>Java Development Kit</td><td>JRE + compiler (<code>javac</code>) + debugger + tools. Required for <strong>developing</strong> Java programs.</td></tr>
+    </table>
+    <div class="dia">  JDK  ⊃  JRE  ⊃  JVM
+  Developer needs JDK  |  End-user needs JRE  |  JVM executes bytecode</div>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div><strong>JVM</strong> is the engine, <strong>JRE</strong> is the full car (engine + body), and <strong>JDK</strong> is the entire garage with tools to build and run the car. Developers need the garage; end-users just need the car.</div>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="qblock q2">
+  <div class="qblock-hdr"><span class="mbadge">2M</span>Q4 — What is a Package in Java? Explain its significance in organizing code and resolving naming conflicts.</div>
+  <div class="ans">
+    <h4>Package</h4>
+    <p>A <em>package</em> is a <strong>namespace / folder</strong> that groups related classes and interfaces. Declared using the <code>package</code> keyword at the top of a source file.</p>
+    <h4>Significance</h4>
+    <ul>
+      <li><strong>Organization:</strong> Groups related classes (e.g., <code>java.util</code>, <code>java.io</code>, <code>java.net</code>).</li>
+      <li><strong>Naming Conflicts:</strong> Two classes can share the same name in different packages — <code>finance.Report</code> vs <code>hr.Report</code>.</li>
+      <li><strong>Access Control:</strong> Default (package-private) access restricts visibility to the same package.</li>
+      <li><strong>Reusability:</strong> Import packages across projects with <code>import</code>.</li>
+    </ul>
+    <pre>package com.myapp.util;          // declare package
+import java.util.ArrayList;      // import from another package
+
+public class Helper { }</pre>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>Packages are like folders on your computer. Just as two files named <code>Resume.docx</code> can coexist in <em>Finance/</em> and <em>HR/</em> folders without conflict, two Java classes can share a name in different packages.</div>
+  </div>
+</div>
+
+<!-- Q5 -->
+<div class="qblock q2">
+  <div class="qblock-hdr"><span class="mbadge">2M</span>Q5 — Explain the differences between Association, Aggregation, and Composition.</div>
+  <div class="ans">
+    <table>
+      <tr><th>Relationship</th><th>Type</th><th>Lifecycle Dependency</th><th>Example</th></tr>
+      <tr><td><em>Association</em></td><td>Uses-A (general)</td><td>None — fully independent</td><td>Teacher &amp; Student</td></tr>
+      <tr><td><em>Aggregation</em></td><td>Has-A (weak)</td><td>Child can exist without parent</td><td>Department HAS Teachers</td></tr>
+      <tr><td><em>Composition</em></td><td>Has-A (strong)</td><td>Child cannot exist without parent</td><td>House HAS Rooms</td></tr>
+    </table>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div><strong>Association</strong> = friends who know each other. <strong>Aggregation</strong> = team &amp; players (team dissolves, players survive). <strong>Composition</strong> = human &amp; heart (human dies, heart ceases to function). Composition represents the strongest ownership.</div>
+  </div>
+</div>
+
+<!-- Q6 -->
+<div class="qblock q2">
+  <div class="qblock-hdr"><span class="mbadge">2M</span>Q6 — Why does Java not support multiple inheritance through classes? How is this limitation addressed?</div>
+  <div class="ans">
+    <h4>The Diamond Problem</h4>
+    <p>If class <strong>C</strong> extends both <strong>A</strong> and <strong>B</strong>, and both override the same method, the compiler cannot determine which version to inherit — causing <em>ambiguity</em>.</p>
+    <div class="dia">        A
+       / \
+      B   C          ← B and C both override method()
+       \ /
+        D            ← Which method() does D inherit? AMBIGUOUS!</div>
+    <h4>Java's Solution: Interfaces</h4>
+    <p>A class can <code>implement</code> multiple interfaces. If a conflict arises with <code>default</code> methods (Java 8+), the implementing class <strong>must explicitly override</strong> the ambiguous method.</p>
+    <pre>interface A { default void show() { System.out.println("A"); } }
+interface B { default void show() { System.out.println("B"); } }
+class C implements A, B {
+    public void show() { A.super.show(); }  // explicit resolution
+}</pre>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>The Diamond Problem is like asking "whose surname do I inherit if both grandparents have conflicting traditions?" Java avoids this for classes. With interfaces, the child must explicitly choose — resolving ambiguity without the confusion.</div>
+  </div>
+</div>
+
+<!-- Q7 -->
+<div class="qblock q2">
+  <div class="qblock-hdr"><span class="mbadge">2M</span>Q7 — Describe the concept of Wrapper Classes and the mechanism of Autoboxing/Unboxing.</div>
+  <div class="ans">
+    <h4>Wrapper Classes</h4>
+    <p>Java provides <em>object equivalents</em> of all primitive types so they can be used in collections, generics, and APIs that require objects.</p>
+    <table>
+      <tr><th>Primitive</th><th>Wrapper Class</th><th>Utility Example</th></tr>
+      <tr><td><code>int</code></td><td><code>Integer</code></td><td><code>Integer.parseInt("5")</code></td></tr>
+      <tr><td><code>char</code></td><td><code>Character</code></td><td><code>Character.isLetter('A')</code></td></tr>
+      <tr><td><code>double</code></td><td><code>Double</code></td><td><code>Double.parseDouble("3.14")</code></td></tr>
+    </table>
+    <h4>Autoboxing &amp; Unboxing</h4>
+    <ul>
+      <li><strong>Autoboxing:</strong> Automatic conversion from primitive → Wrapper: <code>Integer x = 5;</code></li>
+      <li><strong>Unboxing:</strong> Automatic conversion from Wrapper → primitive: <code>int y = x;</code></li>
+    </ul>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>Primitives are raw ingredients; Wrapper classes are packaged products with labels. <strong>Autoboxing</strong> = packaging the ingredient automatically. <strong>Unboxing</strong> = taking it back out. This lets Java treat primitives as objects whenever needed (e.g., in <code>ArrayList&lt;Integer&gt;</code>).</div>
+  </div>
+</div>
+
+<!-- Q8 -->
+<div class="qblock q2">
+  <div class="qblock-hdr"><span class="mbadge">2M</span>Q8 — Explain the significance of the <code>static</code> keyword when applied to variables and methods.</div>
+  <div class="ans">
+    <table>
+      <tr><th>Applied To</th><th>Behaviour</th><th>Example</th></tr>
+      <tr><td><strong>Static Variable</strong></td><td>Belongs to the <em>class</em>, shared by all objects. Memory allocated once at class loading.</td><td><code>static int count = 0;</code></td></tr>
+      <tr><td><strong>Static Method</strong></td><td>Belongs to class; called without an object. Can only access static members. Cannot use <code>this</code> or <code>super</code>.</td><td><code>Math.sqrt(16)</code></td></tr>
+    </table>
+    <pre>class Counter {
+    static int count = 0;          // shared across all objects
+    Counter() { count++; }
+    static int getCount() { return count; }  // called without object
+}
+System.out.println(Counter.getCount());  // no object needed</pre>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div><strong>Static</strong> = "belongs to the class, not individual objects." A school's name is static — the same for all students. Each student's roll number is an instance variable. Static methods are like school-wide announcements that don't belong to any one student.</div>
+  </div>
+</div>
+
+<!-- Q9 -->
+<div class="qblock q2">
+  <div class="qblock-hdr"><span class="mbadge">2M</span>Q9 — Differentiate between Checked Exceptions and Unchecked (Runtime) Exceptions.</div>
+  <div class="ans">
+    <table>
+      <tr><th>Feature</th><th>Checked Exception</th><th>Unchecked (Runtime) Exception</th></tr>
+      <tr><td>Detection</td><td>Compile-time</td><td>Runtime</td></tr>
+      <tr><td>Must Handle?</td><td>Yes — <code>try-catch</code> or <code>throws</code></td><td>No — optional</td></tr>
+      <tr><td>Extends</td><td><code>Exception</code> (not RuntimeException)</td><td><code>RuntimeException</code></td></tr>
+      <tr><td>Examples</td><td><code>IOException</code>, <code>SQLException</code></td><td><code>NullPointerException</code>, <code>ArrayIndexOutOfBoundsException</code></td></tr>
+      <tr><td>Cause</td><td>External resources (files, DB, network)</td><td>Programming logic errors</td></tr>
+    </table>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div><strong>Checked:</strong> The compiler forces you to handle it — like a mandatory seatbelt warning. <strong>Unchecked:</strong> These are programmer errors (null pointer, bad index) — the compiler trusts you but you crash at runtime if careless.</div>
+  </div>
+</div>
+
+<!-- Q10 -->
+<div class="qblock q2">
+  <div class="qblock-hdr"><span class="mbadge">2M</span>Q10 — Differentiate between the usage of <code>final</code>, <code>finally</code>, and <code>finalize</code>.</div>
+  <div class="ans">
+    <table>
+      <tr><th>Keyword</th><th>Type</th><th>Purpose</th></tr>
+      <tr><td><span class="kw">final</span></td><td>Keyword</td><td>Variable → constant (can't reassign). Method → can't override. Class → can't extend.</td></tr>
+      <tr><td><span class="kw">finally</span></td><td>Block</td><td>Always executes after <code>try-catch</code>, even if exception is thrown. Used for cleanup (close DB, files).</td></tr>
+      <tr><td><span class="kw">finalize</span></td><td>Method</td><td>Called by Garbage Collector just before an object is destroyed. From <code>Object</code> class. Deprecated in Java 9+.</td></tr>
+    </table>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div><strong>final</strong> = "Lock it — no changes allowed." <strong>finally</strong> = "Always clean up, no matter what." <strong>finalize</strong> = "Last words before death" (called by GC before destroying the object). Three very different roles, despite their similar-sounding names!</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ SECTION B — 7-MARK ══════════════════════════════════ -->
+<div class="sec-header">
+  SECTION B — 7-Mark Questions
+  <span class="badge">Detailed · Structured · Full-Marks Ready</span>
+</div>
+
+<!-- Q1 -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q1 — Define Abstraction and Encapsulation. Explain how these concepts are implemented in Java using access modifiers and abstract classes/interfaces. Include a code example.</div>
+  <div class="ans">
+    <h3>1. Abstraction</h3>
+    <p><em>Abstraction</em> is the OOP principle of <strong>hiding implementation details</strong> and exposing only the essential features to the user. It reduces complexity and increases code modularity. In Java, abstraction is achieved via <strong>abstract classes</strong> (partial abstraction) and <strong>interfaces</strong> (full abstraction).</p>
+
+    <h3>2. Encapsulation</h3>
+    <p><em>Encapsulation</em> is the principle of <strong>binding data (fields) and methods together</strong> in a single unit (class) and restricting direct access to internal state. Achieved via <strong>access modifiers</strong> (<code>private</code>, <code>protected</code>, <code>public</code>) combined with getter/setter methods.</p>
+
+    <h3>3. Access Modifiers (Encapsulation Backbone)</h3>
+    <table>
+      <tr><th>Modifier</th><th>Same Class</th><th>Same Package</th><th>Subclass</th><th>Other Classes</th></tr>
+      <tr><td><span class="kw">private</span></td><td>✓</td><td>✗</td><td>✗</td><td>✗</td></tr>
+      <tr><td><span class="kw">default</span></td><td>✓</td><td>✓</td><td>✗</td><td>✗</td></tr>
+      <tr><td><span class="kw">protected</span></td><td>✓</td><td>✓</td><td>✓</td><td>✗</td></tr>
+      <tr><td><span class="kw">public</span></td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+    </table>
+
+    <h3>4. Code Example</h3>
+    <pre>// ── Abstraction via Abstract Class ──
+abstract class Shape {
+    abstract double area();             // abstract — no body
+    void display() {                    // concrete method
+        System.out.println("Area: " + area());
+    }
+}
+
+// ── Encapsulation via private fields + getters/setters ──
+class Circle extends Shape {
+    private double radius;              // private — encapsulated
+
+    public void setRadius(double r) {
+        if (r > 0) radius = r;          // validation in setter
+    }
+    public double getRadius() { return radius; }
+
+    @Override
+    double area() { return Math.PI * radius * radius; }
+}
+
+// ── Interface for Pure Abstraction ──
+interface Drawable {
+    void draw();                        // contract — no implementation
+}
+
+class Square extends Shape implements Drawable {
+    private double side;
+    Square(double s) { this.side = s; }
+
+    @Override double area() { return side * side; }
+    @Override public void draw() { System.out.println("Drawing Square"); }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Circle c = new Circle();
+        c.setRadius(5);
+        c.display();       // Area: 78.53...
+
+        Square sq = new Square(4);
+        sq.display();      // Area: 16.0
+        sq.draw();         // Drawing Square
+    }
+}</pre>
+
+    <h3>5. Key Rules</h3>
+    <ul>
+      <li>Abstract class <strong>cannot</strong> be instantiated directly.</li>
+      <li>A class with even one abstract method must be declared <code>abstract</code>.</li>
+      <li>Use <code>private</code> for all fields; provide controlled access via public getters/setters.</li>
+    </ul>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div><strong>Abstraction</strong> = TV remote — you press buttons without knowing the circuit. <strong>Encapsulation</strong> = medicine capsule — the drug (data) is inside, protected. Together: abstraction hides complexity; encapsulation protects data. Both are cornerstones of maintainable, scalable Java design.</div>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q2 — Explain the concept of Constructors. Discuss Default, Parameterized, and Copy constructors in Java, providing code snippets for each.</div>
+  <div class="ans">
+    <h3>1. What is a Constructor?</h3>
+    <p>A <em>constructor</em> is a special method that is <strong>automatically invoked</strong> when an object is created using <code>new</code>. It has the <strong>same name as the class</strong>, no return type, and is used to initialise object state. Constructors can be overloaded.</p>
+
+    <h3>2. Default Constructor</h3>
+    <p>No parameters. Provides default values. If not explicitly defined, the compiler auto-generates one (all fields set to their default: 0, null, false).</p>
+    <pre>class Student {
+    String name;
+    int age;
+
+    Student() {                         // default constructor
+        name = "Unknown";
+        age  = 0;
+    }
+}
+Student s = new Student();              // name="Unknown", age=0</pre>
+
+    <h3>3. Parameterized Constructor</h3>
+    <p>Accepts arguments to initialise fields with user-provided values. Enables creating objects with specific state at creation time.</p>
+    <pre>class Student {
+    String name;
+    int age;
+
+    Student(String n, int a) {          // parameterized constructor
+        this.name = n;
+        this.age  = a;
+    }
+}
+Student s = new Student("Alice", 20);   // name="Alice", age=20</pre>
+
+    <h3>4. Copy Constructor</h3>
+    <p>Takes an object of the same class as parameter and copies its field values. Java does not provide a built-in copy constructor (unlike C++); it must be written manually.</p>
+    <pre>class Student {
+    String name;
+    int age;
+
+    Student(Student other) {            // copy constructor
+        this.name = other.name;
+        this.age  = other.age;
+    }
+}
+Student s1 = new Student("Bob", 21);
+Student s2 = new Student(s1);           // s2 is an independent copy of s1</pre>
+
+    <h3>5. Constructor Chaining with <code>this()</code></h3>
+    <pre>class Student {
+    String name; int age;
+    Student() { this("Default", 18); }          // calls parameterized
+    Student(String n, int a) { name = n; age = a; }
+}</pre>
+
+    <h3>6. Comparison</h3>
+    <table>
+      <tr><th>Type</th><th>Parameters</th><th>Purpose</th></tr>
+      <tr><td>Default</td><td>None</td><td>Initialises with default values</td></tr>
+      <tr><td>Parameterized</td><td>User-defined</td><td>Custom initialisation at creation</td></tr>
+      <tr><td>Copy</td><td>Same-class object</td><td>Creates an independent duplicate</td></tr>
+    </table>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>A constructor is like a <strong>college registration form</strong>. <strong>Default</strong> = blank form with pre-filled defaults. <strong>Parameterized</strong> = form with your own details. <strong>Copy</strong> = photocopying someone else's filled form. Each serves a distinct initialisation purpose.</div>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q3 — "Java is strictly call-by-value." Explain this statement in detail, specifically focusing on how object references are handled during function calls.</div>
+  <div class="ans">
+    <h3>1. Call-by-Value — The Rule</h3>
+    <p>Java <strong>always passes arguments by value</strong>. This means a <em>copy</em> of the variable is passed to the method. For <strong>primitives</strong>, the actual value is copied. For <strong>objects</strong>, the reference (memory address) is copied — but it is still a copy of the reference, not the object itself.</p>
+
+    <h3>2. Case 1 — Primitives</h3>
+    <pre>class Test {
+    static void change(int x) {
+        x = 100;                        // modifies only the local copy
+    }
+    public static void main(String[] args) {
+        int a = 5;
+        change(a);
+        System.out.println(a);          // still 5 — original unchanged
+    }
+}</pre>
+
+    <h3>3. Case 2 — Objects (Reference Copied)</h3>
+    <pre>class Dog {
+    String name;
+    Dog(String n) { this.name = n; }
+}
+class Test {
+    static void modify(Dog d) {
+        d.name = "Max";                 // affects the SAME object in heap
+    }
+    static void reassign(Dog d) {
+        d = new Dog("Rocky");           // only local copy changes; caller unaffected
+    }
+    public static void main(String[] args) {
+        Dog myDog = new Dog("Rex");
+        modify(myDog);
+        System.out.println(myDog.name); // "Max" — field change persists
+
+        reassign(myDog);
+        System.out.println(myDog.name); // still "Max" — reassign had no effect
+    }
+}</pre>
+
+    <h3>4. Memory Diagram</h3>
+    <div class="dia">  Caller stack         Heap
+  ┌──────────┐         ┌──────────────┐
+  │ myDog ───┼────────►│ Dog{name=Rex}│
+  └──────────┘         └──────────────┘
+         │
+  Method stack (copy)
+  ┌──────────┐
+  │   d  ────┼────────► same heap object
+  └──────────┘
+  d.name = "Max" → changes heap object → caller sees "Max"
+  d = new Dog() → d points to a new heap object → caller's myDog UNCHANGED</div>
+
+    <h3>5. Key Takeaway</h3>
+    <ul>
+      <li>Java passes the <strong>value of the reference</strong>, not the reference itself.</li>
+      <li>Field modifications through the copied reference <strong>do</strong> affect the original object.</li>
+      <li>Reassigning the reference inside the method <strong>does not</strong> affect the caller's variable.</li>
+    </ul>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>Imagine giving someone a <strong>photocopy of your house key</strong>. They can enter and rearrange furniture (modify object fields — caller sees changes). But if they throw the copy away and cut a new key (reassign reference), your original key is completely unaffected. Java always hands over the copy — never the original key.</div>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q4 — Define Polymorphism. Provide a detailed comparison between Method Overloading (Compile-time) and Method Overriding (Run-time) with implementation examples.</div>
+  <div class="ans">
+    <h3>1. Polymorphism</h3>
+    <p><em>Polymorphism</em> means <strong>"many forms."</strong> It allows one interface to be used for different underlying data types or behaviours. Java supports two types: <strong>Compile-time</strong> (Method Overloading) and <strong>Run-time</strong> (Method Overriding).</p>
+
+    <h3>2. Method Overloading — Compile-Time Polymorphism</h3>
+    <p>Multiple methods in the <strong>same class</strong> with the same name but <em>different parameter lists</em>. Resolved by the compiler at compile time (static binding).</p>
+    <pre>class Calculator {
+    int add(int a, int b)             { return a + b; }
+    double add(double a, double b)    { return a + b; }   // different types
+    int add(int a, int b, int c)      { return a + b + c; } // different count
+
+    public static void main(String[] args) {
+        Calculator c = new Calculator();
+        System.out.println(c.add(2, 3));       // 5   (int version)
+        System.out.println(c.add(2.5, 3.5));   // 6.0 (double version)
+        System.out.println(c.add(1, 2, 3));    // 6   (3-arg version)
+    }
+}</pre>
+
+    <h3>3. Method Overriding — Run-Time Polymorphism</h3>
+    <p>A <strong>subclass</strong> provides its own implementation of a method already defined in the parent class with the <em>same signature</em>. Resolved at runtime via dynamic dispatch (late binding).</p>
+    <pre>class Animal {
+    void speak() { System.out.println("Animal makes a sound"); }
+}
+class Dog extends Animal {
+    @Override
+    void speak() { System.out.println("Dog says: Woof!"); }
+}
+class Cat extends Animal {
+    @Override
+    void speak() { System.out.println("Cat says: Meow!"); }
+}
+public class Main {
+    public static void main(String[] args) {
+        Animal a1 = new Dog();  // runtime type = Dog
+        Animal a2 = new Cat();  // runtime type = Cat
+        a1.speak();             // Woof! (dynamic dispatch)
+        a2.speak();             // Meow!
+    }
+}</pre>
+
+    <h3>4. Comparison</h3>
+    <table>
+      <tr><th>Feature</th><th>Overloading</th><th>Overriding</th></tr>
+      <tr><td>Type</td><td>Compile-time (static binding)</td><td>Run-time (dynamic binding)</td></tr>
+      <tr><td>Location</td><td>Same class</td><td>Parent class → Child class</td></tr>
+      <tr><td>Signature</td><td>Must differ (params)</td><td>Must be identical</td></tr>
+      <tr><td>Return Type</td><td>Can be different</td><td>Must be same (or covariant)</td></tr>
+      <tr><td>Access Modifier</td><td>Can be anything</td><td>Cannot be more restrictive</td></tr>
+      <tr><td><code>@Override</code></td><td>Not used</td><td>Recommended</td></tr>
+    </table>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div><strong>Overloading</strong> is a chef cooking differently based on ingredients given (decided at order time — compile). <strong>Overriding</strong> is a child using their own accent instead of their parent's (decided at runtime based on the actual object). The JVM uses a <em>virtual method table (vtable)</em> to dispatch overridden calls dynamically.</div>
+  </div>
+</div>
+
+<!-- Q5 -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q5 — Illustrate the various types of Inheritance supported in Java. Explain the "Diamond Problem" and how Java uses Interfaces to achieve multiple inheritance.</div>
+  <div class="ans">
+    <h3>1. Inheritance</h3>
+    <p><em>Inheritance</em> is an OOP mechanism where a child class acquires the properties and behaviours of a parent class. It promotes <strong>code reusability</strong> and establishes an IS-A relationship.</p>
+
+    <h3>2. Types of Inheritance in Java</h3>
+    <table>
+      <tr><th>Type</th><th>Structure</th><th>Support</th></tr>
+      <tr><td><strong>Single</strong></td><td>A → B (one parent, one child)</td><td>Classes ✓</td></tr>
+      <tr><td><strong>Multilevel</strong></td><td>A → B → C (chain)</td><td>Classes ✓</td></tr>
+      <tr><td><strong>Hierarchical</strong></td><td>A → B and A → C (one parent, many children)</td><td>Classes ✓</td></tr>
+      <tr><td><strong>Multiple</strong></td><td>A + B → C (multiple parents)</td><td>Interfaces only ✓</td></tr>
+      <tr><td><strong>Hybrid</strong></td><td>Combination of above</td><td>Interfaces only ✓</td></tr>
+    </table>
+
+    <h3>3. Code — Multilevel Inheritance</h3>
+    <pre>class Animal { void eat()  { System.out.println("Eating"); } }
+class Dog    extends Animal { void bark() { System.out.println("Barking"); } }
+class Puppy  extends Dog    { void play() { System.out.println("Playing"); } }
+
+Puppy p = new Puppy();
+p.eat(); p.bark(); p.play();  // all methods accessible</pre>
+
+    <h3>4. The Diamond Problem</h3>
+    <p>When class D extends both B and C (both of which extend A and override its method), the compiler cannot resolve <em>which version</em> D should inherit — causing <strong>ambiguity</strong>.</p>
+    <div class="dia">            A  (has method display())
+           / \
+          B   C        (both override display())
+           \ /
+            D          ← Inherits from both — AMBIGUOUS! Not allowed in Java for classes.</div>
+
+    <h3>5. Solution via Interfaces (Java 8+ Default Methods)</h3>
+    <pre>interface B { default void show() { System.out.println("B"); } }
+interface C { default void show() { System.out.println("C"); } }
+
+class D implements B, C {
+    @Override
+    public void show() {
+        B.super.show();   // explicitly resolve conflict
+        C.super.show();
+    }
+}
+new D().show(); // B   C</pre>
+
+    <h3>6. Key Points</h3>
+    <ul>
+      <li>Java supports <strong>single inheritance for classes</strong> to avoid the Diamond Problem.</li>
+      <li>Multiple inheritance is supported through <strong>interfaces</strong>.</li>
+      <li>With conflicting <code>default</code> methods, the implementing class <strong>must</strong> override.</li>
+    </ul>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>The Diamond Problem is like two parents giving conflicting instructions — the child is confused. Java avoids this for classes by restricting to single inheritance. For interfaces, the child must <strong>explicitly resolve</strong> the conflict, making intent clear and unambiguous. Interfaces with <code>default</code> methods (Java 8) are the key enabler.</div>
+  </div>
+</div>
+
+<!-- Q6 -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q6 — Explain the complete Life Cycle of a Thread in Java. Discuss the importance of Thread Synchronization and how it is achieved using the <code>synchronized</code> keyword.</div>
+  <div class="ans">
+    <h3>1. Thread Life Cycle — 5 States</h3>
+    <table>
+      <tr><th>State</th><th>Description</th><th>Transition</th></tr>
+      <tr><td><em>New</em></td><td>Thread object created; <code>start()</code> not called yet.</td><td><code>new Thread()</code></td></tr>
+      <tr><td><em>Runnable</em></td><td><code>start()</code> called; eligible for CPU scheduling.</td><td><code>t.start()</code></td></tr>
+      <tr><td><em>Running</em></td><td>Scheduler picks it; <code>run()</code> is executing.</td><td>CPU schedules</td></tr>
+      <tr><td><em>Blocked/Waiting</em></td><td>Paused due to <code>sleep()</code>, <code>wait()</code>, I/O, or lock.</td><td><code>sleep()</code> / <code>wait()</code></td></tr>
+      <tr><td><em>Terminated</em></td><td><code>run()</code> completed normally or via exception.</td><td>run() finishes</td></tr>
+    </table>
+    <div class="dia">  New ──start()──► Runnable ◄────────────────────────────┐
+                         │                                    │
+                   (CPU schedules)                    (notified / timeout)
+                         │                                    │
+                      Running ──(sleep/wait/I-O/lock)──► Blocked/Waiting
+                         │
+                 (run() completes)
+                         ▼
+                    Terminated</div>
+
+    <h3>2. Creating Threads</h3>
+    <pre>// Method 1: Extend Thread
+class MyThread extends Thread {
+    public void run() { System.out.println("Thread: " + getName()); }
+}
+
+// Method 2: Implement Runnable (preferred — allows extending another class)
+class MyRunnable implements Runnable {
+    public void run() { System.out.println("Runnable: " + Thread.currentThread().getName()); }
+}
+new Thread(new MyRunnable()).start();</pre>
+
+    <h3>3. Thread Synchronization</h3>
+    <p><strong>Problem:</strong> When multiple threads access a shared resource concurrently, they may interleave in unpredictable ways causing <em>Race Conditions</em> and data inconsistency.</p>
+    <p><strong>Solution:</strong> The <span class="kw">synchronized</span> keyword ensures only <strong>one thread at a time</strong> can execute a block or method by acquiring the object's <em>monitor lock</em>.</p>
+    <pre>class Counter {
+    private int count = 0;
+
+    // synchronized method — only one thread can execute at a time
+    synchronized void increment() { count++; }
+    synchronized int getCount()   { return count; }
+}
+
+class Main {
+    public static void main(String[] args) throws InterruptedException {
+        Counter c = new Counter();
+
+        Thread t1 = new Thread(() -> { for(int i=0; i&lt;1000; i++) c.increment(); });
+        Thread t2 = new Thread(() -> { for(int i=0; i&lt;1000; i++) c.increment(); });
+
+        t1.start(); t2.start();
+        t1.join();  t2.join();
+
+        System.out.println("Final count: " + c.getCount()); // always 2000
+    }
+}</pre>
+
+    <h3>4. Synchronized Block (finer control)</h3>
+    <pre>synchronized(this) {
+    // only the critical section is locked, not the whole method
+    count++;
+}</pre>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div>Threads are multiple workers sharing one printer. Without sync, two workers print simultaneously — garbled output (race condition). <code>synchronized</code> puts a <strong>lock on the printer</strong> — only one worker at a time. The monitor lock is automatically released when the block exits, ensuring safe concurrent access without deadlock (as long as locks are acquired in consistent order).</div>
+  </div>
+</div>
+
+<!-- Q7 -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q7 — Discuss the hierarchy of the Java Collection Framework. Compare ArrayList and LinkedList in terms of memory usage and performance efficiency.</div>
+  <div class="ans">
+    <h3>1. Collection Framework Hierarchy</h3>
+    <div class="dia">  java.lang.Iterable
+        └── java.util.Collection
+                ├── List  (ordered, duplicates allowed)
+                │     ├── ArrayList
+                │     ├── LinkedList
+                │     └── Vector → Stack
+                ├── Set   (unique elements)
+                │     ├── HashSet
+                │     ├── LinkedHashSet
+                │     └── TreeSet (sorted)
+                └── Queue (FIFO ordering)
+                      ├── LinkedList
+                      └── PriorityQueue
+
+  java.util.Map (key-value pairs — does NOT extend Collection)
+        ├── HashMap
+        ├── LinkedHashMap
+        └── TreeMap (sorted)</div>
+
+    <h3>2. ArrayList</h3>
+    <p>Backed by a <strong>dynamic array</strong>. When capacity is exceeded, a new array of 1.5× size is allocated and elements are copied over.</p>
+    <pre>List&lt;String&gt; al = new ArrayList&lt;&gt;();
+al.add("Java");  al.add("Python");  al.add("C++");
+System.out.println(al.get(1));  // "Python" — O(1) random access</pre>
+
+    <h3>3. LinkedList</h3>
+    <p>Backed by a <strong>doubly-linked list</strong> of nodes. Each node stores: data + pointer to next node + pointer to previous node.</p>
+    <pre>List&lt;String&gt; ll = new LinkedList&lt;&gt;();
+ll.add("Java");  ll.addFirst("Start");  ll.removeLast();
+// Also implements Deque — can be used as stack or queue</pre>
+
+    <h3>4. Detailed Comparison</h3>
+    <table>
+      <tr><th>Feature</th><th>ArrayList</th><th>LinkedList</th></tr>
+      <tr><td>Internal Structure</td><td>Dynamic array</td><td>Doubly linked nodes</td></tr>
+      <tr><td>Random Access (get)</td><td><strong>O(1)</strong> — direct index</td><td><strong>O(n)</strong> — must traverse</td></tr>
+      <tr><td>Insertion (middle)</td><td><strong>O(n)</strong> — shift required</td><td><strong>O(1)</strong> — just relink</td></tr>
+      <tr><td>Deletion (middle)</td><td><strong>O(n)</strong> — shift required</td><td><strong>O(1)</strong> — just relink</td></tr>
+      <tr><td>Memory Per Element</td><td>Compact (data only)</td><td>Higher (data + 2 pointers)</td></tr>
+      <tr><td>Cache Performance</td><td>Better (contiguous memory)</td><td>Poorer (scattered nodes)</td></tr>
+      <tr><td>Implements</td><td>List only</td><td>List + Deque</td></tr>
+      <tr><td>Best Use</td><td>Frequent reads / search</td><td>Frequent insert / delete</td></tr>
+    </table>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div><strong>ArrayList</strong> = a numbered bookshelf — instantly find book 5 (O(1)), but inserting in the middle requires shifting all subsequent books (O(n)). <strong>LinkedList</strong> = a chain — add/remove a link instantly (O(1)), but finding the 5th link requires counting from the beginning (O(n)). Rule of thumb: <em>reads → ArrayList</em>, <em>frequent modifications → LinkedList</em>.</div>
+  </div>
+</div>
+
+<!-- Q8 -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q8 — What is Exception Handling? Explain the robust error-handling mechanism in Java using <code>try</code>, <code>catch</code>, <code>finally</code>, <code>throw</code>, and <code>throws</code>.</div>
+  <div class="ans">
+    <h3>1. Exception Handling</h3>
+    <p><em>Exception handling</em> is a mechanism to <strong>handle runtime errors gracefully</strong>, preventing abnormal program termination and enabling recovery. Java uses a structured try-catch-finally model built on the <code>Throwable</code> hierarchy.</p>
+
+    <h3>2. Exception Hierarchy</h3>
+    <div class="dia">  java.lang.Throwable
+      ├── Error             (JVM errors — don't catch these)
+      │     ├── StackOverflowError
+      │     └── OutOfMemoryError
+      └── Exception
+            ├── Checked Exceptions     (must handle — IOException, SQLException)
+            └── RuntimeException       (unchecked — NullPointerException, etc.)</div>
+
+    <h3>3. Keywords Explained</h3>
+    <table>
+      <tr><th>Keyword</th><th>Role</th></tr>
+      <tr><td><span class="kw">try</span></td><td>Wraps code that may throw an exception. Must be followed by <code>catch</code> or <code>finally</code>.</td></tr>
+      <tr><td><span class="kw">catch</span></td><td>Catches and handles a specific exception type. Multiple catch blocks are allowed.</td></tr>
+      <tr><td><span class="kw">finally</span></td><td>Always executes — even if exception is thrown or caught. Used for cleanup (close files, DB connections).</td></tr>
+      <tr><td><span class="kw">throw</span></td><td>Manually throws an exception object inside a method: <code>throw new IOException("msg");</code></td></tr>
+      <tr><td><span class="kw">throws</span></td><td>Declares in method signature that it may throw checked exceptions. Responsibility passed to caller.</td></tr>
+    </table>
+
+    <h3>4. Complete Example</h3>
+    <pre>class InsufficientFundsException extends Exception {   // custom exception
+    InsufficientFundsException(String msg) { super(msg); }
+}
+
+class BankAccount {
+    double balance = 1000;
+
+    void withdraw(double amt) throws InsufficientFundsException {  // throws
+        if (amt > balance)
+            throw new InsufficientFundsException("Need: " + amt + ", Have: " + balance); // throw
+        balance -= amt;
+        System.out.println("Withdrawn: " + amt);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        BankAccount acc = new BankAccount();
+        try {                                        // try
+            acc.withdraw(500);                       // success
+            acc.withdraw(800);                       // throws exception
+        } catch (InsufficientFundsException e) {     // catch
+            System.out.println("Error: " + e.getMessage());
+        } catch (Exception e) {                      // catch-all
+            System.out.println("Unexpected: " + e);
+        } finally {                                  // finally
+            System.out.println("Transaction session ended.");  // always runs
+        }
+    }
+}
+/* Output:
+   Withdrawn: 500.0
+   Error: Need: 800.0, Have: 500.0
+   Transaction session ended.  ← finally always runs */</pre>
+
+    <h3>5. Multi-catch (Java 7+)</h3>
+    <pre>catch (IOException | SQLException e) { e.printStackTrace(); }  // cleaner</pre>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div><strong>try</strong> = the risky zone. <strong>catch</strong> = the safety net. <strong>finally</strong> = the cleanup crew (always shows up, even after a crash). <strong>throw</strong> = manually triggering an alarm. <strong>throws</strong> = a warning sign on the method door saying "this may explode — caller must handle it." Together they form Java's complete, layered error-handling mechanism.</div>
+  </div>
+</div>
+
+<!-- Q9 -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q9 — Discuss String handling in Java. Explain why the <code>String</code> class is immutable and compare it with <code>StringBuilder</code> and <code>StringBuffer</code>.</div>
+  <div class="ans">
+    <h3>1. String in Java</h3>
+    <p>Strings in Java are <em>objects</em> of the <code>java.lang.String</code> class. Java provides a <strong>String Constant Pool</strong> (SCP) in the heap — when a string literal is created, the JVM checks the pool first. If it exists, it returns the same reference (interning).</p>
+    <pre>String s1 = "Hello";             // stored in String Pool
+String s2 = "Hello";             // s2 points to same pool object as s1
+String s3 = new String("Hello"); // forces new heap object (outside pool)</pre>
+
+    <h3>2. Why String is Immutable</h3>
+    <p>Once a <code>String</code> object is created, its value <strong>cannot be changed</strong>. Any modification creates a new <code>String</code> object.</p>
+    <ul>
+      <li><strong>Security:</strong> Strings are used in class loading, network connections, DB URLs — immutability prevents tampering.</li>
+      <li><strong>Thread Safety:</strong> Multiple threads can share the same String without synchronisation.</li>
+      <li><strong>Hashcode Caching:</strong> Immutable strings cache their hashcode — important for use as HashMap keys.</li>
+      <li><strong>String Pool:</strong> Possible only because the value never changes after creation.</li>
+    </ul>
+    <pre>String s = "Hello";
+s = s + " World";   // does NOT modify "Hello" — creates NEW object "Hello World"
+// "Hello" still exists in pool until GC collects it</pre>
+
+    <h3>3. StringBuilder and StringBuffer</h3>
+    <p>For heavy string manipulation, use mutable alternatives to avoid creating thousands of intermediate <code>String</code> objects.</p>
+    <pre>StringBuilder sb = new StringBuilder("Hello");
+sb.append(" World");           // "Hello World" — modifies same object
+sb.insert(5, ",");             // "Hello, World"
+sb.reverse();                  // "dlroW ,olleH"
+sb.delete(0, 3);               // removes chars from index 0 to 2
+System.out.println(sb.length()); // useful methods available</pre>
+
+    <h3>4. Comparison</h3>
+    <table>
+      <tr><th>Feature</th><th>String</th><th>StringBuilder</th><th>StringBuffer</th></tr>
+      <tr><td>Mutability</td><td>Immutable</td><td>Mutable</td><td>Mutable</td></tr>
+      <tr><td>Thread Safety</td><td>Yes (immutable)</td><td>No</td><td>Yes (synchronized)</td></tr>
+      <tr><td>Performance</td><td>Slow (new objects)</td><td>Fastest</td><td>Slower (sync overhead)</td></tr>
+      <tr><td>Storage</td><td>String Constant Pool</td><td>Heap</td><td>Heap</td></tr>
+      <tr><td>Use When</td><td>Fixed/few modifications</td><td>Single-threaded manipulation</td><td>Multi-threaded manipulation</td></tr>
+    </table>
+
+    <h3>5. Important String Methods</h3>
+    <pre>String s = "  Hello World  ";
+s.length()              // 15
+s.trim()                // "Hello World"
+s.toUpperCase()         // "  HELLO WORLD  "
+s.substring(2, 7)       // "Hello"
+s.charAt(2)             // 'H'
+s.contains("World")     // true
+s.replace("World","Java") // "  Hello Java  "
+s.split(" ")            // ["", "", "Hello", "World", "", ""]
+String.valueOf(42)       // "42"  — primitive to String</pre>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div><strong>String</strong> = a printed book (can't edit, need a new one for every change). <strong>StringBuilder</strong> = a personal notebook (edit freely, fast, single-user). <strong>StringBuffer</strong> = a shared whiteboard (multiple users can edit but one at a time — synchronized). For loops with string concatenation, always prefer <strong>StringBuilder</strong> — it can be 10×+ faster than repeated <code>+</code> on String.</div>
+  </div>
+</div>
+
+<!-- Q10 -->
+<div class="qblock q7">
+  <div class="qblock-hdr"><span class="mbadge">7M</span>Q10 — Explain the core architecture of Spring Boot. Discuss the concepts of Dependency Injection (DI) and Inversion of Control (IoC).</div>
+  <div class="ans">
+    <h3>1. What is Spring Boot?</h3>
+    <p><em>Spring Boot</em> is an opinionated extension of the Spring Framework that enables building <strong>production-ready Java applications</strong> with minimal configuration. Key features: <strong>auto-configuration</strong>, embedded server (Tomcat), starter dependencies, and actuator for monitoring.</p>
+
+    <h3>2. Core Layered Architecture</h3>
+    <table>
+      <tr><th>Layer</th><th>Annotation</th><th>Responsibility</th></tr>
+      <tr><td><strong>Presentation</strong></td><td><code>@RestController</code></td><td>Handles HTTP requests/responses. Maps URLs to methods. Returns JSON/data.</td></tr>
+      <tr><td><strong>Service</strong></td><td><code>@Service</code></td><td>Contains business logic. Calls Repository for data. Keeps Controllers thin.</td></tr>
+      <tr><td><strong>Repository / DAO</strong></td><td><code>@Repository</code></td><td>Interfaces with the database using JPA/Hibernate. Abstracts SQL queries.</td></tr>
+      <tr><td><strong>Model / Entity</strong></td><td><code>@Entity</code></td><td>Represents database tables. Plain Java objects (POJOs) with JPA mapping.</td></tr>
+    </table>
+    <div class="dia">  Client (Browser/App)
+        │  HTTP Request
+        ▼
+  @RestController (Presentation Layer)
+        │  calls
+        ▼
+  @Service (Business Logic Layer)
+        │  calls
+        ▼
+  @Repository (Data Access Layer)
+        │  queries
+        ▼
+  Database (MySQL / PostgreSQL / H2 etc.)</div>
+
+    <h3>3. Inversion of Control (IoC)</h3>
+    <p><em>IoC</em> is a design principle where the <strong>control of object creation and dependency management</strong> is transferred from the application code to a framework (the IoC Container). Instead of classes creating their dependencies, the container creates and injects them.</p>
+    <pre>// Without IoC — tight coupling, hard to test
+class Car {
+    Engine engine = new Engine();   // Car creates its own Engine
+}
+
+// With IoC — Spring creates and manages objects (beans)
+@Component
+class Engine { }
+
+@Component
+class Car {
+    @Autowired Engine engine;       // Spring injects the Engine bean
+}</pre>
+
+    <h3>4. Dependency Injection (DI)</h3>
+    <p><em>DI</em> is the mechanism by which IoC is implemented — dependencies are "injected" into a class rather than the class creating them itself. Spring supports three types:</p>
+    <table>
+      <tr><th>DI Type</th><th>How</th><th>Recommended?</th></tr>
+      <tr><td><strong>Constructor Injection</strong></td><td>Dependencies passed via constructor parameter</td><td>✅ Yes (immutable, testable)</td></tr>
+      <tr><td><strong>Setter Injection</strong></td><td>Dependencies set via setter method</td><td>Optional dependencies</td></tr>
+      <tr><td><strong>Field Injection</strong></td><td><code>@Autowired</code> directly on field</td><td>⚠ Avoid (hard to test)</td></tr>
+    </table>
+
+    <h3>5. Complete Minimal Spring Boot App</h3>
+    <pre>@SpringBootApplication          // enables auto-config + component scan
+public class App {
+    public static void main(String[] args) { SpringApplication.run(App.class, args); }
+}
+
+@RestController
+class HelloController {
+    private final GreetService service;
+
+    HelloController(GreetService service) { // Constructor Injection (recommended)
+        this.service = service;
+    }
+
+    @GetMapping("/hello")
+    String hello() { return service.greet(); }
+}
+
+@Service
+class GreetService {
+    String greet() { return "Hello from Spring Boot!"; }
+}</pre>
+
+    <h3>6. Key Annotations Summary</h3>
+    <table>
+      <tr><th>Annotation</th><th>Purpose</th></tr>
+      <tr><td><code>@SpringBootApplication</code></td><td>Entry point — combines @Configuration + @ComponentScan + @EnableAutoConfiguration</td></tr>
+      <tr><td><code>@RestController</code></td><td>HTTP controller — returns response body directly (combines @Controller + @ResponseBody)</td></tr>
+      <tr><td><code>@Service</code></td><td>Marks business logic layer bean</td></tr>
+      <tr><td><code>@Repository</code></td><td>Marks data access layer; enables exception translation</td></tr>
+      <tr><td><code>@Autowired</code></td><td>Injects dependency by type</td></tr>
+      <tr><td><code>@Component</code></td><td>Generic Spring-managed bean</td></tr>
+    </table>
+    <div class="booster"><div class="booster-lbl">💡 Concept Booster</div><strong>IoC</strong> = Hollywood Principle: "Don't call us, we'll call you." Your class doesn't create its dependencies — Spring's IoC container does. <strong>DI</strong> is the mechanism: Spring delivers the dependencies to your class's doorstep. <strong>Spring Boot</strong> makes this effortless with auto-configuration and embedded servers — think of it as a <em>smart factory manager</em> who knows which worker (bean) to assign to each job, wires them up, and starts the factory automatically.</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  AKTU Java &amp; OOP — Complete Exam Answer Sheet &nbsp;·&nbsp; 2-Mark (×10) + 7-Mark (×10) &nbsp;·&nbsp; All Questions Answered &nbsp;·&nbsp; Print-Ready A4
+</div>
+
+</body>
+</html>

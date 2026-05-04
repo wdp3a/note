@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BCS403 – OOP with Java | Complete AKTU Answers 2024-25</title>
+<style>
+/* ═══════════════════════════════════════════
+   FONTS  (web + print fallbacks)
+═══════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Fira+Code:wght@400;600&family=Nunito:wght@700;900&display=swap');
+
+/* ═══════════════════════════════════════════
+   ROOT PALETTE
+═══════════════════════════════════════════ */
+:root {
+  --ink:        #1c1c2e;
+  --deep:       #0f3460;
+  --accent:     #e94560;
+  --gold:       #f5a623;
+  --teal:       #16a085;
+  --green:      #27ae60;
+  --bg:         #f5f4f0;
+  --card:       #ffffff;
+  --border:     #ddd8d0;
+  --code-bg:    #1e1e2e;
+  --code-fg:    #cdd6f4;
+  --cb-bg:      #fffbf0;
+  --cb-border:  #f5a623;
+  --mark2-bg:   #16a085;
+  --mark7-bg:   #e94560;
+  --hdr-bg:     #0f3460;
+}
+
+/* ═══════════════════════════════════════════
+   RESET
+═══════════════════════════════════════════ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+/* ═══════════════════════════════════════════
+   BASE
+═══════════════════════════════════════════ */
+body {
+  font-family: 'Merriweather', Georgia, 'Times New Roman', serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 13.5px;
+  line-height: 1.8;
+}
+
+/* ═══════════════════════════════════════════
+   COVER PAGE
+═══════════════════════════════════════════ */
+.cover {
+  background: var(--deep);
+  color: #fff;
+  padding: 56px 52px 48px;
+  position: relative;
+  overflow: hidden;
+}
+.cover-badge {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-family: 'Fira Code', monospace;
+  font-size: 10.5px;
+  letter-spacing: 2.5px;
+  padding: 5px 14px;
+  border-radius: 2px;
+  margin-bottom: 22px;
+  text-transform: uppercase;
+}
+.cover h1 {
+  font-family: 'Nunito', sans-serif;
+  font-size: 38px;
+  font-weight: 900;
+  line-height: 1.18;
+  margin-bottom: 10px;
+}
+.cover h1 span { color: var(--gold); }
+.cover .sub { font-size: 15px; opacity: .72; margin-bottom: 34px; }
+.cover-meta { display: flex; gap: 36px; flex-wrap: wrap; }
+.cover-meta-item { font-size: 12.5px; opacity: .78; }
+.cover-meta-item strong { display: block; color: var(--gold); font-size: 14px; opacity:1; }
+.cover-deco {
+  position: absolute; right: -80px; top: -80px;
+  width: 380px; height: 380px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(233,69,96,.28) 0%, transparent 68%);
+  pointer-events: none;
+}
+.cover-deco2 {
+  position: absolute; left: -60px; bottom: -60px;
+  width: 280px; height: 280px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(22,160,133,.22) 0%, transparent 68%);
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════
+   MAIN CONTAINER
+═══════════════════════════════════════════ */
+.wrap { max-width: 920px; margin: 0 auto; padding: 36px 28px 60px; }
+
+/* ═══════════════════════════════════════════
+   SECTION BANNER
+═══════════════════════════════════════════ */
+.sec-banner {
+  background: var(--hdr-bg);
+  color: #fff;
+  padding: 16px 26px;
+  border-radius: 5px 5px 0 0;
+  margin-top: 44px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+.sec-pill {
+  background: var(--accent);
+  color: #fff;
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  padding: 3px 11px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.sec-banner h2 {
+  font-family: 'Nunito', sans-serif;
+  font-size: 19px;
+  font-weight: 900;
+}
+
+/* ═══════════════════════════════════════════
+   QUESTION CARD
+═══════════════════════════════════════════ */
+.qcard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: none;
+  margin-bottom: 2px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.qcard:last-of-type { border-radius: 0 0 5px 5px; margin-bottom: 0; }
+
+/* question header */
+.qh {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--border);
+  break-after: avoid;
+  page-break-after: avoid;
+}
+.qnum {
+  font-family: 'Fira Code', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  padding: 12px 16px;
+  min-width: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.qnum.m2 { background: var(--mark2-bg); }
+.qnum.m7 { background: var(--mark7-bg); }
+.qtxt {
+  padding: 12px 18px;
+  flex: 1;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--deep);
+  line-height: 1.5;
+  font-family: 'Nunito', sans-serif;
+}
+.mbadge {
+  font-family: 'Fira Code', monospace;
+  font-size: 10.5px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  align-self: center;
+  margin-right: 14px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.mbadge.b2 { background: #d5f5ef; color: var(--teal); }
+.mbadge.b7 { background: #fde8eb; color: var(--accent); }
+
+/* answer body */
+.ab { padding: 20px 24px 16px; }
+
+/* ═══════════════════════════════════════════
+   TYPOGRAPHY INSIDE ANSWERS
+═══════════════════════════════════════════ */
+.ab h3 {
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  font-weight: 900;
+  color: var(--deep);
+  border-left: 4px solid var(--accent);
+  padding-left: 10px;
+  margin: 20px 0 8px;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+.ab h3:first-child { margin-top: 0; }
+
+.ab h4 {
+  font-family: 'Nunito', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--teal);
+  margin: 14px 0 6px;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+.ab p { margin-bottom: 8px; font-size: 13px; }
+.ab ul, .ab ol { padding-left: 22px; margin-bottom: 8px; }
+.ab li { margin-bottom: 4px; font-size: 13px; }
+.ab strong { color: var(--deep); }
+
+/* ═══════════════════════════════════════════
+   INLINE CODE
+═══════════════════════════════════════════ */
+kbd, code {
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 11.5px;
+  background: #eef2ff;
+  color: #3730a3;
+  padding: 1px 5px;
+  border-radius: 3px;
+  border: 1px solid #c7d2fe;
+}
+
+/* ═══════════════════════════════════════════
+   CODE BLOCKS
+═══════════════════════════════════════════ */
+pre {
+  background: var(--code-bg);
+  color: var(--code-fg);
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 11.5px;
+  line-height: 1.65;
+  padding: 16px 18px;
+  border-radius: 5px;
+  overflow-x: auto;
+  margin: 12px 0;
+  border-left: 3px solid var(--accent);
+  white-space: pre;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.kw  { color: #cba6f7; }
+.tp  { color: #89dceb; }
+.str { color: #a6e3a1; }
+.cm  { color: #6c7086; font-style: italic; }
+.num { color: #fab387; }
+.fn  { color: #89b4fa; }
+.ann { color: #f38ba8; }
+.op  { color: #89dceb; }
+
+/* ═══════════════════════════════════════════
+   TABLES
+═══════════════════════════════════════════ */
+.ab table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 12.5px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.ab th {
+  background: var(--ink);
+  color: #fff;
+  padding: 8px 12px;
+  text-align: left;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+}
+.ab td { padding: 7px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.ab tr:nth-child(even) td { background: #f8f6f2; }
+
+/* ═══════════════════════════════════════════
+   DIAGRAM / ASCII
+═══════════════════════════════════════════ */
+.diagram {
+  background: #f0f4ff;
+  border: 1px dashed #a0b4d8;
+  border-radius: 5px;
+  padding: 14px 18px;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 11.5px;
+  line-height: 1.85;
+  color: #1a1a3e;
+  margin: 12px 0;
+  white-space: pre;
+  overflow-x: auto;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+/* ═══════════════════════════════════════════
+   CONCEPT BOOSTER
+═══════════════════════════════════════════ */
+.cb {
+  margin-top: 16px;
+  background: var(--cb-bg);
+  border: 1px solid #f0d99a;
+  border-left: 4px solid var(--cb-border);
+  border-radius: 4px;
+  padding: 12px 16px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.cb-title {
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+.cb p { font-size: 12.5px; color: #5a4020; margin: 0; }
+
+/* ═══════════════════════════════════════════
+   HORIZONTAL RULE
+═══════════════════════════════════════════ */
+hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+
+/* ═══════════════════════════════════════════
+   BOTH-OPTIONS LABEL
+═══════════════════════════════════════════ */
+.opt-label {
+  display: inline-block;
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  background: var(--deep);
+  color: #fff;
+  padding: 2px 9px;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+.footer {
+  margin-top: 52px;
+  text-align: center;
+  padding: 24px;
+  border-top: 2px solid var(--border);
+  font-family: 'Fira Code', monospace;
+  font-size: 11.5px;
+  color: #888;
+}
+.footer span { color: var(--accent); }
+
+/* ═══════════════════════════════════════════
+   ██  PRINT STYLES  ██
+═══════════════════════════════════════════ */
+@media print {
+  @page {
+    size: A4;
+    margin: 18mm 14mm 18mm 14mm;
+  }
+
+  * { -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important; }
+
+  body { background: #fff; font-size: 11.5px; line-height: 1.7; }
+
+  /* hide browser chrome artefacts */
+  .cover-deco, .cover-deco2 { display: none; }
+
+  /* cover on its own page */
+  .cover { page-break-after: always; break-after: page; }
+
+  /* section banners never orphaned */
+  .sec-banner { page-break-after: avoid; break-after: avoid; }
+
+  /* keep question header with at least some answer */
+  .qh { page-break-after: avoid; break-after: avoid; }
+
+  /* never split a card across pages if possible */
+  .qcard { page-break-inside: avoid; break-inside: avoid; }
+
+  /* code blocks never split */
+  pre, .diagram, table, .cb { page-break-inside: avoid; break-inside: avoid; }
+
+  /* headings never orphaned */
+  .ab h3, .ab h4 { page-break-after: avoid; break-after: avoid; }
+
+  /* no overflow on narrow print page */
+  pre, .diagram { overflow: visible; white-space: pre-wrap; word-break: break-all; }
+
+  /* font sizes tightened for print */
+  .cover h1       { font-size: 30px; }
+  .sec-banner h2  { font-size: 16px; }
+  .qtxt           { font-size: 12px; }
+  .ab             { padding: 14px 18px 10px; }
+  .ab h3          { font-size: 13px; }
+  .ab h4          { font-size: 12px; }
+  .ab p, .ab li   { font-size: 11.5px; }
+  pre, .diagram   { font-size: 10px; }
+  .ab table       { font-size: 11px; }
+  .cb p           { font-size: 11px; }
+
+  /* tighten wrapping container */
+  .wrap { padding: 0; max-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     COVER
+══════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-deco"></div>
+  <div class="cover-deco2"></div>
+  <div class="cover-badge">AKTU · BCS403 · SEM IV · 2024-25</div>
+  <h1>Object Oriented<br>Programming with <span>Java</span></h1>
+  <p class="sub">Complete Model Answers — Every Question, Both Options, All Sections</p>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><strong>Subject Code</strong>BCS403</div>
+    <div class="cover-meta-item"><strong>Total Marks</strong>70</div>
+    <div class="cover-meta-item"><strong>Duration</strong>3 Hours</div>
+    <div class="cover-meta-item"><strong>Sections</strong>A · B · C (Q3–Q7 both options)</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ══════════════════════════════════════════
+     SECTION A — 2-mark questions
+══════════════════════════════════════════ -->
+<div class="sec-banner">
+  <span class="sec-pill">SECTION A</span>
+  <h2>2-Mark Questions — Attempt All &nbsp;(2 × 7 = 14)</h2>
+</div>
+
+<!-- ─── Q1a ─── -->
+<div class="qcard">
+  <div class="qh">
+    <div class="qnum m2">1a</div>
+    <div class="qtxt">Why is Java platform-independent?</div>
+    <span class="mbadge b2">2 marks</span>
+  </div>
+  <div class="ab">
+    <p>Java follows the <strong>Write Once, Run Anywhere (WORA)</strong> principle. The Java compiler converts source code (<kbd>.java</kbd>) into <strong>bytecode</strong> (<kbd>.class</kbd>), which is not tied to any specific operating system or processor.</p>
+    <p>The <strong>Java Virtual Machine (JVM)</strong>, installed on every target platform (Windows, Linux, macOS), reads this same bytecode and translates it into platform-specific machine code at runtime. Because different JVMs exist for different platforms, the same bytecode executes everywhere without recompilation.</p>
+    <div class="diagram">.java  →  javac (compiler)  →  .class (Bytecode — platform neutral)
+                                        ↓
+                    JVM on Windows / JVM on Linux / JVM on macOS
+                                        ↓
+                         Native Machine Code (platform-specific)</div>
+    <div class="cb">
+      <div class="cb-title">💡 Concept Booster</div>
+      <p>Think of bytecode as a <em>universal recipe</em> and the JVM as a local chef who adapts it to their own kitchen (OS). The recipe never changes, but every chef knows how to cook it. That's why Java is platform-independent — the recipe (bytecode) is universal; the cooking (execution) is local.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Q1b ─── -->
+<div class="qcard">
+  <div class="qh">
+    <div class="qnum m2">1b</div>
+    <div class="qtxt">What is the role of a constructor in a Java class?</div>
+    <span class="mbadge b2">2 marks</span>
+  </div>
+  <div class="ab">
+    <p>A <strong>constructor</strong> is a special block of code used to <strong>initialize an object</strong> when it is created using the <kbd>new</kbd> keyword. It has the same name as the class and has <strong>no return type</strong> (not even <kbd>void</kbd>).</p>
+    <ul>
+      <li>Called <strong>automatically</strong> at object creation time.</li>
+      <li>Sets initial values for object fields.</li>
+      <li>Java provides a <strong>default (no-arg) constructor</strong> if none is defined.</li>
+      <li><strong>Constructor overloading</strong> allows multiple constructors with different parameters.</li>
+    </ul>
+    <pre><span class="kw">class</span> <span class="tp">Student</span> {
+    <span class="tp">String</span> name; <span class="kw">int</span> age;
+    <span class="fn">Student</span>(<span class="tp">String</span> n, <span class="kw">int</span> a) { name <span class="op">=</span> n; age <span class="op">=</span> a; } <span class="cm">// parameterized constructor</span>
+    <span class="fn">Student</span>() { name <span class="op">=</span> <span class="str">"Unknown"</span>; }                   <span class="cm">// default constructor</span>
+}</pre>
+    <div class="cb">
+      <div class="cb-title">💡 Concept Booster</div>
+      <p>A constructor is like a <em>factory setup procedure</em> — the moment a new car comes off the assembly line (object created), the factory automatically installs the engine and sets the color (initializes fields). You don't call it manually; it fires the instant the object is born.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Q1c ─── -->
+<div class="qcard">
+  <div class="qh">
+    <div class="qnum m2">1c</div>
+    <div class="qtxt">What is the purpose of the <kbd>finally</kbd> block in Java exception handling?</div>
+    <span class="mbadge b2">2 marks</span>
+  </div>
+  <div class="ab">
+    <p>The <strong><kbd>finally</kbd></strong> block contains code that is <strong>always executed</strong>, regardless of whether an exception is thrown, caught, or not thrown at all.</p>
+    <ul>
+      <li>Executes after <kbd>try</kbd> and <kbd>catch</kbd> complete.</li>
+      <li>Used for <strong>cleanup operations</strong>: closing files, releasing database connections, freeing resources.</li>
+      <li>Only skipped if <kbd>System.exit()</kbd> is called or the JVM crashes.</li>
+    </ul>
+    <pre><span class="kw">try</span> { <span class="cm">/* risky code */</span> }
+<span class="kw">catch</span> (<span class="tp">Exception</span> e) { <span class="cm">/* handle */</span> }
+<span class="kw">finally</span> { System.out.<span class="fn">println</span>(<span class="str">"Always runs — close resources here"</span>); }</pre>
+    <div class="cb">
+      <div class="cb-title">💡 Concept Booster</div>
+      <p><kbd>finally</kbd> is like a security guard at an exit — whether the event (try block) went smoothly or someone caused trouble (exception), the guard <em>always</em> locks up when everyone leaves. It's your guarantee that cleanup code is never skipped no matter what happens.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Q1d ─── -->
+<div class="qcard">
+  <div class="qh">
+    <div class="qnum m2">1d</div>
+    <div class="qtxt">How is <kbd>throw</kbd> different from <kbd>throws</kbd>?</div>
+    <span class="mbadge b2">2 marks</span>
+  </div>
+  <div class="ab">
+    <table>
+      <tr><th>Feature</th><th><kbd>throw</kbd></th><th><kbd>throws</kbd></th></tr>
+      <tr><td>Purpose</td><td>Actually <strong>throws</strong> an exception instance</td><td><strong>Declares</strong> that a method might throw an exception</td></tr>
+      <tr><td>Location</td><td>Inside method body</td><td>In method signature/declaration</td></tr>
+      <tr><td>Followed by</td><td>An exception <em>object</em></td><td>Exception <em>class name(s)</em></td></tr>
+      <tr><td>Count</td><td>One exception at a time</td><td>Multiple (comma-separated)</td></tr>
+    </table>
+    <pre><span class="cm">// throw — fires an exception object</span>
+<span class="kw">throw new</span> <span class="tp">ArithmeticException</span>(<span class="str">"Divide by zero"</span>);
+
+<span class="cm">// throws — warns callers in method declaration</span>
+<span class="kw">void</span> <span class="fn">readFile</span>(<span class="tp">String</span> path) <span class="kw">throws</span> <span class="tp">IOException</span> { <span class="cm">/* ... */</span> }</pre>
+    <div class="cb">
+      <div class="cb-title">💡 Concept Booster</div>
+      <p><kbd>throw</kbd> is the <em>action</em> (actually throwing a ball), while <kbd>throws</kbd> is the <em>warning label</em> on a method (saying "this machine may eject parts"). One executes; the other informs. Remember: throw = verb (do it), throws = adjective on method (might happen).</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Q1e ─── -->
+<div class="qcard">
+  <div class="qh">
+    <div class="qnum m2">1e</div>
+    <div class="qtxt">What is a functional interface? Give an example.</div>
+    <span class="mbadge b2">2 marks</span>
+  </div>
+  <div class="ab">
+    <p>A <strong>functional interface</strong> is an interface with <strong>exactly one abstract method</strong> (SAM — Single Abstract Method). It may have any number of <kbd>default</kbd> or <kbd>static</kbd> methods.</p>
+    <ul>
+      <li>Annotated with <kbd>@FunctionalInterface</kbd> (optional but compiler-enforced).</li>
+      <li>It is the target type for <strong>lambda expressions</strong> and method references.</li>
+      <li>Built-in examples: <kbd>Runnable</kbd>, <kbd>Predicate&lt;T&gt;</kbd>, <kbd>Comparator&lt;T&gt;</kbd>, <kbd>Callable&lt;V&gt;</kbd>.</li>
+    </ul>
+    <pre><span class="ann">@FunctionalInterface</span>
+<span class="kw">interface</span> <span class="tp">Greet</span> {
+    <span class="kw">void</span> <span class="fn">sayHello</span>(<span class="tp">String</span> name); <span class="cm">// only ONE abstract method</span>
+}
+<span class="cm">// Implemented via lambda</span>
+<span class="tp">Greet</span> g <span class="op">=</span> name <span class="op">-></span> System.out.<span class="fn">println</span>(<span class="str">"Hello, "</span> <span class="op">+</span> name);
+g.<span class="fn">sayHello</span>(<span class="str">"AKTU"</span>); <span class="cm">// Output: Hello, AKTU</span></pre>
+    <div class="cb">
+      <div class="cb-title">💡 Concept Booster</div>
+      <p>A functional interface is like a <em>single-button remote control</em> — it does exactly one thing. Lambda expressions are the shorthand to program that button without writing an entire class. This is Java's gateway to functional programming style.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Q1f ─── -->
+<div class="qcard">
+  <div class="qh">
+    <div class="qnum m2">1f</div>
+    <div class="qtxt">How does Stack differ from Queue?</div>
+    <span class="mbadge b2">2 marks</span>
+  </div>
+  <div class="ab">
+    <table>
+      <tr><th>Feature</th><th>Stack</th><th>Queue</th></tr>
+      <tr><td>Order</td><td><strong>LIFO</strong> — Last In, First Out</td><td><strong>FIFO</strong> — First In, First Out</td></tr>
+      <tr><td>Insert</td><td><kbd>push()</kbd> — at top</td><td><kbd>offer()</kbd> / <kbd>add()</kbd> — at rear</td></tr>
+      <tr><td>Remove</td><td><kbd>pop()</kbd> — from top</td><td><kbd>poll()</kbd> / <kbd>remove()</kbd> — from front</td></tr>
+      <tr><td>Peek</td><td><kbd>peek()</kbd> — top element</td><td><kbd>peek()</kbd> — front element</td></tr>
+      <tr><td>Java class</td><td><kbd>Stack&lt;T&gt;</kbd></td><td><kbd>LinkedList&lt;T&gt;</kbd>, <kbd>ArrayDeque&lt;T&gt;</kbd></td></tr>
+      <tr><td>Use case</td><td>Undo/Redo, recursion, DFS</td><td>Scheduling, BFS, print spooler</td></tr>
+    </table>
+    <div class="cb">
+      <div class="cb-title">💡 Concept Booster</div>
+      <p>Stack = a stack of plates — you always take the <em>top</em> plate. Queue = a ticket counter line — the person who <em>arrived first</em> gets served first. Both manage access order, but in opposite directions. When in doubt: last in → Stack; first in → Queue.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Q1g ─── -->
+<div class="qcard">
+  <div class="qh">
+    <div class="qnum m2">1g</div>
+    <div class="qtxt">What is a GET vs POST request?</div>
+    <span class="mbadge b2">2 marks</span>
+  </div>
+  <div class="ab">
+    <table>
+      <tr><th>Feature</th><th>GET</th><th>POST</th></tr>
+      <tr><td>Purpose</td><td>Retrieve / fetch data</td><td>Send / submit data to server</td></tr>
+      <tr><td>Data location</td><td>Appended in URL as query string</td><td>Sent in request body (hidden)</td></tr>
+      <tr><td>Security</td><td>Less secure — visible in URL</td><td>More secure — body is not shown</td></tr>
+      <tr><td>Idempotent</td><td>Yes — same result every time</td><td>No — may cause side effects</td></tr>
+      <tr><td>Caching</td><td>Can be cached / bookmarked</td><td>Cannot be cached</td></tr>
+      <tr><td>Data size</td><td>Limited (~2000 chars in URL)</td><td>No practical limit</td></tr>
+      <tr><td>Use case</td><td>Fetching a page, search query</td><td>Login form, file upload, create record</td></tr>
+    </table>
+    <div class="cb">
+      <div class="cb-title">💡 Concept Booster</div>
+      <p>GET is like looking at a restaurant menu — you're just reading, nothing changes. POST is like placing an order — you're sending data that changes something on the server. GET is safe to repeat; POST should not be repeated carelessly (it may charge your card twice!).</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION B — 7-mark questions (all 5)
+══════════════════════════════════════════ -->
+<div class="sec-banner">
+  <span class="sec-pill">SECTION B</span>
+  <h2>7-Mark Questions — All Five Answered &nbsp;(7 × 3 = 21, attempt any 3)</h2>
+</div>
+
+<!-- ─── Q2a ─── -->
+<div class="qcard">
+  <div class="qh">
+    <div class="qnum m7">2a</div>
+    <div class="qtxt">Discuss the different data types and control structures in Java with examples.</div>
+    <span class="mbadge b7">7 marks</span>
+  </div>
+  <div class="ab">
+    <h3>Data Types in Java</h3>
+    <p>Java is a <strong>strongly typed</strong> language — every variable must have a declared type before use. Data types are divided into two broad categories.</p>
+
+    <h4>A. Primitive Data Types (8 types)</h4>
+    <table>
+      <tr><th>Type</th><th>Size</th><th>Range</th><th>Example</th></tr>
+      <tr><td><kbd>byte</kbd></td><td>1 byte</td><td>−128 to 127</td><td><kbd>byte b = 10;</kbd></td></tr>
+      <tr><td><kbd>short</kbd></td><td>2 bytes</td><td>−32,768 to 32,767</td><td><kbd>short s = 500;</kbd></td></tr>
+      <tr><td><kbd>int</kbd></td><td>4 bytes</td><td>−2³¹ to 2³¹−1</td><td><kbd>int n = 100;</kbd></td></tr>
+      <tr><td><kbd>long</kbd></td><td>8 bytes</td><td>Very large integers</td><td><kbd>long l = 9L;</kbd></td></tr>
+      <tr><td><kbd>float</kbd></td><td>4 bytes</td><td>Single-precision decimal</td><td><kbd>float f = 3.14f;</kbd></td></tr>
+      <tr><td><kbd>double</kbd></td><td>8 bytes</td><td>Double-precision decimal</td><td><kbd>double d = 3.14;</kbd></td></tr>
+      <tr><td><kbd>char</kbd></td><td>2 bytes</td><td>Single Unicode character</td><td><kbd>char c = 'A';</kbd></td></tr>
+      <tr><td><kbd>boolean</kbd></td><td>1 bit</td><td>true / false</td><td><kbd>boolean x = true;</kbd></td></tr>
+    </table>
+
+    <h4>B. Non-Primitive (Reference) Types</h4>
+    <p>Include <strong>String</strong>, <strong>Arrays</strong>, <strong>Classes</strong>, <strong>Interfaces</strong>. They store <em>memory addresses</em> (references) rather than values directly. Default value is <kbd>null</kbd>.</p>
+
+    <hr>
+    <h3>Control Structures in Java</h3>
+    <p>Control structures determine the <strong>flow of execution</strong> in a program.</p>
+
+    <h4>1. Conditional Statements</h4>
+    <pre><span class="cm">// if-else-if ladder</span>
+<span class="kw">int</span> marks <span class="op">=</span> <span class="num">75</span>;
+<span class="kw">if</span> (marks <span class="op">>=</span> <span class="num">90</span>)      System.out.<span class="fn">println</span>(<span class="str">"A"</span>);
+<span class="kw">else if</span> (marks <span class="op">>=</span> <span class="num">60</span>) System.out.<span class="fn">println</span>(<span class="str">"B"</span>);
+<span class="kw">else</span>                  System.out.<span class="fn">println</span>(<span class="str">"C"</span>);
+
+<span class="cm">// switch statement</span>
+<span class="kw">int</span> day <span class="op">=</span> <span class="num">2</span>;
+<span class="kw">switch</span> (day) {
+    <span class="kw">case</span> <span class="num">1</span>: System.out.<span class="fn">println</span>(<span class="str">"Mon"</span>); <span class="kw">break</span>;
+    <span class="kw">case</span> <span class="num">2</span>: System.out.<span class="fn">println</span>(<span class="str">"Tue"</span>); <span class="kw">break</span>;
+    <span class="kw">default</span>: System.out.<span class="fn">println</span>(<span class="str">"Other"</span>);
+}</pre>
+
+    <h4>2. Looping Statements</h4>
+    <pre><span class="cm">// for loop — count known</span>
+<span class="kw">for</span> (<span class="kw">int</span> i <span class="op">=</span> <span class="num">1</span>; i <span class="op">&lt;=</span> <span class="num">5</span>; i++) System.out.<span class="fn">print</span>(i <span class="op">+</span> <span class="str">" "</span>); <span class="cm">// 1 2 3 4 5</span>
+
+<span class="cm">// while loop — condition checked before entry</span>
+<span class="kw">int</span> i <span class="op">=</span> <span class="num">1</span>;
+<span class="kw">while</span> (i <span class="op">&lt;=</span> <span class="num">5</span>) { System.out.<span class="fn">print</span>(i<span class="op">++</span> <span class="op">+</span> <span class="str">" "</span>); }
+
+<span class="cm">// do-while — executes at least once</span>
+<span class="kw">do</span> { System.out.<span class="fn">print</span>(i<span class="op">++</span> <span class="op">+</span> <span class="str">" "</span>); } <span class="kw">while</span> (i <span class="op">&lt;=</span> <span class="num">5</span>);
+
+<span class="cm">// for-each — iterate collections/arrays</span>
+<span class="kw">int</span>[] arr <span class="op">=</span> {<span class="num">10</span>, <span class="num">20</span>, <span class="num">30</span>};
+<span class="kw">for</span> (<span class="kw">int</span> x : arr) System.out.<span class="fn">print</span>(x <span class="op">+</span> <span class="str">" "</span>); <span class="cm">// 10 20 30</span></pre>
+
+    <h4>3. Jump Statements</h4>
+    <ul>
+      <li><kbd>break</kbd> — immediately exits the loop or switch block.</li>
+      <li><kbd>continue</kbd> — skips current iteration and jumps to the next.</li>
+      <li><kbd>return</kbd> — exits the current method, optionally returning a value.</li>
+    </ul>
+
+    <div class="cb">
+      <div class="cb-title">💡 Concept Booster</div>
+      <p>Data types tell Java <em>how much memory to reserve and what kind of value to hold</em>. Control structures are the <em>traffic signals of code</em> — stop (break), turn (if-else), loop around (for/while). Together they are the foundation of every Java program. Master these and you can write any algorithm.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Q2b ─── -->
+<div class="qcard">
+  <div class="qh">
+    <div class="qnum m7">2b</div>
+    <div class="qtxt">Explain the concept of multithreading. Write a program to implement two threads printing numbers alternatively.</div>
+    <span class="mbadge b7">7 marks</span>
+  </div>
+  <div class="ab">
+    <h3>Multithreading in Java</h3>
+    <p><strong>Multithreading</strong> is the ability of a program to execute <strong>multiple threads concurrently</strong>. A <strong>thread</strong> is the smallest unit of execution within a process. All threads share the same memory (heap) but have their own stack.</p>
+
+    <h4>Benefits</h4>
+    <ul>
+      <li>Better CPU utilization — multiple tasks run simultaneously.</li>
+      <li>Responsive applications — UI stays active while background tasks run.</li>
+      <li>Faster execution for parallelizable problems.</li>
+    </ul>
+
+    <h4>Thread Lifecycle</h4>
+    <div class="diagram">  NEW  →  RUNNABLE  →  RUNNING  →  WAITING/BLOCKED  →  TERMINATED
+(created)  (start())   (CPU allotted) (sleep/wait/join)    (run() ends)</div>
+
+    <h4>Ways to Create Threads</h4>
+    <ol>
+      <li>Extend the <kbd>Thread</kbd> class and override <kbd>run()</kbd>.</li>
+      <li>Implement the <kbd>Runnable</kbd> interface and pass to <kbd>Thread</kbd>.</li>
+    </ol>
+
+    <h4>Program: Two Threads Printing Numbers Alternatively (1–10)</h4>
+    <pre><span class="kw">public class</span> <span class="tp">AlternateNumbers</span> {
+    <span class="kw">static int</span> current <span class="op">=</span> <span class="num">1</span>;
+    <span class="kw">static final int</span> MAX <span class="op">=</span> <span class="num">10</span>;
+    <span class="kw">static final</span> <span class="tp">Object</span> LOCK <span class="op">=</span> <span class="kw">new</span> <span class="tp">Object</span>();
+
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="tp">String</span>[] args) {
+
+        <span class="cm">// Thread 1 — prints odd numbers</span>
+        <span class="tp">Thread</span> t1 <span class="op">=</span> <span class="kw">new</span> <span class="tp">Thread</span>(() <span class="op">-></span> {
+            <span class="kw">while</span> (current <span class="op">&lt;=</span> MAX) {
+                <span class="kw">synchronized</span> (LOCK) {
+                    <span class="kw">while</span> (current <span class="op">&lt;=</span> MAX <span class="op">&amp;&amp;</span> current <span class="op">%</span> <span class="num">2</span> <span class="op">==</span> <span class="num">0</span>) {
+                        <span class="kw">try</span> { LOCK.<span class="fn">wait</span>(); }
+                        <span class="kw">catch</span> (<span class="tp">InterruptedException</span> e) { Thread.<span class="fn">currentThread</span>().<span class="fn">interrupt</span>(); }
+                    }
+                    <span class="kw">if</span> (current <span class="op">&lt;=</span> MAX)
+                        System.out.<span class="fn">println</span>(<span class="str">"Thread-1 (Odd) : "</span> <span class="op">+</span> current<span class="op">++</span>);
+                    LOCK.<span class="fn">notify</span>();
+                }
+            }
+        });
+
+        <span class="cm">// Thread 2 — prints even numbers</span>
+        <span class="tp">Thread</span> t2 <span class="op">=</span> <span class="kw">new</span> <span class="tp">Thread</span>(() <span class="op">-></span> {
+            <span class="kw">while</span> (current <span class="op">&lt;=</span> MAX) {
+                <span class="kw">synchronized</span> (LOCK) {
+                    <span class="kw">while</span> (current <span class="op">&lt;=</span> MAX <span class="op">&amp;&amp;</span> current <span class="op">%</span> <span class="num">2</span> <span class="op">!=</span> <span class="num">0</span>) {
+                        <span class="kw">try</span> { LOCK.<span class="fn">wait</span>(); }
+                        <span class="kw">catch</span> (<span class="tp">InterruptedException</span> e) { Thread.<span class="fn">currentThread</span>().<span class="fn">interrupt</span>(); }
+                    }
+                    <span class="kw">if</span> (current <span class="op">&lt;=</span> MAX)
+                        System.out.<span class="fn">println</span>(<span class="str">"Thread-2 (Even): "</span> <span class="op">+</span> current<span class="op">++</span>);
+                    LOCK.<span class="fn">notify</span>();
+                }
+            }
+        });
+
+        t1.<span class="fn">start</span>();
+        t2.<span class="fn">start</span>();
+    }
+}</pre>
+    <h4>Output</h4>
+    <pre>Thread-1 (Odd) : 1
+Thread-2 (Even): 2
+Thread-1 (Odd) : 3
+Thread-2 (Even): 4
+Thread-1 (Odd) : 5
+Thread-2 (Even): 6   ... and so on up to 10</pre>
+
+    <h4>Key Concepts Used</h4>
+    <ul>
+      <li><kbd>synchronized</kbd> — mutual exclusion; only one thread in the block at a time.</li>
+      <li><kbd>wait()</kbd> — releases lock and suspends thread until notified.</li>
+      <li><kbd>notify()</kbd> — wakes one waiting thread.</li>
+    </ul>
+
+    <div class="cb">
+      <div class="cb-title">💡 Concept Booster</div>
+      <p>Multithreading is like two chefs sharing a single stove — one cooks while the other waits. <kbd>synchronized</kbd> is the kitchen rule (only one chef at the stove). <kbd>wait()</kbd> says "I'm done, you go" and <kbd>notify()</kbd> taps the other chef's shoulder to resume. This coordination is called <em>inter-thread communication</em>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Q2c ─── -->
+<div class="qcard">
+  <div class="qh">
+    <div class="qnum m7">2c</div>
+    <div class="qtxt">What is the Stream API in Java? How does it help in functional-style operations?</div>
+    <span class="mbadge b7">7 marks</span>
+  </div>
+  <div class="ab">
+    <h3>Stream API in Java</h3>
+    <p>Introduced in <strong>Java 8</strong> (<kbd>java.util.stream</kbd>), the Stream API enables <strong>declarative, functional-style processing</strong> of collections and data sequences. A stream is <strong>not a data structure</strong> — it does not store data; it is a pipeline of operations on a source.</p>
+
+    <h4>Key Characteristics</h4>
+    <ul>
+      <li><strong>Lazy evaluation</strong> — intermediate operations execute only when a terminal operation is called.</li>
+      <li><strong>Non-destructive</strong> — does not modify the original collection.</li>
+      <li><strong>Pipeline-based</strong> — operations chained one after another.</li>
+      <li><strong>Supports parallelism</strong> — <kbd>parallelStream()</kbd> for multi-core processing.</li>
+    </ul>
+
+    <h4>Stream Pipeline Structure</h4>
+    <div class="diagram">  Data Source  →  Intermediate Operations (lazy)  →  Terminal Operation
+  (List/Array)     filter · map · sorted · distinct      collect · forEach · count · reduce</div>
+
+    <h4>Common Operations</h4>
+    <table>
+      <tr><th>Type</th><th>Method</th><th>Description</th></tr>
+      <tr><td>Intermediate</td><td><kbd>filter(pred)</kbd></td><td>Keep elements matching predicate</td></tr>
+      <tr><td>Intermediate</td><td><kbd>map(fn)</kbd></td><td>Transform each element</td></tr>
+      <tr><td>Intermediate</td><td><kbd>sorted()</kbd></td><td>Sort elements</td></tr>
+      <tr><td>Intermediate</td><td><kbd>distinct()</kbd></td><td>Remove duplicates</td></tr>
+      <tr><td>Intermediate</td><td><kbd>limit(n)</kbd></td><td>Truncate to first n elements</td></tr>
+      <tr><td>Terminal</td><td><kbd>collect()</kbd></td><td>Gather results into a collection</td></tr>
+      <tr><td>Terminal</td><td><kbd>forEach()</kbd></td><td>Perform action on each element</td></tr>
+      <tr><td>Terminal</td><td><kbd>count()</kbd></td><td>Count matching elements</td></tr>
+      <tr><td>Terminal</td><td><kbd>reduce()</kbd></td><td>Combine all elements to one value</td></tr>
+    </table>
+
+    <h4>Example Program</h4>
+    <pre><span class="kw">import</span> java.util.*;
+<span class="kw">import</span> java.util.stream.*;
+
+<span class="kw">public class</span> <span class="tp">StreamDemo</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="tp">String</span>[] args) {
+        <span class="tp">List</span>&lt;<span class="tp">Integer</span>&gt; nums <span class="op">=</span> <span class="tp">Arrays</span>.<span class="fn">asList</span>(<span class="num">1</span>,<span class="num">2</span>,<span class="num">3</span>,<span class="num">4</span>,<span class="num">5</span>,<span class="num">6</span>,<span class="num">7</span>,<span class="num">8</span>);
+
+        <span class="cm">// Filter even → square → collect</span>
+        <span class="tp">List</span>&lt;<span class="tp">Integer</span>&gt; result <span class="op">=</span> nums.<span class="fn">stream</span>()
+            .<span class="fn">filter</span>(n <span class="op">-></span> n <span class="op">%</span> <span class="num">2</span> <span class="op">==</span> <span class="num">0</span>)      <span class="cm">// [2,4,6,8]</span>
+            .<span class="fn">map</span>(n <span class="op">-></span> n <span class="op">*</span> n)              <span class="cm">// [4,16,36,64]</span>
+            .<span class="fn">collect</span>(Collectors.<span class="fn">toList</span>()); <span class="cm">// terminal</span>
+        System.out.<span class="fn">println</span>(result);         <span class="cm">// [4, 16, 36, 64]</span>
+
+        <span class="cm">// Count elements > 5</span>
+        <span class="kw">long</span> c <span class="op">=</span> nums.<span class="fn">stream</span>().<span class="fn">filter</span>(n <span class="op">-></span> n <span class="op">&gt;</span> <span class="num">5</span>).<span class="fn">count</span>();
+        System.out.<span class="fn">println</span>(<span class="str">"Count > 5: "</span> <span class="op">+</span> c); <span class="cm">// 3</span>
+
+        <span class="cm">// Sum using reduce</span>
+        <span class="kw">int</span> sum <span class="op">=</span> nums.<span class="fn">stream</span>().<span class="fn">reduce</span>(<span class="num">0</span>, Integer<span class="op">::</span>sum);
+        System.out.<span class="fn">println</span>(<span class="str">"Sum: "</span> <span class="op">+</span> sum); <span class="cm">// 36</span>
+    }
+}</pre>
+
+    <div class="cb">
+      <div class="cb-title">💡 Concept Booster</div>
+      <p>The Stream API is like an <em>assembly line</em>. Raw materials (your list) enter one end, pass through machines (filter, map, sort), and polished products come out the other end. You describe <em>what</em> to do, not <em>how</em> to loop — that's the essence of functional programming. Less code, more clarity, easier parallelism.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Q2d ─── -->
+<div class="qcard">
+  <div class="qh">
+    <div class="qnum m7">2d</div>
+    <div class="qtxt">Compare and contrast ArrayList and LinkedList in terms of performance and usage.</div>
+    <span class="mbadge b7">7 marks</span>
+  </div>
+  <div class="ab">
+    <h3>ArrayList vs LinkedList</h3>
+    <p>Both implement the <kbd>List</kbd> interface but use different internal data structures.</p>
+
+    <h4>Internal Structure</h4>
+    <ul>
+      <li><strong>ArrayList</strong> — backed by a <strong>dynamic array</strong>. Elements stored in contiguous memory. Doubles capacity when full.</li>
+      <li><strong>LinkedList</strong> — backed by a <strong>doubly linked list</strong>. Each node stores data + reference to previous and next node.</li>
+    </ul>
+    <div class="diagram">ArrayList:   [ 10 | 20 | 30 | 40 | 50 ]   ← contiguous memory block
+
+LinkedList:  [10]↔[20]↔[30]↔[40]↔[50]   ← nodes scattered in memory</div>
+
+    <h4>Performance Comparison</h4>
+    <table>
+      <tr><th>Operation</th><th>ArrayList</th><th>LinkedList</th></tr>
+      <tr><td>Access by index (<kbd>get(i)</kbd>)</td><td><strong>O(1)</strong> — direct index</td><td>O(n) — must traverse from head</td></tr>
+      <tr><td>Search (<kbd>contains()</kbd>)</td><td>O(n)</td><td>O(n)</td></tr>
+      <tr><td>Insert / Delete at end</td><td>O(1) amortized</td><td><strong>O(1)</strong></td></tr>
+      <tr><td>Insert / Delete at beginning</td><td>O(n) — shifts all elements</td><td><strong>O(1)</strong></td></tr>
+      <tr><td>Insert / Delete in middle</td><td>O(n) — shift required</td><td>O(n) traversal + <strong>O(1)</strong> pointer change</td></tr>
+      <tr><td>Memory overhead</td><td>Low — stores only data</td><td>Higher — data + 2 pointers/node</td></tr>
+      <tr><td>Cache performance</td><td>Good (contiguous)</td><td>Poor (scattered nodes)</td></tr>
+    </table>
+
+    <h4>Feature Comparison</h4>
+    <table>
+      <tr><th>Feature</th><th>ArrayList</th><th>LinkedList</th></tr>
+      <tr><td>Implements</td><td>List</td><td>List, Deque, Queue</td></tr>
+      <tr><td>Best for</td><td>Frequent reads / random access</td><td>Frequent insert / delete</td></tr>
+      <tr><td>Can act as Queue/Deque</td><td>No</td><td>Yes (<kbd>addFirst()</kbd>, <kbd>poll()</kbd>)</td></tr>
+    </table>
+
+    <h4>Code Example</h4>
+    <pre><span class="tp">ArrayList</span>&lt;<span class="tp">Integer</span>&gt; al <span class="op">=</span> <span class="kw">new</span> <span class="tp">ArrayList</span>&lt;&gt;();
+al.<span class="fn">add</span>(<span class="num">10</span>); al.<span class="fn">add</span>(<span class="num">20</span>); al.<span class="fn">add</span>(<span class="num">30</span>);
+System.out.<span class="fn">println</span>(al.<span class="fn">get</span>(<span class="num">1</span>)); <span class="cm">// O(1) → 20</span>
+
+<span class="tp">LinkedList</span>&lt;<span class="tp">Integer</span>&gt; ll <span class="op">=</span> <span class="kw">new</span> <span class="tp">LinkedList</span>&lt;&gt;();
+ll.<span class="fn">addFirst</span>(<span class="num">5</span>); ll.<span class="fn">addLast</span>(<span class="num">15</span>); <span class="cm">// both O(1)</span>
+ll.<span class="fn">removeFirst</span>();                 <span class="cm">// O(1)</span></pre>
+
+    <h4>When to Use Which?</h4>
+    <ul>
+      <li>Use <strong>ArrayList</strong> when: frequent random access, mostly read-heavy, size known upfront.</li>
+      <li>Use <strong>LinkedList</strong> when: frequent insertions/deletions especially at ends, using as Queue/Deque.</li>
+    </ul>
+
+    <div class="cb">
+      <div class="cb-title">💡 Concept Booster</div>
+      <p>ArrayList = a <em>numbered locker system</em> — you go directly to locker #5 instantly (O(1)), but inserting a new locker in the middle shifts everyone (O(n)). LinkedList = a <em>treasure hunt chain</em> — inserting a new clue is instant (just change pointers), but finding clue #50 means following all 49 before it. Choose based on your dominant operation: read → ArrayList, write → LinkedList.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Q2e ─── -->
+<div class="qcard">
+  <div class="qh">
+    <div class="qnum m7">2e</div>
+    <div class="qtxt">What is Spring Boot? How is it different from the traditional Spring framework?</div>
+    <span class="mbadge b7">7 marks</span>
+  </div>
+  <div class="ab">
+    <h3>Spring Boot</h3>
+    <p><strong>Spring Boot</strong> is an <strong>opinionated, convention-over-configuration</strong> extension of the Spring framework that simplifies building production-ready applications. It eliminates boilerplate XML/Java configuration and gets a Spring application running in minutes.</p>
+
+    <h4>Key Features of Spring Boot</h4>
+    <ul>
+      <li><strong>Auto-configuration</strong> — detects classpath dependencies and configures beans automatically.</li>
+      <li><strong>Embedded server</strong> — packages Tomcat/Jetty inside the JAR; no external server needed.</li>
+      <li><strong>Starter POMs</strong> — e.g., <kbd>spring-boot-starter-web</kbd> pulls all required JARs with compatible versions.</li>
+      <li><strong>Spring Initializr</strong> — web-based project generator (start.spring.io).</li>
+      <li><strong>Actuator</strong> — production monitoring endpoints: <kbd>/actuator/health</kbd>, <kbd>/actuator/metrics</kbd>.</li>
+      <li><strong>No XML</strong> — a single <kbd>@SpringBootApplication</kbd> annotation replaces dozens of XML lines.</li>
+    </ul>
+
+    <h4>Minimal Spring Boot Application</h4>
+    <pre><span class="ann">@SpringBootApplication</span> <span class="cm">// @Configuration + @EnableAutoConfiguration + @ComponentScan</span>
+<span class="kw">public class</span> <span class="tp">MyApp</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="tp">String</span>[] args) {
+        SpringApplication.<span class="fn">run</span>(<span class="tp">MyApp</span>.class, args);
+    }
+}
+
+<span class="ann">@RestController</span>
+<span class="kw">class</span> <span class="tp">HelloController</span> {
+    <span class="ann">@GetMapping</span>(<span class="str">"/hello"</span>)
+    <span class="kw">public</span> <span class="tp">String</span> <span class="fn">hello</span>() { <span class="kw">return</span> <span class="str">"Hello, Spring Boot!"</span>; }
+}</pre>
+
+    <h4>Spring Boot vs Traditional Spring</h4>
+    <table>
+      <tr><th>Aspect</th><th>Traditional Spring</th><th>Spring Boot</th></tr>
+      <tr><td>Configuration</td><td>Extensive XML / Java config files</td><td>Auto-configured via annotations</td></tr>
+      <tr><td>Server deployment</td><td>WAR deployed to external Tomcat/JBoss</td><td>Embedded server — runs as JAR</td></tr>
+      <tr><td>Dependency management</td><td>Manual JAR versioning — conflict-prone</td><td>Starter POMs manage versions</td></tr>
+      <tr><td>Startup time</td><td>Long setup before coding begins</td><td>Ready to code in minutes</td></tr>
+      <tr><td>Monitoring</td><td>Must set up manually</td><td>Spring Actuator built-in</td></tr>
+      <tr><td>Boilerplate</td><td>High — many config classes/XML</td><td>Minimal — convention over config</td></tr>
+      <tr><td>Microservices fit</td><td>Heavyweight for microservices</td><td>Ideal — lightweight, standalone</td></tr>
+    </table>
+
+    <div class="cb">
+      <div class="cb-title">💡 Concept Booster</div>
+      <p>Traditional Spring is like <em>building a house from raw bricks</em> — you wire every component yourself. Spring Boot is like a <em>pre-furnished apartment</em> — walls, electricity, plumbing already done; you just move in and start coding. Boot doesn't replace Spring — it removes all the tedious setup work so you can focus on business logic.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION C — ALL BOTH OPTIONS for Q3–Q7
+══════════════════════════════════════════ -->
+<div class="sec-banner">
+  <span class="sec-pill">SECTION C</span>
+  <h2>7-Mark Questions — Both Options Answered for Each Set (Q3 to Q7)</h2>
+</div>
+
+<!-- ══════ Q3 ══════ -->
+<!-- ─── Q3a ─── -->
+<div class="qcard">
+  <div class="qh">
+    <div class="qnum m7">3a</div>
+    <div class="qtxt">Write a Java program to take user input and display the reverse of a string.</div>
+    <span class="mbadge b7">7 marks</span>
+  </div>
+  <div class="ab">
+    <h3>String Reversal in Java</h3>
+    <p>Strings in Java are <strong>immutable</strong>, so reversal creates a new string. Three methods are shown.</p>
+
+    <h4>Method 1: Using StringBuilder (Recommended)</h4>
+    <pre><span class="kw">import</span> java.util.Scanner;
+
+<span class="kw">public class</span> <span class="tp">ReverseString</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="tp">String</span>[] args) {
+        <span class="tp">Scanner</span> sc <span class="op">=</span> <span class="kw">new</span> <span class="tp">Scanner</span>(System.in);
+        System.out.<span class="fn">print</span>(<span class="str">"Enter a string: "</span>);
+        <span class="tp">String</span> input <span class="op">=</span> sc.<span class="fn">nextLine</span>();
+
+        <span class="cm">// Method 1: StringBuilder.reverse()</span>
+        <span class="tp">String</span> rev1 <span class="op">=</span> <span class="kw">new</span> <span class="tp">StringBuilder</span>(input).<span class="fn">reverse</span>().<span class="fn">toString</span>();
+        System.out.<span class="fn">println</span>(<span class="str">"Reversed (StringBuilder): "</span> <span class="op">+</span> rev1);
+
+        <span class="cm">// Method 2: Loop from end to start</span>
+        <span class="tp">StringBuilder</span> sb <span class="op">=</span> <span class="kw">new</span> <span class="tp">StringBuilder</span>();
+        <span class="kw">for</span> (<span class="kw">int</span> i <span class="op">=</span> input.<span class="fn">length</span>() <span class="op">-</span> <span class="num">1</span>; i <span class="op">&gt;=</span> <span class="num">0</span>; i<span class="op">--</span>)
+            sb.<span class="fn">append</span>(input.<span class="fn">charAt</span>(i));
+        System.out.<span class="fn">println</span>(<span class="str">"Reversed (Loop)        : "</span> <span class="op">+</span> sb);
+
+        <span class="cm">// Method 3: Two-pointer swap on char array</span>
+        <span class="kw">char</span>[] chars <span class="op">=</span> input.<span class="fn">toCharArray</span>();
+        <span class="kw">int</span> left <span class="op">=</span> <span class="num">0</span>, right <span class="op">=</span> chars.length <span class="op">-</span> <span class="num">1</span>;
+        <span class="kw">while</span> (left <span class="op">&lt;</span> right) {
+            <span class="kw">char</span> temp <span class="op">=</span> chars[left];
+            chars[left<span class="op">++</span>] <span class="op">=</span> chars[right];
+            chars[right<span class="op">--</span>] <span class="op">=</span> temp;
+        }
+        System.out.<span class="fn">println</span>(<span class="str">"Reversed (Char Array)  : "</span> <span class="op">+</span> <span class="kw">new</span> <span class="tp">String</span>(chars));
+
+        sc.<span class="fn">close</span>();
+    }
+}</pre>
+    <h4>Sample Output</h4>
+    <pre>Enter a string: Hello AKTU
+Reversed (StringBuilder): UTKA olleH
+Reversed (Loop)        : UTKA olleH
+Reversed (Char Array)  : UTKA olleH</pre>
+
+    <div class="cb">
+      <div class="cb-title">💡 Concept Booster</div>
+      <p>Since strings are immutable in Java, reversal always produces a <em>new</em> string. <kbd>StringBuilder</kbd> is mutable and has a built-in <kbd>reverse()</kbd> — the easiest route. The two-pointer swap is the classic interview technique: move inward from both ends swapping characters, like zipping a bag from both sides simultaneously.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Q3b ─── -->
+<div class="qcard">
+  <div class="qh">
+    <div class="qnum m7">3b</div>
+    <div class="qtxt">Explain the concept of Java Virtual Machine and Java Runtime Environment.</div>
+    <span class="mbadge b7">7 marks</span>
+  </div>
+  <div class="ab">
+    <h3>Java Virtual Machine (JVM)</h3>
+    <p>The <strong>JVM</strong> is an abstract computing engine that provides the runtime environment to <strong>execute Java bytecode</strong>. It is the key component that enables platform independence.</p>
+
+    <h4>Responsibilities of JVM</h4>
+    <ul>
+      <li><strong>Class Loading</strong> — loads <kbd>.class</kbd> bytecode files via the ClassLoader.</li>
+      <li><strong>Bytecode Verification</strong> — checks for security violations before execution.</li>
+      <li><strong>Execution</strong> — interprets bytecode line-by-line OR uses the <strong>JIT (Just-In-Time) compiler</strong> to convert hot code paths to native machine code for speed.</li>
+      <li><strong>Memory Management</strong> — manages Heap, Stack, Method Area, and PC Register.</li>
+      <li><strong>Garbage Collection</strong> — automatically frees unreferenced objects from heap memory.</li>
+    </ul>
+
+    <h4>JVM Architecture</h4>
+    <div class="diagram">  ┌─────────────────────────────────────────────────┐
+  │                      JVM                       │
+  │  ┌──────────────────┐  ┌─────────────────────┐ │
+  │  │  Class Loader    │  │  Runtime Data Areas │ │
+  │  │  Subsystem       │  │  ┌────────────────┐ │ │
+  │  │  (Bootstrap,     │  │  │   Heap         │ │ │
+  │  │   Extension,     │  │  ├────────────────┤ │ │
+  │  │   Application)   │  │  │   Stack        │ │ │
+  │  └──────────────────┘  │  ├────────────────┤ │ │
+  │                         │  │   Method Area  │ │ │
+  │  ┌──────────────────┐  │  └────────────────┘ │ │
+  │  │ Execution Engine │  └─────────────────────┘ │
+  │  │  JIT Compiler    │                          │
+  │  │  Garbage Coll.   │                          │
+  │  └──────────────────┘                          │
+  └─────────────────────────────────────────────────┘</div>
+
+    <hr>
+    <h3>Java Runtime Environment (JRE)</h3>
+    <p>The <strong>JRE</strong> is a software package that provides everything needed to <strong>run</strong> Java applications. It is a superset of the JVM.</p>
+
+    <h4>JRE Contains</h4>
+    <ul>
+      <li><strong>JVM</strong> — for bytecode execution.</li>
+      <li><strong>Java Class Libraries</strong> — pre-built API packages (java.lang, java.util, java.io, etc.).</li>
+      <li><strong>Supporting files</strong> — property files, configuration data.</li>
+    </ul>
+    <p>The JRE is for <strong>end users</strong> who only need to run Java apps, not develop them.</p>
+
+    <h4>Relationship: JDK ⊃ JRE ⊃ JVM</h4>
+    <div class="diagram">  ┌─────────────────────────────────────────┐
+  │                  JDK                    │
+  │  (javac compiler, debugger, jar, etc.)  │
+  │  ┌─────────────────────────────────┐   │
+  │  │             JRE                 │   │
+  │  │  (Java Class Libraries)         │   │
+  │  │  ┌───────────────────────────┐  │   │
+  │  │  │          JVM              │  │   │
+  │  │  │  (ClassLoader, Exec.Eng.) │  │   │
+  │  │  └───────────────────────────┘  │   │
+  │  └─────────────────────────────────┘   │
+  └─────────────────────────────────────────┘</div>
+
+    <table>
+      <tr><th>Component</th><th>Full Form</th><th>Purpose</th><th>Used By</th></tr>
+      <tr><td><strong>JVM</strong></td><td>Java Virtual Machine</td><td>Execute bytecode</td><td>Both developers and end users</td></tr>
+      <tr><td><strong>JRE</strong></td><td>Java Runtime Environment</td><td>Run Java programs</td><td>End users</td></tr>
+      <tr><td><strong>JDK</strong></td><td>Java Development Kit</td><td>Develop + run Java programs</td><td>Developers</td></tr>
+    </table>
+
+    <div class="cb">
+      <div class="cb-title">💡 Concept Booster</div>
+      <p>JVM = the <em>engine</em> (does the actual work). JRE = the <em>car</em> (engine + body + fuel — ready to drive). JDK = the <em>car + full mechanic workshop</em> (you can also build and repair cars). You need JDK to write Java; just JRE to run it; and JVM is always inside doing the translation from bytecode to machine code.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Q4 ══════ -->
+<!-- ─── Q4a ─── -->
+<div class="qcard">
+  <div class="qh">
+    <div class="qnum m7">4a</div>
+    <div class="qtxt">Write a Java program to handle multiple exceptions using try-catch-finally.</div>
+    <span class="mbadge b7">7 marks</span>
+  </div>
+  <div class="ab">
+    <h3>Exception Handling with try-catch-finally</h3>
+    <p><strong>Exception handling</strong> prevents abnormal program termination due to runtime errors. Java uses a hierarchy of <kbd>Exception</kbd> classes.</p>
+
+    <h4>Exception Hierarchy (Partial)</h4>
+    <div class="diagram">  Throwable
+  ├── Error           (JVM errors — OutOfMemoryError, StackOverflowError)
+  └── Exception
+      ├── Checked     (must be handled — IOException, SQLException)
+      └── RuntimeException  (unchecked)
+          ├── ArithmeticException
+          ├── NullPointerException
+          ├── ArrayIndexOutOfBoundsException
+          └── NumberFormatException</div>
+
+    <h4>Complete Program</h4>
+    <pre><span class="kw">import</span> java.util.Scanner;
+
+<span class="kw">public class</span> <span class="tp">MultiExceptionDemo</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="tp">String</span>[] args) {
+        <span class="tp">Scanner</span> sc <span class="op">=</span> <span class="kw">new</span> <span class="tp">Scanner</span>(System.in);
+        <span class="kw">int</span>[] arr <span class="op">=</span> {<span class="num">10</span>, <span class="num">20</span>, <span class="num">30</span>};
+
+        <span class="kw">try</span> {
+            <span class="cm">// Scenario 1: ArrayIndexOutOfBoundsException</span>
+            System.out.<span class="fn">print</span>(<span class="str">"Enter index (0-2): "</span>);
+            <span class="kw">int</span> idx <span class="op">=</span> sc.<span class="fn">nextInt</span>();
+            System.out.<span class="fn">println</span>(<span class="str">"Element: "</span> <span class="op">+</span> arr[idx]);
+
+            <span class="cm">// Scenario 2: ArithmeticException</span>
+            System.out.<span class="fn">print</span>(<span class="str">"Enter divisor: "</span>);
+            <span class="kw">int</span> div <span class="op">=</span> sc.<span class="fn">nextInt</span>();
+            System.out.<span class="fn">println</span>(<span class="str">"100 / divisor = "</span> <span class="op">+</span> (<span class="num">100</span> <span class="op">/</span> div));
+
+            <span class="cm">// Scenario 3: NumberFormatException</span>
+            <span class="tp">String</span> s <span class="op">=</span> <span class="str">"xyz"</span>;
+            <span class="kw">int</span> num <span class="op">=</span> <span class="tp">Integer</span>.<span class="fn">parseInt</span>(s); <span class="cm">// throws NFE</span>
+            System.out.<span class="fn">println</span>(<span class="str">"Parsed: "</span> <span class="op">+</span> num);
+
+        } <span class="kw">catch</span> (<span class="tp">ArrayIndexOutOfBoundsException</span> e) {
+            System.out.<span class="fn">println</span>(<span class="str">"[Caught] Array index out of bounds: "</span> <span class="op">+</span> e.<span class="fn">getMessage</span>());
+
+        } <span class="kw">catch</span> (<span class="tp">ArithmeticException</span> e) {
+            System.out.<span class="fn">println</span>(<span class="str">"[Caught] Arithmetic error: "</span> <span class="op">+</span> e.<span class="fn">getMessage</span>());
+
+        } <span class="kw">catch</span> (<span class="tp">NumberFormatException</span> e) {
+            System.out.<span class="fn">println</span>(<span class="str">"[Caught] Number format error: "</span> <span class="op">+</span> e.<span class="fn">getMessage</span>());
+
+        } <span class="kw">catch</span> (<span class="tp">Exception</span> e) {
+            <span class="cm">// Generic fallback — MUST be LAST</span>
+            System.out.<span class="fn">println</span>(<span class="str">"[Caught] Unexpected: "</span> <span class="op">+</span> e.<span class="fn">getMessage</span>());
+
+        } <span class="kw">finally</span> {
+            System.out.<span class="fn">println</span>(<span class="str">"[Finally] Closing scanner — always runs."</span>);
+            sc.<span class="fn">close</span>();
+        }
+    }
+}</pre>
+
+    <h4>Sample Outputs</h4>
+    <pre>Case 1 — index = 5:
+[Caught] Array index out of bounds: Index 5 out of bounds for length 3
+[Finally] Closing scanner — always runs.
+
+Case 2 — divisor = 0:
+[Caught] Arithmetic error: / by zero
+[Finally] Closing scanner — always runs.</pre>
+
+    <h4>Rules for Multiple Catch Blocks</h4>
+    <ul>
+      <li>More <strong>specific</strong> exceptions must come <strong>before</strong> more general ones.</li>
+      <li><kbd>Exception</kbd> (parent of all checked exceptions) must be the <strong>last catch</strong>.</li>
+      <li>Java 7+: Multiple exceptions in one catch: <kbd>catch (AE | NFE e)</kbd>.</li>
+    </ul>
+
+    <div class="cb">
+      <div class="cb-title">💡 Concept Booster</div>
+      <p>Exception handling is like <em>safety nets under a tightrope walker</em>. The try block is the walk; each catch is a net at a specific height (most specific first, generic last); finally is the cleanup crew who tidies up regardless. Java matches the thrown exception top-to-bottom — put <kbd>Exception</kbd> last or it shadows all specific catches above.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Q4b ─── -->
+<div class="qcard">
+  <div class="qh">
+    <div class="qnum m7">4b</div>
+    <div class="qtxt">Write a Java program that creates two threads — one to print even numbers and the other for odd numbers.</div>
+    <span class="mbadge b7">7 marks</span>
+  </div>
+  <div class="ab">
+    <h3>Two Threads: Even and Odd Number Printing</h3>
+    <pre><span class="kw">public class</span> <span class="tp">EvenOddThreads</span> {
+    <span class="kw">static volatile int</span> N <span class="op">=</span> <span class="num">1</span>;   <span class="cm">// shared counter</span>
+    <span class="kw">static final int</span> MAX <span class="op">=</span> <span class="num">10</span>;
+    <span class="kw">static final</span> <span class="tp">Object</span> LOCK <span class="op">=</span> <span class="kw">new</span> <span class="tp">Object</span>();
+
+    <span class="cm">// Thread to print ODD numbers</span>
+    <span class="kw">static class</span> <span class="tp">OddThread</span> <span class="kw">extends</span> <span class="tp">Thread</span> {
+        <span class="ann">@Override</span>
+        <span class="kw">public void</span> <span class="fn">run</span>() {
+            <span class="kw">while</span> (N <span class="op">&lt;=</span> MAX) {
+                <span class="kw">synchronized</span> (LOCK) {
+                    <span class="cm">// wait if current number is even</span>
+                    <span class="kw">while</span> (N <span class="op">&lt;=</span> MAX <span class="op">&amp;&amp;</span> N <span class="op">%</span> <span class="num">2</span> <span class="op">==</span> <span class="num">0</span>) {
+                        <span class="kw">try</span> { LOCK.<span class="fn">wait</span>(); }
+                        <span class="kw">catch</span> (<span class="tp">InterruptedException</span> e) { <span class="kw">return</span>; }
+                    }
+                    <span class="kw">if</span> (N <span class="op">&lt;=</span> MAX) {
+                        System.out.<span class="fn">println</span>(<span class="str">"ODD  thread → "</span> <span class="op">+</span> N<span class="op">++</span>);
+                        LOCK.<span class="fn">notify</span>();
+                    }
+                }
+            }
+        }
+    }
+
+    <span class="cm">// Thread to print EVEN numbers</span>
+    <span class="kw">static class</span> <span class="tp">EvenThread</span> <span class="kw">extends</span> <span class="tp">Thread</span> {
+        <span class="ann">@Override</span>
+        <span class="kw">public void</span> <span class="fn">run</span>() {
+            <span class="kw">while</span> (N <span class="op">&lt;=</span> MAX) {
+                <span class="kw">synchronized</span> (LOCK) {
+                    <span class="cm">// wait if current number is odd</span>
+                    <span class="kw">while</span> (N <span class="op">&lt;=</span> MAX <span class="op">&amp;&amp;</span> N <span class="op">%</span> <span class="num">2</span> <span class="op">!=</span> <span class="num">0</span>) {
+                        <span class="kw">try</span> { LOCK.<span class="fn">wait</span>(); }
+                        <span class="kw">catch</span> (<span class="tp">InterruptedException</span> e) { <span class="kw">return</span>; }
+                    }
+                    <span class="kw">if</span> (N <span class="op">&lt;=</span> MAX) {
+                        System.out.<span class="fn">println</span>(<span class="str">"EVEN thread → "</span> <span class="op">+</span> N<span class="op">++</span>);
+                        LOCK.<span class="fn">notify</span>();
+                    }
+                }
+            }
+        }
+    }
+
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="tp">String</span>[] args) {
+        <span class="kw">new</span> <span class="tp">OddThread</span>().<span class="fn">start</span>();
+        <span class="kw">new</span> <span class="tp">EvenThread</span>().<span class="fn">start</span>();
+    }
+}</pre>
+
+    <h4>Output</h4>
+    <pre>ODD  thread → 1
+EVEN thread → 2
+ODD  thread → 3
+EVEN thread → 4
+ODD  thread → 5
+EVEN thread → 6
+ODD  thread → 7
+EVEN thread → 8
+ODD  thread → 9
+EVEN thread → 10</pre>
+
+    <h4>Explanation</h4>
+    <ul>
+      <li><kbd>synchronized(LOCK)</kbd> — only one thread enters the block at a time.</li>
+      <li><kbd>wait()</kbd> — a thread releases the lock and suspends itself when it's not its turn.</li>
+      <li><kbd>notify()</kbd> — after printing its number, a thread wakes the other one.</li>
+      <li><kbd>volatile</kbd> — ensures the shared counter <kbd>N</kbd> is always read from main memory.</li>
+    </ul>
+
+    <div class="cb">
+      <div class="cb-title">💡 Concept Booster</div>
+      <p>Two threads sharing one counter is like two musicians sharing a single microphone — one sings while the other waits, then they swap. <kbd>synchronized</kbd> is the "only one at the mic" rule; <kbd>wait()</kbd> is stepping back; <kbd>notify()</kbd> is tapping the other's shoulder. This pattern is called <em>inter-thread communication</em>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Q5 ══════ -->
+<!-- ─── Q5a ─── -->
+<div class="qcard">
+  <div class="qh">
+    <div class="qnum m7">5a</div>
+    <div class="qtxt">What are functional interfaces and how are they implemented using lambda expressions?</div>
+    <span class="mbadge b7">7 marks</span>
+  </div>
+  <div class="ab">
+    <h3>Functional Interfaces</h3>
+    <p>A <strong>functional interface</strong> has <strong>exactly one abstract method</strong> (SAM). It can also have default and static methods. The <kbd>@FunctionalInterface</kbd> annotation is optional but recommended — the compiler enforces the SAM rule.</p>
+
+    <h4>Built-in Functional Interfaces (java.util.function)</h4>
+    <table>
+      <tr><th>Interface</th><th>Abstract Method</th><th>Use Case</th></tr>
+      <tr><td><kbd>Predicate&lt;T&gt;</kbd></td><td><kbd>boolean test(T t)</kbd></td><td>Condition check (filter)</td></tr>
+      <tr><td><kbd>Function&lt;T,R&gt;</kbd></td><td><kbd>R apply(T t)</kbd></td><td>Transformation (map)</td></tr>
+      <tr><td><kbd>Consumer&lt;T&gt;</kbd></td><td><kbd>void accept(T t)</kbd></td><td>Action on value (forEach)</td></tr>
+      <tr><td><kbd>Supplier&lt;T&gt;</kbd></td><td><kbd>T get()</kbd></td><td>Provide a value lazily</td></tr>
+      <tr><td><kbd>BiFunction&lt;T,U,R&gt;</kbd></td><td><kbd>R apply(T t, U u)</kbd></td><td>Two inputs, one output</td></tr>
+      <tr><td><kbd>Runnable</kbd></td><td><kbd>void run()</kbd></td><td>Thread task (no input/output)</td></tr>
+    </table>
+
+    <h3>Lambda Expressions</h3>
+    <p>A <strong>lambda expression</strong> is a concise, anonymous implementation of a functional interface. Syntax:</p>
+    <pre><span class="cm">// Syntax: (parameters) -> expression  OR  (parameters) -> { statements; }</span>
+(a, b) <span class="op">-></span> a <span class="op">+</span> b              <span class="cm">// two params, expression body</span>
+n <span class="op">-></span> { System.out.<span class="fn">println</span>(n); } <span class="cm">// one param, block body</span>
+() <span class="op">-></span> <span class="str">"Hello"</span>              <span class="cm">// no param, returns string</span></pre>
+
+    <h4>Comprehensive Examples</h4>
+    <pre><span class="kw">import</span> java.util.*;
+<span class="kw">import</span> java.util.function.*;
+
+<span class="kw">public class</span> <span class="tp">LambdaDemo</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="tp">String</span>[] args) {
+
+        <span class="cm">// 1. Custom functional interface with lambda</span>
+        <span class="ann">@FunctionalInterface</span>
+        interface <span class="tp">MathOp</span> { <span class="kw">int</span> <span class="fn">operate</span>(<span class="kw">int</span> a, <span class="kw">int</span> b); }
+        <span class="tp">MathOp</span> add  <span class="op">=</span> (a, b) <span class="op">-></span> a <span class="op">+</span> b;
+        <span class="tp">MathOp</span> mul  <span class="op">=</span> (a, b) <span class="op">-></span> a <span class="op">*</span> b;
+        System.out.<span class="fn">println</span>(add.<span class="fn">operate</span>(<span class="num">5</span>,<span class="num">3</span>)); <span class="cm">// 8</span>
+        System.out.<span class="fn">println</span>(mul.<span class="fn">operate</span>(<span class="num">5</span>,<span class="num">3</span>)); <span class="cm">// 15</span>
+
+        <span class="cm">// 2. Predicate</span>
+        <span class="tp">Predicate</span>&lt;<span class="tp">Integer</span>&gt; isEven <span class="op">=</span> n <span class="op">-></span> n <span class="op">%</span> <span class="num">2</span> <span class="op">==</span> <span class="num">0</span>;
+        System.out.<span class="fn">println</span>(isEven.<span class="fn">test</span>(<span class="num">4</span>));  <span class="cm">// true</span>
+        System.out.<span class="fn">println</span>(isEven.<span class="fn">test</span>(<span class="num">7</span>));  <span class="cm">// false</span>
+
+        <span class="cm">// 3. Function</span>
+        <span class="tp">Function</span>&lt;<span class="tp">String</span>, <span class="tp">String</span>&gt; upper <span class="op">=</span> s <span class="op">-></span> s.<span class="fn">toUpperCase</span>();
+        System.out.<span class="fn">println</span>(upper.<span class="fn">apply</span>(<span class="str">"aktu"</span>)); <span class="cm">// AKTU</span>
+
+        <span class="cm">// 4. Consumer</span>
+        <span class="tp">Consumer</span>&lt;<span class="tp">String</span>&gt; printer <span class="op">=</span> msg <span class="op">-></span> System.out.<span class="fn">println</span>(<span class="str">">> "</span> <span class="op">+</span> msg);
+        printer.<span class="fn">accept</span>(<span class="str">"Hello World"</span>); <span class="cm">// >> Hello World</span>
+
+        <span class="cm">// 5. Supplier</span>
+        <span class="tp">Supplier</span>&lt;<span class="tp">Double</span>&gt; pi <span class="op">=</span> () <span class="op">-></span> <span class="num">3.14159</span>;
+        System.out.<span class="fn">println</span>(pi.<span class="fn">get</span>()); <span class="cm">// 3.14159</span>
+
+        <span class="cm">// 6. With Collections — sort using lambda</span>
+        <span class="tp">List</span>&lt;<span class="tp">String</span>&gt; names <span class="op">=</span> <span class="tp">Arrays</span>.<span class="fn">asList</span>(<span class="str">"Charlie"</span>,<span class="str">"Alice"</span>,<span class="str">"Bob"</span>);
+        names.<span class="fn">sort</span>((a, b) <span class="op">-></span> a.<span class="fn">compareTo</span>(b)); <span class="cm">// alphabetical sort</span>
+        names.<span class="fn">forEach</span>(n <span class="op">-></span> System.out.<span class="fn">println</span>(n)); <span class="cm">// Alice, Bob, Charlie</span>
+    }
+}</pre>
+
+    <h4>Lambda vs Anonymous Class</h4>
+    <pre><span class="cm">// Anonymous class (old style)</span>
+<span class="tp">Runnable</span> r1 <span class="op">=</span> <span class="kw">new</span> <span class="tp">Runnable</span>() {
+    <span class="kw">public void</span> <span class="fn">run</span>() { System.out.<span class="fn">println</span>(<span class="str">"Old"</span>); }
+};
+
+<span class="cm">// Lambda (concise)</span>
+<span class="tp">Runnable</span> r2 <span class="op">=</span> () <span class="op">-></span> System.out.<span class="fn">println</span>(<span class="str">"New"</span>);</pre>
+
+    <div class="cb">
+      <div class="cb-title">💡 Concept Booster</div>
+      <p>Lambda expressions are like <em>sticky notes for behaviour</em> — instead of writing a whole class to do one thing, you jot it on one line and pass it around. Functional interfaces define the <em>shape of the slot</em>; lambdas <em>fill that slot</em> with actual behaviour. Together they unlock functional programming in Java — cleaner, shorter, and more expressive code.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Q5b ─── -->
+<div class="qcard">
+  <div class="qh">
+    <div class="qnum m7">5b</div>
+    <div class="qtxt">Describe the role of annotations in Java and how type annotations are used.</div>
+    <span class="mbadge b7">7 marks</span>
+  </div>
+  <div class="ab">
+    <h3>Annotations in Java</h3>
+    <p><strong>Annotations</strong> are metadata tags prefixed with <kbd>@</kbd>, applied to code elements (classes, methods, fields, parameters, local variables). They <strong>do not change program logic</strong> directly but provide information to compilers, tools, and frameworks.</p>
+
+    <h4>Roles of Annotations</h4>
+    <ul>
+      <li><strong>Compiler instructions</strong> — <kbd>@Override</kbd> catches incorrect overrides at compile time; <kbd>@SuppressWarnings</kbd> suppresses compiler warnings.</li>
+      <li><strong>Compile-time / build-time processing</strong> — used by tools like Lombok, MapStruct for code generation.</li>
+      <li><strong>Runtime processing</strong> — Spring, Hibernate, JUnit read annotations via <strong>Reflection API</strong> to inject beans, map tables, run tests.</li>
+      <li><strong>Documentation</strong> — <kbd>@Deprecated</kbd> marks outdated APIs in Javadoc.</li>
+    </ul>
+
+    <h4>Built-in Standard Annotations</h4>
+    <table>
+      <tr><th>Annotation</th><th>Purpose</th></tr>
+      <tr><td><kbd>@Override</kbd></td><td>Ensures the method overrides a parent class method; compile error if it doesn't.</td></tr>
+      <tr><td><kbd>@Deprecated</kbd></td><td>Marks code as outdated — compiler generates a warning when used.</td></tr>
+      <tr><td><kbd>@SuppressWarnings("...")</kbd></td><td>Tells compiler to suppress specified warnings.</td></tr>
+      <tr><td><kbd>@FunctionalInterface</kbd></td><td>Validates that interface has exactly one abstract method.</td></tr>
+      <tr><td><kbd>@SafeVarargs</kbd></td><td>Suppresses unchecked varargs heap pollution warnings.</td></tr>
+    </table>
+
+    <h4>Meta-Annotations (Annotations on Annotations)</h4>
+    <table>
+      <tr><th>Meta-Annotation</th><th>Meaning</th></tr>
+      <tr><td><kbd>@Retention</kbd></td><td>Lifetime: SOURCE (discarded) / CLASS (in .class) / RUNTIME (available via reflection)</td></tr>
+      <tr><td><kbd>@Target</kbd></td><td>Where it applies: METHOD, FIELD, TYPE, PARAMETER, LOCAL_VARIABLE, etc.</td></tr>
+      <tr><td><kbd>@Documented</kbd></td><td>Include annotation in Javadoc output.</td></tr>
+      <tr><td><kbd>@Inherited</kbd></td><td>Subclasses automatically inherit the annotation.</td></tr>
+      <tr><td><kbd>@Repeatable</kbd></td><td>Allows applying the same annotation multiple times.</td></tr>
+    </table>
+
+    <h4>Creating a Custom Annotation</h4>
+    <pre><span class="kw">import</span> java.lang.annotation.*;
+
+<span class="ann">@Retention</span>(RetentionPolicy.RUNTIME)
+<span class="ann">@Target</span>(ElementType.METHOD)
+<span class="kw">public</span> @<span class="kw">interface</span> <span class="tp">LogExecutionTime</span> {
+    <span class="tp">String</span> <span class="fn">value</span>() <span class="kw">default</span> <span class="str">"method"</span>;
+}
+
+<span class="kw">class</span> <span class="tp">Service</span> {
+    <span class="ann">@LogExecutionTime</span>(value <span class="op">=</span> <span class="str">"fetchData"</span>)
+    <span class="kw">public void</span> <span class="fn">fetchData</span>() { System.out.<span class="fn">println</span>(<span class="str">"Fetching..."</span>); }
+}</pre>
+
+    <hr>
+    <h3>Type Annotations (Java 8+)</h3>
+    <p><strong>Type annotations</strong> can be applied to <em>any use of a type</em>, not just declarations. They enable pluggable type-checking frameworks like the <strong>Checker Framework</strong> to verify <kbd>@NonNull</kbd>, <kbd>@Readonly</kbd>, etc. at compile time.</p>
+
+    <h4>Where Type Annotations Can Appear</h4>
+    <pre><span class="cm">// Variable declaration</span>
+<span class="ann">@NonNull</span> <span class="tp">String</span> name <span class="op">=</span> <span class="str">"AKTU"</span>;
+
+<span class="cm">// Generic type argument</span>
+<span class="tp">List</span>&lt;<span class="ann">@NonNull</span> <span class="tp">String</span>&gt; items;
+
+<span class="cm">// Method parameter</span>
+<span class="kw">void</span> <span class="fn">process</span>(<span class="ann">@NotNull</span> <span class="tp">String</span> input) { }
+
+<span class="cm">// Return type</span>
+<span class="kw">public</span> <span class="ann">@NonNull</span> <span class="tp">String</span> <span class="fn">getName</span>() { <span class="kw">return</span> name; }
+
+<span class="cm">// instanceof check</span>
+<span class="kw">if</span> (obj <span class="kw">instanceof</span> <span class="ann">@ReadOnly</span> <span class="tp">List</span>&lt;?&gt;) { }
+
+<span class="cm">// object creation</span>
+<span class="kw">new</span> <span class="ann">@Interned</span> <span class="tp">MyObject</span>()</pre>
+
+    <div class="cb">
+      <div class="cb-title">💡 Concept Booster</div>
+      <p>Annotations are like <em>labels on a parcel</em> — "Fragile", "This side up". The parcel (code) doesn't change but the delivery system (compiler/framework) reads the label and acts accordingly. Type annotations make those labels even more precise — you can now tag <em>exactly which type usage</em> must be non-null or immutable, catching bugs before the program even runs.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Q6 ══════ -->
+<!-- ─── Q6a ─── -->
+<div class="qcard">
+  <div class="qh">
+    <div class="qnum m7">6a</div>
+    <div class="qtxt">Write a program to demonstrate the use of HashMap and iterate through keys and values.</div>
+    <span class="mbadge b7">7 marks</span>
+  </div>
+  <div class="ab">
+    <h3>HashMap in Java</h3>
+    <p><kbd>HashMap&lt;K,V&gt;</kbd> stores data as <strong>key-value pairs</strong>. It uses <strong>hashing</strong> to provide average O(1) time for <kbd>get()</kbd> and <kbd>put()</kbd>. It does <strong>not maintain insertion order</strong> and allows <strong>one null key</strong>.</p>
+
+    <h4>Internal Working</h4>
+    <div class="diagram">  key.hashCode()  →  bucket index  →  store Node(key, value)
+  On collision (same bucket): chained LinkedList (Java 7) or TreeNode (Java 8+)</div>
+
+    <h4>Complete Program</h4>
+    <pre><span class="kw">import</span> java.util.*;
+
+<span class="kw">public class</span> <span class="tp">HashMapDemo</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="tp">String</span>[] args) {
+
+        <span class="tp">HashMap</span>&lt;<span class="tp">String</span>, <span class="tp">Integer</span>&gt; marks <span class="op">=</span> <span class="kw">new</span> <span class="tp">HashMap</span>&lt;&gt;();
+        marks.<span class="fn">put</span>(<span class="str">"Alice"</span>,   <span class="num">85</span>);
+        marks.<span class="fn">put</span>(<span class="str">"Bob"</span>,     <span class="num">92</span>);
+        marks.<span class="fn">put</span>(<span class="str">"Charlie"</span>, <span class="num">78</span>);
+        marks.<span class="fn">put</span>(<span class="str">"Diana"</span>,   <span class="num">95</span>);
+        marks.<span class="fn">put</span>(<span class="str">"Eve"</span>,     <span class="num">88</span>);
+
+        System.out.<span class="fn">println</span>(<span class="str">"Size: "</span> <span class="op">+</span> marks.<span class="fn">size</span>());       <span class="cm">// 5</span>
+        System.out.<span class="fn">println</span>(<span class="str">"Alice's marks: "</span> <span class="op">+</span> marks.<span class="fn">get</span>(<span class="str">"Alice"</span>)); <span class="cm">// 85</span>
+        System.out.<span class="fn">println</span>(<span class="str">"Has Bob: "</span> <span class="op">+</span> marks.<span class="fn">containsKey</span>(<span class="str">"Bob"</span>)); <span class="cm">// true</span>
+
+        <span class="cm">// Method 1: entrySet() — best for key + value together</span>
+        System.out.<span class="fn">println</span>(<span class="str">"\n=== entrySet() ==="</span>);
+        <span class="kw">for</span> (<span class="tp">Map.Entry</span>&lt;<span class="tp">String</span>, <span class="tp">Integer</span>&gt; entry : marks.<span class="fn">entrySet</span>()) {
+            System.out.<span class="fn">printf</span>(<span class="str">"%-10s : %d%n"</span>, entry.<span class="fn">getKey</span>(), entry.<span class="fn">getValue</span>());
+        }
+
+        <span class="cm">// Method 2: keySet() — iterate keys only</span>
+        System.out.<span class="fn">println</span>(<span class="str">"\n=== keySet() ==="</span>);
+        <span class="kw">for</span> (<span class="tp">String</span> key : marks.<span class="fn">keySet</span>())
+            System.out.<span class="fn">println</span>(<span class="str">"Key: "</span> <span class="op">+</span> key <span class="op">+</span> <span class="str">", Value: "</span> <span class="op">+</span> marks.<span class="fn">get</span>(key));
+
+        <span class="cm">// Method 3: values() — iterate values only</span>
+        System.out.<span class="fn">println</span>(<span class="str">"\n=== values() ==="</span>);
+        <span class="kw">for</span> (<span class="kw">int</span> v : marks.<span class="fn">values</span>()) System.out.<span class="fn">print</span>(v <span class="op">+</span> <span class="str">" "</span>);
+
+        <span class="cm">// Method 4: Java 8 forEach with lambda</span>
+        System.out.<span class="fn">println</span>(<span class="str">"\n\n=== Lambda forEach() ==="</span>);
+        marks.<span class="fn">forEach</span>((k, v) <span class="op">-></span>
+            System.out.<span class="fn">println</span>(k <span class="op">+</span> <span class="str">" scored "</span> <span class="op">+</span> v <span class="op">+</span> <span class="str">" marks"</span>));
+
+        <span class="cm">// Update and remove</span>
+        marks.<span class="fn">put</span>(<span class="str">"Alice"</span>, <span class="num">90</span>);       <span class="cm">// update</span>
+        marks.<span class="fn">remove</span>(<span class="str">"Charlie"</span>);      <span class="cm">// delete</span>
+        marks.<span class="fn">putIfAbsent</span>(<span class="str">"Frank"</span>, <span class="num">70</span>); <span class="cm">// add only if key absent</span>
+        System.out.<span class="fn">println</span>(<span class="str">"\nAfter updates: "</span> <span class="op">+</span> marks);
+    }
+}</pre>
+
+    <h4>Key HashMap Methods Summary</h4>
+    <table>
+      <tr><th>Method</th><th>Description</th><th>Time Complexity</th></tr>
+      <tr><td><kbd>put(k, v)</kbd></td><td>Insert or update key-value pair</td><td>O(1) avg</td></tr>
+      <tr><td><kbd>get(k)</kbd></td><td>Retrieve value by key</td><td>O(1) avg</td></tr>
+      <tr><td><kbd>remove(k)</kbd></td><td>Delete entry by key</td><td>O(1) avg</td></tr>
+      <tr><td><kbd>containsKey(k)</kbd></td><td>Check key existence</td><td>O(1) avg</td></tr>
+      <tr><td><kbd>keySet()</kbd></td><td>Set of all keys</td><td>O(n)</td></tr>
+      <tr><td><kbd>entrySet()</kbd></td><td>Set of key-value Entry objects</td><td>O(n)</td></tr>
+      <tr><td><kbd>putIfAbsent(k, v)</kbd></td><td>Insert only if key absent</td><td>O(1) avg</td></tr>
+    </table>
+
+    <div class="cb">
+      <div class="cb-title">💡 Concept Booster</div>
+      <p>HashMap is like a <em>phone book with instant lookup</em> — you go straight to "Alice" without scanning every page, because hashing converts the name into a page number (bucket index). Always use <kbd>entrySet()</kbd> for iteration when you need both key and value — it's more efficient than calling <kbd>get()</kbd> inside a <kbd>keySet()</kbd> loop (avoids a second lookup per key).</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Q6b ─── -->
+<div class="qcard">
+  <div class="qh">
+    <div class="qnum m7">6b</div>
+    <div class="qtxt">Discuss the hierarchy of the Collection framework in Java. Differentiate between List, Set, and Map.</div>
+    <span class="mbadge b7">7 marks</span>
+  </div>
+  <div class="ab">
+    <h3>Java Collection Framework</h3>
+    <p>The <strong>Java Collections Framework (JCF)</strong> provides a unified architecture (<kbd>java.util</kbd> package) for storing, retrieving, and manipulating groups of objects. It consists of <strong>interfaces</strong>, <strong>implementations</strong>, and <strong>algorithms</strong>.</p>
+
+    <h4>Collection Framework Hierarchy</h4>
+    <div class="diagram">java.lang.Iterable
+    └── java.util.Collection
+          ├── List (ordered, duplicates allowed)
+          │     ├── ArrayList
+          │     ├── LinkedList
+          │     └── Vector → Stack
+          │
+          ├── Set (unique elements)
+          │     ├── HashSet
+          │     ├── LinkedHashSet
+          │     └── TreeSet (sorted)
+          │
+          └── Queue (FIFO ordering)
+                ├── PriorityQueue
+                └── Deque (interface)
+                      └── ArrayDeque / LinkedList
+
+Map (SEPARATE hierarchy — NOT extends Collection)
+    ├── HashMap
+    ├── LinkedHashMap (insertion order)
+    ├── TreeMap (sorted by key)
+    └── Hashtable (legacy, synchronized)</div>
+
+    <h4>List vs Set vs Map — Comparison</h4>
+    <table>
+      <tr><th>Feature</th><th>List</th><th>Set</th><th>Map</th></tr>
+      <tr><td>Ordering</td><td>Maintains insertion order</td><td>No order (except LinkedHashSet, TreeSet)</td><td>No order (except LinkedHashMap, TreeMap)</td></tr>
+      <tr><td>Duplicates</td><td><strong>Allowed</strong></td><td><strong>Not allowed</strong></td><td>Keys unique; values can repeat</td></tr>
+      <tr><td>Null elements</td><td>Multiple nulls</td><td>One null (HashSet)</td><td>One null key (HashMap)</td></tr>
+      <tr><td>Access method</td><td>By index: <kbd>get(i)</kbd></td><td>Iterator / stream only</td><td>By key: <kbd>get(key)</kbd></td></tr>
+      <tr><td>Interface</td><td><kbd>List&lt;E&gt;</kbd></td><td><kbd>Set&lt;E&gt;</kbd></td><td><kbd>Map&lt;K,V&gt;</kbd></td></tr>
+      <tr><td>Implementations</td><td>ArrayList, LinkedList</td><td>HashSet, TreeSet</td><td>HashMap, TreeMap</td></tr>
+      <tr><td>Use case</td><td>Ordered collection, duplicates OK</td><td>Unique items, membership test</td><td>Key-value lookups</td></tr>
+    </table>
+
+    <h4>Code Examples</h4>
+    <pre><span class="cm">// List — allows duplicates, preserves order</span>
+<span class="tp">List</span>&lt;<span class="tp">String</span>&gt; list <span class="op">=</span> <span class="kw">new</span> <span class="tp">ArrayList</span>&lt;&gt;();
+list.<span class="fn">add</span>(<span class="str">"Java"</span>); list.<span class="fn">add</span>(<span class="str">"Java"</span>); <span class="cm">// [Java, Java]</span>
+System.out.<span class="fn">println</span>(list.<span class="fn">get</span>(<span class="num">0</span>));     <span class="cm">// Java</span>
+
+<span class="cm">// Set — rejects duplicates automatically</span>
+<span class="tp">Set</span>&lt;<span class="tp">String</span>&gt; set <span class="op">=</span> <span class="kw">new</span> <span class="tp">HashSet</span>&lt;&gt;();
+set.<span class="fn">add</span>(<span class="str">"Java"</span>); set.<span class="fn">add</span>(<span class="str">"Java"</span>);
+System.out.<span class="fn">println</span>(set.<span class="fn">size</span>());   <span class="cm">// 1 (duplicate ignored)</span>
+
+<span class="cm">// Map — key-value pairs, keys unique</span>
+<span class="tp">Map</span>&lt;<span class="tp">String</span>, <span class="tp">Integer</span>&gt; map <span class="op">=</span> <span class="kw">new</span> <span class="tp">HashMap</span>&lt;&gt;();
+map.<span class="fn">put</span>(<span class="str">"Alice"</span>, <span class="num">90</span>); map.<span class="fn">put</span>(<span class="str">"Bob"</span>, <span class="num">85</span>);
+System.out.<span class="fn">println</span>(map.<span class="fn">get</span>(<span class="str">"Alice"</span>)); <span class="cm">// 90</span></pre>
+
+    <div class="cb">
+      <div class="cb-title">💡 Concept Booster</div>
+      <p><strong>List</strong> = a notebook (write the same word twice, items in order). <strong>Set</strong> = a whiteboard (each unique word appears once, order not guaranteed). <strong>Map</strong> = a contact book (each unique name maps to one number). Rule of thumb: need order + duplicates → List; need uniqueness → Set; need key-based lookup → Map.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Q7 ══════ -->
+<!-- ─── Q7a ─── -->
+<div class="qcard">
+  <div class="qh">
+    <div class="qnum m7">7a</div>
+    <div class="qtxt">Explain Dependency Injection and its types in Spring. Develop a simple API in Spring Boot to perform CRUD operations using a list as storage.</div>
+    <span class="mbadge b7">7 marks</span>
+  </div>
+  <div class="ab">
+    <h3>Dependency Injection (DI) in Spring</h3>
+    <p><strong>Dependency Injection</strong> is a design pattern where an object receives its dependencies from an external source (the <strong>Spring IoC container</strong>) rather than creating them itself. This promotes <strong>loose coupling</strong>, testability, and maintainability.</p>
+
+    <h4>Types of Dependency Injection</h4>
+    <table>
+      <tr><th>Type</th><th>Mechanism</th><th>Recommended For</th></tr>
+      <tr><td><strong>Constructor Injection</strong></td><td>Dependencies passed as constructor arguments</td><td>Mandatory dependencies (preferred)</td></tr>
+      <tr><td><strong>Setter Injection</strong></td><td>Dependencies set via setter methods</td><td>Optional dependencies</td></tr>
+      <tr><td><strong>Field Injection</strong></td><td><kbd>@Autowired</kbd> directly on the field</td><td>Simple cases (not ideal for unit testing)</td></tr>
+    </table>
+
+    <pre><span class="cm">// Constructor Injection (Best Practice)</span>
+<span class="ann">@Service</span>
+<span class="kw">public class</span> <span class="tp">OrderService</span> {
+    <span class="kw">private final</span> <span class="tp">OrderRepo</span> repo;
+    <span class="ann">@Autowired</span>
+    <span class="kw">public</span> <span class="fn">OrderService</span>(<span class="tp">OrderRepo</span> repo) { <span class="kw">this</span>.repo <span class="op">=</span> repo; }
+}
+
+<span class="cm">// Setter Injection</span>
+<span class="kw">private</span> <span class="tp">OrderRepo</span> repo;
+<span class="ann">@Autowired</span> <span class="kw">public void</span> <span class="fn">setRepo</span>(<span class="tp">OrderRepo</span> r) { <span class="kw">this</span>.repo <span class="op">=</span> r; }
+
+<span class="cm">// Field Injection</span>
+<span class="ann">@Autowired</span> <span class="kw">private</span> <span class="tp">OrderRepo</span> repo;</pre>
+
+    <hr>
+    <h3>Spring Boot CRUD API (In-Memory List Storage)</h3>
+
+    <h4>1. Model</h4>
+    <pre><span class="kw">public class</span> <span class="tp">Student</span> {
+    <span class="kw">private int</span> id;
+    <span class="kw">private</span> <span class="tp">String</span> name;
+    <span class="kw">private int</span> marks;
+    <span class="kw">public</span> <span class="fn">Student</span>(<span class="kw">int</span> id, <span class="tp">String</span> name, <span class="kw">int</span> marks) {
+        <span class="kw">this</span>.id <span class="op">=</span> id; <span class="kw">this</span>.name <span class="op">=</span> name; <span class="kw">this</span>.marks <span class="op">=</span> marks;
+    }
+    <span class="cm">// getters and setters ...</span>
+    <span class="kw">public int</span>    <span class="fn">getId</span>()    { <span class="kw">return</span> id; }
+    <span class="kw">public</span> <span class="tp">String</span> <span class="fn">getName</span>()  { <span class="kw">return</span> name; }
+    <span class="kw">public int</span>    <span class="fn">getMarks</span>() { <span class="kw">return</span> marks; }
+    <span class="kw">public void</span>   <span class="fn">setName</span>(<span class="tp">String</span> n)  { name <span class="op">=</span> n; }
+    <span class="kw">public void</span>   <span class="fn">setMarks</span>(<span class="kw">int</span> m) { marks <span class="op">=</span> m; }
+}</pre>
+
+    <h4>2. REST Controller</h4>
+    <pre><span class="ann">@RestController</span>
+<span class="ann">@RequestMapping</span>(<span class="str">"/students"</span>)
+<span class="kw">public class</span> <span class="tp">StudentController</span> {
+    <span class="kw">private final</span> <span class="tp">List</span>&lt;<span class="tp">Student</span>&gt; db <span class="op">=</span> <span class="kw">new</span> <span class="tp">ArrayList</span>&lt;&gt;();
+    <span class="kw">private int</span> nextId <span class="op">=</span> <span class="num">1</span>;
+
+    <span class="cm">// CREATE — POST /students</span>
+    <span class="ann">@PostMapping</span>
+    <span class="kw">public</span> <span class="tp">Student</span> <span class="fn">create</span>(<span class="ann">@RequestBody</span> <span class="tp">Student</span> s) {
+        <span class="tp">Student</span> ns <span class="op">=</span> <span class="kw">new</span> <span class="tp">Student</span>(nextId<span class="op">++</span>, s.<span class="fn">getName</span>(), s.<span class="fn">getMarks</span>());
+        db.<span class="fn">add</span>(ns); <span class="kw">return</span> ns;
+    }
+    <span class="cm">// READ ALL — GET /students</span>
+    <span class="ann">@GetMapping</span>
+    <span class="kw">public</span> <span class="tp">List</span>&lt;<span class="tp">Student</span>&gt; <span class="fn">getAll</span>() { <span class="kw">return</span> db; }
+
+    <span class="cm">// READ ONE — GET /students/{id}</span>
+    <span class="ann">@GetMapping</span>(<span class="str">"/{id}"</span>)
+    <span class="kw">public</span> <span class="tp">Student</span> <span class="fn">getById</span>(<span class="ann">@PathVariable</span> <span class="kw">int</span> id) {
+        <span class="kw">return</span> db.<span class="fn">stream</span>().<span class="fn">filter</span>(s <span class="op">-></span> s.<span class="fn">getId</span>() <span class="op">==</span> id)
+                 .<span class="fn">findFirst</span>().<span class="fn">orElse</span>(<span class="kw">null</span>);
+    }
+    <span class="cm">// UPDATE — PUT /students/{id}</span>
+    <span class="ann">@PutMapping</span>(<span class="str">"/{id}"</span>)
+    <span class="kw">public</span> <span class="tp">Student</span> <span class="fn">update</span>(<span class="ann">@PathVariable</span> <span class="kw">int</span> id, <span class="ann">@RequestBody</span> <span class="tp">Student</span> upd) {
+        <span class="kw">for</span> (<span class="tp">Student</span> s : db) {
+            <span class="kw">if</span> (s.<span class="fn">getId</span>() <span class="op">==</span> id) {
+                s.<span class="fn">setName</span>(upd.<span class="fn">getName</span>()); s.<span class="fn">setMarks</span>(upd.<span class="fn">getMarks</span>());
+                <span class="kw">return</span> s;
+            }
+        }
+        <span class="kw">return null</span>;
+    }
+    <span class="cm">// DELETE — DELETE /students/{id}</span>
+    <span class="ann">@DeleteMapping</span>(<span class="str">"/{id}"</span>)
+    <span class="kw">public</span> <span class="tp">String</span> <span class="fn">delete</span>(<span class="ann">@PathVariable</span> <span class="kw">int</span> id) {
+        db.<span class="fn">removeIf</span>(s <span class="op">-></span> s.<span class="fn">getId</span>() <span class="op">==</span> id);
+        <span class="kw">return</span> <span class="str">"Deleted id: "</span> <span class="op">+</span> id;
+    }
+}</pre>
+
+    <h4>API Summary</h4>
+    <table>
+      <tr><th>Method</th><th>URL</th><th>Action</th></tr>
+      <tr><td>POST</td><td>/students</td><td>Create new student</td></tr>
+      <tr><td>GET</td><td>/students</td><td>Get all students</td></tr>
+      <tr><td>GET</td><td>/students/{id}</td><td>Get student by ID</td></tr>
+      <tr><td>PUT</td><td>/students/{id}</td><td>Update student</td></tr>
+      <tr><td>DELETE</td><td>/students/{id}</td><td>Delete student</td></tr>
+    </table>
+
+    <div class="cb">
+      <div class="cb-title">💡 Concept Booster</div>
+      <p>Dependency Injection is like <em>room service</em> — you don't go to the kitchen; you press a button and the food (dependency) is brought to you. Spring's IoC container is the kitchen. CRUD in REST follows the <em>restaurant model</em>: POST = place order, GET = see menu/order status, PUT = modify order, DELETE = cancel it.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Q7b ─── -->
+<div class="qcard">
+  <div class="qh">
+    <div class="qnum m7">7b</div>
+    <div class="qtxt">Describe the structure of a basic Spring Boot application. What are the advantages of using Spring Boot over traditional web frameworks?</div>
+    <span class="mbadge b7">7 marks</span>
+  </div>
+  <div class="ab">
+    <h3>Structure of a Basic Spring Boot Application</h3>
+
+    <h4>Standard Maven Project Layout</h4>
+    <div class="diagram">my-app/
+├── src/
+│   ├── main/
+│   │   ├── java/com/example/myapp/
+│   │   │   ├── MyAppApplication.java       ← Entry point (@SpringBootApplication)
+│   │   │   ├── controller/
+│   │   │   │   └── StudentController.java  ← HTTP endpoints (@RestController)
+│   │   │   ├── service/
+│   │   │   │   └── StudentService.java     ← Business logic (@Service)
+│   │   │   ├── repository/
+│   │   │   │   └── StudentRepository.java  ← Data access (@Repository)
+│   │   │   └── model/
+│   │   │       └── Student.java            ← POJO data model
+│   │   └── resources/
+│   │       ├── application.properties      ← Configuration (port, DB, etc.)
+│   │       └── static/                     ← Static files (HTML, CSS, JS)
+│   └── test/
+│       └── java/...                        ← Unit & integration tests
+└── pom.xml                                 ← Maven dependencies &amp; build config</div>
+
+    <h4>Role of Each Layer</h4>
+    <table>
+      <tr><th>Layer / File</th><th>Annotation</th><th>Responsibility</th></tr>
+      <tr><td>Main Class</td><td><kbd>@SpringBootApplication</kbd></td><td>Bootstraps the application, starts embedded server</td></tr>
+      <tr><td>Controller</td><td><kbd>@RestController</kbd></td><td>Handles HTTP requests; maps URLs to methods</td></tr>
+      <tr><td>Service</td><td><kbd>@Service</kbd></td><td>Contains business logic; called by controllers</td></tr>
+      <tr><td>Repository</td><td><kbd>@Repository</kbd></td><td>Data access layer; interfaces with DB/storage</td></tr>
+      <tr><td>Model</td><td>(plain class)</td><td>Data transfer object; represents domain entity</td></tr>
+      <tr><td>application.properties</td><td>—</td><td>Configuration: port, DB URL, logging level, etc.</td></tr>
+    </table>
+
+    <h4>Main Class and a Simple Controller</h4>
+    <pre><span class="ann">@SpringBootApplication</span>
+<span class="kw">public class</span> <span class="tp">MyAppApplication</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="tp">String</span>[] args) {
+        SpringApplication.<span class="fn">run</span>(<span class="tp">MyAppApplication</span>.class, args);
+        <span class="cm">// Starts embedded Tomcat on port 8080 by default</span>
+    }
+}
+
+<span class="ann">@RestController</span>
+<span class="ann">@RequestMapping</span>(<span class="str">"/api"</span>)
+<span class="kw">class</span> <span class="tp">HelloController</span> {
+    <span class="ann">@GetMapping</span>(<span class="str">"/greet"</span>)
+    <span class="kw">public</span> <span class="tp">String</span> <span class="fn">greet</span>() { <span class="kw">return</span> <span class="str">"Welcome to Spring Boot!"</span>; }
+}
+<span class="cm">// Run → visit http://localhost:8080/api/greet</span></pre>
+
+    <h4>application.properties</h4>
+    <pre>server.port=8080
+spring.application.name=my-app
+# logging.level.root=DEBUG</pre>
+
+    <hr>
+    <h3>Advantages of Spring Boot over Traditional Web Frameworks</h3>
+    <table>
+      <tr><th>#</th><th>Aspect</th><th>Traditional Spring / Web Frameworks</th><th>Spring Boot</th></tr>
+      <tr><td>1</td><td>Configuration</td><td>Extensive XML files / Java @Configuration</td><td>Auto-configuration — minimal boilerplate</td></tr>
+      <tr><td>2</td><td>Deployment</td><td>WAR file → deployed to external Tomcat</td><td>Embedded server → single executable JAR</td></tr>
+      <tr><td>3</td><td>Dependencies</td><td>Manual version selection — conflict-prone</td><td>Starter POMs manage compatible versions</td></tr>
+      <tr><td>4</td><td>Setup time</td><td>Hours to configure before coding</td><td>Minutes — ready with Spring Initializr</td></tr>
+      <tr><td>5</td><td>Monitoring</td><td>Manual configuration required</td><td>Spring Actuator built-in (<kbd>/actuator/health</kbd>)</td></tr>
+      <tr><td>6</td><td>Microservices</td><td>Heavyweight for standalone services</td><td>Lightweight, standalone — ideal for microservices</td></tr>
+      <tr><td>7</td><td>Testing</td><td>Complex test setup</td><td><kbd>@SpringBootTest</kbd> simplifies integration tests</td></tr>
+      <tr><td>8</td><td>Profiles</td><td>Manual environment switching</td><td><kbd>@Profile</kbd> + <kbd>application-{profile}.properties</kbd></td></tr>
+    </table>
+
+    <div class="cb">
+      <div class="cb-title">💡 Concept Booster</div>
+      <p>A Spring Boot app has a <em>layered cake structure</em>: Controller (icing) handles HTTP, Service (cake body) handles logic, Repository (base) handles data. <kbd>@SpringBootApplication</kbd> = one magic annotation that does component scanning + auto-configuration + application context setup. It's like pressing one power button to start an entire smart home system — everything configures itself.</p>
+    </div>
+  </div>
+</div>
+
+<!-- footer -->
+<div class="footer">
+  BCS403 · Object Oriented Programming with Java · AKTU B.Tech SEM IV · 2024-25<br><br>
+  <span>All 21 Questions Answered · Both Options for Q3–Q7 · Section A, B, and C Complete</span>
+</div>
+
+</div><!-- /wrap -->
+</body>
+</html>
