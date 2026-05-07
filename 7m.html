@@ -1,0 +1,2430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AKTU UHV — Complete Exam Answer Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --deep: #16213e;
+    --accent: #e94560;
+    --gold: #f5a623;
+    --teal: #0f3460;
+    --sage: #2d6a4f;
+    --sky: #1565c0;
+    --paper: #fdfaf4;
+    --card-bg: #ffffff;
+    --muted: #6b7280;
+    --border: #e5e0d5;
+    --boost-bg: #fff8e7;
+    --boost-border: #f5a623;
+    --q-bg: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  /* ── COVER PAGE ── */
+  .cover {
+    background: var(--q-bg);
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    border: 2px solid rgba(229,69,96,0.25);
+    top: -200px; right: -200px;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    border: 2px solid rgba(245,166,35,0.2);
+    bottom: -100px; left: -100px;
+  }
+  .cover-badge {
+    background: var(--accent);
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    padding: 8px 20px;
+    border-radius: 2px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+  }
+  .cover h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 58px;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 10px;
+    letter-spacing: -1px;
+  }
+  .cover h1 span { color: var(--gold); }
+  .cover-sub {
+    font-size: 22px;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  .cover-meta-item {
+    text-align: center;
+  }
+  .cover-meta-item .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .cover-meta-item .label {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .cover-divider {
+    width: 80px; height: 3px;
+    background: var(--accent);
+    margin: 30px auto;
+  }
+
+  /* ── MAIN CONTAINER ── */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 50px 40px;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section-header {
+    background: var(--q-bg);
+    color: white;
+    padding: 18px 28px;
+    border-radius: 4px 4px 0 0;
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .q-number {
+    background: var(--accent);
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  /* ── QA CARD ── */
+  .qa-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-bottom: 48px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .qa-body {
+    padding: 28px 32px;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--teal);
+    font-size: 16px;
+    margin: 20px 0 8px;
+    padding-bottom: 4px;
+    border-bottom: 2px solid var(--border);
+  }
+  h3:first-child { margin-top: 0; }
+
+  p { margin-bottom: 12px; }
+
+  ul, ol {
+    padding-left: 22px;
+    margin-bottom: 14px;
+  }
+  ul li, ol li {
+    margin-bottom: 6px;
+    line-height: 1.65;
+  }
+
+  strong { color: var(--teal); font-weight: 600; }
+  em { color: var(--accent); font-style: normal; font-weight: 600; }
+
+  /* ── CONCEPT BOOSTER ── */
+  .booster {
+    background: var(--boost-bg);
+    border-left: 5px solid var(--boost-border);
+    padding: 18px 22px;
+    margin-top: 20px;
+    border-radius: 0 4px 4px 0;
+  }
+  .booster-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--boost-border);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .booster-title::before {
+    content: '⚡';
+    font-size: 14px;
+  }
+  .booster p { margin-bottom: 0; color: #4a3800; font-size: 14px; }
+
+  /* ── TABLES ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  thead tr { background: var(--teal); color: white; }
+  th { padding: 10px 14px; text-align: left; font-weight: 600; }
+  td { padding: 9px 14px; border-bottom: 1px solid var(--border); }
+  tbody tr:nth-child(even) { background: #f8f6f0; }
+
+  /* ── DIAGRAM / BOXES ── */
+  .diagram {
+    background: #f0f4ff;
+    border: 2px solid #c5d3f0;
+    border-radius: 6px;
+    padding: 20px;
+    margin: 16px 0;
+    font-size: 13.5px;
+    font-family: 'JetBrains Mono', monospace;
+    text-align: center;
+    line-height: 2;
+    color: var(--deep);
+  }
+  .diagram .arrow { color: var(--accent); font-size: 18px; }
+  .box-row {
+    display: flex;
+    gap: 12px;
+    margin: 14px 0;
+    flex-wrap: wrap;
+  }
+  .box {
+    flex: 1;
+    min-width: 140px;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 6px;
+    padding: 12px 14px;
+    font-size: 13.5px;
+    text-align: center;
+  }
+  .box.green { background: #dcfce7; border-color: #86efac; }
+  .box.red   { background: #fee2e2; border-color: #fca5a5; }
+  .box.gold  { background: #fef9c3; border-color: #fde047; }
+  .box.teal  { background: #ccfbf1; border-color: #5eead4; }
+  .box strong { color: var(--deep); display: block; margin-bottom: 4px; }
+
+  .highlight-box {
+    background: #e0f2fe;
+    border: 1px solid #7dd3fc;
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  .highlight-box.green { background: #dcfce7; border-color: #86efac; }
+  .highlight-box.amber { background: #fef3c7; border-color: #fcd34d; }
+
+  /* ── TOC ── */
+  .toc { page-break-after: always; }
+  .toc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .toc-subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+  }
+  .toc-divider { width: 60px; height: 3px; background: var(--accent); margin-bottom: 30px; }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 30px;
+  }
+  .toc-item {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 5px 0;
+    border-bottom: 1px dotted var(--border);
+    font-size: 13px;
+  }
+  .toc-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 600;
+    min-width: 28px;
+  }
+  .toc-text { color: var(--ink); line-height: 1.4; }
+
+  /* ── PRINT ── */
+  @media print {
+    @page { margin: 0; size: A4; }
+    body { background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .cover { min-height: 100vh; page-break-after: always; }
+    .toc { page-break-after: always; }
+    .qa-card { page-break-inside: avoid; break-inside: avoid; }
+    .container { padding: 40px 45px; }
+    .booster { page-break-inside: avoid; break-inside: avoid; }
+    a { text-decoration: none; color: inherit; }
+  }
+
+  /* ── MOBILE RESPONSIVE (≤480px — optimised for Motorola Edge 50 Neo ~393px) ── */
+  @media (max-width: 480px) {
+    body {
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* Cover page */
+    .cover {
+      padding: 40px 20px;
+      min-height: 100svh;
+    }
+    .cover::before { width: 260px; height: 260px; top: -100px; right: -80px; }
+    .cover::after  { width: 200px; height: 200px; bottom: -60px; left: -60px; }
+    .cover-badge { font-size: 9px; letter-spacing: 2px; padding: 6px 14px; margin-bottom: 20px; }
+    .cover h1 { font-size: 36px; letter-spacing: -0.5px; }
+    .cover-sub { font-size: 15px; margin-bottom: 24px; }
+    .cover-meta { gap: 20px; margin-top: 16px; }
+    .cover-meta-item .num { font-size: 32px; }
+    .cover-meta-item .label { font-size: 10px; letter-spacing: 1px; }
+    .cover-divider { margin: 20px auto; }
+
+    /* TOC */
+    .toc-title { font-size: 24px; }
+    .toc-grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .toc-item { font-size: 12px; padding: 6px 0; }
+
+    /* Main container */
+    .container { padding: 20px 14px; }
+
+    /* QA cards */
+    .qa-card { margin-bottom: 28px; }
+    .section-header {
+      padding: 12px 14px;
+      gap: 10px;
+      flex-wrap: nowrap;
+      align-items: flex-start;
+    }
+    .q-number {
+      font-size: 11px;
+      padding: 3px 8px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .section-header h2 { font-size: 14px; line-height: 1.45; }
+    .qa-body { padding: 16px 14px; }
+
+    /* Headings */
+    h3 { font-size: 14.5px; margin: 16px 0 6px; }
+
+    /* Tables — make scrollable horizontally */
+    table { font-size: 12px; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    th { padding: 8px 10px; white-space: nowrap; }
+    td { padding: 7px 10px; }
+
+    /* Box rows */
+    .box-row { flex-direction: column; gap: 8px; }
+    .box { min-width: unset; font-size: 13px; padding: 10px 12px; }
+
+    /* Diagram boxes */
+    .diagram {
+      font-size: 11px;
+      padding: 12px 10px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      text-align: left;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* Concept booster */
+    .booster { padding: 14px 14px; }
+    .booster p { font-size: 13px; }
+    .booster-title { font-size: 10px; }
+
+    /* Highlight boxes */
+    .highlight-box { font-size: 13px; padding: 12px 14px; }
+
+    /* Lists */
+    ul, ol { padding-left: 18px; }
+    ul li, ol li { margin-bottom: 5px; font-size: 13.5px; }
+
+    /* Footer */
+    .container > div[style*="margin-top:60px"] {
+      margin-top: 32px !important;
+      padding: 20px 16px !important;
+      border-radius: 4px !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ COVER ═══════════════════════════════ -->
+<div class="cover">
+  <div class="cover-badge">AKTU Exam Preparation Series</div>
+  <h1>Universal<br><span>Human Values</span></h1>
+  <div class="cover-sub">Complete 7-Mark Answer Guide</div>
+  <div class="cover-divider"></div>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><div class="num">45</div><div class="label">Questions</div></div>
+    <div class="cover-meta-item"><div class="num">7</div><div class="label">Marks Each</div></div>
+    <div class="cover-meta-item"><div class="num">100%</div><div class="label">Exam Focused</div></div>
+  </div>
+  <p style="margin-top:50px; color:rgba(255,255,255,0.4); font-size:12px; letter-spacing:1px;">INCLUDES CONCEPT BOOSTERS · DIAGRAMS · TABLES · KEY KEYWORDS</p>
+</div>
+
+<!-- ═══════════════════════════════ TOC ═══════════════════════════════ -->
+<div class="container toc">
+  <div class="toc-title">Table of Contents</div>
+  <div class="toc-subtitle">45 EXAM QUESTIONS WITH COMPLETE ANSWERS</div>
+  <div class="toc-divider"></div>
+  <div class="toc-grid">
+    <div class="toc-item"><span class="toc-num">Q.1</span><span class="toc-text">Basic Aspirations: To Be, To Get, To Become</span></div>
+    <div class="toc-item"><span class="toc-num">Q.2</span><span class="toc-text">Needs of Self (I) vs Needs of Body</span></div>
+    <div class="toc-item"><span class="toc-num">Q.3</span><span class="toc-text">Body as Instrument of 'I'</span></div>
+    <div class="toc-item"><span class="toc-num">Q.4</span><span class="toc-text">Harmony in 'I' — Characteristics & Activities</span></div>
+    <div class="toc-item"><span class="toc-num">Q.5</span><span class="toc-text">Self-Exploration: Meaning & Process</span></div>
+    <div class="toc-item"><span class="toc-num">Q.6</span><span class="toc-text">Three Sources of Imagination & Harmony in Self</span></div>
+    <div class="toc-item"><span class="toc-num">Q.7</span><span class="toc-text">Happiness vs Excitement; Sensations & Happiness</span></div>
+    <div class="toc-item"><span class="toc-num">Q.8</span><span class="toc-text">Requirements to Fulfill Basic Human Aspirations</span></div>
+    <div class="toc-item"><span class="toc-num">Q.9</span><span class="toc-text">Feelings of Care & Guidance in Family</span></div>
+    <div class="toc-item"><span class="toc-num">Q.10</span><span class="toc-text">Respect — Differentiation & Minimum Content</span></div>
+    <div class="toc-item"><span class="toc-num">Q.11</span><span class="toc-text">Justice & Mutual Happiness</span></div>
+    <div class="toc-item"><span class="toc-num">Q.12</span><span class="toc-text">Human Relationship: Inherent or Created? Love</span></div>
+    <div class="toc-item"><span class="toc-num">Q.13</span><span class="toc-text">Education–Sanskar & Health–Sanyam</span></div>
+    <div class="toc-item"><span class="toc-num">Q.14</span><span class="toc-text">Need, Guidelines, Content & Process of Value Ed.</span></div>
+    <div class="toc-item"><span class="toc-num">Q.15</span><span class="toc-text">Ethical Human Conduct: Values, Policies, Character</span></div>
+    <div class="toc-item"><span class="toc-num">Q.16</span><span class="toc-text">Issues in Professional Ethics Today</span></div>
+    <div class="toc-item"><span class="toc-num">Q.17</span><span class="toc-text">Excellence vs 'To Be Special' & Harmonious Society</span></div>
+    <div class="toc-item"><span class="toc-num">Q.18</span><span class="toc-text">Fearlessness in Society — Minimum Requirements</span></div>
+    <div class="toc-item"><span class="toc-num">Q.19</span><span class="toc-text">Animal vs Human Consciousness; Value Education</span></div>
+    <div class="toc-item"><span class="toc-num">Q.20</span><span class="toc-text">From Deluded Self to Pure Self</span></div>
+    <div class="toc-item"><span class="toc-num">Q.21</span><span class="toc-text">Material Unit, Conscious Unit, Space & Co-existence</span></div>
+    <div class="toc-item"><span class="toc-num">Q.22</span><span class="toc-text">Natural Characteristics of Four Orders</span></div>
+    <div class="toc-item"><span class="toc-num">Q.23</span><span class="toc-text">Four Orders in Nature: Interdependence</span></div>
+    <div class="toc-item"><span class="toc-num">Q.24</span><span class="toc-text">Activities in Four Orders; Human Order Difference</span></div>
+    <div class="toc-item"><span class="toc-num">Q.25</span><span class="toc-text">Meaning of Co-existence; Units in Space</span></div>
+    <div class="toc-item"><span class="toc-num">Q.26</span><span class="toc-text">Complete Chart of Existence & Co-existence</span></div>
+    <div class="toc-item"><span class="toc-num">Q.27</span><span class="toc-text">Recyclability & Mutual Fulfillment in Nature</span></div>
+    <div class="toc-item"><span class="toc-num">Q.28</span><span class="toc-text">People-Friendly & Eco-Friendly Production Systems</span></div>
+    <div class="toc-item"><span class="toc-num">Q.29</span><span class="toc-text">Holistic Technology — Meaning & Examples</span></div>
+    <div class="toc-item"><span class="toc-num">Q.30</span><span class="toc-text">Comprehensive Human Goals & Society Without Them</span></div>
+    <div class="toc-item"><span class="toc-num">Q.31</span><span class="toc-text">Ethical Human Conduct — Course Analysis</span></div>
+    <div class="toc-item"><span class="toc-num">Q.32</span><span class="toc-text">Response of Self vs Body</span></div>
+    <div class="toc-item"><span class="toc-num">Q.33</span><span class="toc-text">Senses Cannot Be Source of Continuous Happiness</span></div>
+    <div class="toc-item"><span class="toc-num">Q.34</span><span class="toc-text">Intention vs Competence</span></div>
+    <div class="toc-item"><span class="toc-num">Q.35</span><span class="toc-text">Reverence vs Gratitude</span></div>
+    <div class="toc-item"><span class="toc-num">Q.36</span><span class="toc-text">Meaning of Profession & Ethical Competence</span></div>
+    <div class="toc-item"><span class="toc-num">Q.37</span><span class="toc-text">Holistic Development & Role of Education–Sanskar</span></div>
+    <div class="toc-item"><span class="toc-num">Q.38</span><span class="toc-text">Activities of Imagination; Imagination & Right Understanding</span></div>
+    <div class="toc-item"><span class="toc-num">Q.39</span><span class="toc-text">Comprehensive Human Goal vs Present-Day Goals</span></div>
+    <div class="toc-item"><span class="toc-num">Q.40</span><span class="toc-text">Ensuring Respect with Different Competence</span></div>
+    <div class="toc-item"><span class="toc-num">Q.41</span><span class="toc-text">Submergence of Nature in Space; Student Context</span></div>
+    <div class="toc-item"><span class="toc-num">Q.42</span><span class="toc-text">Framework for Humanistic Education</span></div>
+    <div class="toc-item"><span class="toc-num">Q.43</span><span class="toc-text">Essence of Ethical Conduct: Values, Policies, Character</span></div>
+    <div class="toc-item"><span class="toc-num">Q.44</span><span class="toc-text">Right Evaluation vs Wrong Evaluation</span></div>
+    <div class="toc-item"><span class="toc-num">Q.45</span><span class="toc-text">Dimensions for Universal Human Order</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ ANSWERS ═══════════════════════════════ -->
+<div class="container">
+
+<!-- Q1 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.1</span><h2>How do you look at your basic aspirations? Is it 'To Be', 'To Get', 'To Become'? Justify with examples.</h2></div>
+  <div class="qa-body">
+    <h3>Basic Human Aspirations</h3>
+    <p>Every human being has <strong>two fundamental aspirations</strong>:</p>
+    <ul>
+      <li><strong>Happiness (Sukh)</strong> — a state of harmony within the Self (I)</li>
+      <li><strong>Prosperity (Samridhi)</strong> — having more than enough physical facilities</li>
+    </ul>
+
+    <h3>Three Ways of Looking at Aspirations</h3>
+    <div class="box-row">
+      <div class="box red"><strong>'To Get'</strong> Accumulate material things — money, status, fame. Physical/external focus.</div>
+      <div class="box gold"><strong>'To Become'</strong> Achieve a position — doctor, engineer, CEO. Identity-based focus.</div>
+      <div class="box green"><strong>'To Be'</strong> Attain a state of inner harmony — to be happy, to be just. Internal/value focus.</div>
+    </div>
+
+    <h3>Which is the Right Priority?</h3>
+    <p>The right priority is <em>'To Be'</em> — i.e., to ensure right understanding and values within the Self. This is because:</p>
+    <ul>
+      <li>'To Get' gives only temporary pleasure. A person who gets a car is happy for a few days but wants a bigger car later — this is endless.</li>
+      <li>'To Become' makes us dependent on external approval and positions which can be taken away.</li>
+      <li>'To Be' means having a stable, harmonious inner state that does not depend on external conditions.</li>
+    </ul>
+
+    <h3>Justification with Examples</h3>
+    <table>
+      <thead><tr><th>Aspiration</th><th>Example</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td>To Get</td><td>Earning more money, buying bigger house</td><td>Temporary satisfaction, increasing wants</td></tr>
+        <tr><td>To Become</td><td>Becoming a manager or a celebrity</td><td>Dependent on others' approval, fear of losing status</td></tr>
+        <tr><td>To Be</td><td>Being honest, being caring in all situations</td><td>Stable happiness, right conduct regardless of circumstances</td></tr>
+      </tbody>
+    </table>
+    <p>A student who studies <em>to be knowledgeable and competent</em> (To Be) gains lasting wisdom, whereas one who studies <em>to get marks</em> (To Get) may cheat and still remain ignorant.</p>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Think of it as a foundation: "To Be" is the inner foundation (values/happiness), while "To Get" and "To Become" are outer constructions. Without a strong foundation, the outer structure collapses. Right priority = build the inside first.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.2</span><h2>Explain the difference between needs of Self (I) and Body. Can they be fulfilled interchangeably? Verify on yourself.</h2></div>
+  <div class="qa-body">
+    <h3>The Human Being: I + Body</h3>
+    <p>A human being is a co-existence of <strong>Self (I)</strong> — the conscious unit, and <strong>Body</strong> — the material/physical unit. Both have distinct needs.</p>
+
+    <h3>Needs of the Self (I)</h3>
+    <ul>
+      <li>Happiness (Sukh), Peace (Shanti), Satisfaction (Santosh), Bliss (Ananda)</li>
+      <li>These are <strong>continuous</strong> and do not diminish over time</li>
+      <li>Fulfilled by: <em>right understanding, right feelings, right relationships</em></li>
+      <li>These are <strong>qualitative</strong> needs — not measured in quantity</li>
+    </ul>
+
+    <h3>Needs of the Body</h3>
+    <ul>
+      <li>Food, shelter, clothing, rest, physical comfort</li>
+      <li>These are <strong>limited</strong> and can be saturated (you can eat only so much)</li>
+      <li>Fulfilled by: <em>physical facilities</em> (material things)</li>
+      <li>These are <strong>quantitative</strong> needs — can be measured</li>
+    </ul>
+
+    <table>
+      <thead><tr><th>Aspect</th><th>Self (I)</th><th>Body</th></tr></thead>
+      <tbody>
+        <tr><td>Nature</td><td>Conscious, Sentient</td><td>Material, Physiochemical</td></tr>
+        <tr><td>Need</td><td>Happiness, peace, love</td><td>Food, water, shelter</td></tr>
+        <tr><td>Fulfillment</td><td>Values, right understanding</td><td>Physical facilities</td></tr>
+        <tr><td>Quantity</td><td>Continuous, not saturable</td><td>Limited, saturable</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Can They Be Fulfilled Interchangeably? — NO</h3>
+    <ul>
+      <li>Eating more food cannot give peace of mind → Body's food ≠ Self's happiness</li>
+      <li>Money cannot buy genuine love or inner contentment</li>
+      <li>Trying to get happiness through physical things leads to <strong>overindulgence</strong> and addiction</li>
+    </ul>
+    <div class="highlight-box amber">
+      <strong>Self-Verification:</strong> When you are angry or sad, eating your favourite food does not remove the sadness. Conversely, when you are at peace and happy, even simple food feels satisfying. This proves the two needs are independent.
+    </div>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Body needs are like a car needing fuel — once filled, it stops. Self needs are like a pilot needing direction — no amount of fuel replaces the need for a correct destination. Filling the body to satisfy the Self is a fundamental human mistake.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.3</span><h2>Explain body as an instrument of 'I'.</h2></div>
+  <div class="qa-body">
+    <h3>The Relationship Between I and Body</h3>
+    <p>The <strong>Self (I)</strong> is the conscious entity that thinks, feels, desires, and decides. The <strong>Body</strong> is the physical instrument through which the Self acts and experiences the material world.</p>
+
+    <div class="diagram">
+      <strong>Self (I)</strong> — Conscious, Sentient, the 'Knower–Feeler–Doer'<br>
+      <span class="arrow">↓ uses</span><br>
+      <strong>Body</strong> — Physical instrument with 5 sense organs + 5 action organs + Mind<br>
+      <span class="arrow">↓ interacts with</span><br>
+      <strong>External World</strong> — Objects, people, environment
+    </div>
+
+    <h3>Why Body is an Instrument</h3>
+    <ul>
+      <li>The Self <em>uses</em> the body — just like a carpenter uses a hammer</li>
+      <li>The body does not decide on its own — it follows the directions of the Self</li>
+      <li>The body is <strong>material</strong> in nature (made of elements); the Self is <strong>conscious</strong></li>
+      <li>When we say "my body aches," the 'my' refers to the Self, confirming that I ≠ body</li>
+    </ul>
+
+    <h3>Functions of the Body (as Instrument)</h3>
+    <div class="box-row">
+      <div class="box"><strong>Sensing</strong> Receives inputs via 5 senses</div>
+      <div class="box teal"><strong>Acting</strong> Executes actions via action organs</div>
+      <div class="box green"><strong>Processing</strong> Physiochemical processes (digestion, breathing)</div>
+    </div>
+
+    <h3>Importance of This Understanding</h3>
+    <ul>
+      <li>If we mistake <strong>I = Body</strong>, we start believing happiness = physical pleasure → leads to overindulgence</li>
+      <li>The Self must <em>regulate and nurture</em> the body (Sanyam) — not be enslaved by it</li>
+      <li>The body is to be cared for properly but not worshipped as the ultimate self</li>
+    </ul>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Think of the Self as a driver and the Body as a vehicle. A driver must maintain the vehicle but doesn't become the vehicle. If you forget you're the driver and think you ARE the car, you'll make poor decisions — that's exactly what happens when we identify ourselves only as bodies.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.4</span><h2>Harmony in 'I' means understanding characteristics and activities of 'I'. Explain.</h2></div>
+  <div class="qa-body">
+    <h3>What is Harmony in 'I'?</h3>
+    <p>Harmony in the Self (I) refers to a state where all the <strong>activities of the Self are aligned</strong> with right understanding. There is no internal conflict, contradiction, or confusion.</p>
+
+    <h3>Characteristics of the Self (I)</h3>
+    <ul>
+      <li><strong>Desire (Ichha):</strong> The Self generates desires — what do I want?</li>
+      <li><strong>Thought (Vichar):</strong> The Self analyses and thinks about how to achieve it</li>
+      <li><strong>Expectation (Asha):</strong> The Self expects certain outcomes</li>
+    </ul>
+    <p>These three form the <em>inner faculties</em> of the Self.</p>
+
+    <h3>Four Activities of the Self (I)</h3>
+    <div class="box-row">
+      <div class="box gold"><strong>Knowing (Jnana)</strong> The Self understands things — right or wrong knowledge</div>
+      <div class="box green"><strong>Assuming (Manya)</strong> The Self assumes / believes without full knowing</div>
+      <div class="box"><strong>Recognizing (Pahachana)</strong> Identifying relationships and values</div>
+      <div class="box teal"><strong>Fulfilling (Nibhana)</strong> Acting on what is known/assumed</div>
+    </div>
+
+    <h3>When is There Harmony?</h3>
+    <ul>
+      <li>Harmony = when <em>Knowing, Assuming, Recognizing, and Fulfilling</em> are all aligned with right understanding</li>
+      <li>When we assume without right knowing, or when our feelings don't match our values, there is <strong>disharmony</strong></li>
+    </ul>
+
+    <div class="highlight-box">
+      <strong>Example of Disharmony:</strong> A person knows honesty is right (Knowing) but assumes that lying helps them succeed (Assuming) → conflict → disharmony in Self → anxiety and guilt.<br><br>
+      <strong>Example of Harmony:</strong> A person knows and believes that honesty is right AND acts honestly → peace and integrity.
+    </div>
+
+    <h3>Result of Harmony in I</h3>
+    <ul>
+      <li>Inner peace and contentment</li>
+      <li>Natural, effortless ethical conduct</li>
+      <li>No internal contradiction between thoughts, feelings, and actions</li>
+    </ul>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Harmony in I is like all instruments of an orchestra playing in sync. If one instrument plays out of tune (e.g., our desires don't match our values), the whole music (our life) becomes discordant. Right understanding tunes all four activities together.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q5 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.5</span><h2>What is Self-Exploration? Explain the process of self-exploration with a diagram.</h2></div>
+  <div class="qa-body">
+    <h3>Meaning of Self-Exploration</h3>
+    <p><strong>Self-Exploration</strong> is the process of investigating one's own self — to understand what one naturally accepts as true (Sweekar) and what one does not naturally accept as true (Asweekar). It is the <em>dialogue between what is naturally acceptable to me</em> and what is being proposed as valuable.</p>
+    <p>Self-exploration is not about accepting someone else's views blindly — it is about <strong>self-verification</strong> through observation, experience, and critical thinking.</p>
+
+    <h3>Characteristics of Self-Exploration</h3>
+    <ul>
+      <li>It is an <em>inside-out</em> process — starts from within</li>
+      <li>Based on <strong>natural acceptance</strong> — not external authority</li>
+      <li>It is a continuous, ongoing dialogue with oneself</li>
+      <li>Does not require any special equipment or degree</li>
+    </ul>
+
+    <h3>Process of Self-Exploration</h3>
+    <div class="diagram">
+      <strong>WHAT IS</strong> (Current Reality — Present State of Living)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;Beliefs, behaviours, desires, assumptions<br>
+      <span class="arrow">↕ Compare & Reflect</span><br>
+      <strong>WHAT SHOULD BE</strong> (Proposed Understanding — Universal Values)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;Happiness, harmony, truth, justice, love<br>
+      <span class="arrow">↓</span><br>
+      <strong>NATURAL ACCEPTANCE CHECK</strong><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;"Does this feel naturally right to me?"<br>
+      <span class="arrow">↓ if YES → act upon it</span><br>
+      <strong>TRANSFORMED LIVING</strong><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;Right understanding → right feeling → right action
+    </div>
+
+    <h3>What Self-Exploration Leads To</h3>
+    <ul>
+      <li>Clarity about the purpose of life</li>
+      <li>Resolution of internal conflicts (harmony in I)</li>
+      <li>Right understanding of relationships and society</li>
+      <li>Right use of the Body as an instrument</li>
+    </ul>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Self-exploration is like cleaning a mirror. The mirror (Self) always had the capacity to reflect clearly, but dust (wrong beliefs, assumptions) covered it. Self-exploration removes the dust so you can see yourself and reality correctly.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q6 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.6</span><h2>List the three sources of imagination in the Self and illustrate with examples. Explain harmony in the Self with a diagram.</h2></div>
+  <div class="qa-body">
+    <h3>Three Sources of Imagination in Self (I)</h3>
+    <p>The Self (I) continuously generates imagination based on three sources:</p>
+
+    <div class="box-row">
+      <div class="box red">
+        <strong>1. Desire (Ichha)</strong>
+        <p>Wanting something — "I want a new phone", "I want peace"</p>
+      </div>
+      <div class="box gold">
+        <strong>2. Thought (Vichar)</strong>
+        <p>Planning how to achieve it — "I should work harder to afford it"</p>
+      </div>
+      <div class="box green">
+        <strong>3. Expectation (Asha)</strong>
+        <p>Anticipating outcomes — "If I get this, I'll be happy"</p>
+      </div>
+    </div>
+
+    <h3>Examples</h3>
+    <table>
+      <thead><tr><th>Source</th><th>Right Understanding Example</th><th>Without Right Understanding</th></tr></thead>
+      <tbody>
+        <tr><td>Desire</td><td>"I want to be honest and kind"</td><td>"I want more money at any cost"</td></tr>
+        <tr><td>Thought</td><td>"I'll work hard and stay truthful"</td><td>"I'll cheat to get what I want"</td></tr>
+        <tr><td>Expectation</td><td>"Honesty will bring lasting peace"</td><td>"Wealth will make me permanently happy"</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Harmony in the Self — Diagram</h3>
+    <div class="diagram">
+      ┌─────────────────── SELF (I) ───────────────────┐<br>
+      │                                                   │<br>
+      │  ┌──────────┐   ┌──────────┐   ┌───────────┐   │<br>
+      │  │  DESIRE  │ → │ THOUGHT  │ → │EXPECTATION│   │<br>
+      │  └──────────┘   └──────────┘   └───────────┘   │<br>
+      │         ↑ all aligned with RIGHT UNDERSTANDING   │<br>
+      │                      ↓                           │<br>
+      │         HARMONY = Peace · Contentment · Joy      │<br>
+      └───────────────────────────────────────────────────┘<br>
+      <br>
+      When Desire ≠ Thought ≠ Expectation → <span style="color:var(--accent)">DISHARMONY → Conflict → Unhappiness</span>
+    </div>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Imagine a car with three gears — desire, thought, expectation. When all three gears are engaged with right understanding, the car moves smoothly (harmony). When they pull in different directions (e.g., wanting peace but thinking of revenge), the car breaks down. Harmony = all gears aligned.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q7 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.7</span><h2>Distinguish between happiness and excitement. Critically examine how sensations cannot be the source of continuous happiness.</h2></div>
+  <div class="qa-body">
+    <h3>Happiness vs Excitement</h3>
+    <table>
+      <thead><tr><th>Aspect</th><th>Happiness (Sukh)</th><th>Excitement (Thrill/Sensation)</th></tr></thead>
+      <tbody>
+        <tr><td>Nature</td><td>Continuous, stable inner state</td><td>Temporary, fluctuating reaction</td></tr>
+        <tr><td>Source</td><td>Right understanding, harmonious values</td><td>External stimuli, sensory input</td></tr>
+        <tr><td>Duration</td><td>Long-lasting, does not fade</td><td>Short-lived, fades quickly</td></tr>
+        <tr><td>Dependency</td><td>Internal — does not depend on externals</td><td>External — needs stimulation</td></tr>
+        <tr><td>Effect</td><td>Leads to peace and fulfillment</td><td>Leads to craving more stimulation</td></tr>
+        <tr><td>Example</td><td>Joy from helping someone sincerely</td><td>Thrill from a roller-coaster ride</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Why Sensations Cannot Provide Continuous Happiness</h3>
+    <p><strong>Sensations</strong> are inputs received by the body through the five sense organs (sight, sound, taste, touch, smell). These are experienced by the Body — not the Self.</p>
+
+    <ul>
+      <li><strong>Adaptation Effect:</strong> Any repeated sensation loses intensity. The first bite of chocolate is exciting; the 50th bite is not. This shows sensations are <em>self-exhausting</em>.</li>
+      <li><strong>Craving cycle:</strong> Sensations create a craving-fulfillment loop — once the sensation ends, the craving returns (often stronger). This is a cycle of dependence, not happiness.</li>
+      <li><strong>Diminishing returns:</strong> More and more is needed to achieve the same pleasure — this leads to addiction (drugs, screen time, junk food).</li>
+      <li><strong>Body ≠ Self:</strong> Since the Self (I) is not the body, satisfying the body's sensory inputs cannot satisfy the Self's need for happiness.</li>
+    </ul>
+
+    <div class="highlight-box">
+      <strong>Critical Examination:</strong> A person who eats their favorite food when feeling sad does not become genuinely happy — the sadness returns after the eating stops. A wealthy person surrounded by luxuries can still be deeply unhappy. This proves sensations address only the Body, not the Self.
+    </div>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Sensations are like scratching an itch — they provide temporary relief but the itch (craving) returns, often stronger. True happiness is like curing the underlying skin condition — permanent resolution. Sensations treat the symptom; right understanding treats the cause.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q8 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.8</span><h2>What are the requirements to fulfill basic human aspirations?</h2></div>
+  <div class="qa-body">
+    <h3>Basic Human Aspirations</h3>
+    <p>Every human being aspires for:</p>
+    <ul>
+      <li><strong>Happiness (Sukh)</strong> — inner harmony and fulfillment</li>
+      <li><strong>Prosperity (Samridhi)</strong> — having sufficient physical facilities</li>
+    </ul>
+
+    <h3>Requirements to Fulfill These Aspirations</h3>
+    <p>These aspirations operate at <strong>four levels</strong>:</p>
+
+    <div class="box-row">
+      <div class="box green">
+        <strong>1. Self (I)</strong>
+        Right understanding of oneself — values, desires, thoughts aligned with truth
+      </div>
+      <div class="box"><strong>2. Family</strong> Right feelings and relationships with family members — love, care, trust, respect</div>
+      <div class="box gold"><strong>3. Society</strong> Trust, respect, and justice in interaction with other humans</div>
+      <div class="box teal"><strong>4. Nature/Existence</strong> Living in harmony with nature — not exploiting, co-existing sustainably</div>
+    </div>
+
+    <h3>Specific Requirements</h3>
+    <ul>
+      <li><strong>Right Understanding (Samjh):</strong> Understanding oneself and reality correctly — this addresses the needs of the Self</li>
+      <li><strong>Right Feeling (Bhaav):</strong> Feelings like love, respect, gratitude in relationships</li>
+      <li><strong>Right Physical Facilities:</strong> Adequate food, shelter, clothing — just enough for the body's needs (not excessive)</li>
+    </ul>
+
+    <table>
+      <thead><tr><th>Aspiration</th><th>Level</th><th>Requirement</th></tr></thead>
+      <tbody>
+        <tr><td>Happiness</td><td>Self</td><td>Right understanding and values</td></tr>
+        <tr><td>Happiness</td><td>Family</td><td>Trust, care, love, guidance</td></tr>
+        <tr><td>Prosperity</td><td>Body</td><td>Adequate physical facilities</td></tr>
+        <tr><td>Both</td><td>Society & Nature</td><td>Justice, harmony with environment</td></tr>
+      </tbody>
+    </table>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Think of human aspirations as a house needing four walls: Self, Family, Society, and Nature. If even one wall is missing, the house is incomplete. Fulfilling aspirations means strengthening all four walls simultaneously — not just piling money in one corner.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q9 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.9</span><h2>Explain the feelings of Care and Guidance. What role do these feelings have in parent-child relationships?</h2></div>
+  <div class="qa-body">
+    <h3>The Feeling of Care (Mamata / Sneh)</h3>
+    <p><strong>Care</strong> means to feel responsible for the well-being and growth of another person. It involves:</p>
+    <ul>
+      <li>Wishing for the <em>happiness and proper development</em> of the other</li>
+      <li>Taking active steps to nurture their physical, emotional, and intellectual growth</li>
+      <li>Care is unconditional — it doesn't expect anything in return</li>
+      <li>It ensures that the basic physical needs of the other person are fulfilled with <strong>affection</strong></li>
+    </ul>
+
+    <h3>The Feeling of Guidance (Sneh-poorn Margdarshan)</h3>
+    <p><strong>Guidance</strong> means to help another person understand what is right, helping them develop <em>right understanding</em> and correct values. It involves:</p>
+    <ul>
+      <li>Sharing wisdom and knowledge lovingly, not forcefully</li>
+      <li>Helping the other see the consequences of their choices</li>
+      <li>Encouraging self-exploration — not just giving orders</li>
+      <li>It is <strong>value-based mentoring</strong>, not mere instruction</li>
+    </ul>
+
+    <h3>Role in Parent-Child Relationship</h3>
+    <table>
+      <thead><tr><th>Feeling</th><th>Role of Parent</th><th>Benefit for Child</th></tr></thead>
+      <tbody>
+        <tr><td>Care</td><td>Ensures nutritious food, health, safe environment; emotional warmth</td><td>Physical health, emotional security, trust</td></tr>
+        <tr><td>Guidance</td><td>Teaches values, explains right and wrong, encourages self-reflection</td><td>Right understanding, good character, independence</td></tr>
+      </tbody>
+    </table>
+
+    <p>Without <em>Care</em>, the child lacks physical and emotional security. Without <em>Guidance</em>, the child lacks direction and values. Together, they make parents the child's first and most important <strong>value educators</strong>.</p>
+
+    <div class="highlight-box amber">
+      <strong>Important Distinction:</strong> Care without Guidance can lead to overprotection and spoiling. Guidance without Care can be cold and authoritarian. A <em>caring guide</em> is the ideal — like a gardener who both waters the plant (care) and provides a supportive structure (guidance).
+    </div>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Care = "I want you to be well." Guidance = "I want you to understand what is right." A parent who only provides food and things (care) but never teaches values raises a well-fed but confused adult. A parent who lectures without warmth (guidance without care) raises a resentful adult. Both together = holistic parenting.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q10 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.10</span><h2>Explain respect. How are we generally making differentiation in the name of respect? Explain the minimum content of respect for a human being.</h2></div>
+  <div class="qa-body">
+    <h3>Meaning of Respect (Samman)</h3>
+    <p><strong>Respect</strong> means <em>right evaluation</em> — evaluating a person for what they truly are. Since every human being has the same Self (I), every person deserves to be recognized as a conscious, valuable human being.</p>
+    <ul>
+      <li>Respect is NOT flattery, fear, or subservience</li>
+      <li>It means acknowledging the <strong>human potential</strong> and <strong>inherent dignity</strong> in every person</li>
+      <li>True respect is continuous and unconditional</li>
+    </ul>
+
+    <h3>How We Make Wrong Differentiation in Respect</h3>
+    <p>Currently, we evaluate people based on <em>physical or material attributes</em> rather than their humanity:</p>
+    <div class="box-row">
+      <div class="box red"><strong>Wealth</strong> Rich person = more respect; poor person = less respect</div>
+      <div class="box red"><strong>Position</strong> Senior officer respected, junior worker neglected</div>
+      <div class="box red"><strong>Caste/Religion</strong> Upper caste treated with more dignity</div>
+      <div class="box red"><strong>Physical Appearance</strong> Attractive people treated more favorably</div>
+    </div>
+    <p>This is <strong>wrong evaluation</strong> — we are confusing the <em>instrument (body/position/wealth)</em> with the <em>human being (Self/I)</em>.</p>
+
+    <h3>Minimum Content of Respect for a Human Being</h3>
+    <p>The minimum that every human being deserves:</p>
+    <ul>
+      <li><strong>Recognition as a human being:</strong> Every person has the same Self (I) — conscious, capable of happiness and suffering</li>
+      <li><strong>Acknowledgment of their desire for happiness:</strong> Every person wants happiness — this is universally true</li>
+      <li><strong>Right evaluation of their qualities:</strong> See what they are — not just their wealth, caste, or position</li>
+      <li><strong>Non-humiliation:</strong> Not insulting or belittling anyone on the basis of physical/material attributes</li>
+    </ul>
+
+    <div class="highlight-box green">
+      <strong>Key Insight:</strong> Respect does not mean treating everyone identically in every situation — but it means treating every person with the <em>recognition of their inherent human dignity</em>. A cleaner and a CEO are both equally human and deserve this basic recognition.
+    </div>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Imagine every person wearing a label: "Human Being — Contains Self (I), capable of happiness and suffering." Respect means reading that label before anything else. Most of the time, we read the labels "rich/poor," "upper/lower," "educated/uneducated" — and that's where respect goes wrong.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q11 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.11</span><h2>What is justice? How does it lead to mutual happiness?</h2></div>
+  <div class="qa-body">
+    <h3>Meaning of Justice (Nyaya)</h3>
+    <p><strong>Justice</strong> in UHV means the <em>recognition, fulfillment, and evaluation of relationships</em> in a harmonious manner. It is not merely a legal concept but a deeply felt human value.</p>
+    <p>Justice involves three steps:</p>
+    <ol>
+      <li><strong>Recognition (Pahachana):</strong> Correctly identifying the relationship and its values</li>
+      <li><strong>Fulfillment (Nibhana):</strong> Fulfilling the expected feelings in the relationship</li>
+      <li><strong>Evaluation (Mulyankan):</strong> Assessing whether the relationship is being fulfilled rightly</li>
+    </ol>
+
+    <h3>Justice in Relationships</h3>
+    <ul>
+      <li>In every human relationship, both parties expect certain values (trust, respect, care, love)</li>
+      <li>Justice = when both parties <em>correctly identify and fulfil</em> these values</li>
+      <li>Injustice = when one or both parties fail to recognize or act on these values</li>
+    </ul>
+
+    <h3>How Justice Leads to Mutual Happiness</h3>
+    <div class="diagram">
+      Person A correctly understands relationship values<br>
+      <span class="arrow">↓ fulfills them</span><br>
+      Person B feels valued, respected, cared for<br>
+      <span class="arrow">↓ reciprocates</span><br>
+      Person A also feels valued<br>
+      <span class="arrow">↓</span><br>
+      <strong>MUTUAL HAPPINESS</strong> — both feel fulfilled simultaneously
+    </div>
+
+    <p>This is different from a <em>zero-sum game</em> where one person's gain is another's loss. In justice-based relationships, <strong>both gain happiness simultaneously</strong>.</p>
+
+    <div class="highlight-box">
+      <strong>Example:</strong> A student who genuinely respects and learns from a teacher, and a teacher who genuinely cares for and guides the student — both feel fulfilled. This is justice in the student-teacher relationship leading to mutual happiness.
+    </div>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Justice is not a courtroom concept here — it's a relationship concept. Think of it as a two-lane road: both lanes (both people) must flow smoothly for traffic (the relationship) to work. When one lane (one person) blocks or ignores the other, there's an accident (injustice). When both flow well — mutual happiness.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q12 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.12</span><h2>Comment whether human-to-human relationship is inherent or created. Explain the feeling of love in light of this statement.</h2></div>
+  <div class="qa-body">
+    <h3>Is Human Relationship Inherent or Created?</h3>
+    <p>Human-to-human relationship is <strong>inherent</strong> — not created by external factors like culture, laws, or social contracts. This is because:</p>
+    <ul>
+      <li>All human beings have the same <em>Self (I)</em> — the same nature, the same desire for happiness, the same capacity for love and suffering</li>
+      <li>Every person is part of a larger family — the <strong>human family (Manav Parivar)</strong></li>
+      <li>We naturally feel connected to other humans — this feeling exists before any cultural conditioning</li>
+      <li>Seeing another person suffer naturally generates a response of concern in us — this is the inherent connection</li>
+    </ul>
+
+    <div class="highlight-box amber">
+      <strong>Key Statement:</strong> "I am related to all human beings as a member of the human family." This relationship exists by nature — it only needs to be <em>recognized</em>, not created.
+    </div>
+
+    <h3>The Feeling of Love (Prem)</h3>
+    <p><strong>Love</strong> in UHV means the feeling of being related to every human being — a sense of <em>belonging and oneness</em>. It is:</p>
+    <ul>
+      <li><strong>Unconditional:</strong> Not dependent on what the other person does for you</li>
+      <li><strong>Universal:</strong> Not limited to family or friends — extends to all humans</li>
+      <li><strong>Continuous:</strong> Does not change with circumstances or behaviour</li>
+      <li>It is the <em>comprehensive value</em> that encompasses all other relational feelings</li>
+    </ul>
+
+    <h3>Love as the Highest Relational Value</h3>
+    <p>When we feel love for all human beings, it means we:</p>
+    <ul>
+      <li>Genuinely wish for their happiness and well-being</li>
+      <li>Do not want to harm or exploit them under any circumstance</li>
+      <li>See our own happiness as interconnected with others' happiness</li>
+    </ul>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Think of humanity as a tree. Each person is a leaf. Every leaf is inherently connected to the same trunk and roots — not by choice, but by nature. Love is simply recognizing this natural connection. We don't create our connection to the tree — we just need to become aware of it.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q13 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.13</span><h2>Explain the dimensions Education–Sanskar and Health–Sanyam in detail to achieve comprehensive human goal.</h2></div>
+  <div class="qa-body">
+    <h3>Comprehensive Human Goal — Overview</h3>
+    <p>The comprehensive human goal operates at all four levels: Individual, Family, Society, and Nature. Two critical dimensions for achieving this are:</p>
+
+    <h3>1. Education–Sanskar (Shiksha-Sanskar)</h3>
+    <p><strong>Education</strong> refers to the development of <em>right understanding</em> — not just information transfer but the development of a correctly seeing human being.</p>
+    <ul>
+      <li>It should help the student understand themselves (Self), their relationships, society, and nature</li>
+      <li>It should develop <em>values, character, and competence</em> simultaneously</li>
+    </ul>
+    <p><strong>Sanskar</strong> refers to the <em>refinement and value inculcation</em> process — the formation of correct habits, attitudes, and dispositions that support right living.</p>
+    <ul>
+      <li>Sanskar is received from family, teachers, environment, and society</li>
+      <li>It shapes the <em>inner quality</em> of the human being over time</li>
+    </ul>
+    <div class="highlight-box">
+      <strong>Ideal Education:</strong> One that produces a person who is both skilled (competent) AND values-based (ethical) — able to work effectively AND live harmoniously.
+    </div>
+
+    <h3>2. Health–Sanyam (Svasthya-Sanyam)</h3>
+    <p><strong>Health</strong> here means both <em>physical well-being</em> and the right understanding of the body's needs — knowing what truly keeps the body healthy (nutritious food, rest, natural living).</p>
+    <ul>
+      <li>It is not just absence of disease but <em>proper nurturing</em> of the body as the instrument of I</li>
+    </ul>
+    <p><strong>Sanyam</strong> means <em>self-regulation</em> — the Self (I) properly regulating the Body's activities, ensuring the body is used as a tool and not indulged excessively.</p>
+    <ul>
+      <li>Sanyam prevents overindulgence in food, sleep, sensory pleasures</li>
+      <li>It ensures the body remains a healthy instrument for a long time</li>
+      <li>It also means <em>proper use of physical facilities</em> — not wastage or exploitation</li>
+    </ul>
+
+    <table>
+      <thead><tr><th>Dimension</th><th>Focus</th><th>Outcome</th></tr></thead>
+      <tbody>
+        <tr><td>Education</td><td>Right understanding of self and world</td><td>Value-based competence</td></tr>
+        <tr><td>Sanskar</td><td>Refinement of inner qualities</td><td>Good character, habits</td></tr>
+        <tr><td>Health</td><td>Physical well-being and nurturing of body</td><td>Long, healthy instrumental life</td></tr>
+        <tr><td>Sanyam</td><td>Self-regulation of bodily activities</td><td>Balanced, non-addictive living</td></tr>
+      </tbody>
+    </table>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Education-Sanskar develops the <em>driver</em> (Self). Health-Sanyam maintains the <em>vehicle</em> (Body). A great driver in a broken car fails. A perfect car with an untrained driver crashes. You need both — that's the comprehensive human goal.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q14 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.14</span><h2>Discuss the need, basic guidelines, content and process of value education.</h2></div>
+  <div class="qa-body">
+    <h3>Need for Value Education</h3>
+    <ul>
+      <li>Current education is predominantly <em>skill and information-based</em> — produces technically competent but ethically confused graduates</li>
+      <li>Rising rates of corruption, violence, depression, and family breakdown show a <strong>value deficit</strong></li>
+      <li>Human beings need <em>right understanding</em> — not just knowledge — to live happily and contribute to society</li>
+      <li>Technology without values leads to misuse (weapons, pollution, exploitation)</li>
+    </ul>
+
+    <h3>Basic Guidelines of Value Education</h3>
+    <ul>
+      <li><strong>Universal:</strong> Must be acceptable to all humans across cultures, religions, and regions</li>
+      <li><strong>Rational:</strong> Must be based on logic and verifiable experience — not dogma or faith-based</li>
+      <li><strong>Natural Acceptance-Based:</strong> Values must resonate with what every human naturally accepts as right</li>
+      <li><strong>All-inclusive:</strong> Must address all dimensions — self, family, society, nature</li>
+    </ul>
+
+    <h3>Content of Value Education</h3>
+    <div class="box-row">
+      <div class="box green"><strong>Self-Level</strong> Right understanding of I, harmony within self</div>
+      <div class="box"><strong>Family Level</strong> Right feelings in relationships — trust, respect, care, love</div>
+      <div class="box gold"><strong>Society Level</strong> Justice, fearlessness, mutual fulfillment</div>
+      <div class="box teal"><strong>Nature Level</strong> Co-existence, sustainability, balance</div>
+    </div>
+
+    <h3>Process of Value Education</h3>
+    <ol>
+      <li><strong>Proposal:</strong> A value or understanding is proposed (e.g., "happiness is an inner state")</li>
+      <li><strong>Verification:</strong> The student checks it against their own natural acceptance and experience</li>
+      <li><strong>Dialogue:</strong> Discussion and exploration — not blind acceptance</li>
+      <li><strong>Internalization:</strong> The student integrates the value into their thinking and behaviour</li>
+      <li><strong>Practice:</strong> The understanding manifests in right conduct naturally</li>
+    </ol>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Value education is different from moral preaching. It's not "do this because we say so" — it's "here's a way of looking at life; check if it feels right to you, and then live accordingly." The difference: preaching creates compliance; value education creates conviction.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q15 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.15</span><h2>What is ethical human conduct? Explain in terms of values, policies and character with appropriate examples.</h2></div>
+  <div class="qa-body">
+    <h3>Ethical Human Conduct</h3>
+    <p><strong>Ethical human conduct</strong> means acting in ways that are <em>mutually fulfilling</em> for oneself and others, based on right understanding. It involves consistency between inner values, outer policies/actions, and the character one develops over time.</p>
+
+    <h3>1. Values (Mulya)</h3>
+    <p>Values are <strong>universal inner standards</strong> of right and wrong — they are the same for all human beings:</p>
+    <ul>
+      <li>Trust, Respect, Affection, Care, Guidance, Gratitude, Reverence, Love</li>
+      <li>Example: <em>Honesty</em> — the value of being truthful is universally accepted as right</li>
+      <li>Values guide what <em>should</em> be done, regardless of circumstance</li>
+    </ul>
+
+    <h3>2. Policies (Niti)</h3>
+    <p>Policies are <strong>context-based guidelines</strong> derived from values — they tell us how to act in specific situations:</p>
+    <ul>
+      <li>A doctor's policy: "I will not share a patient's confidential information" (derived from the value of trust)</li>
+      <li>An engineer's policy: "I will not approve a structurally unsafe design even under pressure" (from value of responsibility)</li>
+      <li>Policies can change with context, but values they are based on remain constant</li>
+    </ul>
+
+    <h3>3. Character (Charitra)</h3>
+    <p><strong>Character</strong> is the consistent manifestation of values and policies over time — it is what a person <em>is</em>, not just what they do occasionally:</p>
+    <ul>
+      <li>A person of character acts honestly not because they are watched, but because it is natural to them</li>
+      <li>Character is built by repeatedly aligning actions with values</li>
+    </ul>
+
+    <table>
+      <thead><tr><th>Layer</th><th>Meaning</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Values</td><td>Inner standards (what is right)</td><td>Honesty, Care, Justice</td></tr>
+        <tr><td>Policies</td><td>Contextual guidelines from values</td><td>"I will not falsify records"</td></tr>
+        <tr><td>Character</td><td>Consistent behaviour based on values</td><td>Always telling truth even at personal cost</td></tr>
+      </tbody>
+    </table>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Values are the compass (direction), policies are the map (specific route), and character is the habitual walking (consistent movement). Without a compass, your map is useless. Without a map, walking is aimless. Without walking, nothing happens. All three together = ethical human conduct.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q16 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.16</span><h2>Explore the issues in professional ethics in the current scenario. List unethical practices in profession today and methods being tried to curb them.</h2></div>
+  <div class="qa-body">
+    <h3>Professional Ethics — Meaning</h3>
+    <p><strong>Professional ethics</strong> refers to the application of core human values (honesty, responsibility, care, competence) within one's professional role. It ensures that a professional serves society and not just personal gain.</p>
+
+    <h3>Key Issues in Professional Ethics Today</h3>
+    <ul>
+      <li><strong>Conflict of interest:</strong> Professionals prioritizing personal gain over client/public welfare</li>
+      <li><strong>Short-term profit orientation:</strong> Focus on quarterly profits vs long-term sustainability and integrity</li>
+      <li><strong>Pressure to compromise:</strong> Junior professionals pressured by seniors to cut corners or falsify data</li>
+      <li><strong>Lack of accountability:</strong> Diffusion of responsibility in large organizations</li>
+      <li><strong>Technology misuse:</strong> Using professional skills for surveillance, exploitation, or harmful AI</li>
+    </ul>
+
+    <h3>Unethical Practices in Professions Today</h3>
+    <table>
+      <thead><tr><th>Profession</th><th>Unethical Practice</th></tr></thead>
+      <tbody>
+        <tr><td>Engineering</td><td>Approving substandard materials, falsifying safety tests, plagiarism in research</td></tr>
+        <tr><td>Medicine</td><td>Unnecessary procedures for profit, misdiagnosis, pharmaceutical kickbacks</td></tr>
+        <tr><td>Law</td><td>Fabricating evidence, prolonging cases for fees, conflict of interest</td></tr>
+        <tr><td>Finance</td><td>Insider trading, falsifying accounts, Ponzi schemes</td></tr>
+        <tr><td>Technology</td><td>Data privacy violations, biased algorithms, building addictive products</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Methods Being Tried to Curb Unethical Practices</h3>
+    <ul>
+      <li><strong>Regulatory frameworks:</strong> SEBI, MCI, Bar Council, IEEE Code of Ethics</li>
+      <li><strong>Whistleblower protection laws</strong> to encourage reporting of unethical behaviour</li>
+      <li><strong>Value education in professional courses</strong> — UHV in engineering curricula (like this course!)</li>
+      <li><strong>Corporate governance standards:</strong> ESG (Environmental, Social, Governance) frameworks</li>
+      <li><strong>Transparent audit systems</strong> and <strong>independent oversight boards</strong></li>
+    </ul>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Regulations are like traffic police — they catch violators after the fact. Value education is like teaching people why safe driving matters — it prevents violations in the first place. For true professional ethics, we need both — laws AND inner values.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q17 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.17</span><h2>Explain how excellence is different from 'to be special' and how it leads toward a harmonious society.</h2></div>
+  <div class="qa-body">
+    <h3>'To Be Special' — The Problem</h3>
+    <p><strong>'To be special'</strong> means wanting to be <em>better than others</em>, to stand out, to be recognized as superior. This is:</p>
+    <ul>
+      <li>Comparative and competitive — requires others to be 'less'</li>
+      <li>Based on ego and external validation</li>
+      <li>Creates insecurity, jealousy, and constant anxiety (fear of losing specialness)</li>
+      <li>Fundamentally <strong>divisive</strong> — separates "special" from "ordinary"</li>
+    </ul>
+
+    <h3>Excellence — The Right Understanding</h3>
+    <p><strong>Excellence</strong> means performing one's role and responsibilities to the fullest extent — not to be better than someone else, but because it is the <em>right way of being</em>.</p>
+    <ul>
+      <li>Excellence is about <em>contribution, not competition</em></li>
+      <li>It means fulfilling one's duties with sincerity, care, and competence</li>
+      <li>It is <strong>non-comparative</strong> — a farmer can be excellent, so can a doctor, so can a sweeper</li>
+      <li>It leads to inner satisfaction, not external applause</li>
+    </ul>
+
+    <table>
+      <thead><tr><th>Aspect</th><th>To Be Special</th><th>Excellence</th></tr></thead>
+      <tbody>
+        <tr><td>Goal</td><td>Superiority over others</td><td>Fulfillment of one's role</td></tr>
+        <tr><td>Orientation</td><td>Comparative, competitive</td><td>Intrinsic, value-based</td></tr>
+        <tr><td>Effect on others</td><td>Diminishes others, creates rivalry</td><td>Inspires, contributes to society</td></tr>
+        <tr><td>Emotional state</td><td>Anxiety, insecurity</td><td>Satisfaction, inner peace</td></tr>
+      </tbody>
+    </table>
+
+    <h3>How Excellence Leads to Harmonious Society</h3>
+    <ul>
+      <li>When every person pursues excellence in their own role, <em>all roles are fulfilled well</em> → society functions harmoniously</li>
+      <li>There is no exploitation or envy — everyone's contribution is valued</li>
+      <li>Collective excellence = social harmony (like an orchestra where every musician plays their best)</li>
+    </ul>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>"To be special" is trying to be the tallest building by demolishing others. "Excellence" is building yourself as tall and strong as possible so the city (society) is enriched. In a city of excellent buildings, there is no "tallest" — just a beautiful skyline.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q18 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.18</span><h2>For fearlessness in society, what are the minimum requirements? What is your participation towards ensuring a fearless society?</h2></div>
+  <div class="qa-body">
+    <h3>Meaning of Fearlessness (Abhaya)</h3>
+    <p><strong>Fearlessness</strong> in society means a state where every individual feels safe, secure, and free from threat — physically, emotionally, and psychologically. It is a key attribute of a just and harmonious society.</p>
+
+    <h3>Minimum Requirements for a Fearless Society</h3>
+    <ul>
+      <li><strong>Mutual trust:</strong> Every member of society trusts that others will not harm them. Trust is the foundation of fearlessness.</li>
+      <li><strong>Justice in relationships:</strong> When relationships are just and values are fulfilled, there is no reason for fear or conflict.</li>
+      <li><strong>Right understanding in individuals:</strong> People who understand their connection to others do not exploit or harm others — they naturally uphold safety.</li>
+      <li><strong>Absence of exploitation:</strong> No person or group exploits another for resources, power, or pleasure.</li>
+      <li><strong>Transparent governance:</strong> Institutions that are accountable and serve all without discrimination.</li>
+      <li><strong>Education in values:</strong> A society where people have good values naturally generates less fear.</li>
+    </ul>
+
+    <h3>Participation Towards a Fearless Society</h3>
+    <ul>
+      <li><strong>Personal level:</strong> Ensuring I do not cause fear to others — through honesty, non-violence, and trustworthy behaviour</li>
+      <li><strong>Family level:</strong> Creating a fearless environment at home — where children and elders are not afraid to express themselves</li>
+      <li><strong>Professional level:</strong> Not engaging in intimidation, corruption, or unfair practices</li>
+      <li><strong>Community level:</strong> Standing up for justice when others are treated unjustly; not being a silent bystander</li>
+      <li><strong>Civic level:</strong> Supporting and promoting institutions and systems that protect rights and ensure safety</li>
+    </ul>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>A fearless society is not built by armies — it's built by individuals who commit to not being a source of fear for anyone else. When 1 billion people each decide "I will not harm, exploit, or threaten anyone," you get a fearless society. It starts with each individual — it starts with you.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q19 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.19</span><h2>Explain the difference between animal consciousness and human consciousness. How does value education enable transformation?</h2></div>
+  <div class="qa-body">
+    <h3>Animal Consciousness</h3>
+    <p>Animals are guided primarily by <strong>instinct and sensation</strong>:</p>
+    <ul>
+      <li>They live by the <em>survival impulse</em> — seek food, avoid predators, reproduce</li>
+      <li>Their behaviour is reactive — based on immediate needs and threats</li>
+      <li>No capacity for self-reflection, ethical reasoning, or long-term planning</li>
+      <li>Relationships based on utility and power (stronger animal dominates)</li>
+    </ul>
+
+    <h3>Human Consciousness</h3>
+    <p>Humans have the capacity for <strong>self-awareness, ethical reasoning, and aspiration for happiness beyond sensation</strong>:</p>
+    <ul>
+      <li>Humans can choose actions based on values — not just instinct</li>
+      <li>Humans can reflect on their own behaviour and improve it</li>
+      <li>Humans aspire for happiness, justice, love — which are not mere survival needs</li>
+      <li>Humans can live in harmony with each other and nature through right understanding</li>
+    </ul>
+
+    <table>
+      <thead><tr><th>Aspect</th><th>Animal Consciousness</th><th>Human Consciousness</th></tr></thead>
+      <tbody>
+        <tr><td>Basis</td><td>Instinct and sensation</td><td>Values and right understanding</td></tr>
+        <tr><td>Relationships</td><td>Utility and power</td><td>Trust, love, care, justice</td></tr>
+        <tr><td>Aspiration</td><td>Survival, pleasure</td><td>Happiness, truth, harmony</td></tr>
+        <tr><td>Self-awareness</td><td>Absent</td><td>Present — capacity for self-exploration</td></tr>
+      </tbody>
+    </table>
+
+    <h3>How Value Education Enables Transformation</h3>
+    <ul>
+      <li>Many humans currently live with <em>animal consciousness</em> — driven by greed, fear, competition, and sensation-seeking (only the body's needs matter)</li>
+      <li><strong>Value education</strong> helps a person recognize their true human nature — as a Self (I) with the capacity for love, justice, and harmony</li>
+      <li>It transforms the basis of decision-making from <em>instinct → understanding</em>, from <em>sensation → values</em></li>
+      <li>It enables the person to live naturally in harmony with others and nature</li>
+    </ul>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Animal consciousness = "What can I get?" Human consciousness = "What is right?" Value education is the upgrade process — moving from a primitive operating system (survival mode) to an advanced one (harmony mode). The hardware (brain/body) is the same; the software (understanding/values) is upgraded.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q20 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.20</span><h2>Explain the process needed to approach the pure self from deluded self.</h2></div>
+  <div class="qa-body">
+    <h3>Deluded Self vs Pure Self</h3>
+    <p>The <strong>Deluded Self</strong> is the state of the Self (I) when it operates on <em>wrong assumptions, conditioning, and mistaken beliefs</em> — believing that happiness comes from physical things, that relationships are based on utility, that the body is all there is.</p>
+    <p>The <strong>Pure Self</strong> is the Self operating with <em>right understanding</em> — aware of its true nature, values, and relationship with existence.</p>
+
+    <h3>Characteristics of Deluded Self</h3>
+    <ul>
+      <li>Confused about what brings real happiness</li>
+      <li>Governed by conditioned beliefs from upbringing, media, peer pressure</li>
+      <li>Mistaken assumption: I = Body → therefore happiness = physical pleasure</li>
+      <li>Relationships based on: "What can you do for me?"</li>
+      <li>Constant inner conflict, anxiety, craving</li>
+    </ul>
+
+    <h3>Process to Approach Pure Self</h3>
+    <div class="diagram">
+      <strong>Step 1: Self-Exploration</strong><br>
+      Question your beliefs — are they naturally acceptable or just conditioned?<br>
+      <span class="arrow">↓</span><br>
+      <strong>Step 2: Natural Acceptance</strong><br>
+      Identify what you naturally accept as true (e.g., "honesty feels right")<br>
+      <span class="arrow">↓</span><br>
+      <strong>Step 3: Right Understanding</strong><br>
+      Develop understanding of I, body, relationships, nature, existence<br>
+      <span class="arrow">↓</span><br>
+      <strong>Step 4: Verification in Living</strong><br>
+      Test the understanding in daily life — does it bring harmony?<br>
+      <span class="arrow">↓</span><br>
+      <strong>Step 5: Transformation in Behaviour</strong><br>
+      Gradually, thinking → feeling → action aligns with right values<br>
+      <span class="arrow">↓</span><br>
+      <strong>Pure Self: Harmony, Peace, Authentic Living</strong>
+    </div>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>The deluded self is like a person who has been told all their life that sugar is salt. They put sugar in soup and wonder why it tastes wrong. Self-exploration is tasting again and questioning — "Wait, is this really salt?" The pure self is the person who now correctly identifies both sugar and salt and uses them rightly.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q21 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.21</span><h2>Explain the following three realities: Material Unit, Conscious Unit, Space and Co-existence.</h2></div>
+  <div class="qa-body">
+    <h3>1. Material Unit (Jadd Ikai)</h3>
+    <p>A <strong>Material Unit</strong> is any unit in existence that is <em>non-conscious</em> — it does not have the capacity for desire, thought, or self-awareness.</p>
+    <ul>
+      <li>Examples: atoms, molecules, rocks, soil, water, air, plants (in physical form), planets</li>
+      <li>Material units have <strong>definite physical and chemical properties</strong> — they follow physical laws</li>
+      <li>They interact through physical-chemical activities (reactions, bonding, attraction/repulsion)</li>
+      <li>All material units are <em>submerged in space</em> — they exist within space but do not extend outside their boundaries</li>
+    </ul>
+
+    <h3>2. Conscious Unit (Chetan Ikai)</h3>
+    <p>A <strong>Conscious Unit</strong> is any unit that possesses <em>consciousness</em> — it has the capacity for knowing, desiring, feeling, and choosing.</p>
+    <ul>
+      <li>Examples: The Self (I) in human beings; also considered in the life-order at higher levels</li>
+      <li>The Self/I is a conscious unit — it is <em>alive, aware, and self-determining</em></li>
+      <li>Conscious units have activities that are qualitatively different from material reactions — they involve thinking, imagining, feeling, and evaluation</li>
+    </ul>
+
+    <h3>3. Space (Shunya / Vyapak)</h3>
+    <p><strong>Space</strong> is the <em>all-pervasive medium</em> in which all units (material and conscious) exist.</p>
+    <ul>
+      <li>Space is continuous, infinite, and undivided</li>
+      <li>It is the backdrop of existence — everything exists <em>in</em> space</li>
+      <li>Space itself has no physical properties — it is transparent and all-pervading</li>
+    </ul>
+
+    <h3>Co-existence (Sahaastitva)</h3>
+    <p><strong>Co-existence</strong> means that all units (material and conscious) exist <em>together in space</em>, and each unit is complete in itself while also being a part of the larger whole.</p>
+    <ul>
+      <li>Every unit has its own nature and properties — but exists <em>with all other units</em> in space</li>
+      <li>Co-existence is not just physical proximity — it implies natural interconnection and mutual relationship</li>
+    </ul>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Imagine space as the ocean, and all units (material and conscious) as fish of various sizes swimming in it. Each fish is distinct (its own unit) but all coexist in the same ocean (space). Remove the ocean and nothing survives. That's co-existence — distinct units in a shared, all-pervading medium.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q22 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.22</span><h2>Explain the natural characteristics and innateness of all the four orders with examples.</h2></div>
+  <div class="qa-body">
+    <h3>Four Orders in Nature</h3>
+    <p>Nature is organized into <strong>four orders</strong>, each with its own natural characteristics (Dharma) and innateness (Swabhava):</p>
+
+    <table>
+      <thead><tr><th>Order</th><th>Examples</th><th>Natural Characteristic (Dharma)</th><th>Innateness (Swabhava)</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Material Order</strong></td><td>Stones, soil, water, metals, air</td><td>Physical-chemical properties — conductivity, hardness, reactivity</td><td>Existence as matter, following physical laws</td></tr>
+        <tr><td><strong>Plant/Bio Order</strong></td><td>Trees, plants, grass, fungi</td><td>Growth, nutrition, reproduction, bio-chemical activity</td><td>To grow and sustain life processes</td></tr>
+        <tr><td><strong>Animal Order</strong></td><td>Insects, birds, fish, mammals</td><td>Sensation, movement, instinct-based behaviour, self-preservation</td><td>To survive and reproduce via instinct</td></tr>
+        <tr><td><strong>Human Order</strong></td><td>Human beings</td><td>Knowledge, understanding, ethical reasoning, choice based on values</td><td>To understand, relate, and live in harmony</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Key Insights</h3>
+    <ul>
+      <li>Each order has its own <em>inherent nature</em> — fire naturally burns, trees naturally grow, animals naturally seek food</li>
+      <li>Each order <em>fulfills the needs</em> of higher orders — rocks support plants, plants feed animals, animals and plants serve humans</li>
+      <li>The human order is <strong>unique</strong> — it has the capacity to understand all other orders and live in harmony with them OR exploit them</li>
+      <li>Dharma of each unit = its natural, undeniable characteristics (e.g., fire's dharma is heat and light)</li>
+    </ul>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Each order is like a layer of a cake — each layer has its own taste and texture (innateness) and contributes to the whole (nature's harmony). You can't replace one layer with another. Similarly, each natural order has its own role — and disrupting any layer disrupts the whole cake (ecosystem).</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q23 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.23</span><h2>What are the four orders in nature? How are they inter-dependent and mutually fulfilling for each other?</h2></div>
+  <div class="qa-body">
+    <h3>Four Orders in Nature</h3>
+    <div class="box-row">
+      <div class="box"><strong>Material Order</strong> Non-living matter</div>
+      <div class="box green"><strong>Plant/Bio Order</strong> Living but not sentient</div>
+      <div class="box gold"><strong>Animal Order</strong> Living and sentient</div>
+      <div class="box teal"><strong>Human Order</strong> Living, sentient, conscious</div>
+    </div>
+
+    <h3>Interdependence and Mutual Fulfillment</h3>
+    <p>Each order depends on the others and contributes to the others:</p>
+
+    <table>
+      <thead><tr><th>Order</th><th>What it Needs</th><th>What it Provides</th></tr></thead>
+      <tbody>
+        <tr><td>Material Order</td><td>Space to exist (from existence)</td><td>Minerals, soil, water for plant order</td></tr>
+        <tr><td>Plant Order</td><td>Soil, water, sunlight from material order</td><td>Oxygen, food, shelter for animal and human orders</td></tr>
+        <tr><td>Animal Order</td><td>Plants and sometimes other animals for food</td><td>Pollination, seed dispersal, soil aeration</td></tr>
+        <tr><td>Human Order</td><td>All three lower orders for sustenance</td><td>Responsible stewardship, protection, and maintenance of all orders</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Mutual Fulfillment in Practice</h3>
+    <ul>
+      <li>Plants absorb CO₂ (from animals/humans) and provide O₂ → mutual gas exchange</li>
+      <li>Bees pollinate flowers → flowers provide nectar → mutual benefit</li>
+      <li>Earthworms aerate soil → plants grow better → earthworms get organic matter</li>
+      <li>Humans should maintain this cycle — not disrupt it through overexploitation</li>
+    </ul>
+
+    <div class="highlight-box amber">
+      <strong>Human Responsibility:</strong> Unlike other orders (which follow instinct), humans have the capacity to <em>consciously choose</em> to maintain or destroy this interdependence. The UHV course argues that right understanding leads to protecting this web of mutual fulfillment.
+    </div>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Think of the four orders as a relay race — each order passes the baton to the next. If the material order fails (soil degrades), the plant order falters → animals suffer → humans suffer. Mutual fulfillment means every runner in the relay runs their best so the whole team wins.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q24 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.24</span><h2>Explain the activities in the four orders of nature. How are the activities in the human order qualitatively different?</h2></div>
+  <div class="qa-body">
+    <h3>Activities in Each Order</h3>
+    <table>
+      <thead><tr><th>Order</th><th>Type of Activity</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Material Order</td><td>Physico-chemical reactions — mechanical, thermal, electrical</td><td>Iron rusting, water freezing, combustion</td></tr>
+        <tr><td>Plant Order</td><td>Bio-chemical activities — growth, photosynthesis, respiration, reproduction</td><td>Tree absorbing CO₂, seed germinating</td></tr>
+        <tr><td>Animal Order</td><td>Sensation-based — movement, feeding, defense, reproduction, social hierarchy</td><td>Lion hunting, birds migrating, bees building hives</td></tr>
+        <tr><td>Human Order</td><td>Knowledge-based — understanding, evaluating, choosing, creating, relating</td><td>Writing poetry, making ethical choices, doing science</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Why Human Activities are Qualitatively Different</h3>
+    <ul>
+      <li><strong>Freedom of choice:</strong> Animals act by instinct; humans can choose to override instinct based on values (e.g., a human can choose not to retaliate even when provoked)</li>
+      <li><strong>Self-reflection:</strong> Humans can think about their own thinking — this meta-cognition is absent in other orders</li>
+      <li><strong>Value-based action:</strong> Humans can act based on justice, love, truth — not just survival</li>
+      <li><strong>Creation of knowledge:</strong> Humans create, store, and transmit understanding across generations (science, philosophy, art)</li>
+      <li><strong>Responsibility:</strong> Only humans can be held morally responsible for their actions</li>
+      <li><strong>Conscious intent:</strong> Human activities have purpose and meaning beyond biological necessity</li>
+    </ul>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Material order = hardware executing fixed code. Plant order = hardware growing and self-repairing. Animal order = hardware running instinct software. Human order = hardware capable of writing new software (values, understanding) — and choosing which software to run. That's the qualitative difference: humans are self-programmable.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q25 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.25</span><h2>Explain the meaning of co-existence. How are units in co-existence being in space?</h2></div>
+  <div class="qa-body">
+    <h3>Meaning of Co-existence (Sahaastitva)</h3>
+    <p><strong>Co-existence</strong> is the fundamental reality of existence — it means that all units (material and conscious) exist <em>together in space</em>, each complete in itself, yet mutually related and interconnected.</p>
+    <ul>
+      <li>Co-existence is not just "being next to each other" — it is a deep, interconnected mutual relationship</li>
+      <li>Every unit has its own distinct nature (Dharma) while simultaneously being part of the larger whole</li>
+      <li>Co-existence implies <em>mutual complementarity</em> — each unit enriches the existence of others</li>
+    </ul>
+
+    <h3>How Units Exist in Space</h3>
+    <ul>
+      <li><strong>Space is continuous and all-pervading</strong> — it encompasses and permeates all units</li>
+      <li>Every unit (atom, plant, animal, human) is <em>submerged in space</em> — surrounded by and contained within space</li>
+      <li>No unit can exist outside space — space is the universal container</li>
+      <li>Yet each unit has its own boundary — it is distinct within space</li>
+    </ul>
+
+    <div class="diagram">
+      ┌─────────────────────── SPACE (All-pervading) ───────────────────────┐<br>
+      │   ◉ Material Units   ◉ Plant Units   ◉ Animal Units   ◉ Human Units │<br>
+      │         ↕                  ↕                ↕               ↕        │<br>
+      │         ←──────── All related, all submerged in Space ──────────→    │<br>
+      │                      CO-EXISTENCE                                    │<br>
+      └──────────────────────────────────────────────────────────────────────┘
+    </div>
+
+    <h3>Significance of Co-existence</h3>
+    <ul>
+      <li>Understanding co-existence dissolves the illusion of separateness — we are all part of the same existence</li>
+      <li>It forms the basis for <em>ecological responsibility</em> — harming nature means harming existence of which we are a part</li>
+      <li>It grounds the UHV concept of <em>living in harmony</em> with all four orders</li>
+    </ul>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Think of space as the internet and every unit as a connected device. Each device is distinct and has its own functions, but all exist on the same network, influence each other, and depend on the network's existence. Co-existence = understanding that the network is as important as any individual device.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q26 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.26</span><h2>Draw the complete chart of existence showing co-existence in existence and the four orders of nature.</h2></div>
+  <div class="qa-body">
+    <h3>Complete Chart of Existence</h3>
+
+    <div class="diagram" style="text-align:left; line-height:2.2; padding:24px;">
+      <div style="text-align:center; font-size:16px; margin-bottom:12px;"><strong>EXISTENCE (ASTITVA) = Units + Space</strong></div>
+      <div style="text-align:center; color:var(--accent);">═══════════════════════════════════════════════════</div><br>
+      <strong>SPACE (SHUNYA / VYAPAK)</strong><br>
+      &nbsp;&nbsp;└── Continuous, all-pervading, contains all units<br><br>
+      <strong>NATURE (PRAKRITI) = Four Orders submerged in Space</strong><br><br>
+      &nbsp;&nbsp;┌─────────────────────────────────────────┐<br>
+      &nbsp;&nbsp;│  1. MATERIAL ORDER (Padartha Awastha)   │<br>
+      &nbsp;&nbsp;│  &nbsp;&nbsp;→ Soil, Water, Air, Metals, Minerals   │<br>
+      &nbsp;&nbsp;│  &nbsp;&nbsp;→ Physico-chemical activities           │<br>
+      &nbsp;&nbsp;└─────────────────────────────────────────┘<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇ Provides base for<br>
+      &nbsp;&nbsp;┌─────────────────────────────────────────┐<br>
+      &nbsp;&nbsp;│  2. PLANT ORDER (Prana Awastha)          │<br>
+      &nbsp;&nbsp;│  &nbsp;&nbsp;→ Trees, Plants, Crops, Fungi         │<br>
+      &nbsp;&nbsp;│  &nbsp;&nbsp;→ Bio-chemical / growth activities     │<br>
+      &nbsp;&nbsp;└─────────────────────────────────────────┘<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇ Provides food/oxygen for<br>
+      &nbsp;&nbsp;┌─────────────────────────────────────────┐<br>
+      &nbsp;&nbsp;│  3. ANIMAL ORDER (Jiva Awastha)          │<br>
+      &nbsp;&nbsp;│  &nbsp;&nbsp;→ Insects, Birds, Fish, Mammals       │<br>
+      &nbsp;&nbsp;│  &nbsp;&nbsp;→ Instinct-based, sensory activities   │<br>
+      &nbsp;&nbsp;└─────────────────────────────────────────┘<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇ Co-exists with<br>
+      &nbsp;&nbsp;┌─────────────────────────────────────────┐<br>
+      &nbsp;&nbsp;│  4. HUMAN ORDER (Gyan Awastha)           │<br>
+      &nbsp;&nbsp;│  &nbsp;&nbsp;→ Human Beings                         │<br>
+      &nbsp;&nbsp;│  &nbsp;&nbsp;→ Knowledge-based, value-based         │<br>
+      &nbsp;&nbsp;│  &nbsp;&nbsp;→ Capacity for harmony OR destruction  │<br>
+      &nbsp;&nbsp;└─────────────────────────────────────────┘<br><br>
+      <div style="text-align:center; color:var(--accent);">All four orders are submerged in Space → CO-EXISTENCE</div>
+    </div>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>This chart shows nature as a nested system: Space contains everything; within space are four increasingly complex orders. The human order sits at the top — the most capable and therefore the most responsible. Understanding this chart = understanding our place and responsibility in existence.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q27 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.27</span><h2>Explain the inherent recyclability and mutual fulfillment in nature. Analyze the current status of human interaction with nature.</h2></div>
+  <div class="qa-body">
+    <h3>Inherent Recyclability in Nature</h3>
+    <p>Nature operates in <strong>closed-loop cycles</strong> — nothing is truly wasted. Every output of one process becomes the input for another:</p>
+    <ul>
+      <li><strong>Carbon Cycle:</strong> Animals exhale CO₂ → plants absorb it → produce O₂ → animals breathe it</li>
+      <li><strong>Water Cycle:</strong> Evaporation → condensation → precipitation → absorption → evaporation (repeated)</li>
+      <li><strong>Nutrient Cycle:</strong> Dead organisms decompose → become soil nutrients → feed plants → eaten by animals</li>
+      <li>This cyclical nature ensures that <em>resources are perpetually renewed</em> without external input</li>
+    </ul>
+
+    <h3>Mutual Fulfillment in Nature</h3>
+    <ul>
+      <li>Each order <em>gives and receives</em> — not just takes</li>
+      <li>Trees give oxygen, food, shade; in return they receive CO₂, water, nutrients from soil</li>
+      <li>This creates a <strong>self-sustaining system</strong> of balance and abundance</li>
+    </ul>
+
+    <h3>Current Status of Human Interaction with Nature</h3>
+    <p>Humans have largely disrupted this inherent recyclability:</p>
+    <ul>
+      <li><strong>Overextraction:</strong> Mining, deforestation, overfishing — taking more than nature can regenerate</li>
+      <li><strong>Pollution:</strong> Releasing non-recyclable waste (plastics, chemicals) that nature cannot process</li>
+      <li><strong>Climate change:</strong> Disrupting the carbon cycle through excess fossil fuel burning</li>
+      <li><strong>Biodiversity loss:</strong> Destroying species and ecosystems — breaking the web of mutual fulfillment</li>
+      <li><strong>Linear economy:</strong> Human production follows a <em>take-make-dispose</em> model, unlike nature's circular model</li>
+    </ul>
+
+    <div class="highlight-box amber">
+      <strong>Root Cause:</strong> This disruption stems from humans operating with <em>animal or deluded consciousness</em> — "What can I extract?" instead of "How can I co-exist and contribute?"
+    </div>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Nature is a perfectly functioning recycling plant — running for billions of years without producing any waste. Humans walked in and started throwing in material the plant can't process (plastics, chemicals) while also stealing raw materials faster than they can be replaced. Right understanding = respecting the plant's operating limits.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q28 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.28</span><h2>Discuss the scope and characteristics of people-friendly and eco-friendly production systems.</h2></div>
+  <div class="qa-body">
+    <h3>Need for People-Friendly & Eco-Friendly Production</h3>
+    <p>Current industrial systems prioritize <em>profit maximization</em> — often at the cost of human well-being and ecological balance. A truly holistic production system must serve both people and nature.</p>
+
+    <h3>Characteristics of People-Friendly Production Systems</h3>
+    <ul>
+      <li><strong>Safe working conditions:</strong> No hazardous chemicals, reasonable hours, physical safety</li>
+      <li><strong>Fair wages:</strong> Workers receive proportionate compensation</li>
+      <li><strong>Meaningful work:</strong> Work that respects the dignity of the worker</li>
+      <li><strong>Products that enrich lives:</strong> Not products designed to exploit or create addiction</li>
+      <li><strong>Community benefit:</strong> Production serves local community needs, not just distant markets</li>
+      <li><strong>Non-exploitative supply chains:</strong> No child labour, no forced labour</li>
+    </ul>
+
+    <h3>Characteristics of Eco-Friendly Production Systems</h3>
+    <ul>
+      <li><strong>Minimal waste:</strong> Closed-loop processes, recycling of by-products</li>
+      <li><strong>Renewable energy use:</strong> Solar, wind, biomass instead of fossil fuels</li>
+      <li><strong>Biodegradable materials:</strong> Avoiding long-lasting synthetic materials where natural alternatives exist</li>
+      <li><strong>Low carbon footprint:</strong> Minimizing greenhouse gas emissions</li>
+      <li><strong>Biodiversity-conscious:</strong> No destruction of natural habitats</li>
+    </ul>
+
+    <h3>Scope</h3>
+    <ul>
+      <li>Agriculture: Organic farming, permaculture</li>
+      <li>Industry: Circular economy, industrial symbiosis</li>
+      <li>Technology: Green tech, appropriate technology</li>
+      <li>Energy: Renewable energy systems</li>
+    </ul>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>A people-friendly + eco-friendly production system is one that, when you trace its entire life cycle — from raw material to final product to disposal — leaves humans better off AND the environment healthier. The challenge today is that most systems optimize one at the cost of the other. Right understanding enables optimizing both simultaneously.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q29 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.29</span><h2>Explain the term 'Holistic Technology'. Take examples from Indian history and evaluate if they are holistic.</h2></div>
+  <div class="qa-body">
+    <h3>Meaning of Holistic Technology</h3>
+    <p><strong>Holistic Technology</strong> is technology that is developed and applied in harmony with <em>all dimensions of existence</em> — it serves human well-being while also being compatible with ecological balance and social justice.</p>
+    <p>A holistic technology must satisfy:</p>
+    <ul>
+      <li><strong>Human dimension:</strong> Serves the real needs of people without creating dependency or harm</li>
+      <li><strong>Ecological dimension:</strong> Works within nature's capacity — recyclable, non-polluting</li>
+      <li><strong>Social dimension:</strong> Accessible to all, does not create inequality or exploitation</li>
+      <li><strong>Long-term sustainability:</strong> Can be maintained indefinitely without depleting resources</li>
+    </ul>
+
+    <h3>Examples from Indian History</h3>
+    <table>
+      <thead><tr><th>Technology</th><th>Description</th><th>Holistic Evaluation</th></tr></thead>
+      <tbody>
+        <tr><td>Step wells (Vav/Baoli)</td><td>Community water harvesting structures lasting thousands of years</td><td>✅ Eco-friendly, community-serving, durable, no pollution</td></tr>
+        <tr><td>Ayurvedic medicine</td><td>Plant-based, holistic health system</td><td>✅ Uses natural resources, minimal side effects, community-accessible</td></tr>
+        <tr><td>Khadi/Handloom</td><td>Decentralized textile production, empowers local artisans</td><td>✅ No industrial pollution, supports livelihoods, sustainable</td></tr>
+        <tr><td>Traditional crop rotation</td><td>Multi-crop farming systems that maintain soil health</td><td>✅ Soil-enriching, biodiversity-preserving, no chemical inputs</td></tr>
+        <tr><td>Zero-waste cooking</td><td>Every part of a plant/animal used — no food waste</td><td>✅ Circular, efficient, ecologically responsible</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Contrast with Non-Holistic Technology</h3>
+    <p>Modern technologies like <em>chemical pesticides, single-use plastics, fossil fuel engines</em> solve one problem (productivity) but create several others (soil degradation, pollution, climate change) — they are <strong>not holistic</strong>.</p>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Holistic technology is like a good doctor's treatment — it cures the illness without damaging other organs. Non-holistic technology is like a medicine that cures one disease but causes three others. Indian traditional technologies often show remarkable holism precisely because they evolved over centuries of feedback from nature itself.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q30 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.30</span><h2>What are comprehensive human goals? Write the state of society in the lack of identification of these goals.</h2></div>
+  <div class="qa-body">
+    <h3>Comprehensive Human Goals</h3>
+    <p>The <strong>comprehensive human goal</strong> is to achieve a state of <em>undivided society and universal order</em> — where every person and every part of nature lives in harmony.</p>
+    <p>This is achieved across four levels:</p>
+    <div class="box-row">
+      <div class="box green"><strong>Individual Level</strong> Right understanding, inner harmony, correct values</div>
+      <div class="box"><strong>Family Level</strong> Harmony in relationships — love, trust, care, guidance</div>
+      <div class="box gold"><strong>Society Level</strong> Fear-free, exploitation-free, justice-based social order</div>
+      <div class="box teal"><strong>Nature Level</strong> Co-existence, sustainable living, ecological balance</div>
+    </div>
+
+    <h3>Two Key Elements of Comprehensive Human Goal</h3>
+    <ul>
+      <li><strong>Happiness (Sukh)</strong> — at individual and family level</li>
+      <li><strong>Prosperity (Samridhi)</strong> — sufficient physical facilities for all</li>
+      <li><strong>Fearlessness (Abhaya)</strong> — in society</li>
+      <li><strong>Co-existence (Sahaastitva)</strong> — with nature</li>
+    </ul>
+
+    <h3>State of Society Without Comprehensive Human Goals</h3>
+    <ul>
+      <li><strong>Individual level:</strong> Confusion, anxiety, depression, addiction, identity crisis</li>
+      <li><strong>Family level:</strong> Broken families, mistrust, domestic violence, generation gaps</li>
+      <li><strong>Society level:</strong> Corruption, inequality, exploitation, crime, wars, discrimination</li>
+      <li><strong>Nature level:</strong> Climate change, deforestation, species extinction, resource depletion</li>
+    </ul>
+    <p>When humans chase only <em>wealth, power, or pleasure</em> without comprehensive goals, the result is a society in perpetual conflict — where prosperity for some comes at the cost of suffering for others.</p>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Comprehensive human goals are like the GPS destination. Without a destination, every road looks the same — you drive fast but go nowhere meaningful. Today's society has lots of speed (technology, growth) but no agreed destination (comprehensive goals). The result: we're lost on a highway.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q31 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.31</span><h2>Analyze ethical human conduct as taught in the course giving suitable examples.</h2></div>
+  <div class="qa-body">
+    <h3>Ethical Human Conduct in UHV Framework</h3>
+    <p>Ethical conduct, as per UHV, is <strong>naturally flowing right behaviour</strong> that emerges from right understanding — it is not forced compliance with external rules but an expression of internal values.</p>
+
+    <h3>Dimensions of Ethical Conduct</h3>
+    <ul>
+      <li><strong>Towards Self:</strong> Living with right understanding — not deceiving oneself. <em>Example: Acknowledging one's mistakes rather than rationalizing them.</em></li>
+      <li><strong>Towards Family:</strong> Fulfilling relational feelings — trust, care, guidance. <em>Example: A parent who is honest with their child even when the truth is uncomfortable.</em></li>
+      <li><strong>Towards Society:</strong> Ensuring justice, fearlessness, respect for all. <em>Example: An engineer who refuses to pass a substandard safety design despite pressure.</em></li>
+      <li><strong>Towards Nature:</strong> Using resources responsibly, not over-exploiting. <em>Example: A factory that treats its waste water before discharge.</em></li>
+    </ul>
+
+    <h3>Analysis: What Makes Conduct Truly Ethical?</h3>
+    <table>
+      <thead><tr><th>Criterion</th><th>Ethical</th><th>Merely Compliant (not truly ethical)</th></tr></thead>
+      <tbody>
+        <tr><td>Source</td><td>Internal values and understanding</td><td>Fear of punishment, social pressure</td></tr>
+        <tr><td>Consistency</td><td>Same whether observed or not</td><td>Changes when no one is watching</td></tr>
+        <tr><td>Motivation</td><td>Mutual wellbeing</td><td>Self-interest / avoiding consequences</td></tr>
+      </tbody>
+    </table>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>The true test of ethical conduct: "Would I act the same way if no one would ever know?" If yes — it's ethical. If no — it's merely compliant. UHV aims to produce people who act the same in public and private, not because they're watched, but because they've internalized what is right.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q32 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.32</span><h2>Distinguish between the response of the Self and Body giving suitable examples.</h2></div>
+  <div class="qa-body">
+    <h3>Response of the Self (I) vs Body</h3>
+    <table>
+      <thead><tr><th>Aspect</th><th>Response of Self (I)</th><th>Response of Body</th></tr></thead>
+      <tbody>
+        <tr><td>Nature</td><td>Conscious, value-based evaluation</td><td>Physiological, reflex or sensation-based</td></tr>
+        <tr><td>Stimulus</td><td>Understanding, values, ethical situations</td><td>Physical touch, pain, pleasure, hunger</td></tr>
+        <tr><td>Quality</td><td>Qualitative — can be right or wrong</td><td>Quantitative — intensity varies</td></tr>
+        <tr><td>Duration</td><td>Can persist over time (regret, conviction)</td><td>Temporary — fades as stimulus ends</td></tr>
+        <tr><td>Change</td><td>Changes with understanding (insight)</td><td>Changes with physiology (medicine, rest)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Examples</h3>
+    <div class="box-row">
+      <div class="box green">
+        <strong>Self Response</strong><br>
+        Feeling guilty after lying → This is the Self recognizing the value of honesty has been violated.<br>
+        Feeling satisfied after helping someone → Self fulfilling its relational values.
+      </div>
+      <div class="box red">
+        <strong>Body Response</strong><br>
+        Feeling hungry after not eating → Body signaling physiological need.<br>
+        Flinching when touched by a hot object → Reflex action, no conscious evaluation.
+      </div>
+    </div>
+
+    <h3>Key Insight</h3>
+    <ul>
+      <li>When someone insults you: <em>Body response</em> = rapid heartbeat, adrenaline; <em>Self response</em> = feeling hurt, deciding whether to react with anger or understanding</li>
+      <li>The Self can <em>regulate</em> the body's responses through right understanding — this is Sanyam</li>
+    </ul>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Imagine your phone getting a notification (body response — screen lights up, vibrates). That's automatic. Whether you respond with anger, kindness, or wisdom depends on the USER (Self response). The phone just alerts; the person decides how to act. Body = alert system; Self = decision-maker.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q33 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.33</span><h2>Critically analyze the statement: "Our senses cannot be the source of continuous happiness".</h2></div>
+  <div class="qa-body">
+    <h3>Understanding the Statement</h3>
+    <p>This statement challenges the common assumption that <em>sensory pleasures — food, music, physical comfort, visual beauty</em> — are the path to happiness.</p>
+
+    <h3>Why Senses Seem Like a Source of Happiness</h3>
+    <ul>
+      <li>Sensory inputs trigger pleasure responses in the brain (dopamine release)</li>
+      <li>These feel good momentarily — food tastes delicious, music sounds beautiful</li>
+      <li>Society and advertising reinforce the idea: "Buy this → feel happy"</li>
+    </ul>
+
+    <h3>Critical Analysis: Why Senses Cannot Provide Continuous Happiness</h3>
+    <ol>
+      <li><strong>Adaptation:</strong> The brain habituates to repeated stimuli — the 10th listen to a favourite song is less thrilling than the first. Pleasure diminishes.</li>
+      <li><strong>Saturation:</strong> Sensory needs have a physical limit. You can eat only so much before it becomes uncomfortable. True happiness has no such ceiling.</li>
+      <li><strong>Craving cycle:</strong> Every sensory pleasure creates a craving for more — not satisfaction. This is the mechanism of addiction.</li>
+      <li><strong>Mismatch with Self's nature:</strong> The Self (I) needs happiness; the body needs sensory input. These are categorically different. Satisfying the body cannot satisfy the Self.</li>
+      <li><strong>Contextual dependency:</strong> The same sensation can feel good in one context and awful in another (e.g., same food when happy vs. when grieving). This shows the source of happiness is the inner state, not the sensation.</li>
+    </ol>
+
+    <div class="highlight-box green">
+      <strong>Conclusion:</strong> Senses are instruments of experience — not sources of happiness. A healthy inner state (right understanding, harmonious values) can make even simple sensory experiences pleasurable. Without inner harmony, no sensory pleasure suffices.
+    </div>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Sensory pleasure is like a scratch for an itch — temporarily relieving but not solving the underlying dryness. True happiness is like moisturizing the skin — the itch doesn't return. The more you chase sensory pleasures, the more itchy (craving) your life becomes. Inner harmony = no itch in the first place.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q34 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.34</span><h2>Explain the difference between intention and competence. How do we come to confuse between the two?</h2></div>
+  <div class="qa-body">
+    <h3>Intention (Uddeshya)</h3>
+    <p><strong>Intention</strong> refers to the <em>inner desire or motivation</em> behind an action — what you <em>want to achieve</em>. It is a quality of the Self (I).</p>
+    <ul>
+      <li>Example: A doctor intending to heal patients genuinely</li>
+      <li>Intention relates to values and purpose</li>
+    </ul>
+
+    <h3>Competence (Yogyata)</h3>
+    <p><strong>Competence</strong> refers to the <em>actual ability or skill</em> to achieve the intended outcome — what you <em>can do</em>. It involves knowledge and skills.</p>
+    <ul>
+      <li>Example: A doctor who has the medical knowledge and clinical skill to actually cure patients</li>
+      <li>Competence relates to ability and practice</li>
+    </ul>
+
+    <table>
+      <thead><tr><th>Aspect</th><th>Intention</th><th>Competence</th></tr></thead>
+      <tbody>
+        <tr><td>Domain</td><td>Values, ethics, purpose</td><td>Skills, knowledge, ability</td></tr>
+        <tr><td>Source</td><td>Right understanding</td><td>Education, training, practice</td></tr>
+        <tr><td>Sufficiency</td><td>Not sufficient alone — need competence to act</td><td>Not sufficient alone — need right intention to direct</td></tr>
+      </tbody>
+    </table>
+
+    <h3>How We Confuse the Two</h3>
+    <ul>
+      <li>We often assume: <em>"Good intentions automatically lead to right outcomes."</em> But without competence, good intentions can cause harm (e.g., a well-meaning but untrained person performing surgery).</li>
+      <li>Conversely, we mistake technical competence for ethical conduct — <em>"He is skilled, therefore he is good."</em> A highly skilled hacker is competent but may use it unethically.</li>
+      <li>Education systems often measure only competence (marks, grades) — leading students to think achieving high marks = having good values.</li>
+    </ul>
+
+    <div class="highlight-box">
+      <strong>Ideal:</strong> Right intention (values) + Right competence (skills) = Truly beneficial professional conduct. Both are necessary. Neither alone is sufficient.
+    </div>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Intention is the destination on your GPS; competence is your driving skill. Having a beautiful destination (good intentions) doesn't help if you can't drive (no competence). Great driving skill (competence) means nothing if you're driving to the wrong place (wrong intentions). You need both to arrive at a good outcome.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q35 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.35</span><h2>Explain the feeling of Reverence. Distinguish between reverence and gratitude with examples.</h2></div>
+  <div class="qa-body">
+    <h3>Meaning of Reverence (Shraddha)</h3>
+    <p><strong>Reverence</strong> is the feeling of <em>deep respect, admiration, and recognition</em> for someone who has achieved higher wisdom, understanding, or values — someone who has gone further on the path of right living than oneself. It involves:</p>
+    <ul>
+      <li>Recognizing the superior wisdom or virtue of another</li>
+      <li>A genuine desire to learn from and be guided by them</li>
+      <li>An attitude of humility and openness in their presence</li>
+      <li>Examples: A student's feeling towards a truly wise teacher; the feeling towards great thinkers, saints, parents who embody values</li>
+    </ul>
+
+    <h3>Meaning of Gratitude (Kritagyata)</h3>
+    <p><strong>Gratitude</strong> is the feeling of <em>thankfulness and recognition</em> for what someone has given you — their time, effort, support, or sacrifice for your well-being. It involves:</p>
+    <ul>
+      <li>Acknowledging the contribution another has made to your growth or well-being</li>
+      <li>Feeling indebted in a positive, appreciative sense</li>
+      <li>Examples: Gratitude to parents for raising you; gratitude to a mentor who guided your career</li>
+    </ul>
+
+    <h3>Distinction between Reverence and Gratitude</h3>
+    <table>
+      <thead><tr><th>Aspect</th><th>Reverence</th><th>Gratitude</th></tr></thead>
+      <tbody>
+        <tr><td>Focus</td><td>What the person IS (their wisdom/values)</td><td>What the person DID (their actions for you)</td></tr>
+        <tr><td>Basis</td><td>Recognition of higher understanding</td><td>Recognition of contribution to one's life</td></tr>
+        <tr><td>Direction</td><td>Towards wisdom and virtue</td><td>Towards kindness and support</td></tr>
+        <tr><td>Example</td><td>Reverence for Mahatma Gandhi's values and wisdom</td><td>Gratitude to a teacher who helped you pass an exam</td></tr>
+      </tbody>
+    </table>
+
+    <p><em>Note:</em> One can feel both reverence and gratitude toward the same person. A great teacher may be revered for wisdom AND felt gratitude towards for personal support.</p>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Gratitude = "Thank you for what you did for me." Reverence = "I look up to who you are." You can be grateful to a friend who helped you move furniture. You revere someone whose character and understanding inspire you to be better. Gratitude looks at actions; reverence looks at being.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q36 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.36</span><h2>Explain the meaning of profession and explore the need of ethical competence in profession.</h2></div>
+  <div class="qa-body">
+    <h3>Meaning of Profession</h3>
+    <p>A <strong>profession</strong> is not merely a job — it is a <em>role in society through which one contributes to the well-being of others</em> while also sustaining oneself. Key aspects:</p>
+    <ul>
+      <li>It involves specialized knowledge and skills acquired through education and training</li>
+      <li>It is a role of responsibility — the professional's actions affect the lives of others</li>
+      <li>Examples: Engineering, medicine, law, teaching, architecture, management</li>
+    </ul>
+
+    <h3>Ethical Competence in Profession</h3>
+    <p><strong>Ethical competence</strong> is the ability to act in one's professional role in ways that are aligned with core human values — honesty, responsibility, care, justice — even under pressure to compromise.</p>
+
+    <h3>Why Ethical Competence is Needed</h3>
+    <ul>
+      <li><strong>Professional decisions affect many:</strong> An engineer's design affects thousands of users; a doctor's prescription affects the patient's health. Wrong decisions cause harm.</li>
+      <li><strong>Trust is the foundation:</strong> Society trusts professionals because of their expertise AND their integrity. Without ethical competence, this trust breaks down.</li>
+      <li><strong>Power asymmetry:</strong> Professionals have more knowledge than their clients — this creates potential for exploitation. Ethics prevents misuse of this power advantage.</li>
+      <li><strong>Long-term consequences:</strong> Many professional decisions have long-term impacts (environmental decisions, public health policies). Ethics ensures these are considered.</li>
+      <li><strong>Systemic health:</strong> Professions shape society. Ethical professionals collectively build a just, functional society.</li>
+    </ul>
+
+    <div class="highlight-box">
+      <strong>Key Formula:</strong> Technical Competence + Ethical Competence = True Professional Excellence
+    </div>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>A surgeon with perfect technical skill but poor ethics might perform unnecessary operations for money. A surgeon with good ethics but poor technical skill might harm patients unintentionally. Society needs surgeons (and all professionals) who are both technically excellent AND ethically grounded. One without the other is dangerous.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q37 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.37</span><h2>Explain the meaning of holistic development. Critically analyze the role of Education–Sanskar in holistic development.</h2></div>
+  <div class="qa-body">
+    <h3>Meaning of Holistic Development</h3>
+    <p><strong>Holistic development</strong> means the development of a human being in <em>all dimensions</em> — not just intellectual or professional, but also emotional, moral, relational, and physical:</p>
+    <div class="box-row">
+      <div class="box"><strong>Intellectual</strong> Right understanding, critical thinking</div>
+      <div class="box green"><strong>Ethical/Moral</strong> Values, character, integrity</div>
+      <div class="box gold"><strong>Emotional</strong> Ability to relate, empathize, care</div>
+      <div class="box teal"><strong>Physical</strong> Health, sanyam (self-regulation)</div>
+    </div>
+    <p>Holistic development produces a person who is simultaneously <em>competent, ethical, healthy, and happy</em>.</p>
+
+    <h3>Role of Education–Sanskar in Holistic Development</h3>
+    <p><strong>Education</strong> should provide:</p>
+    <ul>
+      <li>Right understanding of oneself, relationships, nature, and existence</li>
+      <li>Not just job-ready skills but life-ready wisdom</li>
+      <li>Value-based curriculum alongside technical knowledge</li>
+    </ul>
+    <p><strong>Sanskar</strong> contributes through:</p>
+    <ul>
+      <li>Family environment, cultural practices, and role models who embody values</li>
+      <li>Consistent exposure to ethical conduct in everyday life</li>
+      <li>Shaping inner dispositions (how we naturally feel and react)</li>
+    </ul>
+
+    <h3>Critical Analysis</h3>
+    <p>Current education systems largely fail at holistic development because:</p>
+    <ul>
+      <li>They are <em>marks-oriented</em>, not understanding-oriented</li>
+      <li>Sanskar is weakening — media, social media, and consumerist culture provide negative sanskar</li>
+      <li>There is a gap between what is taught and what is modelled — teachers may teach values but not embody them</li>
+    </ul>
+    <p>For genuine holistic development, education and sanskar must both move towards <em>right understanding as the foundation</em>.</p>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Education gives you the knowledge of what a good life looks like. Sanskar shapes your gut feeling — your default reactions. You need both: Education tells you honesty is right (intellectually); Sanskar makes you feel discomfort when you are dishonest (instinctively). Together, they make ethical conduct effortless.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q38 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.38</span><h2>Describe the activities of imagination in the Self. Justify how imagination gets enslaved with lack of right understanding.</h2></div>
+  <div class="qa-body">
+    <h3>Activities of Imagination in the Self (I)</h3>
+    <p>The Self continuously engages in <strong>imagination</strong> — it is the primary activity of I. The three forms of imagination are:</p>
+    <ul>
+      <li><strong>Desire (Ichha):</strong> Generating wants and aspirations — "I want peace", "I want recognition"</li>
+      <li><strong>Thought (Vichar):</strong> Deliberating and planning — "How should I act to achieve this?"</li>
+      <li><strong>Expectation (Asha):</strong> Anticipating outcomes — "If I do X, I will get Y"</li>
+    </ul>
+    <p>These three form a continuous mental activity — the "inner chatter" of the Self.</p>
+
+    <h3>How Imagination Gets Enslaved Without Right Understanding</h3>
+    <p>Without right understanding, the imagination becomes <em>enslaved to sensory inputs and conditioned beliefs</em>:</p>
+    <ul>
+      <li><strong>Desire becomes craving:</strong> Instead of desiring genuine happiness, we start desiring sensory pleasures (more food, more money, more likes on social media) because we wrongly believe these will give happiness</li>
+      <li><strong>Thought becomes manipulation:</strong> Planning not on values but on how to get more for oneself — deceiving others, cutting corners</li>
+      <li><strong>Expectation becomes anxiety:</strong> When expectations are tied to external outcomes (wealth, status), they generate constant fear of not achieving or losing them</li>
+    </ul>
+
+    <div class="highlight-box amber">
+      <strong>Result of Enslaved Imagination:</strong> The Self becomes trapped in an endless loop of craving → partial satisfaction → more craving. This is the root of addiction, anxiety, depression, and restlessness.
+    </div>
+
+    <h3>How Right Understanding Frees Imagination</h3>
+    <ul>
+      <li>Desire aligns with genuine happiness (values, harmony, contribution)</li>
+      <li>Thought becomes constructive and ethical planning</li>
+      <li>Expectation becomes realistic and founded on inner states, not external outcomes</li>
+    </ul>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Without right understanding, imagination is like a powerful horse with no rider — it runs wherever instinct and habit take it (usually toward sensory pleasures and ego). Right understanding is the skilled rider who guides the horse toward meaningful destinations. The horse's power (imagination) is not wasted — it's directed rightly.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q39 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.39</span><h2>Explain the comprehensive human goal and critically examine the goals of present-day society with respect to human goal and its outcome.</h2></div>
+  <div class="qa-body">
+    <h3>Comprehensive Human Goal</h3>
+    <p>The comprehensive human goal is to achieve <strong>Universal Human Order</strong> — a state where:</p>
+    <ul>
+      <li>Every individual lives with <em>right understanding and inner harmony</em></li>
+      <li>Every family is characterized by <em>trust, care, and harmonious relationships</em></li>
+      <li>Society is <em>free from exploitation, fear, and injustice</em></li>
+      <li>Nature is treated with <em>respect and maintained in co-existence</em></li>
+    </ul>
+
+    <h3>Present-Day Goals of Society</h3>
+    <ul>
+      <li><strong>Economic growth:</strong> GDP maximization as the primary national goal</li>
+      <li><strong>Technological advancement:</strong> Innovation for its own sake or for commercial gain</li>
+      <li><strong>Military power:</strong> Defense superiority as national security strategy</li>
+      <li><strong>Individual wealth:</strong> Personal financial accumulation as the goal of individuals</li>
+      <li><strong>Fame/popularity:</strong> Social media influence, recognition as personal goals</li>
+    </ul>
+
+    <h3>Critical Examination and Outcomes</h3>
+    <table>
+      <thead><tr><th>Present Goal</th><th>What It Ignores</th><th>Outcome</th></tr></thead>
+      <tbody>
+        <tr><td>GDP growth</td><td>Quality of life, inequality, ecology</td><td>Environmental destruction, poverty alongside plenty</td></tr>
+        <tr><td>Military power</td><td>Dialogue, justice, human dignity</td><td>Arms race, conflict, fear</td></tr>
+        <tr><td>Individual wealth</td><td>Community wellbeing, relationships</td><td>Loneliness, inequality, exploitation</td></tr>
+        <tr><td>Fame/popularity</td><td>Inner character, real relationships</td><td>Anxiety, identity crises, depression</td></tr>
+      </tbody>
+    </table>
+
+    <p>Present-day goals are <em>fragmented and incomplete</em> — they address only the body and material dimension, neglecting the Self's need for happiness, harmony, and meaning.</p>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Present-day society is like a hospital that measures success by number of beds and expensive equipment — but not by whether patients actually get better. The comprehensive human goal is asking: "Are people actually becoming happier, more just, and more harmonious?" — not just richer or more powerful.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q40 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.40</span><h2>Explain how respect can be ensured if everyone has different competence.</h2></div>
+  <div class="qa-body">
+    <h3>The Challenge: Different Competence, Same Respect?</h3>
+    <p>People vary widely in skills, intelligence, education, physical abilities, and social roles. The question is: can we genuinely respect all of them equally?</p>
+
+    <h3>The UHV Answer: Respect is Not Based on Competence</h3>
+    <p><strong>Respect (Samman)</strong> means <em>right evaluation</em> — and the fundamental evaluative truth is that every human being has the same <em>Self (I)</em> — the same conscious nature, the same aspiration for happiness, the same capacity for love and suffering.</p>
+    <ul>
+      <li>Competence is a <em>quality of the instrument (body + skills)</em>, not of the Self</li>
+      <li>Respecting someone means recognizing them as a conscious human being — independent of their competence</li>
+      <li>Different competences create different social roles — not different human worth</li>
+    </ul>
+
+    <h3>How Respect is Ensured Despite Different Competence</h3>
+    <div class="box-row">
+      <div class="box green">
+        <strong>Level 1: Basic Human Respect</strong>
+        Every person, regardless of competence, receives recognition of their human dignity — never humiliated or exploited.
+      </div>
+      <div class="box">
+        <strong>Level 2: Role-Specific Recognition</strong>
+        A cleaner's work keeps a hospital safe. A surgeon performs operations. Both are necessary. Both are respected for their contribution.
+      </div>
+      <div class="box gold">
+        <strong>Level 3: Developmental Respect</strong>
+        People with higher competence are given acknowledgment for that — but this acknowledgment does not diminish those with lesser competence.
+      </div>
+    </div>
+
+    <div class="highlight-box amber">
+      <strong>Key Insight:</strong> Respect is not a limited resource. Respecting a farmer's contribution does not take away from respecting a scientist's. Mutual respect is not zero-sum.
+    </div>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Think of an orchestra. The violinist and the percussionist have very different skills (competences). But both are essential to the performance, and both deserve respect — not the same type of praise, but the same depth of human recognition. Competence creates roles; values create respect. These operate on different planes.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q41 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.41</span><h2>Explain the submergence of nature in space. How does this relate to a student going through a professional course?</h2></div>
+  <div class="qa-body">
+    <h3>Submergence of Nature in Space</h3>
+    <p><strong>Submergence (Vyaptata)</strong> means that all units of nature — every atom, every living being, every element — exist <em>within space</em>, surrounded by space, and cannot exist outside of it.</p>
+    <ul>
+      <li>Space is the <em>universal container</em> — all-pervading, continuous, and undivided</li>
+      <li>Every material unit has its own boundary but is submerged in the continuous space around it</li>
+      <li>No unit is isolated — every unit is connected to all others through the common medium of space</li>
+      <li>This submergence implies <strong>fundamental interconnectedness</strong> — no unit exists in isolation</li>
+    </ul>
+    <p>This is the basis for <strong>co-existence</strong> — all units are submerged in the same space, making them inherently related.</p>
+
+    <h3>Relationship to a Student in a Professional Course</h3>
+    <p>The metaphor of submergence applies powerfully to a student's situation:</p>
+    <ul>
+      <li><strong>You are not isolated:</strong> Just as every unit is submerged in space (the larger whole), a student exists within and is supported by family, society, and nature — not as an independent atom</li>
+      <li><strong>Interdependence with all:</strong> The knowledge you acquire, the resources you use (electricity, food, internet) — all come from the larger social and natural system you are submerged in</li>
+      <li><strong>Responsibility flows from submergence:</strong> Since you are part of the larger whole, your actions (as a future professional) affect the whole. You cannot say "it's not my problem"</li>
+      <li><strong>Contribution to the whole:</strong> Your professional skills should enrich the system you are submerged in — just as every natural unit contributes to the larger order</li>
+    </ul>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>A fish in the ocean is "submerged" — the ocean sustains it, and the fish's health affects the ocean's health. Similarly, a student is submerged in society — society created the educational system, the infrastructure, the knowledge base you're using. Recognizing this submergence generates responsibility: "I must contribute back to what sustains me."</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q42 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.42</span><h2>Visualize a framework for humanistic education for children. Suggest ways to modify present-day school education.</h2></div>
+  <div class="qa-body">
+    <h3>Framework for Humanistic Education</h3>
+    <p>Humanistic education aims to develop the <em>whole human being</em> — not just the intellect but also values, emotional intelligence, social responsibility, and physical health.</p>
+
+    <div class="diagram">
+      <strong>HUMANISTIC EDUCATION FRAMEWORK</strong><br><br>
+      ┌──────────────────────────────────────────────┐<br>
+      │   PILLAR 1: Right Understanding              │<br>
+      │   Self, relationships, nature, existence     │<br>
+      └──────────────────────────────────────────────┘<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+<br>
+      ┌──────────────────────────────────────────────┐<br>
+      │   PILLAR 2: Values & Ethics                  │<br>
+      │   Trust, care, honesty, justice, love        │<br>
+      └──────────────────────────────────────────────┘<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+<br>
+      ┌──────────────────────────────────────────────┐<br>
+      │   PILLAR 3: Technical/Cognitive Skills       │<br>
+      │   Literacy, numeracy, science, technology    │<br>
+      └──────────────────────────────────────────────┘<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+<br>
+      ┌──────────────────────────────────────────────┐<br>
+      │   PILLAR 4: Health & Sanyam                  │<br>
+      │   Physical wellbeing, self-regulation        │<br>
+      └──────────────────────────────────────────────┘<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+      <strong>OUTCOME: Competent, Ethical, Healthy, Happy Human Being</strong>
+    </div>
+
+    <h3>Suggestions to Modify Present-Day School Education</h3>
+    <ul>
+      <li><strong>Include UHV/values education as a core subject</strong> — not an optional add-on</li>
+      <li><strong>Replace rote learning with experiential learning</strong> — field visits, project-based learning, self-reflection exercises</li>
+      <li><strong>Teacher training in values:</strong> Teachers should embody the values they teach — recruitment and training processes to include character assessment</li>
+      <li><strong>Reduce examination pressure:</strong> Move from marks-based to competence and values-based assessment</li>
+      <li><strong>Include nature education:</strong> Regular interactions with natural environments to develop ecological understanding</li>
+      <li><strong>Community service as curriculum:</strong> Students engage with social problems — developing empathy and responsibility</li>
+      <li><strong>Meditation and self-reflection periods</strong> — daily quiet time for students to reflect on their thoughts, feelings, and actions</li>
+    </ul>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Current school education is like a factory — standardized input (syllabus), standardized output (marks), mass production. Humanistic education is like a garden — each plant (student) gets sunlight (right understanding), water (values), support (community), and grows according to its own nature into a healthy, unique being.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q43 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.43</span><h2>Explain the essence of ethical human conduct in terms of values, policies and character.</h2></div>
+  <div class="qa-body">
+    <h3>Essence of Ethical Human Conduct</h3>
+    <p>Ethical human conduct is the <em>natural expression of right understanding</em> in daily life — it is not forced or rule-following but flows spontaneously from aligned values, policies, and character.</p>
+
+    <h3>Three Layers of Ethical Conduct</h3>
+    <p><strong>1. Values (Foundation):</strong></p>
+    <ul>
+      <li>The universal inner standards that every human naturally accepts — honesty, care, trust, justice, love</li>
+      <li>These are the <em>roots</em> of ethical conduct — they don't change with situations</li>
+      <li>When a person has right values, all their conduct is guided by them</li>
+    </ul>
+
+    <p><strong>2. Policies (Application):</strong></p>
+    <ul>
+      <li>Context-specific guidelines derived from values — "In my profession, I will not falsify data"</li>
+      <li>Policies translate abstract values into specific decisions and actions</li>
+      <li>They may vary by role, context, and situation — but always derive from the same values</li>
+    </ul>
+
+    <p><strong>3. Character (Manifestation):</strong></p>
+    <ul>
+      <li>Character is the <em>consistent, habitual expression</em> of values and policies in all situations</li>
+      <li>A person of character acts ethically not when convenient, but consistently</li>
+      <li>Character is built gradually through practice and becomes the person's natural way of being</li>
+    </ul>
+
+    <div class="diagram">
+      VALUES (universal, internal) → What is right?<br>
+      <span class="arrow">↓ translate into</span><br>
+      POLICIES (contextual, applied) → How to act rightly in this situation?<br>
+      <span class="arrow">↓ practiced consistently become</span><br>
+      CHARACTER (habitual, natural) → Right conduct flows effortlessly
+    </div>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Values are the roots of a tree. Policies are the branches — extending the roots' strength into different directions (situations). Character is the fruit — the visible, tangible outcome of healthy roots and well-grown branches. Without strong roots (values), branches grow in wrong directions and fruits are bitter.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q44 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.44</span><h2>Explain right evaluation and wrong evaluation with suitable examples.</h2></div>
+  <div class="qa-body">
+    <h3>Right Evaluation (Samyak Mulyankan)</h3>
+    <p><strong>Right evaluation</strong> means evaluating a person, object, or situation for <em>what it truly is</em> — based on its actual nature, qualities, and purpose.</p>
+    <ul>
+      <li>Seeing a knife as a kitchen tool → right evaluation</li>
+      <li>Seeing a person as a conscious human being who deserves dignity → right evaluation</li>
+      <li>Evaluating a professional by their competence, ethics, and contribution → right evaluation</li>
+    </ul>
+
+    <h3>Wrong Evaluation (Asam Mulyankan)</h3>
+    <p><strong>Wrong evaluation</strong> means attributing wrong properties to something — either undervaluing or overvaluing based on irrelevant criteria.</p>
+    <ul>
+      <li>Thinking money can buy happiness (overvaluing money's capability) → wrong evaluation</li>
+      <li>Evaluating a person by their caste, wealth, or appearance → wrong evaluation of human worth</li>
+      <li>Believing that only physically attractive people are "successful" → wrong evaluation</li>
+    </ul>
+
+    <table>
+      <thead><tr><th>Situation</th><th>Right Evaluation</th><th>Wrong Evaluation</th></tr></thead>
+      <tbody>
+        <tr><td>Meeting a poor person</td><td>A fellow human being worthy of dignity</td><td>An inferior person unworthy of respect</td></tr>
+        <tr><td>Receiving an award</td><td>Recognition of contribution in a specific area</td><td>Proof of being superior as a person</td></tr>
+        <tr><td>Using technology</td><td>A tool to solve problems ethically</td><td>The source of all happiness and progress</td></tr>
+        <tr><td>Experiencing failure</td><td>An opportunity to learn and improve</td><td>Proof of personal worthlessness</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Consequences</h3>
+    <ul>
+      <li><strong>Right evaluation</strong> leads to peace, wise decisions, harmonious relationships</li>
+      <li><strong>Wrong evaluation</strong> leads to confusion, conflict, exploitation, and unhappiness</li>
+    </ul>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Wrong evaluation is like looking at the moon through a crooked lens and concluding it's a square. The moon hasn't changed — your instrument of observation is distorted. Right understanding = correcting the lens so we see things as they actually are. Most human suffering comes from crooked lenses (wrong evaluations), not from the actual situations themselves.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q45 -->
+<div class="qa-card">
+  <div class="section-header"><span class="q-number">Q.45</span><h2>Explain the dimensions (systems) required to ensure universal human order.</h2></div>
+  <div class="qa-body">
+    <h3>Universal Human Order (Sarvbhaum Vyavastha)</h3>
+    <p><strong>Universal Human Order</strong> is a society-wide state where every individual, family, and community lives in harmony — with each other and with nature. It is the comprehensive human goal at the societal level.</p>
+
+    <h3>Dimensions / Systems Required</h3>
+
+    <p><strong>1. Education System (Shiksha Vyavastha)</strong></p>
+    <ul>
+      <li>Develops right understanding in every member of society</li>
+      <li>Humanistic education that produces ethical, competent, and healthy individuals</li>
+      <li>Imparts values alongside technical skills</li>
+    </ul>
+
+    <p><strong>2. Health System (Svasthya-Sanyam Vyavastha)</strong></p>
+    <ul>
+      <li>Ensures physical and mental well-being for all</li>
+      <li>Based on Sanyam — right use and care of body</li>
+      <li>Includes preventive healthcare and natural living practices</li>
+    </ul>
+
+    <p><strong>3. Production System (Utpadan Vyavastha)</strong></p>
+    <ul>
+      <li>People-friendly and eco-friendly production</li>
+      <li>Satisfies genuine needs without exploitation or waste</li>
+      <li>Holistic technology — compatible with human and ecological well-being</li>
+    </ul>
+
+    <p><strong>4. Justice / Exchange System (Nyaya–Vitaran Vyavastha)</strong></p>
+    <ul>
+      <li>Fair distribution and exchange of produced goods and services</li>
+      <li>No exploitation, no hoarding — everyone's needs met</li>
+      <li>Based on the principle of giving at least as much value as one receives</li>
+    </ul>
+
+    <div class="diagram">
+      ┌────────────────────────────────────────────────────┐<br>
+      │           UNIVERSAL HUMAN ORDER                    │<br>
+      ├────────────────┬───────────────┬───────────────────┤<br>
+      │ Education &amp;    │ Health &amp;      │ Production &amp;     │<br>
+      │ Sanskar        │ Sanyam        │ Work System       │<br>
+      │ (Right         │ (Physical     │ (Eco-friendly     │<br>
+      │  Understanding)│  Well-being)  │  Products)        │<br>
+      ├────────────────┴───────────────┴───────────────────┤<br>
+      │      Justice / Exchange / Distribution System      │<br>
+      │      (Fair, equitable, need-based)                 │<br>
+      └────────────────────────────────────────────────────┘<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+      <strong>OUTCOME: Fearless, Exploitation-free, Co-existent Society</strong>
+    </div>
+
+    <h3>Interdependence of Systems</h3>
+    <p>All four systems are interdependent — a failure in any one creates imbalance. For example, an excellent production system without justice in distribution creates inequality. Perfect education without health support limits human potential.</p>
+
+    <div class="booster">
+      <div class="booster-title">Concept Booster</div>
+      <p>Think of Universal Human Order as a well-functioning city. It needs roads (education), hospitals (health), factories (production), and markets (justice/distribution) — all working together. Focus only on factories (production/wealth) while ignoring roads and hospitals → a rich but sick and isolated city. All four systems must work in harmony.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="margin-top:60px; padding:30px; background:var(--q-bg); border-radius:6px; color:white; text-align:center; page-break-inside:avoid;">
+  <div style="font-family:'Playfair Display',serif; font-size:24px; margin-bottom:10px;">AKTU UHV — Complete Answer Guide</div>
+  <div style="color:rgba(255,255,255,0.5); font-size:13px; letter-spacing:1px;">45 Questions · 7 Marks Each · Concept Boosters Included</div>
+  <div style="margin-top:16px; color:rgba(255,255,255,0.3); font-size:11px;">Best of luck in your examinations · Study with understanding, not just memory</div>
+</div>
+
+</div><!-- /container -->
+</body>
+</html>

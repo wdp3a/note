@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UHV – 2 Mark Questions & Answers | AKTU</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410;
+    --paper: #fdf8f0;
+    --deep: #2c1a0e;
+    --accent: #8b3a0f;
+    --accent-light: #c0622a;
+    --rule: #d4b896;
+    --highlight: #fff3e0;
+    --muted: #6b5040;
+    --tag-bg: #f0e6d8;
+    --booster-bg: #eaf4ea;
+    --booster-border: #4caf50;
+    --booster-text: #1b4d1f;
+    --booster-label: #2e7d32;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 13.5pt;
+    line-height: 1.75;
+  }
+
+  /* ── COVER HEADER ─────────────────────────────── */
+  .cover {
+    background: var(--deep);
+    color: #fdf8f0;
+    padding: 48px 60px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 18px,
+      rgba(255,255,255,0.025) 18px,
+      rgba(255,255,255,0.025) 19px
+    );
+  }
+  .cover-inner { position: relative; z-index: 1; }
+  .cover-tag {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Source Serif 4', serif;
+    font-size: 9pt;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 2px;
+    margin-bottom: 18px;
+  }
+  .cover h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 36pt;
+    font-weight: 700;
+    color: #fdf8f0;
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+  .cover h1 span { color: #e8b07a; }
+  .cover-sub {
+    font-size: 12pt;
+    color: #c9b8a4;
+    font-style: italic;
+    margin-bottom: 24px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .meta-pill {
+    font-size: 9.5pt;
+    color: #e8d5c0;
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .meta-pill::before {
+    content: '◆';
+    color: var(--accent-light);
+    font-size: 7pt;
+  }
+
+  /* ── MAIN WRAPPER ──────────────────────────────── */
+  .wrapper {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 60px 80px;
+  }
+
+  /* ── SECTION TITLES ────────────────────────────── */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 11pt;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: 8px;
+    margin: 44px 0 28px;
+  }
+  .section-title:first-of-type { margin-top: 0; }
+
+  /* ── Q&A CARD ──────────────────────────────────── */
+  .qa {
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    gap: 0 16px;
+    margin-bottom: 22px;
+    page-break-inside: avoid;
+  }
+  .qa-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 15pt;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.4;
+    padding-top: 1px;
+  }
+  .qa-body {
+    border-left: 3px solid var(--rule);
+    padding-left: 16px;
+  }
+  .qa-body:hover { border-left-color: var(--accent-light); }
+  .qa-q {
+    font-weight: 600;
+    font-size: 11.5pt;
+    color: var(--deep);
+    margin-bottom: 6px;
+    line-height: 1.5;
+  }
+  .qa-a {
+    font-size: 11pt;
+    color: #3a2a1e;
+    line-height: 1.8;
+    background: var(--highlight);
+    padding: 10px 14px;
+    border-radius: 4px;
+  }
+  .qa-a strong {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ── CONCEPT BOOSTER ───────────────────────────── */
+  .concept-booster {
+    margin-top: 10px;
+    background: var(--booster-bg);
+    border-left: 4px solid var(--booster-border);
+    border-radius: 4px;
+    padding: 9px 14px;
+    font-size: 10.5pt;
+    color: var(--booster-text);
+    line-height: 1.75;
+  }
+  .concept-booster .booster-label {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 9pt;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--booster-label);
+    margin-bottom: 4px;
+  }
+  .concept-booster strong {
+    color: var(--booster-label);
+    font-weight: 700;
+  }
+
+  /* ── DIVIDER ───────────────────────────────────── */
+  hr.divider {
+    border: none;
+    border-top: 1px dashed var(--rule);
+    margin: 10px 0 20px 54px;
+  }
+
+  /* ── FOOTER ────────────────────────────────────── */
+  .footer {
+    margin-top: 60px;
+    border-top: 2px solid var(--rule);
+    padding-top: 18px;
+    font-size: 9.5pt;
+    color: var(--muted);
+    font-style: italic;
+    text-align: center;
+  }
+
+  /* ── MOBILE STYLES (Motorola Edge 50 Neo ~393px) ── */
+  @media (max-width: 600px) {
+    body {
+      font-size: 11pt;
+      line-height: 1.7;
+    }
+
+    /* Cover */
+    .cover {
+      padding: 28px 18px 24px;
+    }
+    .cover h1 {
+      font-size: 22pt;
+      line-height: 1.2;
+    }
+    .cover-sub {
+      font-size: 10.5pt;
+      margin-bottom: 16px;
+    }
+    .cover-meta {
+      gap: 12px;
+    }
+    .meta-pill {
+      font-size: 9pt;
+    }
+
+    /* Wrapper */
+    .wrapper {
+      padding: 28px 14px 56px;
+    }
+
+    /* Section titles */
+    .section-title {
+      font-size: 10pt;
+      margin: 32px 0 20px;
+      letter-spacing: 0.14em;
+    }
+
+    /* Q&A Cards */
+    .qa {
+      grid-template-columns: 30px 1fr;
+      gap: 0 10px;
+      margin-bottom: 18px;
+    }
+    .qa-num {
+      font-size: 12pt;
+    }
+    .qa-body {
+      padding-left: 12px;
+    }
+    .qa-q {
+      font-size: 10.5pt;
+      line-height: 1.45;
+      margin-bottom: 8px;
+    }
+    .qa-a {
+      font-size: 10pt;
+      line-height: 1.75;
+      padding: 10px 12px;
+    }
+
+    /* Concept Booster */
+    .concept-booster {
+      font-size: 9.5pt;
+      padding: 9px 11px;
+      line-height: 1.65;
+    }
+    .concept-booster .booster-label {
+      font-size: 8.5pt;
+    }
+
+    /* Divider */
+    hr.divider {
+      margin: 8px 0 18px 40px;
+    }
+
+    /* Footer */
+    .footer {
+      font-size: 9pt;
+      margin-top: 40px;
+      padding-top: 14px;
+      line-height: 1.6;
+    }
+  }
+
+  /* ── PRINT STYLES ──────────────────────────────── */
+  @media print {
+    @page { margin: 0; size: A4; }
+    body { font-size: 10pt; background: var(--paper) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .cover { background: var(--deep) !important; padding: 30px 40px 26px; }
+    .cover h1 { font-size: 24pt; }
+    .wrapper { padding: 28px 40px 40px; max-width: 100%; }
+    .section-title { margin: 28px 0 16px; break-inside: avoid; break-after: avoid; }
+    .qa-num { font-size: 12pt; }
+    .qa-q { font-size: 10pt; }
+    .qa-a { font-size: 9.5pt; padding: 7px 10px; background: var(--highlight) !important; }
+    .concept-booster { font-size: 9pt; background: var(--booster-bg) !important; padding: 7px 10px; }
+    hr.divider { break-inside: avoid; margin: 4px 0 8px 54px; }
+
+    /* ── PAGE-TOP PADDING ──────────────────────────────────────────
+       With printer margin set to 0, any .qa card that lands at the
+       very top of a new sheet touches the paper edge. Adding a fixed
+       padding-top to every .qa guarantees a comfortable gap whether
+       the card sits mid-page or is the very first thing on a new page.
+       24px ≈ 8.5 mm — adjust up/down to taste.                      */
+    .qa {
+      padding-top: 24px;
+      margin-bottom: 10px;
+      break-inside: avoid;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ COVER ══════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-inner">
+    <div class="cover-tag">AKTU · Universal Human Values</div>
+    <h1>UHV <span>2-Mark</span><br>Questions &amp; Answers</h1>
+    <p class="cover-sub">Simplified answers + Concept Boosters for Unit 1 – Unit 5</p>
+    <div class="cover-meta">
+      <span class="meta-pill">68 Questions Covered</span>
+      <span class="meta-pill">B.Tech All Branches</span>
+      <span class="meta-pill">AKTU Syllabus</span>
+      <span class="meta-pill">Concept Boosters Added</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CONTENT ════════════════════════════════════ -->
+<div class="wrapper">
+
+  <!-- UNIT 1 -->
+  <div class="section-title">Unit 1 — Introduction to Value Education</div>
+
+  <div class="qa">
+    <div class="qa-num">1</div>
+    <div class="qa-body">
+      <div class="qa-q">What is the method to fulfill basic aspirations of a human being? Is it same for everyone?</div>
+      <div class="qa-a">The method is <strong>self-exploration</strong> — looking within yourself to understand what truly makes you happy and prosperous. Think of it like checking your own inner GPS instead of blindly following others. Every human wants happiness and prosperity, so the destination is the same for all. But the paths people take differ due to their upbringing, culture, and beliefs. The correct path is: right understanding → right feelings → right actions.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Think of it this way — everyone wants to reach Delhi, but some take the wrong road because they were told it leads there (preconditioning). Self-exploration is like reading your own map and finding the real road. The destination (happiness + prosperity) is the same; only the understanding of how to get there differs.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">2</div>
+    <div class="qa-body">
+      <div class="qa-q">What are basic aspirations of human being?</div>
+      <div class="qa-a">Every human being has two basic and universal aspirations: <strong>(1) Happiness (Sukh)</strong> — a feeling of inner peace and fulfilment in relationships; and <strong>(2) Prosperity (Samridhi)</strong> — having enough physical things (food, clothes, shelter) comfortably available. These two needs are shared by all humans across all cultures and times — whether rich or poor, Indian or foreign.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Easy trick to remember: <strong>Sukh = need of "I" (self)</strong> and <strong>Samridhi = need of body</strong>. Sukh is inner; Samridhi is outer. A person may be rich but unhappy (Samridhi without Sukh) or happy but poor (Sukh without Samridhi). The goal of UHV is to achieve BOTH together.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">3</div>
+    <div class="qa-body">
+      <div class="qa-q">Can activities of self be definite? Explain definite vs indefinite states.</div>
+      <div class="qa-a">Yes, the activities of the self can become definite. When we act with <strong>right understanding</strong>, our desires, thoughts, and expectations become clear and consistent — this is the <strong>definite (nischit) state</strong>. When we act based on assumptions or social conditioning without evaluation, our activities are contradictory and confused — this is the <strong>indefinite (anischit) state</strong>. Self-exploration helps convert indefinite states into definite ones.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Imagine a student who studies sometimes from peer pressure and sometimes from genuine interest — that's an indefinite state (no clarity). A student who understands <em>why</em> education matters and studies consistently — that's a definite state. Right understanding creates consistency. In UHV, the goal is to reach a definite, conflict-free inner state.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">4</div>
+    <div class="qa-body">
+      <div class="qa-q">What are the activities of self?</div>
+      <div class="qa-a">The self (I) performs three core activities: <strong>(1) Imaging (Chitran)</strong> — forming mental pictures of people, things, or situations; <strong>(2) Analyzing (Vishleshan)</strong> — comparing and reasoning about those images; <strong>(3) Tasting/Selecting (Swad/Chayan)</strong> — choosing what feels acceptable or right. Together, these three activities shape all our desires, thoughts, and expectations.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Simple flow: You <em>see</em> a new phone (Imaging) → you <em>compare</em> it with your old one (Analyzing) → you <em>decide</em> you want it (Selecting). All three steps happen inside "I" (self), not the body. The body just carries out what "I" decides. Remember: <strong>Chitran → Vishleshan → Chayan</strong>.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">5</div>
+    <div class="qa-body">
+      <div class="qa-q">What is natural acceptance and experiential validation?</div>
+      <div class="qa-a"><strong>Natural Acceptance</strong> is an inner sense that tells you what is right — without anyone forcing you. For example, you naturally feel that honesty is right and cheating is wrong. It is not taught; it is already inside you. <strong>Experiential Validation</strong> means testing something by actually living it and confirming it works in real life. Together, these two form the method of self-exploration: accept only what feels naturally right AND works in real experience.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        <strong>Natural Acceptance</strong> = your inner compass (always pointing to what's right). <strong>Experiential Validation</strong> = testing the compass in real terrain. In UHV, you don't just believe something is right — you check it with your inner compass first, then verify it by living it. If both match, it's a genuine value. Exam tip: these two together form the basis of self-exploration.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">6</div>
+    <div class="qa-body">
+      <div class="qa-q">What is self-exploration and why is it important?</div>
+      <div class="qa-a"><strong>Self-exploration</strong> is the process of looking within yourself to discover what truly makes you happy, what you naturally accept as right, and how to live in harmony. It is important because: (a) it resolves inner conflicts, (b) it gives a solid foundation for ethical living, (c) it helps you understand yourself, your family, society, and nature — the four levels of harmony that lead to real happiness and prosperity.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Most people search for happiness <em>outside</em> — in money, status, or pleasure. Self-exploration teaches you to search <em>inside</em>. It's like debugging your own software — finding where your assumptions are wrong and correcting them. Result: fewer conflicts, more peace. This is the starting point of all UHV learning.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">7</div>
+    <div class="qa-body">
+      <div class="qa-q">What is preconditioning? Give example.</div>
+      <div class="qa-a"><strong>Preconditioning</strong> is the set of beliefs and habits we absorb from family, society, media, and education — without consciously evaluating them. These conditioned ideas shape our thinking automatically, even when they are wrong or harmful. They may or may not align with natural acceptance. <em>Example:</em> A person raised to believe "wealth = success" chases money even at the cost of health and relationships, not because it's naturally right, but due to conditioning.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Preconditioning = <strong>factory-installed settings</strong> in your mind — put there by society, not chosen by you. Self-exploration helps you <em>question</em> these settings and replace the wrong ones with right understanding. Classic examples of preconditioning: "boys don't cry," "more money = more respect," "competition is everything." UHV challenges all of these.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">8</div>
+    <div class="qa-body">
+      <div class="qa-q">What is imagination and its sources?</div>
+      <div class="qa-a"><strong>Imagination (Kalpana)</strong> is the activity of the self where it creates new ideas, images, or scenarios beyond what currently exists. It is the creative power of "I". Sources of imagination include: (a) past memories and experiences, (b) current desires and aspirations, (c) sensory inputs that the self processes and combines in new ways. When imagination is guided by right understanding, it becomes constructive; without it, it leads to unrealistic desires.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Imagination is the mind's ability to go beyond the present. A poet imagines a poem; an engineer imagines a bridge; a person imagines their future. In UHV, the key point is: imagination shaped by <strong>right understanding</strong> leads to positive goals; imagination shaped by <strong>preconditioning</strong> leads to greed or fantasy. The source matters!
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">9</div>
+    <div class="qa-body">
+      <div class="qa-q">What is the difference between intention and desire?</div>
+      <div class="qa-a"><strong>Desire (Iccha)</strong> is an unexamined want — it may pop up due to habit, impulse, or conditioning, and it can be fleeting or contradictory. For example: "I want a new phone" (without really thinking why). <strong>Intention</strong> is a conscious, evaluated commitment aligned with right understanding and natural acceptance — it is purposeful and stable. For example: "I intend to learn a new skill because it genuinely helps me grow."</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Desire = impulse (unreflected, can change any time). Intention = resolved purpose (comes after thinking clearly). In UHV, when the self is in a <strong>definite state</strong>, desires become intentions — clear, consistent, and aligned with natural acceptance. The goal is to move from scattered desires to purposeful intentions through self-exploration.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">10</div>
+    <div class="qa-body">
+      <div class="qa-q">What are values or human values? Give example.</div>
+      <div class="qa-a"><strong>Human values</strong> are the feelings in relationships that every human naturally accepts as right and that create mutual happiness for both people involved. They are universal — they don't change with time, place, or culture. <em>Examples:</em> Trust (Vishwas), Respect (Samman), Love (Prem), Care (Mamata), Gratitude, Compassion. These are not rules imposed from outside — they arise naturally when we understand human relationships correctly.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Test for a human value: Ask yourself — "Would I want others to treat me this way?" If yes, it's a value (e.g., respect, honesty). Values create <strong>mutual fulfilment</strong> — both giver and receiver feel good. That's the key difference between a value and a rule: values feel naturally right; rules are enforced from outside. All nine feelings in UHV (Trust, Respect, Affection, etc.) are human values.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">11</div>
+    <div class="qa-body">
+      <div class="qa-q">How do you decide what is valuable?</div>
+      <div class="qa-a">Something is valuable if it passes two tests: <strong>(1) Natural Acceptance</strong> — it feels right without any external pressure or force; and <strong>(2) Experiential Validation</strong> — it can actually be lived and confirmed to bring harmony in real life. Additionally, if an activity or feeling contributes to harmony at all four levels (self, family, society, nature) without creating conflict anywhere, it is genuinely valuable.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Two-question test for value: (1) "Does it feel naturally right to me?" (2) "Does it work in practice and bring harmony?" If BOTH are YES — it's valuable. Example: Honesty feels naturally right AND leads to better relationships in real life → it's a value. Cheating may feel temporarily rewarding but fails both tests. Use this test in your exam answers!
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">12</div>
+    <div class="qa-body">
+      <div class="qa-q">What is the difference between belief and understanding?</div>
+      <div class="qa-a"><strong>Belief</strong> is accepting something as true without personally verifying it — it often comes from tradition, authority, or habit. You simply follow it. <strong>Understanding</strong> is knowledge that you have checked through your own natural acceptance and lived experience. It is verified and certain. Belief can be blind and can lead to contradictions; understanding is clear, consistent, and can be lived without conflict. Value education aims to move students from belief to understanding.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Belief = "I've been told this, so I follow it." Understanding = "I've verified this myself — I know it's right." Example: Believing "money brings happiness" (common belief) vs. understanding "happiness comes from right relationships and inner harmony" (verified through experience). UHV replaces blind beliefs with genuine understanding. This is the real goal of value education.
+      </div>
+    </div>
+  </div>
+
+  <!-- UNIT 2 -->
+  <div class="section-title">Unit 2 — Harmony in the Human Being</div>
+
+  <div class="qa">
+    <div class="qa-num">13</div>
+    <div class="qa-body">
+      <div class="qa-q">What is the difference between happiness and excitement?</div>
+      <div class="qa-a"><strong>Happiness (Sukh)</strong> is a deep, continuous state of inner peace and fulfilment that comes from right understanding and good relationships. It does not depend on any external event. <strong>Excitement</strong> is a temporary, intense stimulation caused by external things — a new gadget, a party, a win. It feels good for a short time but fades quickly. Excitement comes from the body's senses; happiness is a state of "I" (the self).</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Think: excitement is like a <strong>sugar rush</strong> — intense but short-lived; happiness is like <strong>good health</strong> — steady and lasting. Buying a new phone gives excitement (fades in days). Having a trustworthy best friend gives happiness (lasts). Exam tip: happiness is <strong>continuous and self-generated</strong>; excitement is <strong>temporary and externally triggered</strong>.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">14</div>
+    <div class="qa-body">
+      <div class="qa-q">What is continuity of happiness?</div>
+      <div class="qa-a"><strong>Continuity of happiness</strong> means that true happiness does not come and go — it is a stable, uninterrupted state. It doesn't depend on whether something good or bad is happening outside. This continuous happiness comes when "I" (the self) is in harmony — with itself (right understanding), with others (right relationships), and with nature. Unlike pleasure, which stops when the event ends, genuine happiness keeps going.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Imagine a lamp powered by sunlight (solar) vs. a candle. The candle gives light only while burning; solar lamp keeps glowing. Pleasure = candle (needs a new event each time). Happiness = solar lamp (self-sustaining, continuous). In UHV, <strong>right understanding is the "solar panel"</strong> that keeps happiness going without needing external events.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">15</div>
+    <div class="qa-body">
+      <div class="qa-q">What do you mean by sukh and suvidha?</div>
+      <div class="qa-a"><strong>Sukh (Happiness)</strong> is the need of the self — it is inner peace, fulfilment in relationships, and right understanding. It is non-material and comes from within. <strong>Suvidha (Physical Comfort/Facility)</strong> is the need of the body — food, shelter, clothing, gadgets, and amenities. Suvidha is necessary but limited in how much you actually need. The biggest human mistake is confusing the two — thinking that more suvidha (wealth, comfort) will give sukh (happiness).</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        <strong>Sukh = need of "I"</strong> (non-material, unlimited) | <strong>Suvidha = need of body</strong> (material, limited need). A person who gets more and more suvidha but has no good relationships or inner peace — has suvidha, no sukh. A person with modest means but loving family and inner clarity — has sukh. UHV says: prioritise sukh; suvidha is needed but don't chase it endlessly.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">16</div>
+    <div class="qa-body">
+      <div class="qa-q">What is prosperity?</div>
+      <div class="qa-a"><strong>Prosperity (Samridhi)</strong> is the feeling of having more than enough physical resources for your body's needs — and being confident that these will continue to be available. It is not the same as just being rich. True prosperity = knowing what the body actually needs + being able to provide it + feeling that abundance. When a person produces more than they need and shares the rest, prosperity becomes complete and meaningful.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        A farmer with a small field who knows his family's food needs, produces enough, and shares extra with neighbours = truly prosperous. A billionaire who is always anxious about losing money = not truly prosperous (no feeling of abundance). Key formula: <strong>Prosperity = Sufficiency + Feeling of Abundance + Willingness to Share</strong>. Accumulation alone is NOT prosperity.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">17</div>
+    <div class="qa-body">
+      <div class="qa-q">What are the needs of self vs needs of body?</div>
+      <div class="qa-a"><strong>Needs of the Self (I):</strong> Happiness — which comes from right understanding and harmonious relationships. These needs are non-material and continuous — they don't get "used up." <strong>Needs of the Body:</strong> Physical facilities like food, clothing, shelter, and health. These are material, temporary (need regular replenishment), and limited in actual requirement. The common mistake is trying to fulfil the self's need for happiness through material things meant for the body.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Think of it as two different tanks: the <strong>soul tank</strong> (needs happiness, relationships, understanding) and the <strong>body tank</strong> (needs food, rest, shelter). People often try to fill the soul tank with material goods — but it doesn't work, because the tanks are different. UHV says: fill each tank with the right fuel. This is the root cause of most unhappiness in modern life.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">18</div>
+    <div class="qa-body">
+      <div class="qa-q">What happens when human being is assumed as body?</div>
+      <div class="qa-a">When a human is treated as <em>only</em> a body, the entire focus shifts to sensory pleasure and material gain. This leads to: (a) neglect of feelings, relationships, and inner life; (b) exploitation of nature and other people; (c) constant conflicts and unhappiness; (d) treating humans as biological machines with no deeper value. This is the foundation of the materialistic and consumerist worldview that causes social and ecological imbalance.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        If you see a person as <em>only</em> a body, you might exploit them for labour, treat them as a consumer, or value them only for physical appearance. This is exactly what happens in many workplaces, advertisements, and social systems today. UHV says humans are <strong>body + "I" (self)</strong> — both must be respected and nourished. Ignoring "I" leads to all modern crises.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">19</div>
+    <div class="qa-body">
+      <div class="qa-q">What is the difference between conscious unit and material unit?</div>
+      <div class="qa-a">A <strong>Material Unit</strong> follows physical and chemical laws without any self-awareness or choice — it has no desires or feelings. Examples: stone, iron, water. A <strong>Conscious Unit</strong> is self-aware — it can desire, think, feel, evaluate, and make choices. Human beings are conscious units. Importantly, even in a human being, the body is a material unit, while the "I" (self) is the conscious unit. The two together make a complete human.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        A robot can process data and act — but it has no self-awareness or natural acceptance. It's a complex material unit. A human has a body (material) PLUS an "I" that is aware, chooses values, and feels. This is the key distinction in UHV. <strong>Material units are governed by laws of nature; conscious units can govern themselves through right understanding.</strong>
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">20</div>
+    <div class="qa-body">
+      <div class="qa-q">Explain 'I' as a conscious unit and body as an instrument.</div>
+      <div class="qa-a">The <strong>'I' (self)</strong> is the conscious part of a human — the seat of desires, feelings, thoughts, and choices. It is the decision-maker and the real "you." The <strong>body</strong> is a material instrument through which "I" interacts with the world — it senses, moves, speaks, and acts. Just like a carpenter (I) uses tools (body) to build furniture, the self uses the body to express and carry out its decisions. "I" is the master; body is the vehicle.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Analogy: You (I) are the <strong>driver</strong>; your body is the <strong>car</strong>. The car doesn't decide where to go — you do. When "I" has right understanding, the car (body) goes in the right direction. When "I" is confused (preconditioning, wrong beliefs), the car goes off-road. UHV focuses on improving the driver (I), not just the car (body).
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">21</div>
+    <div class="qa-body">
+      <div class="qa-q">What is innateness?</div>
+      <div class="qa-a"><strong>Innateness (Svabhav)</strong> refers to the natural, inherent qualities that belong to a unit by its very nature — they cannot be changed by external force. For human beings, innateness includes the natural acceptance of values like trust, compassion, and co-existence — these are built-in, not taught. For material things, innateness is their inherent physical quality (e.g., fire is always hot — that is its innateness). Every unit in nature has its own innateness.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Innateness = the <strong>"core nature"</strong> that cannot be changed. Fire can't be cold; water can't be dry. Similarly, the human self cannot genuinely accept dishonesty or cruelty as good — because its innateness is to seek harmony and co-existence. When humans act against their innateness (e.g., by being cruel), they feel inner conflict. UHV aims to help humans live aligned with their innateness.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">22</div>
+    <div class="qa-body">
+      <div class="qa-q">What are Swatva, Swatantrata and Swarajya?</div>
+      <div class="qa-a"><strong>Swatva (Self-ness)</strong> — knowing and accepting who you truly are as a conscious self; not confusing yourself with just your body or social role. <strong>Swatantrata (Freedom)</strong> — freedom from depending on external things for happiness; being guided by your own natural acceptance rather than compulsion. <strong>Swarajya (Self-governance)</strong> — the ability to govern your own desires, thoughts, and actions through right understanding; true inner discipline, not forced by anyone outside.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Three S's: <strong>Swatva = "Know yourself"</strong> | <strong>Swatantrata = "Free yourself"</strong> | <strong>Swarajya = "Govern yourself"</strong>. Most people are slaves to social approval (not free) and have no self-discipline (no self-governance). UHV says: first know what you truly are (Swatva), then free yourself from dependencies (Swatantrata), then govern your inner world through understanding (Swarajya).
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">23</div>
+    <div class="qa-body">
+      <div class="qa-q">What are the four dimensions of a human being?</div>
+      <div class="qa-a">A human being has four interrelated dimensions: <strong>(1) Body (Sharir)</strong> — the physical entity; <strong>(2) Mind/Mana</strong> — the seat of desires and imagination within "I"; <strong>(3) Vital Energy/Prana</strong> — the life force that connects mind and body; <strong>(4) Self/Consciousness (Atma / 'I')</strong> — the aware, choosing, feeling entity. Well-being comes when all four dimensions are in harmony with each other.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Simple hierarchy: <strong>Body → Prana → Mind → "I" (Self)</strong>. "I" is the highest and most important — it governs the rest. Modern education focuses only on the body (physical health) and mind (mental skills) but ignores "I." UHV focuses on developing "I" through right understanding, which then naturally brings harmony to all other dimensions.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">24</div>
+    <div class="qa-body">
+      <div class="qa-q">What are the four dimensions of human order / humanistic development?</div>
+      <div class="qa-a">Humanistic development means achieving harmony at four levels simultaneously: <strong>(1) Individual</strong> — harmony within the self through right understanding; <strong>(2) Family</strong> — harmonious, value-based relationships at home; <strong>(3) Society</strong> — a mutually fulfilling, just, and fearless social order; <strong>(4) Nature/Existence</strong> — living in co-existence and balance with nature. Development in all four levels together is the comprehensive human goal.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Think of four expanding circles: <strong>Self → Family → Society → Nature</strong>. True development means all four circles are in harmony — not just one. Current models focus on economic development (society) but ignore individual inner harmony and ecological balance. UHV says: start from the individual (self-exploration) and let harmony ripple outward to family, society, and nature.
+      </div>
+    </div>
+  </div>
+
+  <!-- UNIT 3 -->
+  <div class="section-title">Unit 3 — Harmony in the Family and Society</div>
+
+  <div class="qa">
+    <div class="qa-num">25</div>
+    <div class="qa-body">
+      <div class="qa-q">What are the four orders of nature?</div>
+      <div class="qa-a">Nature consists of four orders: <strong>(1) Physical/Material Order (Padarth Avastha)</strong> — soil, minerals, metals (non-living); <strong>(2) Bio/Plant Order (Pran Avastha)</strong> — plants, trees, microorganisms (living but no self-awareness); <strong>(3) Animal Order (Jiv Avastha)</strong> — animals, birds, insects (living, instinct-based self); <strong>(4) Human Order (Gyaan Avastha)</strong> — human beings (living, self-aware, capable of right understanding and ethical choice). Each order is more complex than the one before it.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Memory trick: <strong>PBAH</strong> = Physical → Bio → Animal → Human. Each step adds something new: Bio adds <em>life</em>, Animal adds <em>instinct-based self</em>, Human adds <em>knowledge and ethical choice</em>. The human order is the highest — the only one capable of understanding and choosing harmony. This is why UHV says humans have a special responsibility toward all other orders.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">26</div>
+    <div class="qa-body">
+      <div class="qa-q">What are the characteristics of animal order?</div>
+      <div class="qa-a">The animal order (Jiv Avastha) is characterized by: (a) body + a self, but the self acts mainly by <strong>instinct</strong> and physical sensation; (b) behaviour is driven by hunger, fear, and reproduction; (c) limited or no ethical choice — animals cannot decide to be honest or just; (d) no ability for self-exploration or right understanding; (e) animals live in natural harmony instinctively — unlike humans who must consciously choose it.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Animals don't need a UHV class — they live naturally according to their instinct. A lion hunts to eat (not out of greed); a bird builds a nest (just enough). Animals are naturally in harmony with nature. Humans, however, have <em>freedom</em> — which means they can choose harmony OR destruction. UHV is needed precisely because humans have this choice and often make wrong ones.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">27</div>
+    <div class="qa-body">
+      <div class="qa-q">What is nature? Explain units in nature.</div>
+      <div class="qa-a"><strong>Nature</strong> is the totality of all existence — everything from atoms to galaxies, all existing in interrelationship. Every single entity in nature is called a <strong>unit (ikaai)</strong> — a self-organized entity with its own innateness and activity. Units exist in space and are always interacting with other units. Nature as a whole is self-regulated, self-sustaining, and in dynamic co-existence — no part is truly isolated.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Think of nature as a giant web: every strand is connected. A tree (unit) interacts with soil, water, air, insects, and animals — all of which are also units. Remove one, and the web weakens. This is why UHV says: <strong>every unit has its innateness and role</strong>. Humans disturbing other units (like deforestation) breaks the web of co-existence. Understanding units helps us understand ecological responsibility.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">28</div>
+    <div class="qa-body">
+      <div class="qa-q">What is co-existence and submergence in nature?</div>
+      <div class="qa-a"><strong>Co-existence (Sah-astitva)</strong> means every unit exists in mutual relationship with other units within a larger whole — no unit is isolated or self-sufficient on its own. <strong>Submergence (Doob kar rehna)</strong> means each unit exists within the larger existence, like a fish inside water. The fish doesn't dissolve or lose identity — it remains a fish, but it is fully embedded in and dependent on the water. This is the fundamental reality of all existence.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Submergence analogy: imagine a <strong>salt crystal in the ocean</strong> — the crystal exists (has its own identity) but is fully within and part of the ocean (larger existence). It neither dissolves completely nor exists independently. This is co-existence with submergence. Humans exist in the larger existence (nature + universe) in the same way. Realising this naturally leads to ecological responsibility and humility.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">29</div>
+    <div class="qa-body">
+      <div class="qa-q">Nature has recyclability and mutual fulfillment — explain.</div>
+      <div class="qa-a"><strong>Recyclability</strong> means nature has zero waste — everything is reused. Dead leaves become compost → compost nourishes soil → soil grows plants → plants feed animals. Nothing is wasted in nature's cycles. <strong>Mutual Fulfilment</strong> means every unit in nature contributes to and fulfils the needs of other units — trees give oxygen to animals, animals exhale CO₂ for trees, bees pollinate flowers. This mutual support sustains the entire ecosystem endlessly.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Nature runs the world's most perfect circular economy — no landfills, no pollution, no waste. Every unit both gives and receives. Contrast this with human-made systems that are linear (take → use → throw away) and cause pollution and scarcity. UHV says: if humans understand recyclability and mutual fulfilment in nature, they will naturally shift to sustainable living. Nature is the best teacher.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">30</div>
+    <div class="qa-body">
+      <div class="qa-q">What is harmony and levels of harmony?</div>
+      <div class="qa-a"><strong>Harmony</strong> is a state of mutual complementarity and co-existence — where different parts work together without conflict. It exists at four levels: <strong>(1) Within the self</strong> — alignment of desires, thoughts, and actions; <strong>(2) In the family</strong> — fulfilment of feelings in relationships; <strong>(3) In society</strong> — a mutually fulfilling, just social order; <strong>(4) In nature</strong> — co-existence of all four orders with mutual support. Harmony at all levels together is the comprehensive human goal.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Harmony is like an orchestra: each instrument (unit) plays its part, and together they produce beautiful music. When one instrument is out of tune (disharmony), the whole performance suffers. UHV says harmony must exist at ALL four levels — individual, family, society, nature. If you're happy inside but your family is fighting, that's not full harmony. All four circles must be in tune.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">31</div>
+    <div class="qa-body">
+      <div class="qa-q">What is the comprehensive human goal?</div>
+      <div class="qa-a">The comprehensive human goal is achieving all four of the following simultaneously: <strong>(1) Right Understanding (Samajh)</strong> — understanding yourself and the world correctly; <strong>(2) Prosperity (Samridhi)</strong> — having enough physical facilities; <strong>(3) Fearlessness (Abhay)</strong> — living without fear of other humans in a just society; <strong>(4) Co-existence (Sah-astitva)</strong> — living in harmony with nature. In UHV, this is called the <em>Purna Manav Lakshya</em> — the complete human goal.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Remember as <strong>RPFC</strong>: <strong>R</strong>ight Understanding → <strong>P</strong>rosperity → <strong>F</strong>earlessness → <strong>C</strong>o-existence. Current development focuses only on P (prosperity) and ignores R, F, C — that's why we have mental health crises, social conflict, and ecological destruction. Purna Manav Lakshya means: be happy inside, have enough outside, live safely with others, and coexist with nature.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">32</div>
+    <div class="qa-body">
+      <div class="qa-q">What are components of humanistic tradition?</div>
+      <div class="qa-a">Humanistic tradition has three essential components: <strong>(1) Right Understanding (Samajh)</strong> — knowing and living by universal human values; <strong>(2) Right Feelings (Bhav)</strong> — expressing the correct values in relationships (trust, respect, care, etc.); <strong>(3) Right Action (Kriya)</strong> — ethical behaviour in work, production, and society. These three together form a tradition that sustains human well-being across generations, without contradiction or conflict.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Think of humanistic tradition as a <strong>tree</strong>: Understanding is the root (foundation), Feelings are the trunk (connecting inner to outer), and Action is the fruit (visible outcome). A tree with no roots falls. Similarly, a tradition of actions without understanding (blind rituals) eventually collapses. UHV aims to build culture from the roots — from understanding, not just rules.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">33</div>
+    <div class="qa-body">
+      <div class="qa-q">What are domains of education and their complementarity?</div>
+      <div class="qa-a">Education covers three complementary domains: <strong>(1) Values &amp; Knowledge</strong> — understanding of self, relationships, society, and nature (the "why"); <strong>(2) Skills</strong> — practical competence and ability to act rightly (the "how"); <strong>(3) Physical Facilities</strong> — enabling tools, infrastructure, and environment (the "with what"). They are complementary: values guide direction, skills provide capacity, facilities support implementation. Without values guiding them, skills and facilities lead to exploitation.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        A doctor needs all three: <strong>Values</strong> (care for patient's well-being, not just profit) + <strong>Skills</strong> (medical knowledge and technique) + <strong>Facilities</strong> (hospital, medicines). Remove values → unethical doctor. Remove skills → incompetent doctor. Remove facilities → helpless doctor. In today's education, the values domain is missing — that's what UHV aims to restore.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">34</div>
+    <div class="qa-body">
+      <div class="qa-q">What is education and sanskar?</div>
+      <div class="qa-a"><strong>Education (Shiksha)</strong> is developing right understanding of reality — of self, relationships, society, and nature. It is about truly understanding life, not just collecting information. <strong>Sanskar</strong> is the formation of character through values, habits, and conduct that become second nature — you do the right thing naturally, without needing to be forced. Education + Sanskar together produce a person who both understands what is right and naturally acts accordingly.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        <strong>Education</strong> = understanding in the mind. <strong>Sanskar</strong> = values becoming part of character. A person with education knows that honesty is right; a person with sanskar is honest automatically — it becomes their nature. UHV aims for both: not just knowing values intellectually, but having them so deeply internalized that they become effortless behavior. That's true character development.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">35</div>
+    <div class="qa-body">
+      <div class="qa-q">What is the objective of education-sanskar?</div>
+      <div class="qa-a">The objective is to develop human beings with <strong>right understanding, right feelings, and right physical action</strong> — enabling them to live harmoniously at all four levels (individual, family, society, nature). The goal is not just to make people employable, but to make them truly humane — happy within themselves, prosperous in their means, contributing to a just, fearless, and co-existent society.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Current education objective: produce employees with skills. UHV's education-sanskar objective: produce <strong>complete human beings</strong> — with inner happiness, good relationships, ethical work, and environmental responsibility. Compare: an engineer who knows circuits vs. an engineer who knows circuits AND cares about people's safety AND doesn't harm the environment. The second engineer has had education + sanskar.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">36</div>
+    <div class="qa-body">
+      <div class="qa-q">What is the need of value education?</div>
+      <div class="qa-a">Value education is needed because: (a) current education gives skills and information but ignores values; (b) lack of values is causing rising conflicts, depression, crime, and ecological damage; (c) without values, technology and wealth become tools of exploitation; (d) it provides the foundation for ethical professional behaviour, harmonious families, and a just society; (e) it addresses the root cause of human problems — lack of right understanding — rather than just the symptoms.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        We teach students HOW to build bridges, write code, manage companies — but not WHY or FOR WHOM or WITH WHAT ETHICS. The result: technically skilled but values-deficient professionals. Value education fills this gap. It's like giving a powerful car (technical skills) a proper steering wheel (values) and GPS (right understanding). Without the steering wheel and GPS, the car crashes — no matter how powerful.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">37</div>
+    <div class="qa-body">
+      <div class="qa-q">What are implications of value education?</div>
+      <div class="qa-a">Value education implies: (a) moving from <strong>blind belief to genuine understanding</strong>; (b) developing <strong>self-discipline</strong> from within, rather than needing external control; (c) enabling <strong>ethical professional conduct</strong> in every career; (d) building <strong>harmonious families and society</strong>; (e) promoting <strong>eco-friendly, sustainable living</strong>. It transforms not just what a person knows, but how they actually live — making education truly human-centric, not just economy-centric.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Value education has three levels of impact: <strong>Individual</strong> (inner harmony, self-discipline), <strong>Social</strong> (better relationships, ethical profession, just society), and <strong>Ecological</strong> (sustainable living, co-existence with nature). It's a ripple effect — start from within, and it spreads outward. In exams, listing these three levels shows strong understanding.
+      </div>
+    </div>
+  </div>
+
+  <!-- UNIT 4 -->
+  <div class="section-title">Unit 4 — Harmony in Professional Life</div>
+
+  <div class="qa">
+    <div class="qa-num">38</div>
+    <div class="qa-body">
+      <div class="qa-q">What is ethical human conduct?</div>
+      <div class="qa-a"><strong>Ethical human conduct</strong> is behaviour that is aligned with natural acceptance, right understanding, and human values — in every situation: personal, professional, and social. It means: being honest, genuinely respecting others, fulfilling your responsibilities, avoiding exploitation, and contributing to mutual well-being. In UHV, ethics is not about following rules out of fear — it is about living from genuine inner understanding of what is right.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Two types of "ethical" behaviour: (1) <strong>Rule-based</strong> — "I won't cheat because I might get caught." (2) <strong>Understanding-based</strong> — "I won't cheat because it harms others and violates my natural acceptance." UHV is about the second type. True ethical conduct comes from understanding, not enforcement. When you truly understand why something is wrong, you don't need a law to stop you.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">39</div>
+    <div class="qa-body">
+      <div class="qa-q">What is ethics?</div>
+      <div class="qa-a"><strong>Ethics</strong> is the study and practice of right conduct — what actions are good, just, and beneficial to all. In UHV, ethics flows from right understanding: a truly ethical person acts from inner conviction aligned with natural acceptance — not from fear of law or social disapproval. Ethics is universal — it applies equally to all humans regardless of their profession, culture, religion, or nationality.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Ethics in UHV = <strong>doing what is right because you understand it's right</strong>, not because you'll be punished if you don't. Difference: a student who doesn't cheat because the camera is on = not ethical; a student who doesn't cheat because they genuinely value honesty = ethical. UHV's ethics is internal, universal, and based on natural acceptance — not external, relative, or rule-based.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">40</div>
+    <div class="qa-body">
+      <div class="qa-q">What is competence in professional ethics?</div>
+      <div class="qa-a"><strong>Competence in professional ethics</strong> = <strong>Values + Skills + Knowledge</strong>. A truly competent professional: (a) has the technical skills to do the job well; (b) possesses right understanding of how their work impacts society; (c) upholds human values in every decision they make. Mere technical skill without values leads to exploitation. Competence is not just "can you do the job?" — it's "can you do it well AND ethically AND for the genuine benefit of all?"</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Formula: <strong>Competence = Values + Skills + Knowledge</strong> (learn this!). A surgeon with great skills but no values may operate unnecessarily for money. A skilled coder without values may build harmful software. Values are the steering wheel for skills and knowledge. Without values, skills become dangerous. With values, they become powerful tools for human well-being.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">41</div>
+    <div class="qa-body">
+      <div class="qa-q">What is profession?</div>
+      <div class="qa-a">A <strong>profession</strong> is a vocation that uses specialized knowledge and skills to serve society. In UHV, a profession is ethical when it: (a) genuinely contributes to the well-being of others and society; (b) is performed with right understanding of its purpose and impact; (c) ensures mutual fulfilment — both the professional and the people they serve benefit. Profession is not merely a way to earn money — it is a social responsibility and a way to contribute meaningfully to society.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Ask yourself: "Is my work making people's lives better?" If yes, you're living your profession as a social responsibility. A doctor who genuinely wants to heal, a teacher who genuinely wants to educate, an engineer who genuinely wants to build useful things — these are ethical professionals. In UHV, profession = service + right understanding + mutual benefit, not just a paycheck.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">42</div>
+    <div class="qa-body">
+      <div class="qa-q">What are guidelines of professional ethics?</div>
+      <div class="qa-a">Professional ethics guidelines include: <strong>(1) Commitment to right understanding</strong> — know the purpose and real impact of your work; <strong>(2) Honesty and transparency</strong> in all dealings; <strong>(3) Respect for all stakeholders</strong> — clients, colleagues, society; <strong>(4) Ensuring human welfare</strong> through your work output; <strong>(5) Avoiding exploitation</strong> of nature, people, or resources; <strong>(6) Continuous self-evaluation</strong> — improve your character alongside your technical skills.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Think of professional ethics as a <strong>6-point code</strong>: Understand → Be Honest → Respect Everyone → Ensure Welfare → Don't Exploit → Keep Improving. These aren't just work rules; they are expressions of human values in a professional setting. A professional who follows all six genuinely serves society — and ironically also earns greater long-term trust, respect, and success.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">43</div>
+    <div class="qa-body">
+      <div class="qa-q">What is trust? Why is it foundation of relationship?</div>
+      <div class="qa-a"><strong>Trust (Vishwas)</strong> is the feeling of assurance that the other person genuinely cares about your well-being and will not intentionally harm you. It is the foundation of all relationships because: without trust, every interaction becomes guarded, transactional, and stressful; with trust, there is openness, cooperation, and mutual growth. Trust is the very first feeling that must be established in any relationship — without it, no other value can function properly.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Think of trust as the <strong>foundation of a building</strong>. All other values (respect, care, love, etc.) are the floors built on top. If the foundation (trust) is weak, the whole building collapses — no matter how beautiful the upper floors are. This is why UHV places trust as the FIRST and most fundamental feeling in relationships. Without trust, even love feels uncertain.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">44</div>
+    <div class="qa-body">
+      <div class="qa-q">What is complete value in relationship?</div>
+      <div class="qa-a">Complete value in a relationship means the feeling you have for the other is <strong>unconditional and continuous</strong> — it does not change based on the other's behaviour, achievements, or usefulness to you. For example, a mother's love for her child is complete — it does not increase when the child succeeds or decrease when the child fails. Complete value means accepting the other as a full human being and being genuinely committed to their well-being at all times.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Conditional value = "I respect you because you are useful to me." Complete value = "I respect you because you are a human being, period." In most modern relationships, value is conditional — friends based on utility, respect based on status. UHV says complete (unconditional) value is the natural standard for human relationships. Love (Prem) in UHV is defined as complete value for the other.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">45</div>
+    <div class="qa-body">
+      <div class="qa-q">What are feelings (care, guidance, respect, glory etc.)?</div>
+      <div class="qa-a">Feelings are the basis of values in human relationships. Key feelings include: <strong>Trust (Vishwas)</strong> — foundation of all relations; <strong>Respect (Samman)</strong> — recognizing the other's self; <strong>Love/Affection (Prem/Sneha)</strong> — complete value; <strong>Care (Mamata)</strong> — concern for physical well-being; <strong>Guidance (Vatsalya)</strong> — helping toward right understanding; <strong>Reverence (Shraddha)</strong> — toward those with right understanding; <strong>Glory (Gaurav)</strong> — feeling proud of the other's goodness and achievements.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        UHV identifies <strong>nine feelings</strong> in relationships — each one is a human value. Together they create the map of a fully harmonious human relationship. Think of feelings as the <strong>colours on a palette</strong> — each one unique, and together they paint a complete picture of love and care. The goal is to correctly identify and express the right feeling in the right relationship at the right time.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">46</div>
+    <div class="qa-body">
+      <div class="qa-q">What are forms of disrespect?</div>
+      <div class="qa-a">Forms of disrespect include: <strong>(a) Non-recognition</strong> — ignoring someone's presence or human worth; <strong>(b) Under-estimation</strong> — treating someone as inferior or less capable; <strong>(c) Condemnation</strong> — attacking the person's self, not just their action; <strong>(d) Insult</strong> — deliberately hurting someone's dignity. All forms of disrespect deny the equal humanness of the other person and cause deep damage to relationships and society. Disrespect always has roots in a false evaluation of the other person.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Disrespect = <strong>seeing the other as less than a full human being</strong>. All forms — ignoring, belittling, insulting, condemning — stem from this. In UHV, respect flows naturally when you truly see the other person as a conscious self just like you. Disrespect is always a sign of a wrong assumption or evaluation. Correcting that assumption is the first step to restoring respect.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">47</div>
+    <div class="qa-body">
+      <div class="qa-q">What is justice?</div>
+      <div class="qa-a"><strong>Justice (Nyaya)</strong> in UHV is the state where every unit in a relationship is <em>recognised, evaluated correctly, and fulfilled</em> appropriately. Justice has three requirements: (a) the feeling/intention is right, (b) the evaluation (who deserves what) is correct, and (c) the action/expression is appropriate. Justice is not just following the law — it is the complete fulfilment of all human values in every relationship at the right time and in the right measure.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Justice in UHV = <strong>Recognition + Right Evaluation + Right Action</strong>. Example: A teacher who recognizes a student's effort, evaluates their work fairly, and gives appropriate feedback — that's justice in the classroom. Justice is not just a legal concept in UHV — it's the natural outcome of all human values being practiced correctly in every relationship, every day.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">48</div>
+    <div class="qa-body">
+      <div class="qa-q">What is the relationship between truth and respect?</div>
+      <div class="qa-a"><strong>Truth (Satya)</strong> means seeing things as they truly are — accepting yourself and others as conscious human beings of equal inherent value. <strong>Respect (Samman)</strong> flows naturally from truth: when you truly see the other person as a conscious self — just like you — respect arises spontaneously, without effort. Disrespect is rooted in a false evaluation — seeing the other as less than human. Therefore, <strong>truth is the basis of genuine respect</strong>.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Simple logic chain: <strong>Truth → Correct Evaluation → Respect</strong>. When you see someone as truly equal to you in their humanness (truth), you naturally respect them. When you see them as inferior/superior/object (false evaluation), disrespect or flattery follows. This is why UHV says truth comes before respect — you cannot genuinely respect someone if you're evaluating them wrongly.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">49</div>
+    <div class="qa-body">
+      <div class="qa-q">What are two natural feelings from affection?</div>
+      <div class="qa-a">From affection (Sneha / Prem) arise two natural feelings: <strong>(1) Care (Mamata)</strong> — the feeling of responsibility and concern for the physical well-being of the other; wanting to ensure their body is healthy, nourished, and safe. <strong>(2) Guidance (Vatsalya)</strong> — the feeling of wanting the other to develop right understanding and become their best self. Care is directed toward the body; guidance is directed toward the self (I) of the other person.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Parents show both naturally: <strong>Care (Mamata)</strong> = "Did you eat? Are you warm? Are you safe?" — concern for the child's body. <strong>Guidance (Vatsalya)</strong> = "Learn to be honest. Develop good character. Think clearly." — concern for the child's inner growth. Good parenting addresses both. In UHV, true affection always includes both care (body) and guidance (self). Only one is incomplete.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">50</div>
+    <div class="qa-body">
+      <div class="qa-q">What is excellence? How is it different from competition?</div>
+      <div class="qa-a"><strong>Excellence</strong> is doing your best in alignment with right understanding and values — it is self-referenced (you compare to your own potential and values, not to others) and collaborative. <strong>Competition</strong> is performance measured against others — it is other-referenced and often generates fear, jealousy, and exploitation. Excellence seeks mutual growth — "Can we all be better together?" Competition often seeks one person's victory over another's defeat. Excellence is sustainable; unhealthy competition is not.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        <strong>Excellence</strong> = becoming the best version of yourself, inspired by your own values. <strong>Competition</strong> = trying to be better than others, motivated by comparison. A musician who practises to master their art (excellence) vs. a musician who practises to beat rivals (competition) — same action, different motivation, very different inner experience. UHV encourages excellence because it produces harmony; unhealthy competition produces conflict and anxiety.
+      </div>
+    </div>
+  </div>
+
+  <!-- UNIT 5 -->
+  <div class="section-title">Unit 5 — Harmony in Nature and Existence</div>
+
+  <div class="qa">
+    <div class="qa-num">51</div>
+    <div class="qa-body">
+      <div class="qa-q">What is the role of physical facilities?</div>
+      <div class="qa-a"><strong>Physical facilities</strong> support the body's needs — food, shelter, clothing, health, and comfort. Their role is to <em>enable</em> the self to live without physical difficulty and pursue right understanding without bodily obstruction. They are necessary but limited — the body has definite, limited needs. Physical facilities do not produce happiness; they only remove physical discomfort. Confusing them with sources of happiness leads to greed and endless accumulation.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Physical facilities are like <strong>the road, not the destination</strong>. A good road helps you travel comfortably — but it doesn't decide where you're going or make the journey meaningful. Similarly, physical facilities help you live without bodily trouble — but they don't create happiness. Once you have enough road, more road doesn't help. Once you have enough physical facilities, more doesn't add to happiness.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">52</div>
+    <div class="qa-body">
+      <div class="qa-q">Why are physical facilities temporary?</div>
+      <div class="qa-a">Physical facilities are temporary because: (a) they are material — they wear out, decay, or get consumed over time; (b) their satisfaction is short-lived — eating satisfies hunger only until the next meal; (c) they belong to the world of matter, not consciousness — they change and perish. Unlike right understanding, which once achieved remains with you permanently, physical facilities must constantly be replenished. This impermanence makes them insufficient as a foundation for lasting happiness.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Physical satisfaction follows the <strong>law of diminishing returns</strong>: a second meal is less satisfying than the first; a fifth holiday is less exciting than the first. No matter how much you accumulate, the satisfaction fades. But understanding, once gained, stays and deepens. This is why UHV says: invest in right understanding (permanent) not just physical accumulation (temporary). Temporary things cannot give permanent happiness.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">53</div>
+    <div class="qa-body">
+      <div class="qa-q">What are problems due to preconditioned desires?</div>
+      <div class="qa-a">Preconditioned desires lead to: <strong>(a) Endless craving</strong> — they are insatiable because they're not based on actual need; <strong>(b) Inner conflict</strong> — when conditioned desires clash with natural acceptance; <strong>(c) Exploitation of others</strong> — pursuing conditioned desires regardless of impact on people; <strong>(d) Environmental damage</strong> — consuming far beyond actual need; <strong>(e) Unhappiness</strong> — mistaking the fulfilment of a conditioned want for genuine happiness, which never truly arrives.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Preconditioned desire example: "I must own the latest phone every year" (conditioned by advertising, peer pressure) — not a real need. Chasing it causes: stress (inner conflict), financial pressure (exploitation of self), e-waste (environmental damage), and brief satisfaction followed by wanting the next model (endless craving). Replace preconditioned desires with naturally accepted needs, and all five problems dissolve.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">54</div>
+    <div class="qa-body">
+      <div class="qa-q">What are conflicts due to lack of natural acceptance?</div>
+      <div class="qa-a">When we act without natural acceptance: <strong>(a) Inner contradiction</strong> — we feel something is wrong even while doing it; <strong>(b) Relationship conflicts</strong> — we fail to give correct feelings like respect, care, or trust; <strong>(c) Social conflicts</strong> — exploitation, injustice, and violence arise; <strong>(d) Ecological conflicts</strong> — we over-exploit nature without restraint. All human-made problems — from personal unhappiness to global crises — trace back to ignoring or violating natural acceptance.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Natural acceptance is your <strong>inner compass</strong>. When you ignore it (e.g., lie, cheat, exploit), you feel inner conflict — even if no one else knows. That inner discomfort is the signal that you've violated natural acceptance. When you consistently ignore that signal, conflicts spread outward — into relationships, society, and nature. UHV says: follow the compass, and conflicts naturally reduce at all levels.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">55</div>
+    <div class="qa-body">
+      <div class="qa-q">What is human consciousness vs animal consciousness?</div>
+      <div class="qa-a"><strong>Animal consciousness</strong> is governed by instinct — the self acts primarily for survival, reproduction, and sensory pleasure, without the ability to make ethical choices. <strong>Human consciousness</strong> is capable of <em>right understanding</em> — the self can evaluate, choose values, cultivate meaningful relationships, and consciously live in harmony. Humans have the unique ability to rise above instinct through education and self-exploration. Animals cannot do this — they follow their nature automatically.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Animals follow programming (instinct); humans can <strong>rewrite their programming</strong> (through self-exploration and right understanding). A wolf attacks out of hunger — it cannot choose not to. A human can choose compassion even when angry, share even when scarce, and forgive even when wronged. This freedom to choose is what makes human consciousness special — and UHV is the guide for using this freedom wisely.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">56</div>
+    <div class="qa-body">
+      <div class="qa-q">What are features of human consciousness?</div>
+      <div class="qa-a">Features of human consciousness: <strong>(1) Self-awareness</strong> — the ability to reflect on your own thoughts, feelings, and actions; <strong>(2) Natural acceptance</strong> — an innate inner recognition of what is right; <strong>(3) Ethical choice</strong> — freedom to choose values over instinct; <strong>(4) Desire for harmony</strong> — an innate longing for right relationships and co-existence; <strong>(5) Capacity for self-exploration and transformation</strong> — the ability to understand and change oneself. All five are unique to human beings among all natural orders.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Remember as <strong>SANED</strong>: <strong>S</strong>elf-awareness, <strong>N</strong>atural acceptance, <strong>E</strong>thical choice, <strong>D</strong>esire for harmony, <strong>T</strong>ransformation capacity. These five features together make the case for WHY humans need UHV — because we have the ability to choose and grow. An animal cannot become more ethical; a human can. That's the unique gift and unique responsibility of human consciousness.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">57</div>
+    <div class="qa-body">
+      <div class="qa-q">What is transformation from deluded self to pure self?</div>
+      <div class="qa-a">A <strong>deluded self</strong> operates with incorrect assumptions — confusing the body with the self, pleasure with happiness, and wealth with prosperity — which leads to constant conflict, unhappiness, and wrong actions. A <strong>pure self</strong> operates with right understanding — it is in harmony with its natural acceptance and lives consistently without inner contradiction. The transformation from deluded to pure happens through self-exploration, correcting wrong assumptions, and aligning actions with values. This is the core purpose of value education.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Deluded self = <strong>person who thinks shadow is the real thing</strong> (running after money/pleasure as happiness). Pure self = <strong>person who sees reality clearly</strong> (knows happiness comes from right understanding and relationships). The transformation is like clearing fog from a mirror — the mirror (self) was always capable of reflecting clearly; fog (wrong assumptions) just blocked it. Self-exploration is the process of clearing the fog.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">58</div>
+    <div class="qa-body">
+      <div class="qa-q">What are types of desires?</div>
+      <div class="qa-a">Desires can be classified as: <strong>(1) Natural desires</strong> — aligned with natural acceptance (e.g., happiness, right relationships, meaningful work); these lead to fulfilment when met. <strong>(2) Conditioned/Preconditioned desires</strong> — arising from upbringing, media, or peer pressure (e.g., unlimited wealth, status, fame); these are insatiable and lead to endless dissatisfaction. <strong>(3) Bodily desires</strong> — the actual needs of the physical organism (food, rest, shelter); these are legitimate but limited.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Three types: <strong>Natural</strong> (always right, leads to fulfilment) | <strong>Conditioned</strong> (often wrong, leads to craving) | <strong>Bodily</strong> (necessary but limited). The problem is we mix them up — we treat conditioned desires as if they're natural ones ("I naturally need to be rich/famous"). Self-exploration helps you sort them: which desires are truly yours, and which were installed by society? Keep the natural, question the conditioned.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">59</div>
+    <div class="qa-body">
+      <div class="qa-q">What are criteria of humanistic management?</div>
+      <div class="qa-a">Humanistic management is guided by: <strong>(1) Human values at the core</strong> — decisions based on right understanding; <strong>(2) Mutual fulfilment</strong> — policies that genuinely benefit all stakeholders; <strong>(3) Right utilisation of nature</strong> — without exploitation or waste; <strong>(4) Ethical professional conduct</strong> in every process; <strong>(5) Comprehensive human goal</strong> — aiming not just for profit, but for harmony at individual, family, social, and natural levels. Management must serve human well-being, not just operational efficiency.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Traditional management goal = maximize profit. Humanistic management goal = <strong>maximize well-being of all</strong> — employees, customers, society, and nature. Example: a company that pays fair wages, produces useful products, avoids pollution, and cares for worker families = humanistic management. It's not anti-profit; it's pro-humanity. Profits earned this way are sustainable and ethically clean.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">60</div>
+    <div class="qa-body">
+      <div class="qa-q">What are activities of material order?</div>
+      <div class="qa-a">The material (physical) order consists of entities with only physical and chemical activity — no self-awareness or choice. Their activities include: <strong>existence, composition, decomposition, chemical reaction, and physical transformation</strong>. Material units follow natural laws automatically and deterministically. Examples: minerals forming crystals, metals oxidising (rusting), water evaporating. These units have no desires or feelings — they simply respond to physical and chemical forces according to fixed laws.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Material order activities = everything studied in physics and chemistry. Rocks don't choose to erode; water doesn't choose to freeze — it happens according to physical laws. No desire, no awareness, no choice. Contrast with humans: we can choose to act differently. This shows why the human order is higher — we have the additional dimension of consciousness and ethical choice above the physical laws.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">61</div>
+    <div class="qa-body">
+      <div class="qa-q">What are constituents of physical order?</div>
+      <div class="qa-a">The physical/material order (Padarth Avastha) consists of all non-living, non-biological entities: <strong>soil, rocks, minerals, metals, water, air, and fire</strong> — the five basic elements (Panch-tatva: earth, water, fire, air, space) and all their combinations. These form the physical foundation on which bio, animal, and human orders are built and sustained. The physical order has properties like mass, volume, and chemical composition — but no life or consciousness.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Think of the physical order as the <strong>base layer of nature's pyramid</strong> — everything else (plants, animals, humans) stands on top of it. Without soil, water, air, and minerals, no life is possible. Humans are at the top of the pyramid but completely dependent on the base. Destroying the physical order (pollution, mining, deforestation) weakens the base and eventually collapses everything above — including us.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">62</div>
+    <div class="qa-body">
+      <div class="qa-q">Difference between bio order and physical order?</div>
+      <div class="qa-a"><strong>Physical Order:</strong> non-living, no growth, no reproduction, governed only by physico-chemical laws. Example: rock, metal, water. <strong>Bio Order:</strong> living entities capable of <em>growth, nutrition, and reproduction</em>; they absorb and process the physical order for sustenance. Example: plants, bacteria, fungi. The bio order adds the dimension of life (prana) to matter. Both are material, but the bio order is animate (alive) while the physical order is inanimate (non-living).</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Key difference: <strong>Physical order = no life; Bio order = life added</strong>. A rock and a seed are both physical objects — but a seed has prana (life force). Drop both in soil: the rock stays a rock; the seed grows into a tree. That difference is the bio order. In UHV's framework, as you go from physical → bio → animal → human, each level adds a new dimension of activity and complexity.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">63</div>
+    <div class="qa-body">
+      <div class="qa-q">What is utility value vs artistic value?</div>
+      <div class="qa-a"><strong>Utility value</strong> is the worth of something based on its functional, practical use — how well it serves a physical purpose. Example: a plain chair has utility value for sitting. <strong>Artistic value</strong> is the worth arising from the beauty, craftsmanship, and aesthetic expression of something — it addresses the emotional and creative dimension of human life. Example: a beautifully carved chair has both utility and artistic value. Both are real and important; artistic value reflects humanity's aspiration beyond mere survival.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        <strong>Utility value</strong> = "Does it work?" | <strong>Artistic value</strong> = "Is it beautiful?" A hammer has utility value; the Taj Mahal has artistic value (and some utility too). Humans are the only beings who create and appreciate artistic value — animals don't build art. This shows that human life has dimensions beyond survival (body needs) — beauty, creativity, and meaning are also genuine human needs addressed by UHV.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">64</div>
+    <div class="qa-body">
+      <div class="qa-q">What are the three activities in self (imaging, analyzing, selecting)?</div>
+      <div class="qa-a">The self (I) has three fundamental activities: <strong>(1) Imaging (Chitran)</strong> — forming mental pictures of objects, people, and scenarios; <strong>(2) Analyzing (Vishleshan)</strong> — comparing, reasoning, and evaluating images against each other; <strong>(3) Tasting/Selecting (Swad/Chayan)</strong> — choosing what is acceptable or desirable based on the analysis. These three activities constitute the complete cognitive and decision-making cycle of the self — from perceiving to reasoning to choosing.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        These three activities happen in your mind all the time — you just don't notice! You <em>image</em> a career option → <em>analyze</em> its pros and cons → <em>select</em> it (or not). In UHV, these activities are the tools of the self. With right understanding, they work clearly and correctly. With preconditioning, they get distorted — wrong images, wrong analysis, wrong choices. Self-exploration corrects all three.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">65</div>
+    <div class="qa-body">
+      <div class="qa-q">What are feelings when someone helps you?</div>
+      <div class="qa-a">When someone genuinely helps you, these natural feelings arise: <strong>Gratitude (Kritagyata)</strong> — a deep sense of thankfulness for their contribution to your well-being; <strong>Respect (Samman)</strong> — recognition and acknowledgment of their goodness and effort; <strong>Trust (Vishwas)</strong> — increased confidence in their genuine care for you. These feelings arise naturally and spontaneously — they indicate the relational values working correctly and naturally within the self. You don't have to force them.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Think of the last time someone helped you genuinely — didn't you naturally feel grateful, respectful, and trusting toward them? UHV uses this everyday experience to show that <strong>values are natural, not artificial</strong>. You don't need to be "taught" to feel gratitude — it arises automatically when the self recognizes genuine care. This is the proof that human values are innate, not imposed from outside.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">66</div>
+    <div class="qa-body">
+      <div class="qa-q">What is outcome of harmony in nature?</div>
+      <div class="qa-a">Harmony in nature produces: <strong>(a) Ecological balance</strong> — sustainable cycles of water, carbon, and nutrients continue; <strong>(b) Biodiversity</strong> — all species flourish in their natural roles; <strong>(c) Clean environment</strong> — air, water, and soil remain healthy and unpolluted; <strong>(d) Climate stability</strong> — natural climate patterns remain undisturbed; <strong>(e) Abundance for all living beings</strong> through mutual fulfilment. When humans live in co-existence with nature, the entire system self-regulates and sustains all life indefinitely.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        Nature in harmony = a perfectly running, self-sustaining system — like a well-managed factory with zero waste and happy workers. Humans disturbing this harmony (deforestation, pollution, overhunting) = like someone randomly breaking gears in the factory. The current climate crisis, biodiversity loss, and pollution are outcomes of <strong>disharmony with nature</strong>. UHV says: restoring harmony in nature starts with human beings restoring right understanding.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">67</div>
+    <div class="qa-body">
+      <div class="qa-q">What is sanyam and swasthya?</div>
+      <div class="qa-a"><strong>Sanyam (Self-regulation)</strong> is the right, balanced use of the body — using it in ways that are in harmony with its natural functioning; neither over-indulging (excess) nor under-nourishing (deprivation). It means using the body as an instrument of the self wisely and responsibly. <strong>Swasthya (Health)</strong> is the natural, balanced state of the body when it is properly cared for — physically active, correctly nourished, and in harmony with its own natural design. Sanyam leads to swasthya; violating sanyam leads to disease.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        <strong>Sanyam</strong> = responsible stewardship of the body (like maintaining a vehicle properly). <strong>Swasthya</strong> = the body in its optimal natural state (vehicle running smoothly). Over-eating, under-sleeping, or overworking violates sanyam → leads to disease (loss of swasthya). UHV's point: the body is "I"'s instrument — take care of it wisely, not obsessively. Sanyam is the middle path — neither neglect nor over-indulgence.
+      </div>
+    </div>
+  </div><hr class="divider">
+
+  <div class="qa">
+    <div class="qa-num">68</div>
+    <div class="qa-body">
+      <div class="qa-q">Difference between care and guidance?</div>
+      <div class="qa-a"><strong>Care (Mamata)</strong> is the feeling of responsibility for the <em>physical well-being</em> of the other — ensuring their body is nourished, healthy, protected, and safe. It is directed toward the body. <strong>Guidance (Vatsalya)</strong> is the feeling of wanting the other to develop <em>right understanding</em> and grow toward their fullest, best self — it is directed toward the self (I) of the other person. Care protects and nourishes the body; guidance develops and elevates the consciousness.</div>
+      <div class="concept-booster">
+        <span class="booster-label">💡 Concept Booster</span><br>
+        A good teacher shows both: <strong>Care</strong> = "Are you well? Did you eat? Are you stressed?" — concern for physical and emotional well-being. <strong>Guidance</strong> = "Let me help you think clearly, develop understanding, grow as a person" — concern for inner development. Care without guidance = overprotection (body safe, self doesn't grow). Guidance without care = cold mentorship (self grows, but body/wellbeing neglected). Both together = true affection.
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Universal Human Values — AKTU Syllabus &nbsp;|&nbsp; 2-Mark Questions &amp; Answers &nbsp;|&nbsp; Simplified Answers + Concept Boosters &nbsp;|&nbsp; All 68 Questions Exam Ready
+  </div>
+
+</div>
+</body>
+</html>
