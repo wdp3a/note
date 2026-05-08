@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AKTU Cyber Security – 2 Marks Answers</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f0f4ff;
+    --surface: #ffffff;
+    --surface2: #f7f9ff;
+    --border: #dce3f5;
+    --text: #1a1f3a;
+    --text-muted: #5a6080;
+    --accent: #2d5be3;
+    --accent2: #7c3aed;
+    --accent3: #0891b2;
+    --success: #059669;
+    --warn: #d97706;
+    --danger: #dc2626;
+    --card-shadow: 0 2px 16px rgba(45,91,227,0.07);
+    --card-shadow-hover: 0 6px 32px rgba(45,91,227,0.14);
+    --booster-bg: #fffbeb;
+    --booster-border: #f59e0b;
+    --def-bg: #eff6ff;
+    --def-border: #3b82f6;
+    --point-bg: #f0fdf4;
+    --point-border: #22c55e;
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+  [data-theme="dark"] {
+    --bg: #0f1220;
+    --surface: #1a1f35;
+    --surface2: #141828;
+    --border: #2a3055;
+    --text: #e8eaf6;
+    --text-muted: #8890b0;
+    --accent: #5b8af5;
+    --accent2: #a78bfa;
+    --accent3: #22d3ee;
+    --success: #34d399;
+    --warn: #fbbf24;
+    --danger: #f87171;
+    --card-shadow: 0 2px 16px rgba(0,0,0,0.4);
+    --card-shadow-hover: 0 6px 32px rgba(91,138,245,0.2);
+    --booster-bg: #1f1a0a;
+    --booster-border: #f59e0b;
+    --def-bg: #0d1a33;
+    --def-border: #3b82f6;
+    --point-bg: #0a1f14;
+    --point-border: #22c55e;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2d5be3 50%, #7c3aed 100%);
+    color: #fff;
+    padding: 2.5rem 1.5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 50px;
+    padding: 0.3rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  header h1 {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(1.5rem, 5vw, 2.4rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  header p {
+    font-size: 0.95rem;
+    opacity: 0.85;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  /* ─── CONTROLS ─── */
+  .controls {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 1rem 1rem 0;
+  }
+  .btn {
+    padding: 0.5rem 1.2rem;
+    border-radius: 50px;
+    border: 2px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  #darkToggle { font-size: 1rem; padding: 0.5rem 0.9rem; }
+
+  /* ─── SEARCH ─── */
+  .search-wrap {
+    padding: 1rem 1rem 0;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .search-wrap input {
+    width: 100%;
+    padding: 0.75rem 1.2rem;
+    border-radius: 50px;
+    border: 2px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border 0.2s;
+  }
+  .search-wrap input:focus { border-color: var(--accent); }
+
+  /* ─── PROGRESS ─── */
+  .progress-bar-wrap {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 999; height: 3px;
+  }
+  .progress-bar {
+    height: 3px;
+    background: linear-gradient(90deg, #2d5be3, #7c3aed);
+    width: 0%;
+    transition: width 0.1s;
+  }
+
+  /* ─── TOC ─── */
+  .toc-wrap {
+    max-width: 900px;
+    margin: 1.5rem auto 0;
+    padding: 0 1rem;
+  }
+  .toc-toggle {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.9rem 1.2rem;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--accent);
+    width: 100%;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Nunito', sans-serif;
+    transition: all 0.2s;
+  }
+  .toc-toggle:hover { background: var(--def-bg); }
+  .toc-body {
+    display: none;
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 var(--radius) var(--radius);
+    padding: 1rem 1.2rem;
+  }
+  .toc-body.open { display: block; }
+  .toc-body ol {
+    column-count: 2;
+    column-gap: 1.5rem;
+    list-style: none;
+  }
+  @media(max-width:500px){ .toc-body ol { column-count: 1; } }
+  .toc-body li { padding: 0.2rem 0; }
+  .toc-body a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  .toc-body a:hover { text-decoration: underline; }
+
+  /* ─── MAIN CONTENT ─── */
+  .main { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+
+  /* ─── QUESTION CARD ─── */
+  .q-card {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 1.5rem;
+    box-shadow: var(--card-shadow);
+    transition: box-shadow 0.2s, transform 0.2s;
+    overflow: hidden;
+  }
+  .q-card:hover { box-shadow: var(--card-shadow-hover); transform: translateY(-1px); }
+
+  .q-header {
+    padding: 1rem 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    user-select: none;
+  }
+  .q-num {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    border-radius: 50px;
+    min-width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+  .q-text {
+    font-family: 'Sora', sans-serif;
+    font-size: 0.97rem;
+    font-weight: 700;
+    color: var(--text);
+    flex: 1;
+    line-height: 1.4;
+  }
+  .q-chevron {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    transition: transform 0.3s;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+  .q-card.open .q-chevron { transform: rotate(180deg); }
+
+  .q-body {
+    display: none;
+    border-top: 2px solid var(--border);
+    padding: 1.2rem;
+  }
+  .q-card.open .q-body { display: block; }
+
+  /* ─── BOOSTER ─── */
+  .booster {
+    background: var(--booster-bg);
+    border-left: 4px solid var(--booster-border);
+    border-radius: var(--radius-sm);
+    padding: 0.9rem 1rem;
+    margin-bottom: 1rem;
+  }
+  .booster-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--warn);
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .booster p { font-size: 0.9rem; color: var(--text); }
+
+  /* ─── DEFINITION BOX ─── */
+  .def-box {
+    background: var(--def-bg);
+    border-left: 4px solid var(--def-border);
+    border-radius: var(--radius-sm);
+    padding: 0.9rem 1rem;
+    margin-bottom: 0.9rem;
+  }
+  .def-box p { font-size: 0.92rem; }
+
+  /* ─── POINTS ─── */
+  .points {
+    background: var(--point-bg);
+    border-left: 4px solid var(--point-border);
+    border-radius: var(--radius-sm);
+    padding: 0.9rem 1rem;
+    margin-bottom: 0.9rem;
+  }
+  .points ul { padding-left: 1.2rem; }
+  .points ul li { font-size: 0.92rem; margin-bottom: 0.45rem; }
+  .points ul li:last-child { margin-bottom: 0; }
+
+  /* ─── CONCLUSION ─── */
+  .conclusion {
+    background: var(--surface2);
+    border: 2px dashed var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  /* ─── LABELS ─── */
+  .label {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0.15rem 0.6rem;
+    border-radius: 50px;
+    margin-bottom: 0.5rem;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .label-def { background: #dbeafe; color: #1d4ed8; }
+  .label-points { background: #dcfce7; color: #15803d; }
+  .label-concl { background: #f3f4f6; color: #4b5563; }
+  [data-theme="dark"] .label-def { background: #1e3a8a; color: #93c5fd; }
+  [data-theme="dark"] .label-points { background: #14532d; color: #86efac; }
+  [data-theme="dark"] .label-concl { background: #1f2937; color: #9ca3af; }
+
+  keyword { color: var(--accent); font-weight: 700; }
+  strong { color: var(--accent2); }
+
+  .section-divider {
+    text-align: center;
+    padding: 1rem 0 0.5rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ─── BACK TO TOP ─── */
+  #backToTop {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 44px; height: 44px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(45,91,227,0.4);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 998;
+    transition: transform 0.2s;
+  }
+  #backToTop:hover { transform: scale(1.1); }
+
+  /* hidden by search */
+  .q-card.hidden { display: none; }
+
+  /* expand all state */
+  .q-card.force-open .q-body { display: block; }
+  .q-card.force-open .q-chevron { transform: rotate(180deg); }
+
+  @media(max-width:600px){
+    header { padding: 2rem 1rem 1.5rem; }
+    .q-header { padding: 0.9rem 1rem; }
+    .q-body { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+<header>
+  <div class="badge">🔐 AKTU B.Tech · Cyber Security</div>
+  <h1>2 Marks Questions<br>Perfect Answers</h1>
+  <p>35 Questions · Exam-Ready · Simple Language · Mobile Friendly</p>
+</header>
+
+<div class="controls">
+  <button class="btn" id="expandAll">Expand All</button>
+  <button class="btn" id="collapseAll">Collapse All</button>
+  <button class="btn" id="darkToggle">🌙 Dark Mode</button>
+</div>
+
+<div class="search-wrap">
+  <input type="text" id="searchInput" placeholder="🔍  Search questions...">
+</div>
+
+<div class="toc-wrap">
+  <button class="toc-toggle" id="tocToggle">📋 Table of Contents (All 35 Questions) <span id="tocArrow">▼</span></button>
+  <div class="toc-body" id="tocBody">
+    <ol>
+      <li><a href="#q1">1. Computer Security, Confidentiality & Integrity</a></li>
+      <li><a href="#q2">2. Encryption and Decryption</a></li>
+      <li><a href="#q3">3. Cipher and Key in Cryptography</a></li>
+      <li><a href="#q4">4. Principles of Secure Design</a></li>
+      <li><a href="#q5">5. SSL, HTTPS, TLS</a></li>
+      <li><a href="#q6">6. System Call Interposition</a></li>
+      <li><a href="#q7">7. Problems with ptrace</a></li>
+      <li><a href="#q8">8. DAC, MAC, UNIX & Windows Access Control</a></li>
+      <li><a href="#q9">9. Web Security</a></li>
+      <li><a href="#q10">10. SQL Injection Attack</a></li>
+      <li><a href="#q11">11. Cross Site Scripting (XSS)</a></li>
+      <li><a href="#q12">12. Cross Site Request Forgery (CSRF)</a></li>
+      <li><a href="#q13">13. Covert Channels in VMM Security</a></li>
+      <li><a href="#q14">14. Benefits of IPsec</a></li>
+      <li><a href="#q15">15. Why Use DNSSEC?</a></li>
+      <li><a href="#q16">16. DNS Look-up Zones</a></li>
+      <li><a href="#q17">17. Firewall and Its Uses</a></li>
+      <li><a href="#q18">18. Session Hijacking</a></li>
+      <li><a href="#q19">19. Confinement Principle</a></li>
+      <li><a href="#q20">20. Software Fault Isolation</a></li>
+      <li><a href="#q21">21. Kernel in UNIX</a></li>
+      <li><a href="#q22">22. Advantages & Limitations of UNIX</a></li>
+      <li><a href="#q23">23. Privilege & Ways to Drop It</a></li>
+      <li><a href="#q24">24. Goals of Confidentiality Policies</a></li>
+      <li><a href="#q25">25. Hash Function</a></li>
+      <li><a href="#q26">26. Virus vs Worm</a></li>
+      <li><a href="#q27">27. Ransomware</a></li>
+      <li><a href="#q28">28. Frame Busting in Web Security</a></li>
+      <li><a href="#q29">29. Cache Memory vs RAM</a></li>
+      <li><a href="#q30">30. Cyber Crime</a></li>
+      <li><a href="#q31">31. Botnet</a></li>
+      <li><a href="#q32">32. Mobile Device Security</a></li>
+      <li><a href="#q33">33. Authentication and Authorization</a></li>
+      <li><a href="#q34">34. Digital Evidence</a></li>
+      <li><a href="#q35">35. Why is Cyber Security Needed?</a></li>
+    </ol>
+  </div>
+</div>
+
+<div class="main" id="mainContent">
+
+<!-- Q1 -->
+<div class="q-card open" id="q1" data-question="computer security confidentiality integrity">
+  <div class="q-header">
+    <div class="q-num">01</div>
+    <div class="q-text">What is computer security? Discuss confidentiality and integrity.</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p><keyword>Computer Security</keyword> refers to the protection of computer systems, networks, and data from unauthorized access, theft, damage, or disruption. Its main goal is to ensure that information is <strong>safe, accurate, and available</strong> to authorized users only.</p>
+    </div>
+    <div class="label label-points">Key Points</div>
+    <div class="points">
+      <ul>
+        <li><strong>Confidentiality:</strong> Only authorized persons can access the information. For example, your bank password should only be known to you. It prevents unauthorized disclosure of data. Achieved using encryption, passwords, and access controls.</li>
+        <li><strong>Integrity:</strong> Data must remain accurate and unchanged unless modified by an authorized person. For example, if you send ₹100 in a transaction, it should not change to ₹1000. It prevents unauthorized modification of data.</li>
+        <li><strong>Availability (bonus point):</strong> The third pillar – information must be available to authorized users whenever needed. These three together form the <strong>CIA Triad</strong> of security.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">Computer security is built on the CIA Triad. Confidentiality protects data from exposure; Integrity protects data from tampering. Both are essential for any secure system.</div>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="q-card open" id="q2" data-question="encryption decryption cryptography">
+  <div class="q-header">
+    <div class="q-num">02</div>
+    <div class="q-text">What is Encryption and Decryption in cryptography?</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="booster">
+      <div class="booster-title">⚡ Concept Booster</div>
+      <p><strong>Cryptography</strong> is the science of hiding information using codes and ciphers so that only the intended person can read it. Think of it as writing a secret letter in a language only you and your friend understand.</p>
+    </div>
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p><keyword>Encryption</keyword> is the process of converting plain readable data (plaintext) into an unreadable format (ciphertext) using an algorithm and a key, so that unauthorized persons cannot read it.</p>
+      <p style="margin-top:0.6rem;"><keyword>Decryption</keyword> is the reverse process — converting the ciphertext back to the original plaintext using a key, so the authorized receiver can read the message.</p>
+    </div>
+    <div class="label label-points">Key Points</div>
+    <div class="points">
+      <ul>
+        <li><strong>Plaintext → Encryption → Ciphertext</strong> (data becomes unreadable)</li>
+        <li><strong>Ciphertext → Decryption → Plaintext</strong> (data becomes readable again)</li>
+        <li><strong>Key</strong> is used in both processes. Without the correct key, decryption is impossible.</li>
+        <li>Example: "HELLO" → encrypted → "MJQQT" → decrypted → "HELLO"</li>
+        <li>Types: <strong>Symmetric Encryption</strong> (same key for both), <strong>Asymmetric Encryption</strong> (public & private key pair).</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">Encryption and decryption are the core tools of cryptography. Encryption protects data during storage and transmission; decryption allows the rightful owner to read it.</div>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="q-card open" id="q3" data-question="cipher key cryptography roles">
+  <div class="q-header">
+    <div class="q-num">03</div>
+    <div class="q-text">What are the roles of cipher and key in cryptography?</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p>A <keyword>Cipher</keyword> is an algorithm (a set of rules or steps) used to perform encryption and decryption. A <keyword>Key</keyword> is a secret value (a string of bits/characters) that is fed into the cipher to produce the encrypted or decrypted output.</p>
+    </div>
+    <div class="label label-points">Key Points</div>
+    <div class="points">
+      <ul>
+        <li><strong>Role of Cipher:</strong> It defines the method/algorithm for transforming data. For example, Caesar Cipher shifts letters by a fixed number. AES, DES, RSA are modern ciphers.</li>
+        <li><strong>Role of Key:</strong> It controls how the cipher operates. Even if someone knows the cipher (algorithm), without the key they cannot decrypt the data. The security of encryption depends on the key, not on hiding the algorithm.</li>
+        <li><strong>Kerckhoffs's Principle:</strong> A cipher should be secure even if everything about the system is public knowledge, except the key.</li>
+        <li>Longer key = stronger security. Example: AES-128 (128-bit key) vs AES-256 (256-bit key).</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">The cipher provides the method, and the key provides the secret. Together they ensure data security. Without the correct key, the cipher alone is useless to an attacker.</div>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="q-card open" id="q4" data-question="principles secure design architecture">
+  <div class="q-header">
+    <div class="q-num">04</div>
+    <div class="q-text">What are the principles of secure design / secure architecture principles?</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="label label-def">Introduction</div>
+    <div class="def-box">
+      <p>Secure design principles are a set of guidelines followed by security engineers while building systems to make them resistant to attacks. These were proposed by <strong>Saltzer & Schroeder</strong> and are fundamental to building secure software and systems.</p>
+    </div>
+    <div class="label label-points">Key Principles</div>
+    <div class="points">
+      <ul>
+        <li><strong>Principle of Least Privilege:</strong> Every user or program should have only the minimum rights needed to perform their task. No extra permissions.</li>
+        <li><strong>Fail-Safe Defaults:</strong> By default, access should be denied. Access is given only when explicitly permitted.</li>
+        <li><strong>Economy of Mechanism:</strong> Keep the design as simple as possible. Simple systems are easier to test and verify.</li>
+        <li><strong>Complete Mediation:</strong> Every access to a resource must be checked for authorization — no shortcuts.</li>
+        <li><strong>Open Design:</strong> Security should not depend on keeping the design secret. (Kerckhoffs's principle)</li>
+        <li><strong>Separation of Privilege:</strong> Require more than one condition (e.g., two keys) to grant access to sensitive operations.</li>
+        <li><strong>Psychological Acceptability:</strong> Security mechanisms should be easy for users to understand and use correctly.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">These principles form the foundation of secure system design. Following them reduces vulnerabilities and makes systems harder to attack.</div>
+  </div>
+</div>
+
+<!-- Q5 -->
+<div class="q-card open" id="q5" data-question="SSL how it works HTTPS TLS difference">
+  <div class="q-header">
+    <div class="q-num">05</div>
+    <div class="q-text">What is SSL and how does it work? Differentiate between HTTPS, SSL and TLS.</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="booster">
+      <div class="booster-title">⚡ Concept Booster</div>
+      <p>When you visit a website, data travels between your browser and the server. Without security, hackers can read this data. SSL/TLS creates a secure, encrypted tunnel for this data transfer.</p>
+    </div>
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p><keyword>SSL (Secure Sockets Layer)</keyword> is a security protocol that establishes an encrypted connection between a web server and a browser, ensuring that all data passed between them remains private and secure.</p>
+    </div>
+    <div class="label label-points">How SSL Works</div>
+    <div class="points">
+      <ul>
+        <li><strong>Step 1 – Handshake:</strong> The browser contacts the server and requests a secure connection.</li>
+        <li><strong>Step 2 – Certificate:</strong> The server sends its SSL Certificate (which contains its public key) to the browser.</li>
+        <li><strong>Step 3 – Verification:</strong> The browser verifies the certificate with a trusted Certificate Authority (CA).</li>
+        <li><strong>Step 4 – Session Key:</strong> A shared session key is created using asymmetric encryption for symmetric encrypted communication.</li>
+        <li><strong>Step 5 – Secure Communication:</strong> All data is now encrypted using this session key.</li>
+      </ul>
+    </div>
+    <div class="label label-points">Difference: HTTPS, SSL, TLS</div>
+    <div class="points">
+      <ul>
+        <li><strong>SSL</strong> – Old protocol (now deprecated). Was used to secure internet connections. Has known vulnerabilities.</li>
+        <li><strong>TLS (Transport Layer Security)</strong> – Upgraded, more secure version of SSL. TLS 1.3 is the latest. Modern websites use TLS, not SSL.</li>
+        <li><strong>HTTPS</strong> – HTTP + TLS/SSL = HTTPS. It is the secure version of HTTP. When you see a 🔒 padlock in your browser, the website is using HTTPS (which uses TLS underneath).</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">SSL is the older protocol, TLS is its improved successor, and HTTPS is the application-level result of using TLS to secure HTTP communication.</div>
+  </div>
+</div>
+
+<!-- Q6 -->
+<div class="q-card open" id="q6" data-question="system call interposition">
+  <div class="q-header">
+    <div class="q-num">06</div>
+    <div class="q-text">Explain System Call Interposition.</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="booster">
+      <div class="booster-title">⚡ Concept Booster</div>
+      <p>A <strong>System Call</strong> is a request made by a program to the operating system to perform privileged operations like reading a file, opening a network connection, or allocating memory. Normal programs cannot directly access hardware — they must go through the OS via system calls.</p>
+    </div>
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p><keyword>System Call Interposition</keyword> is a security technique where a monitor (a security layer) <strong>intercepts system calls</strong> made by an application before they reach the operating system kernel. The monitor checks whether the call is safe or malicious, and either allows or denies it.</p>
+    </div>
+    <div class="label label-points">Key Points</div>
+    <div class="points">
+      <ul>
+        <li>It works like a <strong>security guard</strong> between the application and the OS kernel.</li>
+        <li>If an application tries to do something harmful (e.g., delete a system file or open a suspicious network port), the monitor blocks it.</li>
+        <li>It is used for <strong>sandboxing</strong> untrusted programs — running them in a restricted environment.</li>
+        <li>Tools like <strong>Systrace, seccomp</strong> (used in Linux) use system call interposition.</li>
+        <li>It provides <strong>fine-grained control</strong> over what a program can and cannot do.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">System Call Interposition is a powerful security mechanism that monitors application behavior at the OS boundary, preventing malicious or unauthorized actions before they can cause harm.</div>
+  </div>
+</div>
+
+<!-- Q7 -->
+<div class="q-card open" id="q7" data-question="problems ptrace">
+  <div class="q-header">
+    <div class="q-num">07</div>
+    <div class="q-text">Discuss problems associated with ptrace.</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="booster">
+      <div class="booster-title">⚡ Concept Booster</div>
+      <p><strong>ptrace</strong> is a system call in Linux/Unix that allows one process (the tracer/monitor) to observe and control the execution of another process (the tracee). It is used for debugging and is also the basis for system call interposition tools like Strace.</p>
+    </div>
+    <div class="label label-def">Introduction</div>
+    <div class="def-box">
+      <p>While ptrace is useful for debugging and monitoring, it has several <strong>security and performance problems</strong> that make it unreliable for security-critical interposition.</p>
+    </div>
+    <div class="label label-points">Problems with ptrace</div>
+    <div class="points">
+      <ul>
+        <li><strong>TOCTOU (Time Of Check to Time Of Use) Attack:</strong> There is a time gap between when ptrace checks a system call argument and when the kernel actually uses it. An attacker can modify the argument in this gap to bypass security checks. This is the most serious flaw.</li>
+        <li><strong>Performance Overhead:</strong> ptrace requires context switches between the traced process and the monitor for every system call. This is very slow and causes significant performance degradation.</li>
+        <li><strong>Complexity in Multi-threaded Programs:</strong> ptrace has difficulty correctly handling multi-threaded applications because multiple threads making system calls simultaneously create race conditions.</li>
+        <li><strong>Incomplete Coverage:</strong> ptrace may miss certain system calls or signals, creating gaps in monitoring that attackers can exploit.</li>
+        <li><strong>Limited to Single Tracer:</strong> Only one process can trace another at a time using ptrace, limiting flexibility.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">ptrace is useful for debugging but is unsuitable for production security enforcement due to TOCTOU vulnerabilities, performance issues, and multi-threading problems. Modern alternatives like seccomp are preferred.</div>
+  </div>
+</div>
+
+<!-- Q8 -->
+<div class="q-card open" id="q8" data-question="DAC MAC discretionary mandatory access control UNIX Windows">
+  <div class="q-header">
+    <div class="q-num">08</div>
+    <div class="q-text">What is the difference between Discretionary Access Control, Mandatory Access Control, UNIX access control and Windows access control?</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="booster">
+      <div class="booster-title">⚡ Concept Booster</div>
+      <p><strong>Access Control</strong> is the process of deciding who can access which resources (files, folders, devices) in a system. Different systems use different models to implement this.</p>
+    </div>
+    <div class="label label-points">Key Differences</div>
+    <div class="points">
+      <ul>
+        <li><strong>Discretionary Access Control (DAC):</strong> The owner of a resource decides who can access it. For example, you own a file and you choose who can read, write, or execute it. It is flexible but less secure — owners may make poor decisions. Used in most standard OS.</li>
+        <li><strong>Mandatory Access Control (MAC):</strong> Access is controlled by the system (administrator/policy), not the owner. Resources are assigned security labels (e.g., Top Secret, Confidential) and users have clearance levels. Even the file owner cannot override the policy. Used in military and high-security systems (e.g., SELinux).</li>
+        <li><strong>UNIX Access Control:</strong> Uses DAC model. Each file has an owner, a group, and permissions for Owner/Group/Others using read (r), write (w), execute (x) bits. For example: <code>rwxr-xr--</code>. Simple and effective.</li>
+        <li><strong>Windows Access Control:</strong> Uses a more advanced DAC model called <strong>ACL (Access Control List)</strong>. Each file/folder has an ACL listing specific users and their permissions. More granular than UNIX. Supports inheritance of permissions. Uses SID (Security Identifiers) to identify users.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">DAC gives control to the owner; MAC gives control to the system. UNIX uses simple permission bits while Windows uses detailed ACLs — both are DAC models but with different levels of granularity.</div>
+  </div>
+</div>
+
+<!-- Q9 -->
+<div class="q-card open" id="q9" data-question="web security">
+  <div class="q-header">
+    <div class="q-num">09</div>
+    <div class="q-text">What is Web Security?</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p><keyword>Web Security</keyword> (also called Web Application Security) refers to the protection of websites, web applications, and web services from attacks, unauthorized access, data theft, and malicious exploitation over the internet.</p>
+    </div>
+    <div class="label label-points">Key Points</div>
+    <div class="points">
+      <ul>
+        <li>Web security protects against threats like <strong>SQL Injection, XSS, CSRF, Session Hijacking, Phishing,</strong> and more.</li>
+        <li>It ensures that user data (like passwords, credit card numbers) is not stolen or tampered with.</li>
+        <li>Key tools and techniques include: <strong>HTTPS, Firewalls, Input Validation, Authentication, Encryption, Security Headers</strong>.</li>
+        <li>The <strong>OWASP Top 10</strong> is a widely recognized list of the most critical web application security risks.</li>
+        <li>Web security protects three parties: the <strong>server</strong> (where the app runs), the <strong>client</strong> (browser), and the <strong>data</strong> in transit.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">Web security is essential in today's internet-driven world. Without it, sensitive user data and business operations are at constant risk from cyber attackers.</div>
+  </div>
+</div>
+
+<!-- Q10 -->
+<div class="q-card open" id="q10" data-question="SQL injection attack">
+  <div class="q-header">
+    <div class="q-num">10</div>
+    <div class="q-text">What is SQL injection attack? Explain briefly.</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="booster">
+      <div class="booster-title">⚡ Concept Booster</div>
+      <p><strong>SQL (Structured Query Language)</strong> is used by websites to communicate with their databases. For example, when you log in, the website sends an SQL query to the database to check your username and password.</p>
+    </div>
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p><keyword>SQL Injection</keyword> is a web attack where the attacker inserts malicious SQL code into an input field (like a login form or search box) to manipulate the database query and gain unauthorized access to data.</p>
+    </div>
+    <div class="label label-points">Key Points</div>
+    <div class="points">
+      <ul>
+        <li><strong>How it works:</strong> Suppose a login query is: <code>SELECT * FROM users WHERE username='input' AND password='input'</code>. An attacker types <code>' OR '1'='1</code> as input. The query becomes always true and the attacker logs in without a valid password.</li>
+        <li><strong>What attackers can do:</strong> Read sensitive data, modify or delete database records, bypass login authentication, and sometimes execute commands on the server.</li>
+        <li><strong>Prevention:</strong> Use <strong>Prepared Statements / Parameterized Queries</strong>, input validation, and stored procedures. Never directly include user input in SQL queries.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">SQL Injection is one of the most dangerous and common web attacks. It exploits improper input handling to manipulate databases. Parameterized queries are the best defense.</div>
+  </div>
+</div>
+
+<!-- Q11 -->
+<div class="q-card open" id="q11" data-question="cross site scripting XSS anti-XSS tools protection">
+  <div class="q-header">
+    <div class="q-num">11</div>
+    <div class="q-text">What is Cross Site Scripting (XSS)? Mention anti-XSS tools/protection.</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="booster">
+      <div class="booster-title">⚡ Concept Booster</div>
+      <p>A website can display content entered by users (like comments, usernames, search queries). If the website doesn't validate this input, an attacker can enter malicious scripts instead of normal text.</p>
+    </div>
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p><keyword>Cross Site Scripting (XSS)</keyword> is a web attack where an attacker injects malicious JavaScript code into a trusted website. When other users visit that page, the malicious script runs in their browser without their knowledge, stealing cookies, session tokens, or redirecting them to fake sites.</p>
+    </div>
+    <div class="label label-points">Types & Key Points</div>
+    <div class="points">
+      <ul>
+        <li><strong>Stored XSS:</strong> Malicious script is permanently stored in the database (e.g., in a comment section). Every user who loads that page gets attacked.</li>
+        <li><strong>Reflected XSS:</strong> The script is embedded in a URL. When the victim clicks the URL, the script executes in their browser.</li>
+        <li><strong>DOM-based XSS:</strong> The attack happens in the browser's DOM environment without involving the server.</li>
+        <li><strong>Anti-XSS Protections:</strong>
+          <br>• <strong>Input Validation & Output Encoding</strong> (HTML encode user input)
+          <br>• <strong>Content Security Policy (CSP)</strong> headers
+          <br>• <strong>HttpOnly Cookies</strong> (prevents JavaScript from accessing cookies)
+          <br>• Anti-XSS Libraries: <strong>OWASP ESAPI, DOMPurify, XSS filters</strong>
+          <br>• Browser built-in XSS filters (X-XSS-Protection header)</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">XSS attacks exploit a website's trust to run attacker scripts in victim browsers. Proper input handling, output encoding, and CSP headers are the best defense.</div>
+  </div>
+</div>
+
+<!-- Q12 -->
+<div class="q-card open" id="q12" data-question="cross site request forgery CSRF">
+  <div class="q-header">
+    <div class="q-num">12</div>
+    <div class="q-text">What is Cross Site Request Forgery (CSRF)?</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="booster">
+      <div class="booster-title">⚡ Concept Booster</div>
+      <p>When you log into a website, your browser stores a session cookie. The website uses this cookie to verify you are logged in. CSRF exploits this by tricking your browser into sending requests to that website without your knowledge.</p>
+    </div>
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p><keyword>CSRF (Cross Site Request Forgery)</keyword> is an attack where an attacker tricks an already-authenticated user into unknowingly submitting a malicious request to a web application. The application cannot tell if the request came from the real user or from the attacker's page.</p>
+    </div>
+    <div class="label label-points">Key Points</div>
+    <div class="points">
+      <ul>
+        <li><strong>Example:</strong> You are logged into your bank. You visit a malicious website. That site silently sends a request to your bank to transfer money using your active session.</li>
+        <li>CSRF exploits the website's trust in the user's browser (since the cookie is automatically sent).</li>
+        <li>Unlike XSS (which exploits the user's trust in the website), CSRF exploits the website's trust in the user.</li>
+        <li><strong>Prevention:</strong> Use <strong>CSRF Tokens</strong> (unique random tokens added to forms), <strong>SameSite Cookie attribute</strong>, re-authentication for sensitive actions, and <strong>Referer header validation</strong>.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">CSRF tricks authenticated users into performing unwanted actions on a trusted website. CSRF tokens are the most effective defense against this attack.</div>
+  </div>
+</div>
+
+<!-- Q13 -->
+<div class="q-card open" id="q13" data-question="covert channels VMM security disadvantages problems">
+  <div class="q-header">
+    <div class="q-num">13</div>
+    <div class="q-text">What are covert channels and their disadvantages/problems in VMM security?</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="booster">
+      <div class="booster-title">⚡ Concept Booster</div>
+      <p>A <strong>VMM (Virtual Machine Monitor)</strong> or Hypervisor runs multiple virtual machines (VMs) on a single physical machine. These VMs should be completely isolated from each other — but covert channels can break this isolation.</p>
+    </div>
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p>A <keyword>Covert Channel</keyword> is a secret communication path that allows a process to transfer information in a way that violates the system's official security policy — using resources that are not intended for communication (like CPU usage, memory, disk I/O timing).</p>
+    </div>
+    <div class="label label-points">Problems in VMM Security</div>
+    <div class="points">
+      <ul>
+        <li><strong>Information Leakage:</strong> A malicious VM can use covert channels (e.g., by observing CPU or cache timing) to steal data from another VM on the same physical host — breaking isolation.</li>
+        <li><strong>Difficult to Detect:</strong> Covert channels do not use normal network paths, so traditional security tools like firewalls cannot detect them.</li>
+        <li><strong>Types in VMM context:</strong> <strong>Storage Covert Channels</strong> (using shared storage) and <strong>Timing Covert Channels</strong> (measuring response times to infer secret data).</li>
+        <li><strong>Hard to Eliminate:</strong> Since they exploit shared physical resources (CPU cache, RAM), completely eliminating covert channels in a shared environment is nearly impossible.</li>
+        <li><strong>Low bandwidth but still dangerous:</strong> Even if they transfer data slowly, they can leak passwords, encryption keys, or sensitive information over time.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">Covert channels are hidden communication paths that bypass security policies. In VMM environments, they are particularly dangerous because they can break VM isolation without being detected by standard security tools.</div>
+  </div>
+</div>
+
+<!-- Q14 -->
+<div class="q-card open" id="q14" data-question="IPsec benefits">
+  <div class="q-header">
+    <div class="q-num">14</div>
+    <div class="q-text">Give benefits of IPsec.</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="booster">
+      <div class="booster-title">⚡ Concept Booster</div>
+      <p><strong>IPsec (Internet Protocol Security)</strong> is a suite of protocols that secures communication at the <strong>Network Layer (Layer 3)</strong> of the OSI model. It is commonly used in VPNs (Virtual Private Networks).</p>
+    </div>
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p><keyword>IPsec</keyword> provides end-to-end security for IP packets by authenticating and encrypting each IP packet in a communication session.</p>
+    </div>
+    <div class="label label-points">Benefits of IPsec</div>
+    <div class="points">
+      <ul>
+        <li><strong>Data Confidentiality:</strong> Encrypts packets so that even if intercepted, the data cannot be read.</li>
+        <li><strong>Data Integrity:</strong> Ensures that packets have not been modified during transmission using cryptographic hash functions.</li>
+        <li><strong>Authentication:</strong> Verifies that packets come from a legitimate, trusted source (not a fake/impersonated source). Prevents IP spoofing.</li>
+        <li><strong>Anti-Replay Protection:</strong> Prevents attackers from capturing and re-sending old packets to replay attacks.</li>
+        <li><strong>Transparent to Applications:</strong> Works at the network layer, so applications don't need to be modified to benefit from IPsec security.</li>
+        <li><strong>VPN Support:</strong> IPsec is the backbone of secure VPN tunnels used by organizations to connect remote offices and employees.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">IPsec provides a comprehensive security solution at the network level — offering confidentiality, integrity, authentication, and replay protection — making it ideal for VPNs and secure network communication.</div>
+  </div>
+</div>
+
+<!-- Q15 -->
+<div class="q-card open" id="q15" data-question="DNSSEC recommend why">
+  <div class="q-header">
+    <div class="q-num">15</div>
+    <div class="q-text">Why would you recommend using DNSSEC?</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="booster">
+      <div class="booster-title">⚡ Concept Booster</div>
+      <p><strong>DNS (Domain Name System)</strong> is like the phone book of the internet. It converts domain names (like google.com) into IP addresses. However, standard DNS has no security — attackers can manipulate DNS responses in a <strong>DNS Spoofing / Cache Poisoning</strong> attack.</p>
+    </div>
+    <div class="label label-def">What is DNSSEC?</div>
+    <div class="def-box">
+      <p><keyword>DNSSEC (DNS Security Extensions)</keyword> is a set of security extensions added to DNS that use <strong>digital signatures</strong> to verify that the DNS response you receive is authentic and has not been tampered with.</p>
+    </div>
+    <div class="label label-points">Why Recommend DNSSEC?</div>
+    <div class="points">
+      <ul>
+        <li><strong>Prevents DNS Spoofing/Poisoning:</strong> Without DNSSEC, attackers can redirect users to fake websites by providing false IP addresses. DNSSEC prevents this.</li>
+        <li><strong>Ensures Data Integrity:</strong> Digital signatures ensure DNS records have not been modified by a man-in-the-middle attacker.</li>
+        <li><strong>Builds Trust:</strong> Users can be confident they are connecting to the correct, legitimate website.</li>
+        <li><strong>Chain of Trust:</strong> DNSSEC creates a cryptographic chain of trust from the root DNS servers down to the individual domain, making it extremely difficult to forge.</li>
+        <li><strong>Protects Against Pharming:</strong> Pharming attacks (redirecting to malicious sites at the DNS level) are blocked by DNSSEC.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">DNSSEC should be used because standard DNS is vulnerable to spoofing and poisoning attacks. DNSSEC adds authentication and integrity verification, making DNS responses trustworthy.</div>
+  </div>
+</div>
+
+<!-- Q16 -->
+<div class="q-card open" id="q16" data-question="DNS look-up zones how many">
+  <div class="q-header">
+    <div class="q-num">16</div>
+    <div class="q-text">How many look-up zones are in DNS?</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="booster">
+      <div class="booster-title">⚡ Concept Booster</div>
+      <p>A <strong>DNS Zone</strong> is a portion of the DNS namespace that is managed by a specific DNS server. DNS lookup zones store information about domain names and their corresponding IP addresses.</p>
+    </div>
+    <div class="label label-def">Answer</div>
+    <div class="def-box">
+      <p>There are <keyword>two types of DNS lookup zones</keyword>:</p>
+    </div>
+    <div class="label label-points">The Two Look-up Zones</div>
+    <div class="points">
+      <ul>
+        <li><strong>1. Forward Lookup Zone:</strong> Resolves a <strong>domain name → IP address</strong>. This is the most common type. Example: When you type "google.com", the forward lookup zone returns its IP address (142.250.190.46). Uses <strong>A records</strong> (for IPv4) and <strong>AAAA records</strong> (for IPv6).</li>
+        <li><strong>2. Reverse Lookup Zone:</strong> Resolves an <strong>IP address → domain name</strong>. It is the opposite of forward lookup. Example: Given IP 142.250.190.46, it returns "google.com". Uses <strong>PTR (Pointer) records</strong>. Useful for logging, security auditing, and verifying email servers.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">DNS has two lookup zones — Forward (name to IP) and Reverse (IP to name). Both are essential for proper DNS operation and network security verification.</div>
+  </div>
+</div>
+
+<!-- Q17 -->
+<div class="q-card open" id="q17" data-question="firewall definition uses">
+  <div class="q-header">
+    <div class="q-num">17</div>
+    <div class="q-text">Define Firewall and its uses.</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p>A <keyword>Firewall</keyword> is a network security system (hardware, software, or both) that <strong>monitors and controls incoming and outgoing network traffic</strong> based on predefined security rules. It acts as a barrier between a trusted internal network and an untrusted external network (like the internet).</p>
+    </div>
+    <div class="label label-points">Uses of Firewall</div>
+    <div class="points">
+      <ul>
+        <li><strong>Traffic Filtering:</strong> Allows legitimate traffic and blocks unauthorized or suspicious traffic based on IP addresses, ports, and protocols.</li>
+        <li><strong>Preventing Unauthorized Access:</strong> Stops hackers, bots, and unauthorized users from entering the internal network.</li>
+        <li><strong>Protection from Malware:</strong> Blocks malicious traffic that may carry viruses, worms, or trojans.</li>
+        <li><strong>Monitoring & Logging:</strong> Keeps logs of all network traffic for security auditing and intrusion detection.</li>
+        <li><strong>VPN Support:</strong> Many firewalls support VPN connections for secure remote access.</li>
+        <li><strong>Types:</strong> Packet Filtering Firewall, Stateful Inspection Firewall, Application Layer Firewall (Proxy Firewall), Next-Generation Firewall (NGFW).</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">A firewall is the first line of defense for any network. It acts as a security gatekeeper — allowing safe traffic and blocking threats before they can enter the internal network.</div>
+  </div>
+</div>
+
+<!-- Q18 -->
+<div class="q-card open" id="q18" data-question="session hijacking why successful">
+  <div class="q-header">
+    <div class="q-num">18</div>
+    <div class="q-text">What is Session Hijacking and why is it successful?</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="booster">
+      <div class="booster-title">⚡ Concept Booster</div>
+      <p>When you log into a website, the server creates a <strong>session</strong> and gives your browser a <strong>session ID</strong> (stored as a cookie). This ID is used to recognize you on subsequent requests without asking for your password again.</p>
+    </div>
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p><keyword>Session Hijacking</keyword> is an attack where an attacker steals a valid session ID (session token) of a logged-in user and uses it to impersonate that user, gaining unauthorized access to the web application — without knowing the username or password.</p>
+    </div>
+    <div class="label label-points">Why is it Successful?</div>
+    <div class="points">
+      <ul>
+        <li><strong>Session IDs sent over HTTP:</strong> If HTTPS is not used, session cookies travel as plaintext and can be intercepted by a network sniffer (Man-in-the-Middle attack).</li>
+        <li><strong>Predictable Session IDs:</strong> If session IDs are not random enough, attackers can guess them.</li>
+        <li><strong>XSS Exploitation:</strong> Attacker uses XSS to steal session cookies from the victim's browser using JavaScript (document.cookie).</li>
+        <li><strong>Session Fixation:</strong> Attacker tricks the user into using a session ID that the attacker already knows.</li>
+        <li><strong>Long Session Timeouts:</strong> Sessions that never expire give attackers a long window to use the stolen token.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">Session hijacking is successful because session tokens are often poorly protected. Using HTTPS, secure/HttpOnly cookie flags, short timeouts, and token regeneration after login are key countermeasures.</div>
+  </div>
+</div>
+
+<!-- Q19 -->
+<div class="q-card open" id="q19" data-question="confinement principle significance">
+  <div class="q-header">
+    <div class="q-num">19</div>
+    <div class="q-text">What is the significance of Confinement Principle?</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="booster">
+      <div class="booster-title">⚡ Concept Booster</div>
+      <p>Imagine you hire a contractor to work inside your house but you don't want them to take anything outside. Confinement in computing is similar — restricting a program so it cannot leak information or resources outside its allowed boundary.</p>
+    </div>
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p>The <keyword>Confinement Principle</keyword> (proposed by Butler Lampson) states that a <strong>program should be restricted so that it cannot communicate or leak information outside its authorized boundaries</strong>, even if it is malicious or compromised.</p>
+    </div>
+    <div class="label label-points">Significance</div>
+    <div class="points">
+      <ul>
+        <li><strong>Prevents Data Leakage:</strong> Even if a program is malicious, confinement ensures it cannot send sensitive data to unauthorized external parties.</li>
+        <li><strong>Sandboxing:</strong> Confinement is the basis of sandboxing — running programs in an isolated environment (e.g., browser sandboxes, containers like Docker).</li>
+        <li><strong>Limits Damage:</strong> If a program is compromised, confinement limits the damage it can cause — it cannot affect other parts of the system.</li>
+        <li><strong>Challenges:</strong> Achieving complete confinement is very hard due to covert channels — a confined process may still leak info through side channels (CPU timing, memory usage).</li>
+        <li><strong>Used in:</strong> Operating system sandboxes, virtual machines, Java security model, and containerization.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">The confinement principle is crucial for limiting the impact of malicious or compromised programs. It forms the theoretical basis for sandboxing and containment technologies used in modern security systems.</div>
+  </div>
+</div>
+
+<!-- Q20 -->
+<div class="q-card open" id="q20" data-question="software fault isolation SFI">
+  <div class="q-header">
+    <div class="q-num">20</div>
+    <div class="q-text">Discuss software fault isolation.</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="booster">
+      <div class="booster-title">⚡ Concept Booster</div>
+      <p>Normally, different programs running in the same process share the same memory space. If one part crashes or has a bug, it can corrupt everything else. Software Fault Isolation (SFI) prevents this by creating boundaries within the same process.</p>
+    </div>
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p><keyword>Software Fault Isolation (SFI)</keyword> is a technique that confines untrusted code within a specific region of memory so that any fault, bug, or malicious action in that code cannot affect the rest of the application or system — without using hardware protection or separate processes.</p>
+    </div>
+    <div class="label label-points">Key Points</div>
+    <div class="points">
+      <ul>
+        <li><strong>How it works:</strong> The code is modified (instrumented) before execution. Instructions that access memory are checked to ensure they only access allowed memory regions.</li>
+        <li><strong>No separate process needed:</strong> Isolation is achieved at software level, making it faster than process-level isolation.</li>
+        <li><strong>Used in:</strong> Web browsers (to safely run plugins), Native Client (NaCl) by Google, WebAssembly sandbox.</li>
+        <li><strong>Benefit:</strong> Good performance with strong isolation — the code cannot jump to or write into unauthorized memory.</li>
+        <li><strong>Limitation:</strong> Covert channels may still exist; also requires careful implementation to ensure all code paths are covered.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">SFI is an efficient way to run untrusted code safely within a trusted environment. It is widely used in browsers and runtime environments to prevent malicious or buggy code from compromising the entire system.</div>
+  </div>
+</div>
+
+<!-- Q21 -->
+<div class="q-card open" id="q21" data-question="kernel UNIX operating system use">
+  <div class="q-header">
+    <div class="q-num">21</div>
+    <div class="q-text">What is the use of kernel in UNIX operating system?</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="booster">
+      <div class="booster-title">⚡ Concept Booster</div>
+      <p>An operating system has two main layers: the <strong>Kernel</strong> (inner core, talks to hardware) and the <strong>Shell</strong> (outer layer, interface for users). The kernel is the heart of the OS.</p>
+    </div>
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p>The <keyword>Kernel</keyword> is the core component of the UNIX operating system that directly manages the hardware resources of the computer and provides essential services to all other parts of the OS and to applications.</p>
+    </div>
+    <div class="label label-points">Uses of Kernel in UNIX</div>
+    <div class="points">
+      <ul>
+        <li><strong>Process Management:</strong> Creates, schedules, and terminates processes. Manages multitasking.</li>
+        <li><strong>Memory Management:</strong> Allocates and deallocates memory to processes. Manages virtual memory and paging.</li>
+        <li><strong>File System Management:</strong> Manages file creation, reading, writing, deletion, and permissions in the UNIX file system.</li>
+        <li><strong>Device Management:</strong> Communicates with hardware devices (disk, keyboard, monitor) through device drivers.</li>
+        <li><strong>System Call Interface:</strong> Provides a secure interface (system calls) for user programs to request kernel services like file I/O and process creation.</li>
+        <li><strong>Security Enforcement:</strong> Enforces user permissions, access controls, and privilege separation.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">The UNIX kernel is the central authority of the OS — managing hardware, memory, processes, and files. All user programs depend on the kernel to perform any meaningful operation.</div>
+  </div>
+</div>
+
+<!-- Q22 -->
+<div class="q-card open" id="q22" data-question="UNIX advantages limitations">
+  <div class="q-header">
+    <div class="q-num">22</div>
+    <div class="q-text">What are some advantages and limitations of UNIX?</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="label label-points">Advantages of UNIX</div>
+    <div class="points">
+      <ul>
+        <li><strong>Multi-user & Multi-tasking:</strong> Multiple users can work simultaneously, and multiple programs can run at the same time.</li>
+        <li><strong>Security:</strong> Strong file permission system (owner/group/others), user authentication, and privilege separation make UNIX inherently secure.</li>
+        <li><strong>Stability & Reliability:</strong> UNIX systems can run for years without rebooting. Used in servers and critical infrastructure.</li>
+        <li><strong>Portability:</strong> Written mostly in C, UNIX can be compiled and run on different hardware platforms.</li>
+        <li><strong>Powerful Shell:</strong> The UNIX shell supports scripting and automation of complex tasks with simple commands.</li>
+        <li><strong>Open Source Variants:</strong> Linux (UNIX-like) is freely available and widely used.</li>
+      </ul>
+    </div>
+    <div class="label label-points">Limitations of UNIX</div>
+    <div class="points">
+      <ul>
+        <li><strong>Complex for Beginners:</strong> Command-line interface is not user-friendly. Steep learning curve for non-technical users.</li>
+        <li><strong>Limited GUI Support:</strong> UNIX was originally designed for CLI, not graphical interfaces.</li>
+        <li><strong>Hardware Compatibility:</strong> Not all devices have UNIX-compatible drivers.</li>
+        <li><strong>Cost:</strong> Commercial UNIX versions (like Solaris, HP-UX) can be expensive.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">UNIX is powerful, secure, and stable — ideal for servers and developers. However, its complexity makes it challenging for general consumers compared to Windows or macOS.</div>
+  </div>
+</div>
+
+<!-- Q23 -->
+<div class="q-card open" id="q23" data-question="privilege drop ways">
+  <div class="q-header">
+    <div class="q-num">23</div>
+    <div class="q-text">What is a privilege? Explain ways to drop privileges.</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="booster">
+      <div class="booster-title">⚡ Concept Booster</div>
+      <p>In an OS, not every program needs full administrative power. A program running with too many privileges is dangerous — if compromised, the attacker gets all those privileges too. Dropping privileges is like removing extra keys from a keyholder once they are no longer needed.</p>
+    </div>
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p>A <keyword>Privilege</keyword> is a special permission or right granted to a process or user to perform operations beyond normal user capabilities — such as reading protected files, binding to low port numbers (below 1024), or modifying system settings.</p>
+    </div>
+    <div class="label label-points">Ways to Drop Privileges</div>
+    <div class="points">
+      <ul>
+        <li><strong>setuid() / seteuid():</strong> A process running as root can call setuid() to permanently change its user ID to a less-privileged user, dropping root privileges.</li>
+        <li><strong>Privilege Separation:</strong> Split a program into two parts — one high-privilege part that does the sensitive task, and one low-privilege part that does the rest. The high-privilege part exits after doing its job. (Used in OpenSSH).</li>
+        <li><strong>Capabilities (Linux):</strong> Instead of giving full root access, Linux Capabilities allow giving only specific powers (like CAP_NET_BIND_SERVICE to bind port 80) and revoking them after use.</li>
+        <li><strong>chroot Jail:</strong> Restricts a process to a specific directory, so even if it runs as root, it cannot access files outside that directory.</li>
+        <li><strong>Using Non-root Accounts:</strong> Design applications to run as a dedicated non-root service account rather than root from the start.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">Privileges should be held only as long as needed and dropped immediately after use. This follows the Principle of Least Privilege and significantly limits damage if a program is compromised.</div>
+  </div>
+</div>
+
+<!-- Q24 -->
+<div class="q-card open" id="q24" data-question="goals confidentiality policies">
+  <div class="q-header">
+    <div class="q-num">24</div>
+    <div class="q-text">What are the goals of confidentiality policies?</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="booster">
+      <div class="booster-title">⚡ Concept Booster</div>
+      <p>A <strong>Confidentiality Policy</strong> is a set of rules that an organization or system follows to control who can access sensitive information. The most famous model is the <strong>Bell-LaPadula Model</strong>, used in military systems.</p>
+    </div>
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p><keyword>Confidentiality Policies</keyword> are security policies designed to prevent unauthorized disclosure (leakage) of sensitive information. They define rules about who can read what data.</p>
+    </div>
+    <div class="label label-points">Goals of Confidentiality Policies</div>
+    <div class="points">
+      <ul>
+        <li><strong>Prevent Unauthorized Disclosure:</strong> Ensure that sensitive data is only accessible to authorized individuals. This is the primary goal.</li>
+        <li><strong>No Read Up (Simple Security Property):</strong> A user with low clearance cannot read data with a higher classification level. (e.g., a "Confidential" user cannot read "Top Secret" files).</li>
+        <li><strong>No Write Down (Star Property):</strong> A user with high clearance cannot write data to a lower level. This prevents a high-clearance user from leaking sensitive info to a low-clearance file.</li>
+        <li><strong>Data Classification:</strong> Classify data into levels (Public, Internal, Confidential, Top Secret) and ensure each level is protected appropriately.</li>
+        <li><strong>Enforce Need-to-Know:</strong> Even authorized users should only access information they need for their specific job function.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">Confidentiality policies aim to prevent data leakage through strict access controls. The Bell-LaPadula "no read up, no write down" rules are the classic implementation of these goals.</div>
+  </div>
+</div>
+
+<!-- Q25 -->
+<div class="q-card open" id="q25" data-question="hash function definition use">
+  <div class="q-header">
+    <div class="q-num">25</div>
+    <div class="q-text">Define hash function. What is its use?</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p>A <keyword>Hash Function</keyword> is a mathematical function that takes an input (data of any size) and produces a fixed-size output called a <strong>hash value</strong>, <strong>digest</strong>, or <strong>fingerprint</strong>. It is a one-way function — you cannot reverse it to get the original input.</p>
+      <p style="margin-top:0.6rem;">Example: SHA-256 always produces a 256-bit output regardless of input size. "Hello" → a8483...  (64 hex chars)</p>
+    </div>
+    <div class="label label-points">Uses of Hash Function</div>
+    <div class="points">
+      <ul>
+        <li><strong>Password Storage:</strong> Instead of storing actual passwords, systems store their hash values. Even if the database is hacked, the actual password cannot be recovered.</li>
+        <li><strong>Data Integrity Verification:</strong> When you download a file, you can compare its hash with the official hash to confirm the file was not modified or corrupted.</li>
+        <li><strong>Digital Signatures:</strong> Hash functions are used in creating digital signatures. The hash of a document is signed, not the whole document.</li>
+        <li><strong>Message Authentication Codes (MAC):</strong> Ensures messages have not been tampered with during transmission.</li>
+        <li><strong>Blockchain:</strong> Each block in a blockchain contains the hash of the previous block, ensuring immutability.</li>
+        <li><strong>Common Hash Algorithms:</strong> MD5 (weak, deprecated), SHA-1 (weak), SHA-256, SHA-3 (secure).</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">Hash functions provide a fast, one-way way to represent data uniquely. They are essential for password security, data integrity, digital signatures, and many other cryptographic applications.</div>
+  </div>
+</div>
+
+<!-- Q26 -->
+<div class="q-card open" id="q26" data-question="virus worm main difference">
+  <div class="q-header">
+    <div class="q-num">26</div>
+    <div class="q-text">What is the main difference between virus and worm?</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="label label-def">Quick Definitions</div>
+    <div class="def-box">
+      <p>A <keyword>Virus</keyword> is a malicious program that <strong>attaches itself to a legitimate file/program</strong> and spreads when that file is shared or executed by a user. It requires human action to spread.</p>
+      <p style="margin-top:0.6rem;">A <keyword>Worm</keyword> is a self-replicating malicious program that <strong>spreads automatically over a network</strong> without needing to attach to any file and without requiring any human action.</p>
+    </div>
+    <div class="label label-points">Key Differences</div>
+    <div class="points">
+      <ul>
+        <li><strong>Spreading:</strong> Virus needs a host file + user action to spread. Worm spreads on its own through networks.</li>
+        <li><strong>Host Requirement:</strong> Virus requires a host file (like .exe, .doc). Worm is standalone — no host file needed.</li>
+        <li><strong>Speed of Spread:</strong> Worms spread much faster than viruses since they are autonomous.</li>
+        <li><strong>Damage:</strong> Both can cause damage; worms also consume bandwidth and can slow down entire networks.</li>
+        <li><strong>Examples:</strong> Virus — ILOVEYOU, Melissa. Worm — Morris Worm, WannaCry (which also had ransomware).</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">The key difference is that a virus needs a host and human action to spread, while a worm is self-sufficient and spreads automatically across networks. Worms are generally faster and harder to contain.</div>
+  </div>
+</div>
+
+<!-- Q27 -->
+<div class="q-card open" id="q27" data-question="ransomware what is">
+  <div class="q-header">
+    <div class="q-num">27</div>
+    <div class="q-text">What is Ransomware?</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p><keyword>Ransomware</keyword> is a type of malicious software (malware) that <strong>encrypts the victim's files or locks their computer</strong>, making the data inaccessible, and then demands a ransom payment (usually in cryptocurrency like Bitcoin) from the victim to restore access.</p>
+    </div>
+    <div class="label label-points">Key Points</div>
+    <div class="points">
+      <ul>
+        <li><strong>How it spreads:</strong> Through phishing emails, malicious attachments, infected websites, or exploiting software vulnerabilities.</li>
+        <li><strong>What it does:</strong> Encrypts all important files (documents, photos, databases) with a key only the attacker knows. Displays a ransom note demanding payment.</li>
+        <li><strong>Famous Examples:</strong> WannaCry (2017) — affected 200,000+ computers worldwide; CryptoLocker; Petya/NotPetya.</li>
+        <li><strong>Impact:</strong> Can shut down hospitals, businesses, and government systems. Victims may lose critical data permanently.</li>
+        <li><strong>Prevention:</strong> Regular data backups, keeping software updated, not clicking suspicious links, using antivirus software, and email filtering.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">Ransomware is one of the most destructive cyber threats today. Regular offline backups are the most effective way to recover without paying the ransom. Prevention is always better than cure.</div>
+  </div>
+</div>
+
+<!-- Q28 -->
+<div class="q-card open" id="q28" data-question="frame busting web security use">
+  <div class="q-header">
+    <div class="q-num">28</div>
+    <div class="q-text">What is the use of frame busting in web security?</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="booster">
+      <div class="booster-title">⚡ Concept Booster</div>
+      <p><strong>Clickjacking</strong> is a web attack where an attacker embeds a legitimate website (like your bank) inside an invisible <code>&lt;iframe&gt;</code> on their malicious page. You think you're clicking on the malicious page, but you're actually clicking on the hidden bank page — performing actions unknowingly.</p>
+    </div>
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p><keyword>Frame Busting</keyword> is a technique used by websites to prevent themselves from being loaded inside an <code>&lt;iframe&gt;</code> on another site. It is used to defend against <strong>Clickjacking attacks</strong>.</p>
+    </div>
+    <div class="label label-points">How It Works & Key Points</div>
+    <div class="points">
+      <ul>
+        <li><strong>JavaScript Method:</strong> The website includes a script that checks if it is the top-level window. If it's inside an iframe, the script "busts out" by forcing itself to be the top window: <code>if(top != self) top.location = self.location;</code></li>
+        <li><strong>Better Alternative – X-Frame-Options Header:</strong> Modern web security uses the HTTP header <code>X-Frame-Options: DENY</code> (or SAMEORIGIN) to tell browsers to refuse loading the page inside any iframe. This is more reliable than JavaScript frame busting.</li>
+        <li><strong>Content Security Policy (CSP):</strong> The <code>frame-ancestors</code> directive in CSP is the latest recommended way to control iframe embedding.</li>
+        <li>Frame busting protects sensitive pages like login pages, banking pages, and settings pages from clickjacking.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">Frame busting protects users from clickjacking by preventing websites from being embedded in iframes. The X-Frame-Options header and CSP frame-ancestors are the modern, recommended solutions.</div>
+  </div>
+</div>
+
+<!-- Q29 -->
+<div class="q-card open" id="q29" data-question="cache memory RAM difference">
+  <div class="q-header">
+    <div class="q-num">29</div>
+    <div class="q-text">What is the difference between Cache Memory and RAM?</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="booster">
+      <div class="booster-title">⚡ Concept Booster</div>
+      <p>Think of memory like a chef's workspace. <strong>RAM</strong> is the large counter where all ingredients (data) for the current meal are kept. <strong>Cache</strong> is the small tray right next to the chef's hand — holding only the most frequently needed ingredients for instant access.</p>
+    </div>
+    <div class="label label-points">Key Differences</div>
+    <div class="points">
+      <ul>
+        <li><strong>Location:</strong> Cache is located inside or very close to the CPU. RAM (main memory) is located on the motherboard, farther from the CPU.</li>
+        <li><strong>Speed:</strong> Cache is much faster than RAM (nanoseconds vs. tens of nanoseconds). It provides data to the CPU at nearly CPU speed.</li>
+        <li><strong>Size:</strong> Cache is small (KB to a few MB). RAM is much larger (GB range).</li>
+        <li><strong>Cost:</strong> Cache is significantly more expensive per byte than RAM.</li>
+        <li><strong>Purpose:</strong> Cache stores frequently used data for ultra-fast CPU access, reducing delays. RAM stores all data and programs currently in use.</li>
+        <li><strong>Volatility:</strong> Both are volatile — data is lost when power is off.</li>
+        <li><strong>Levels:</strong> Cache has L1, L2, L3 levels — L1 is fastest and smallest, closest to CPU.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">Cache is a small, ultra-fast memory inside the CPU for frequently accessed data, while RAM is larger, slower main memory holding all active programs. Both are essential for CPU performance.</div>
+  </div>
+</div>
+
+<!-- Q30 -->
+<div class="q-card open" id="q30" data-question="cyber crime define">
+  <div class="q-header">
+    <div class="q-num">30</div>
+    <div class="q-text">Define Cyber Crime.</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p><keyword>Cyber Crime</keyword> refers to any illegal or criminal activity that involves a computer, computer network, or digital device — either as the tool used to commit the crime, or as the target of the crime. It is also called <strong>computer crime</strong> or <strong>e-crime</strong>.</p>
+    </div>
+    <div class="label label-points">Key Points</div>
+    <div class="points">
+      <ul>
+        <li><strong>Types of Cyber Crime:</strong>
+          <br>• <strong>Hacking</strong> – Unauthorized access to systems
+          <br>• <strong>Phishing</strong> – Fraudulent emails to steal credentials
+          <br>• <strong>Identity Theft</strong> – Stealing personal information
+          <br>• <strong>Ransomware</strong> – Encrypting data and demanding ransom
+          <br>• <strong>Online Fraud</strong> – Financial scams over the internet
+          <br>• <strong>Cyberbullying</strong> – Harassment online
+          <br>• <strong>Child Pornography</strong> – Illegal online content
+        </li>
+        <li><strong>Two categories:</strong> (1) Computer as a target (hacking, malware attacks). (2) Computer as a tool (online fraud, harassment).</li>
+        <li><strong>Legal Framework in India:</strong> Governed by the <strong>Information Technology Act, 2000 (IT Act)</strong> and the Indian Penal Code.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">Cyber crime is a growing global threat that exploits digital technology for illegal purposes. Awareness, strong passwords, updated software, and legal enforcement are key to combating it.</div>
+  </div>
+</div>
+
+<!-- Q31 -->
+<div class="q-card open" id="q31" data-question="botnet what is">
+  <div class="q-header">
+    <div class="q-num">31</div>
+    <div class="q-text">What is Botnet?</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="booster">
+      <div class="booster-title">⚡ Concept Booster</div>
+      <p>Imagine thousands of computers unknowingly infected with malware and controlled by a single hacker — like an army of zombie computers. This is a botnet. The infected computers are called <strong>bots</strong> or <strong>zombies</strong>.</p>
+    </div>
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p>A <keyword>Botnet</keyword> (short for "Robot Network") is a network of internet-connected devices (computers, phones, IoT devices) that have been infected by malware and are secretly controlled by an attacker (called the <strong>Bot Herder</strong> or <strong>C&C — Command and Control</strong> server) without the device owners' knowledge.</p>
+    </div>
+    <div class="label label-points">Key Points</div>
+    <div class="points">
+      <ul>
+        <li><strong>How devices get infected:</strong> Through malware, phishing emails, software vulnerabilities, or malicious downloads.</li>
+        <li><strong>Uses of Botnets by attackers:</strong>
+          <br>• <strong>DDoS Attacks</strong> – Flood a target server with traffic to take it down
+          <br>• <strong>Spam Campaigns</strong> – Send millions of spam emails
+          <br>• <strong>Click Fraud</strong> – Generate fake ad clicks
+          <br>• <strong>Credential Stuffing</strong> – Try stolen passwords on many sites
+          <br>• <strong>Cryptocurrency Mining</strong> – Use victim's CPU to mine crypto
+        </li>
+        <li><strong>Famous Botnets:</strong> Mirai (attacked IoT devices), Zeus, Conficker.</li>
+        <li><strong>Defense:</strong> Keep software updated, use antivirus, monitor network traffic for unusual behavior.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">Botnets are powerful cyber weapons made of infected "zombie" devices. They are behind many of the largest cyber attacks including massive DDoS attacks and global spam campaigns.</div>
+  </div>
+</div>
+
+<!-- Q32 -->
+<div class="q-card open" id="q32" data-question="mobile devices security why needed">
+  <div class="q-header">
+    <div class="q-num">32</div>
+    <div class="q-text">Why do mobile devices need security?</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="label label-def">Introduction</div>
+    <div class="def-box">
+      <p>Mobile phones today store enormous amounts of personal data — banking details, passwords, photos, emails, contacts, and location history. This makes them valuable targets for attackers. Mobile security ensures this data remains safe.</p>
+    </div>
+    <div class="label label-points">Why Mobile Security is Needed</div>
+    <div class="points">
+      <ul>
+        <li><strong>Sensitive Data Storage:</strong> Mobiles store banking apps, passwords, personal photos, health data — all of which are high-value targets for cybercriminals.</li>
+        <li><strong>Physical Loss/Theft:</strong> Mobile devices are easily lost or stolen. Without security (PIN/biometric), anyone can access all data.</li>
+        <li><strong>Malicious Apps:</strong> Fake apps in unofficial app stores can steal data, track location, or show ads (adware). App permissions need to be controlled.</li>
+        <li><strong>Unsecured Wi-Fi:</strong> Mobile users often connect to public Wi-Fi where man-in-the-middle attacks are easy. VPNs and HTTPS are essential.</li>
+        <li><strong>SMS Phishing (Smishing):</strong> Attackers send fake SMS messages with malicious links.</li>
+        <li><strong>Outdated OS:</strong> Unpatched mobile operating systems have known vulnerabilities that attackers exploit.</li>
+        <li><strong>Mobile Payments:</strong> With UPI, wallets, and mobile banking, a compromised phone means direct financial loss.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">Mobile devices are now mini-computers with access to our most sensitive information. Strong passwords, app permissions management, regular updates, and trusted app stores are essential for mobile security.</div>
+  </div>
+</div>
+
+<!-- Q33 -->
+<div class="q-card open" id="q33" data-question="authentication authorization define">
+  <div class="q-header">
+    <div class="q-num">33</div>
+    <div class="q-text">Define Authentication and Authorization.</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="booster">
+      <div class="booster-title">⚡ Concept Booster</div>
+      <p>Think of entering an office building: Showing your ID to the security guard to prove who you are = <strong>Authentication</strong>. After entering, only being allowed into certain rooms = <strong>Authorization</strong>. Authentication always comes first.</p>
+    </div>
+    <div class="label label-def">Definitions</div>
+    <div class="def-box">
+      <p><keyword>Authentication</keyword> is the process of <strong>verifying the identity</strong> of a user, device, or system — confirming that they are who they claim to be.</p>
+      <p style="margin-top:0.6rem;"><keyword>Authorization</keyword> is the process of <strong>determining what an authenticated user is allowed to do</strong> — which resources they can access and what actions they can perform.</p>
+    </div>
+    <div class="label label-points">Key Differences</div>
+    <div class="points">
+      <ul>
+        <li><strong>Authentication answers:</strong> "Who are you?" — Authorization answers: "What can you do?"</li>
+        <li><strong>Authentication methods:</strong> Passwords, OTP, biometrics (fingerprint, face), security tokens, certificates.</li>
+        <li><strong>Authorization methods:</strong> Access Control Lists (ACL), Role-Based Access Control (RBAC), permissions.</li>
+        <li><strong>Order:</strong> Authentication always happens before authorization.</li>
+        <li><strong>Example:</strong> You log in to Gmail (Authentication). After login, you can only access your emails, not someone else's (Authorization).</li>
+        <li><strong>Multi-Factor Authentication (MFA):</strong> Combines two or more authentication factors (password + OTP) for stronger security.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">Authentication verifies identity; authorization controls access. Together they form the foundation of access management. Both are essential for secure systems — you must first prove who you are, then be given only the rights you need.</div>
+  </div>
+</div>
+
+<!-- Q34 -->
+<div class="q-card open" id="q34" data-question="digital evidence explain">
+  <div class="q-header">
+    <div class="q-num">34</div>
+    <div class="q-text">Explain digital evidence.</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="booster">
+      <div class="booster-title">⚡ Concept Booster</div>
+      <p><strong>Digital Forensics</strong> is the process of collecting, analyzing, and preserving electronic evidence for use in legal investigations. Just like physical crime scenes leave fingerprints, digital crime leaves behind digital traces.</p>
+    </div>
+    <div class="label label-def">Definition</div>
+    <div class="def-box">
+      <p><keyword>Digital Evidence</keyword> is any data or information that is stored or transmitted in digital form and can be used in a court of law to prove or disprove facts in a legal investigation or criminal case.</p>
+    </div>
+    <div class="label label-points">Key Points</div>
+    <div class="points">
+      <ul>
+        <li><strong>Sources of Digital Evidence:</strong>
+          <br>• Computer hard drives, USB drives, SD cards
+          <br>• Emails, chat messages, social media posts
+          <br>• Browser history and cookies
+          <br>• CCTV footage, GPS location data
+          <br>• Log files from servers and applications
+          <br>• Mobile phone data (call logs, messages, photos)
+        </li>
+        <li><strong>Properties of Good Digital Evidence:</strong> It must be <strong>Authentic</strong> (not tampered), <strong>Complete</strong> (not partial), <strong>Reliable</strong>, and <strong>Believable</strong>.</li>
+        <li><strong>Chain of Custody:</strong> Proper documentation of who collected, handled, and analyzed the evidence to ensure it is admissible in court.</li>
+        <li><strong>Challenges:</strong> Digital evidence is fragile — it can be easily deleted, modified, or encrypted. Special forensic tools (like FTK, Autopsy, EnCase) are used to extract and preserve it without altering the original.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">Digital evidence is crucial in modern cyber crime investigations. Its integrity must be carefully preserved through proper collection, handling, and chain of custody to be valid in legal proceedings.</div>
+  </div>
+</div>
+
+<!-- Q35 -->
+<div class="q-card open" id="q35" data-question="cyber security why needed significance">
+  <div class="q-header">
+    <div class="q-num">35</div>
+    <div class="q-text">Why is cyber security needed?</div>
+    <div class="q-chevron">▼</div>
+  </div>
+  <div class="q-body">
+    <div class="label label-def">Introduction</div>
+    <div class="def-box">
+      <p><keyword>Cyber Security</keyword> is the practice of protecting computers, networks, systems, and data from digital attacks, unauthorized access, and damage. In today's digital world, almost everything — banking, healthcare, government, communication — runs on digital systems, making cyber security absolutely essential.</p>
+    </div>
+    <div class="label label-points">Why Cyber Security is Needed</div>
+    <div class="points">
+      <ul>
+        <li><strong>Protection of Personal Data:</strong> Billions of users store personal information (Aadhaar, banking, health records) online. Without security, this data can be stolen and misused.</li>
+        <li><strong>Financial Security:</strong> Online banking, UPI, and e-commerce are widespread. Cyber attacks cause massive financial losses to individuals and businesses. (Global cybercrime damages exceed trillions of dollars annually.)</li>
+        <li><strong>National Security:</strong> Critical infrastructure like power grids, defense systems, water treatment plants, and communication networks are digitally controlled. Cyber attacks on these can cause national disasters.</li>
+        <li><strong>Business Continuity:</strong> A cyber attack (ransomware, DDoS) can shut down a business completely. Cyber security ensures operations continue without disruption.</li>
+        <li><strong>Privacy Protection:</strong> Prevents surveillance, stalking, and unauthorized monitoring of individuals.</li>
+        <li><strong>Increasing Cyber Threats:</strong> Cyber attacks are increasing in frequency and sophistication every year — making security more important than ever.</li>
+        <li><strong>Legal Compliance:</strong> Organizations must follow data protection laws (GDPR, IT Act 2000) to protect user data. Cyber security ensures compliance.</li>
+      </ul>
+    </div>
+    <div class="label label-concl">Conclusion</div>
+    <div class="conclusion">Cyber security is not optional in the modern world — it is a necessity. As our dependence on digital systems grows, so does the responsibility to protect them from ever-evolving threats. A secure cyberspace is essential for individuals, businesses, and nations alike.</div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<button id="backToTop" title="Back to Top">↑</button>
+
+<script>
+  // ─── Dark Mode ───
+  const darkToggle = document.getElementById('darkToggle');
+  const html = document.documentElement;
+  const saved = localStorage.getItem('theme');
+  if (saved === 'dark') { html.setAttribute('data-theme','dark'); darkToggle.textContent = '☀️ Light Mode'; }
+
+  darkToggle.addEventListener('click', () => {
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      html.removeAttribute('data-theme');
+      darkToggle.textContent = '🌙 Dark Mode';
+      localStorage.setItem('theme','light');
+    } else {
+      html.setAttribute('data-theme','dark');
+      darkToggle.textContent = '☀️ Light Mode';
+      localStorage.setItem('theme','dark');
+    }
+  });
+
+  // ─── Collapsible Cards ───
+  document.querySelectorAll('.q-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const card = header.parentElement;
+      card.classList.toggle('open');
+    });
+  });
+
+  // ─── Expand / Collapse All ───
+  document.getElementById('expandAll').addEventListener('click', () => {
+    document.querySelectorAll('.q-card').forEach(c => c.classList.add('open'));
+  });
+  document.getElementById('collapseAll').addEventListener('click', () => {
+    document.querySelectorAll('.q-card').forEach(c => c.classList.remove('open'));
+  });
+
+  // ─── TOC Toggle ───
+  document.getElementById('tocToggle').addEventListener('click', () => {
+    const body = document.getElementById('tocBody');
+    const arrow = document.getElementById('tocArrow');
+    body.classList.toggle('open');
+    arrow.textContent = body.classList.contains('open') ? '▲' : '▼';
+  });
+
+  // ─── Search ───
+  document.getElementById('searchInput').addEventListener('input', function() {
+    const val = this.value.toLowerCase();
+    document.querySelectorAll('.q-card').forEach(card => {
+      const text = card.getAttribute('data-question') + ' ' + card.innerText.toLowerCase();
+      if (val === '' || text.includes(val)) {
+        card.classList.remove('hidden');
+        if (val !== '') card.classList.add('open');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+  });
+
+  // ─── Progress Bar ───
+  window.addEventListener('scroll', () => {
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+    document.getElementById('progressBar').style.width = pct + '%';
+
+    const backBtn = document.getElementById('backToTop');
+    backBtn.style.display = scrollTop > 400 ? 'flex' : 'none';
+  });
+
+  // ─── Back to Top ───
+  document.getElementById('backToTop').addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>
