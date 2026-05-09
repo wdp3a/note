@@ -1,0 +1,2045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AKTU Cyber Security — Exam Answer Book</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Sora:wght@300;400;600;700;800&display=swap');
+
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161e;
+    --surface2: #1a1e2a;
+    --border: #252a38;
+    --accent: #00e5ff;
+    --accent2: #7c3aed;
+    --accent3: #f59e0b;
+    --accent4: #10b981;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --text-dim: #64748b;
+    --danger: #ef4444;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Sora', sans-serif;
+    --radius: 12px;
+    --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  }
+  [data-theme="light"] {
+    --bg: #f0f4ff;
+    --surface: #ffffff;
+    --surface2: #eef2ff;
+    --border: #c7d2fe;
+    --text: #1e1b4b;
+    --text-muted: #4338ca;
+    --text-dim: #6366f1;
+    --shadow: 0 4px 24px rgba(99,102,241,0.1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.75;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  /* ── Header ── */
+  header {
+    background: linear-gradient(135deg, #0d0f14 0%, #1a0a2e 50%, #0a1628 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 1.5rem 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  [data-theme="light"] header { background: linear-gradient(135deg, #4338ca 0%, #7c3aed 50%, #2563eb 100%); }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(0,229,255,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 50%, rgba(124,58,237,0.08) 0%, transparent 60%);
+  }
+  .header-badge {
+    display: inline-block;
+    background: rgba(0,229,255,0.1);
+    border: 1px solid rgba(0,229,255,0.3);
+    color: var(--accent);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    margin-bottom: 1rem;
+  }
+  header h1 {
+    font-size: clamp(1.6rem, 5vw, 2.8rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.2;
+    position: relative;
+  }
+  header h1 span { color: var(--accent); }
+  header p { color: rgba(255,255,255,0.6); margin-top: 0.5rem; font-size: 0.9rem; }
+
+  /* ── Theme toggle ── */
+  .theme-btn {
+    position: fixed; top: 1rem; right: 1rem; z-index: 999;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 50px;
+    padding: 0.4rem 0.9rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-family: var(--sans);
+    transition: all 0.2s;
+  }
+  .theme-btn:hover { background: var(--accent); color: #000; border-color: var(--accent); }
+
+  /* ── Layout ── */
+  .container { max-width: 960px; margin: 0 auto; padding: 1rem 1rem 4rem; }
+
+  /* ── TOC ── */
+  .toc-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin: 1.5rem 0;
+    overflow: hidden;
+  }
+  .toc-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 1.2rem;
+    cursor: pointer;
+    user-select: none;
+    background: var(--surface2);
+  }
+  .toc-header h2 { font-size: 0.95rem; font-weight: 700; color: var(--accent); letter-spacing: 0.05em; }
+  .toc-header span { font-size: 1.1rem; transition: transform 0.3s; }
+  .toc-body { padding: 0.8rem 1.2rem 1.2rem; }
+  .toc-body ol { padding-left: 1.4rem; }
+  .toc-body li { margin: 0.3rem 0; }
+  .toc-body a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+  .toc-body a:hover { color: var(--accent); }
+
+  /* ── Question Card ── */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin: 1.5rem 0;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: border-color 0.2s;
+  }
+  .q-card:hover { border-color: var(--accent2); }
+
+  .q-header {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1.2rem 1.4rem;
+    background: linear-gradient(90deg, rgba(124,58,237,0.12), rgba(0,229,255,0.04));
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+  }
+  .q-num {
+    min-width: 2.2rem; height: 2.2rem;
+    background: var(--accent2);
+    color: #fff;
+    border-radius: 8px;
+    display: grid; place-items: center;
+    font-weight: 700; font-size: 0.85rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .q-title { font-size: 0.95rem; font-weight: 600; line-height: 1.5; flex: 1; }
+  .q-marks {
+    background: rgba(0,229,255,0.1);
+    border: 1px solid rgba(0,229,255,0.2);
+    color: var(--accent);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: 50px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .q-toggle { color: var(--text-dim); font-size: 1.2rem; flex-shrink: 0; transition: transform 0.3s; }
+
+  .q-body { padding: 1.4rem; display: none; }
+  .q-body.open { display: block; }
+
+  /* ── Section Labels ── */
+  .section {
+    margin: 1.2rem 0 0.6rem;
+  }
+  .section-label {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; padding: 0.25rem 0.7rem;
+    border-radius: 50px; margin-bottom: 0.6rem;
+  }
+  .lbl-intro { background: rgba(16,185,129,0.12); color: var(--accent4); }
+  .lbl-concept { background: rgba(245,158,11,0.12); color: var(--accent3); }
+  .lbl-answer { background: rgba(0,229,255,0.1); color: var(--accent); }
+  .lbl-diagram { background: rgba(124,58,237,0.12); color: #a78bfa; }
+  .lbl-exam { background: rgba(239,68,68,0.12); color: #f87171; }
+  .lbl-quick { background: rgba(16,185,129,0.12); color: var(--accent4); }
+  .lbl-adv { background: rgba(245,158,11,0.1); color: var(--accent3); }
+
+  /* ── Content Styles ── */
+  p { margin: 0.5rem 0; color: var(--text); }
+  ul, ol { padding-left: 1.5rem; margin: 0.5rem 0; }
+  li { margin: 0.3rem 0; }
+  strong { color: var(--accent); font-weight: 600; }
+  em { color: var(--accent3); font-style: normal; font-weight: 500; }
+
+  .highlight-box {
+    background: var(--surface2);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 0.8rem 1rem;
+    margin: 0.7rem 0;
+    font-size: 0.9rem;
+  }
+  .warning-box {
+    background: rgba(239,68,68,0.06);
+    border-left: 3px solid #ef4444;
+    border-radius: 0 8px 8px 0;
+    padding: 0.8rem 1rem;
+    margin: 0.7rem 0;
+    font-size: 0.9rem;
+  }
+  .tip-box {
+    background: rgba(16,185,129,0.06);
+    border-left: 3px solid var(--accent4);
+    border-radius: 0 8px 8px 0;
+    padding: 0.8rem 1rem;
+    margin: 0.7rem 0;
+    font-size: 0.9rem;
+  }
+  .memory-box {
+    background: rgba(245,158,11,0.06);
+    border: 1px dashed rgba(245,158,11,0.4);
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    margin: 0.7rem 0;
+    font-size: 0.88rem;
+  }
+  .memory-box::before { content: '🧠 '; }
+
+  /* ── Tables ── */
+  .table-wrap { overflow-x: auto; margin: 0.8rem 0; border-radius: 8px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th {
+    background: var(--surface2);
+    color: var(--accent);
+    font-weight: 700;
+    padding: 0.7rem 0.9rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  td { padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+  /* ── Code / Math ── */
+  code {
+    font-family: var(--mono);
+    background: rgba(0,229,255,0.08);
+    color: var(--accent);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+  }
+  .math-block {
+    font-family: var(--mono);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 0.7rem 0;
+    font-size: 0.9rem;
+    overflow-x: auto;
+    color: var(--accent3);
+    line-height: 2;
+  }
+
+  /* ── Steps ── */
+  .steps { counter-reset: step; }
+  .step {
+    display: flex; gap: 0.8rem; align-items: flex-start;
+    margin: 0.6rem 0;
+  }
+  .step-num {
+    counter-increment: step;
+    min-width: 1.8rem; height: 1.8rem;
+    background: var(--accent2);
+    color: #fff;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: 0.75rem; font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-num::before { content: counter(step); }
+
+  /* ── Quick Revision Pills ── */
+  .pills { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.5rem 0; }
+  .pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 0.25rem 0.7rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  /* ── SVG / Diagram containers ── */
+  .diagram-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 0.8rem 0;
+    overflow-x: auto;
+    text-align: center;
+  }
+  svg text { font-family: var(--sans), sans-serif; }
+
+  /* ── Divider ── */
+  hr { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ── Responsive ── */
+  @media(max-width: 600px) {
+    .q-header { flex-wrap: wrap; }
+    .q-marks { font-size: 0.65rem; }
+  }
+</style>
+</head>
+<body>
+
+<button class="theme-btn" onclick="toggleTheme()">☀ Light</button>
+
+<header>
+  <div class="header-badge">AKTU B.Tech · Cyber Security · 7-Mark Answers</div>
+  <h1>Cyber Security <span>Exam Answer Book</span></h1>
+  <p>21 Questions · High-Scoring · Exam-Oriented · Dark/Light Mode</p>
+</header>
+
+<div class="container">
+
+  <!-- TOC -->
+  <div class="toc-wrap">
+    <div class="toc-header" onclick="toggleTOC()">
+      <h2>📋 TABLE OF CONTENTS</h2>
+      <span id="toc-arrow">▼</span>
+    </div>
+    <div class="toc-body" id="toc-body">
+      <ol>
+        <li><a href="#q1">Intrusion Detection System (IDS)</a></li>
+        <li><a href="#q2">Why is Security Hard?</a></li>
+        <li><a href="#q3">ACL, Identity-Based & Role-Based Access Control</a></li>
+        <li><a href="#q4">Access Control: Windows vs UNIX</a></li>
+        <li><a href="#q5">Control Hijacking & Buffer Overflow</a></li>
+        <li><a href="#q6">Defenses Against Control Hijacking</a></li>
+        <li><a href="#q7">System Call Interposition, ptrace & systrace</a></li>
+        <li><a href="#q8">Software Fault Isolation (SFI)</a></li>
+        <li><a href="#q9">Browser Isolation & Remote Browser Isolation</a></li>
+        <li><a href="#q10">Cross Site Request Forgery (CSRF)</a></li>
+        <li><a href="#q11">Cross Site Scripting (XSS)</a></li>
+        <li><a href="#q12">SQL Injection, CSRF, XSS, Sessions & HTTP Auth</a></li>
+        <li><a href="#q13">SSL Encryption & Server Authentication</a></li>
+        <li><a href="#q14">Session Hijacking & Fixation Attacks</a></li>
+        <li><a href="#q15">Asymmetric Algorithms / Public Key Cryptography</a></li>
+        <li><a href="#q16">RSA Algorithm with Worked Example (p=11,q=13,e=7,m=9)</a></li>
+        <li><a href="#q17">Symmetric vs Asymmetric Key Cryptography</a></li>
+        <li><a href="#q18">Single-Key & Public-Key Cryptography</a></li>
+        <li><a href="#q19">Digital Signature</a></li>
+        <li><a href="#q20">DES, Double DES & Triple DES</a></li>
+        <li><a href="#q21">IP Protocol Functions Summary</a></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===================== Q1 ===================== -->
+  <div class="q-card" id="q1">
+    <div class="q-header" onclick="toggleQ('b1')">
+      <div class="q-num">1</div>
+      <div class="q-title">What is an Intrusion Detection System (IDS)? Discuss its types, strengths, approaches and difficulties in anomaly detection.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-toggle" id="a1">▼</span>
+    </div>
+    <div class="q-body" id="b1">
+      <div class="section">
+        <div class="section-label lbl-intro">Introduction</div>
+        <p>An <strong>Intrusion Detection System (IDS)</strong> is a security tool that monitors network traffic or system activities and raises alerts when suspicious or malicious behavior is detected. It acts like a <em>security alarm</em> for a computer network.</p>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-concept">Concept Booster</div>
+        <div class="highlight-box">
+          IDS does NOT block attacks — it only <strong>detects and alerts</strong>. The system that blocks is called IPS (Intrusion Prevention System).
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Types of IDS</div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Type</th><th>Where it Monitors</th><th>Example</th></tr>
+            <tr><td><strong>NIDS</strong> (Network-based)</td><td>Network traffic between devices</td><td>Snort, Suricata</td></tr>
+            <tr><td><strong>HIDS</strong> (Host-based)</td><td>Individual computer/server</td><td>OSSEC, Tripwire</td></tr>
+            <tr><td><strong>Hybrid IDS</strong></td><td>Both network + host</td><td>Prelude</td></tr>
+          </table>
+        </div>
+        <div class="section-label lbl-answer" style="margin-top:1rem">Detection Approaches</div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Approach</th><th>How it works</th><th>Pro</th><th>Con</th></tr>
+            <tr><td><strong>Signature-based</strong></td><td>Matches known attack patterns (signatures)</td><td>Low false positives</td><td>Can't detect new attacks</td></tr>
+            <tr><td><strong>Anomaly-based</strong></td><td>Learns normal behavior; flags deviations</td><td>Detects new/unknown attacks</td><td>High false positives</td></tr>
+            <tr><td><strong>Stateful Protocol</strong></td><td>Tracks protocol state machines</td><td>Detects protocol violations</td><td>Complex to implement</td></tr>
+          </table>
+        </div>
+        <div class="section-label lbl-answer" style="margin-top:1rem">Strengths of IDS</div>
+        <ul>
+          <li>Detects internal & external threats</li>
+          <li>Provides audit trail and logs for forensics</li>
+          <li>Can monitor multiple systems simultaneously</li>
+          <li>Complements firewalls and antivirus</li>
+          <li>Identifies policy violations (insider threats)</li>
+        </ul>
+        <div class="section-label lbl-answer" style="margin-top:1rem">Difficulties in Anomaly Detection</div>
+        <ul>
+          <li><strong>Defining "Normal":</strong> Normal behavior changes over time (e.g., end-of-year high traffic). What's baseline?</li>
+          <li><strong>High False Positive Rate:</strong> Legitimate users flagged as attackers → alert fatigue.</li>
+          <li><strong>High False Negative Rate:</strong> Slow/stealthy attacks may look "normal".</li>
+          <li><strong>Mimicry Attacks:</strong> Attacker crafts traffic that looks normal to IDS.</li>
+          <li><strong>Encrypted Traffic:</strong> IDS cannot inspect encrypted packets easily.</li>
+          <li><strong>Training Data Poisoning:</strong> If attacker poisons training data, IDS baseline is corrupted.</li>
+          <li><strong>Resource Intensive:</strong> Machine learning-based anomaly detection is computationally expensive.</li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-diagram">Diagram</div>
+        <div class="diagram-box">
+          <svg viewBox="0 0 600 180" width="100%" style="max-width:600px">
+            <rect x="10" y="60" width="100" height="50" rx="8" fill="#7c3aed" opacity="0.8"/>
+            <text x="60" y="81" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">Internet</text>
+            <text x="60" y="97" text-anchor="middle" fill="#ddd" font-size="10">Traffic</text>
+            <line x1="110" y1="85" x2="180" y2="85" stroke="#00e5ff" stroke-width="2" marker-end="url(#arr)"/>
+            <rect x="180" y="55" width="110" height="60" rx="8" fill="#1a1e2a" stroke="#00e5ff" stroke-width="2"/>
+            <text x="235" y="78" text-anchor="middle" fill="#00e5ff" font-size="11" font-weight="bold">IDS Engine</text>
+            <text x="235" y="95" text-anchor="middle" fill="#94a3b8" font-size="9">Signature/Anomaly</text>
+            <text x="235" y="108" text-anchor="middle" fill="#94a3b8" font-size="9">Detection</text>
+            <line x1="290" y1="85" x2="360" y2="85" stroke="#00e5ff" stroke-width="2" marker-end="url(#arr)"/>
+            <rect x="360" y="60" width="100" height="50" rx="8" fill="#10b981" opacity="0.8"/>
+            <text x="410" y="81" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">Internal</text>
+            <text x="410" y="97" text-anchor="middle" fill="#ddd" font-size="10">Network</text>
+            <line x1="235" y1="55" x2="235" y2="20" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"/>
+            <rect x="175" y="5" width="120" height="25" rx="6" fill="#ef4444" opacity="0.2" stroke="#ef4444"/>
+            <text x="235" y="21" text-anchor="middle" fill="#f87171" font-size="10" font-weight="bold">⚠ ALERT to Admin</text>
+            <defs>
+              <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#00e5ff"/>
+              </marker>
+            </defs>
+            <text x="300" y="170" text-anchor="middle" fill="#64748b" font-size="10">Figure: Basic IDS Architecture</text>
+          </svg>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-exam">Important Exam Points</div>
+        <div class="warning-box">
+          ⚠ <strong>Common Trap:</strong> Students often confuse IDS with IPS. IDS = detect only; IPS = detect + block.<br>
+          ✅ NIDS vs HIDS distinction is frequently asked.<br>
+          ✅ Always mention "false positive" and "false negative" in anomaly detection difficulties.
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-quick">Quick Revision</div>
+        <div class="pills">
+          <span class="pill">IDS = Detect Only</span>
+          <span class="pill">NIDS = Network</span>
+          <span class="pill">HIDS = Host</span>
+          <span class="pill">Signature = Known attacks</span>
+          <span class="pill">Anomaly = Unknown attacks</span>
+          <span class="pill">Mimicry = IDS weakness</span>
+        </div>
+        <div class="memory-box">Mnemonic for IDS types: <strong>"Never Hug Hyenas"</strong> → Network, Host, Hybrid</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Q2 ===================== -->
+  <div class="q-card" id="q2">
+    <div class="q-header" onclick="toggleQ('b2')">
+      <div class="q-num">2</div>
+      <div class="q-title">Why is Security Hard?</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-toggle" id="a2">▼</span>
+    </div>
+    <div class="q-body" id="b2">
+      <div class="section">
+        <div class="section-label lbl-intro">Introduction</div>
+        <p>Security is fundamentally hard because <strong>defenders must protect everything; attackers only need to find one weakness</strong>. It is an asymmetric battle.</p>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Why Security is Hard — Key Reasons</div>
+        <div class="steps">
+          <div class="step"><div class="step-num"></div><div><strong>Attacker Advantage (Asymmetry):</strong> Attacker needs ONE vulnerability. Defender must protect EVERYTHING. Cost is asymmetric.</div></div>
+          <div class="step"><div class="step-num"></div><div><strong>Complexity of Systems:</strong> Modern software has millions of lines of code. Every line is a potential vulnerability. More features = more attack surface.</div></div>
+          <div class="step"><div class="step-num"></div><div><strong>Human Factor:</strong> Users choose weak passwords, click phishing links, share credentials. Humans are the weakest link.</div></div>
+          <div class="step"><div class="step-num"></div><div><strong>Unknown Unknowns (Zero-Days):</strong> Vulnerabilities exist that nobody knows about yet. You can't defend against what you don't know.</div></div>
+          <div class="step"><div class="step-num"></div><div><strong>Evolving Threat Landscape:</strong> Attackers constantly develop new techniques. Yesterday's defense may be today's vulnerability.</div></div>
+          <div class="step"><div class="step-num"></div><div><strong>Security vs Usability Trade-off:</strong> Making a system very secure often makes it hard to use. Organizations choose usability, reducing security.</div></div>
+          <div class="step"><div class="step-num"></div><div><strong>Interconnected Systems:</strong> A secure system may connect to an insecure one (supply chain attacks). Security is only as strong as the weakest link.</div></div>
+          <div class="step"><div class="step-num"></div><div><strong>Economic Incentives:</strong> Companies prioritize speed-to-market over security. Security costs money upfront; breaches cost money later.</div></div>
+          <div class="step"><div class="step-num"></div><div><strong>Insider Threats:</strong> Trusted employees can abuse their access. Authentication doesn't stop authorized but malicious users.</div></div>
+          <div class="step"><div class="step-num"></div><div><strong>Legacy Systems:</strong> Old systems with known vulnerabilities are hard to update or replace in critical infrastructure.</div></div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">The CIA Triad Challenge</div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Goal</th><th>Challenge</th></tr>
+            <tr><td><strong>Confidentiality</strong></td><td>Encryption can be broken; keys can be stolen</td></tr>
+            <tr><td><strong>Integrity</strong></td><td>Data can be tampered in transit or at rest</td></tr>
+            <tr><td><strong>Availability</strong></td><td>DDoS can bring down any system</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-exam">Important Exam Points</div>
+        <div class="tip-box">✅ Write at least 6–7 reasons with brief explanation for full 7 marks.<br>
+        ✅ Use the phrase "Attackers need to find ONE hole; defenders must plug ALL holes" — examiners love it.<br>
+        ✅ Mention CIA triad and its challenges.</div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-quick">Quick Revision</div>
+        <div class="pills">
+          <span class="pill">Asymmetry</span><span class="pill">Complexity</span><span class="pill">Human Factor</span>
+          <span class="pill">Zero-Days</span><span class="pill">Evolving Threats</span><span class="pill">Usability Trade-off</span>
+          <span class="pill">Insider Threats</span><span class="pill">Legacy Systems</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Q3 ===================== -->
+  <div class="q-card" id="q3">
+    <div class="q-header" onclick="toggleQ('b3')">
+      <div class="q-num">3</div>
+      <div class="q-title">Explain Access Control List (ACL), Identity-based Access Control and Role-based Access Control along with their properties, technologies and uses.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-toggle" id="a3">▼</span>
+    </div>
+    <div class="q-body" id="b3">
+      <div class="section">
+        <div class="section-label lbl-intro">Introduction</div>
+        <p>Access control determines <strong>who can access what resources and what operations they can perform</strong>. It is the cornerstone of information security.</p>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">1. Access Control List (ACL)</div>
+        <p>An ACL is a table attached to each resource (file, directory, network interface) listing <strong>which users/processes have which permissions</strong>.</p>
+        <div class="highlight-box">
+          <strong>Structure:</strong> Resource → [User1: Read/Write, User2: Read-Only, User3: No Access]
+        </div>
+        <ul>
+          <li><strong>Properties:</strong> Per-object permission list; supports fine-grained control; easy to revoke access</li>
+          <li><strong>Technologies:</strong> Linux file ACLs (getfacl/setfacl), Windows NTFS ACLs, Cisco Router ACLs, AWS S3 bucket policies</li>
+          <li><strong>Uses:</strong> File system security, network router packet filtering, cloud resource protection</li>
+          <li><strong>Limitation:</strong> Hard to manage when users = thousands (doesn't scale well)</li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">2. Identity-Based Access Control (IBAC)</div>
+        <p>Access is granted based on the <strong>identity (username/ID) of the requester</strong>. Each user has a unique identity and permissions assigned directly to it.</p>
+        <ul>
+          <li><strong>Properties:</strong> User-centric; permissions follow the individual; simple concept</li>
+          <li><strong>Technologies:</strong> LDAP, Active Directory (without groups), Unix UID-based permissions</li>
+          <li><strong>Uses:</strong> Small organizations, personal computers, simple systems</li>
+          <li><strong>Limitation:</strong> When a user leaves, you must update permissions everywhere manually. Doesn't scale.</li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">3. Role-Based Access Control (RBAC)</div>
+        <p>Access is granted based on the <strong>role of a user</strong> (e.g., Admin, Manager, Employee) rather than individual identity. Users are assigned roles; roles have permissions.</p>
+        <div class="highlight-box">
+          <strong>Flow:</strong> User → assigned Role → Role has Permissions → User gets Permissions
+        </div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Property</th><th>Description</th></tr>
+            <tr><td>Least Privilege</td><td>Users get only permissions needed for their role</td></tr>
+            <tr><td>Separation of Duties</td><td>Conflicting permissions can't be in one role</td></tr>
+            <tr><td>Role Hierarchy</td><td>Senior roles inherit permissions of junior roles</td></tr>
+            <tr><td>Scalability</td><td>Adding/removing users doesn't change permissions</td></tr>
+          </table>
+        </div>
+        <ul>
+          <li><strong>Technologies:</strong> Active Directory Groups, AWS IAM Roles, Oracle DB Roles, Spring Security</li>
+          <li><strong>Uses:</strong> Hospitals (doctor/nurse/admin roles), banks (teller/manager roles), enterprises</li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Comparison Table</div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Feature</th><th>ACL</th><th>IBAC</th><th>RBAC</th></tr>
+            <tr><td>Basis</td><td>Resource list</td><td>Identity</td><td>Role</td></tr>
+            <tr><td>Scalability</td><td>Medium</td><td>Low</td><td>High</td></tr>
+            <tr><td>Management</td><td>Per resource</td><td>Per user</td><td>Per role</td></tr>
+            <tr><td>Best for</td><td>Files/networks</td><td>Small systems</td><td>Enterprises</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-exam">Important Exam Points</div>
+        <div class="warning-box">
+          ⚠ RBAC is the most asked topic. Always mention "Separation of Duties" and "Least Privilege" as RBAC properties.<br>
+          ✅ ACL = attached to resource; IBAC = attached to user; RBAC = attached to role.
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-quick">Quick Revision</div>
+        <div class="memory-box">Think of a hospital: Doctors have roles (doctor-role → can view prescriptions). ACL is like a lock with a list of who has keys. IBAC = key per person. RBAC = key per job title.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Q4 ===================== -->
+  <div class="q-card" id="q4">
+    <div class="q-header" onclick="toggleQ('b4')">
+      <div class="q-num">4</div>
+      <div class="q-title">Compare Access Control in Windows and UNIX.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-toggle" id="a4">▼</span>
+    </div>
+    <div class="q-body" id="b4">
+      <div class="section">
+        <div class="section-label lbl-answer">UNIX Access Control</div>
+        <p>UNIX uses a simple <strong>DAC (Discretionary Access Control)</strong> model with three permission sets per file:</p>
+        <div class="math-block">
+Permission Format: [type][Owner][Group][Others]<br>
+Example: -rwxr-x---<br>
+r = read (4), w = write (2), x = execute (1)<br>
+Owner: rwx=7, Group: r-x=5, Others: ---=0  →  chmod 750
+        </div>
+        <ul>
+          <li><strong>Subjects:</strong> Users (UID) and Groups (GID)</li>
+          <li><strong>Objects:</strong> Files and directories (everything is a file in UNIX)</li>
+          <li><strong>Special bits:</strong> SUID (run as owner), SGID (run as group), Sticky bit (only owner can delete)</li>
+          <li><strong>Root (UID=0):</strong> Superuser with unrestricted access to everything</li>
+          <li><strong>ACL Extension:</strong> Extended ACLs via <code>setfacl</code> / <code>getfacl</code></li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Windows Access Control</div>
+        <p>Windows uses a more complex <strong>NTFS-based ACL</strong> system with rich granularity:</p>
+        <ul>
+          <li><strong>SID (Security Identifier):</strong> Unique ID for each user/group (like UID but longer)</li>
+          <li><strong>DACL (Discretionary ACL):</strong> List of ACEs (Access Control Entries) — who gets what permission</li>
+          <li><strong>SACL (System ACL):</strong> For auditing — logs who accessed what</li>
+          <li><strong>ACE Types:</strong> Allow or Deny specific permissions</li>
+          <li><strong>Permissions:</strong> Very granular — Read, Write, Execute, Modify, Full Control, List Folder, etc.</li>
+          <li><strong>Inheritance:</strong> Child objects automatically inherit parent permissions</li>
+          <li><strong>Tokens:</strong> Access tokens carry user's SID + group memberships + privileges</li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Side-by-Side Comparison</div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Feature</th><th>UNIX</th><th>Windows</th></tr>
+            <tr><td>Model</td><td>Simple DAC (9-bit)</td><td>Rich ACL (DACL/SACL)</td></tr>
+            <tr><td>User ID</td><td>UID (integer)</td><td>SID (long string)</td></tr>
+            <tr><td>Permission Sets</td><td>Owner, Group, Others</td><td>Individual ACEs per user/group</td></tr>
+            <tr><td>Granularity</td><td>Low (r/w/x)</td><td>High (15+ permission types)</td></tr>
+            <tr><td>Superuser</td><td>root (UID=0)</td><td>Administrator account</td></tr>
+            <tr><td>Auditing</td><td>Limited</td><td>SACL provides audit trails</td></tr>
+            <tr><td>Inheritance</td><td>Manual</td><td>Automatic inheritance</td></tr>
+            <tr><td>Complexity</td><td>Simple, elegant</td><td>Complex but powerful</td></tr>
+            <tr><td>Special Bits</td><td>SUID, SGID, Sticky</td><td>No direct equivalent</td></tr>
+            <tr><td>Extended ACL</td><td>setfacl/getfacl</td><td>Built-in NTFS ACL</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-exam">Important Exam Points</div>
+        <div class="tip-box">✅ UNIX: 9-bit permission model is simple but limited.<br>
+        ✅ Windows: DACL (who can access) + SACL (who is audited) — this distinction is important.<br>
+        ✅ Both use Discretionary Access Control (owner decides permissions).</div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-quick">Quick Revision</div>
+        <div class="pills">
+          <span class="pill">UNIX = rwx bits</span><span class="pill">Windows = DACL+SACL</span><span class="pill">SUID = run as owner</span>
+          <span class="pill">SID = Windows user ID</span><span class="pill">ACE = individual permission entry</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Q5 ===================== -->
+  <div class="q-card" id="q5">
+    <div class="q-header" onclick="toggleQ('b5')">
+      <div class="q-num">5</div>
+      <div class="q-title">What is Control Hijacking? Explain buffer overflow and various types of hijacking attacks with examples.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-toggle" id="a5">▼</span>
+    </div>
+    <div class="q-body" id="b5">
+      <div class="section">
+        <div class="section-label lbl-intro">Introduction</div>
+        <p><strong>Control Hijacking</strong> is an attack where an attacker takes control of a program's execution flow by overwriting critical control data (like return addresses or function pointers) to run their own malicious code (shellcode).</p>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-concept">Concept Booster</div>
+        <div class="highlight-box">
+          Stack Layout (low → high address):<br>
+          [Local Variables] [Saved Frame Pointer] [Return Address] [Function Arguments]<br>
+          <br>
+          If we overflow local variables, we can overwrite the <strong>Return Address</strong> to redirect execution.
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Buffer Overflow</div>
+        <p>A <strong>buffer overflow</strong> occurs when a program writes more data into a buffer than it can hold, overwriting adjacent memory.</p>
+        <div class="steps">
+          <div class="step"><div class="step-num"></div><div>Program allocates a buffer of size 10 bytes on stack.</div></div>
+          <div class="step"><div class="step-num"></div><div>User inputs 50 bytes (e.g., using <code>gets()</code> or <code>strcpy()</code> — unsafe functions).</div></div>
+          <div class="step"><div class="step-num"></div><div>Extra bytes overflow into return address.</div></div>
+          <div class="step"><div class="step-num"></div><div>Attacker crafts input to overwrite return address with address of shellcode.</div></div>
+          <div class="step"><div class="step-num"></div><div>When function returns, CPU jumps to shellcode → attacker wins!</div></div>
+        </div>
+        <div class="math-block">
+// Vulnerable code:<br>
+void foo(char *input) {<br>
+&nbsp;&nbsp;char buf[10];<br>
+&nbsp;&nbsp;strcpy(buf, input);  // No bounds check!<br>
+}<br>
+// Input: "AAAAAAAAAA\xde\xad\xbe\xef" → overwrites return address
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Types of Hijacking Attacks</div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Attack Type</th><th>What is Overwritten</th><th>Example/Detail</th></tr>
+            <tr><td><strong>Stack Smashing</strong></td><td>Return address on stack</td><td>Classic buffer overflow; attacker redirects return to shellcode</td></tr>
+            <tr><td><strong>Heap Overflow</strong></td><td>Heap memory objects/function pointers</td><td>Overflow heap buffer to corrupt adjacent object's vtable pointer</td></tr>
+            <tr><td><strong>Integer Overflow</strong></td><td>Size calculations</td><td><code>int size = user_input; malloc(size*4)</code> — if size overflows, tiny buffer allocated, then overflow</td></tr>
+            <tr><td><strong>Format String Attack</strong></td><td>Memory via printf</td><td><code>printf(user_input)</code> — attacker uses %n to write arbitrary values to memory</td></tr>
+            <tr><td><strong>Use-After-Free</strong></td><td>Freed heap memory</td><td>Attacker allocates new object in freed memory, gains control via old pointer</td></tr>
+            <tr><td><strong>Return-to-libc</strong></td><td>Return address</td><td>Instead of shellcode, return to system() function in libc to execute /bin/sh</td></tr>
+            <tr><td><strong>ROP (Return-Oriented Programming)</strong></td><td>Return address chain</td><td>Chain small code snippets ("gadgets") ending in RET to execute arbitrary code without injecting shellcode</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-diagram">Stack Overflow Diagram</div>
+        <div class="diagram-box">
+          <svg viewBox="0 0 520 200" width="100%" style="max-width:520px">
+            <rect x="160" y="10" width="200" height="30" rx="4" fill="#ef4444" opacity="0.7"/>
+            <text x="260" y="30" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">Return Address ← OVERWRITTEN!</text>
+            <rect x="160" y="45" width="200" height="25" rx="4" fill="#7c3aed" opacity="0.6"/>
+            <text x="260" y="62" text-anchor="middle" fill="#fff" font-size="10">Saved Frame Pointer</text>
+            <rect x="160" y="75" width="200" height="50" rx="4" fill="#00e5ff" opacity="0.15" stroke="#00e5ff"/>
+            <text x="260" y="95" text-anchor="middle" fill="#00e5ff" font-size="10" font-weight="bold">Buffer[10]</text>
+            <text x="260" y="112" text-anchor="middle" fill="#94a3b8" font-size="9">← Overflowed with 50 bytes</text>
+            <rect x="160" y="130" width="200" height="25" rx="4" fill="#10b981" opacity="0.5"/>
+            <text x="260" y="147" text-anchor="middle" fill="#fff" font-size="10">Function Arguments</text>
+            <text x="50" y="27" fill="#f87171" font-size="10" text-anchor="middle">↑ High</text>
+            <text x="50" y="147" fill="#94a3b8" font-size="10" text-anchor="middle">↓ Low</text>
+            <line x1="75" y1="35" x2="75" y2="140" stroke="#64748b" stroke-width="1" stroke-dasharray="3"/>
+            <text x="430" y="30" fill="#f87171" font-size="10">Attacker's target</text>
+            <line x1="360" y1="25" x2="415" y2="25" stroke="#f87171" stroke-dasharray="3"/>
+            <text x="380" y="170" text-anchor="middle" fill="#64748b" font-size="10">Figure: Stack Layout during Buffer Overflow</text>
+          </svg>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-exam">Important Exam Points</div>
+        <div class="warning-box">
+          ⚠ <strong>Unsafe functions in C:</strong> gets(), strcpy(), sprintf(), scanf() — always mention these as causes.<br>
+          ✅ ROP and Return-to-libc are modern attacks when stack is non-executable (NX bit set).<br>
+          ✅ Draw the stack diagram — examiners give extra marks for diagrams!
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-quick">Quick Revision</div>
+        <div class="pills">
+          <span class="pill">Buffer Overflow → overwrite return addr</span><span class="pill">Heap Overflow → vtable</span>
+          <span class="pill">Format String → %n</span><span class="pill">ROP → chain gadgets</span><span class="pill">UAF → freed memory</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Q6 ===================== -->
+  <div class="q-card" id="q6">
+    <div class="q-header" onclick="toggleQ('b6')">
+      <div class="q-num">6</div>
+      <div class="q-title">Explain defenses and protection techniques against control hijacking.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-toggle" id="a6">▼</span>
+    </div>
+    <div class="q-body" id="b6">
+      <div class="section">
+        <div class="section-label lbl-answer">Defense Techniques Against Control Hijacking</div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>#</th><th>Defense</th><th>How it Works</th><th>Limitation</th></tr>
+            <tr><td>1</td><td><strong>Stack Canaries</strong></td><td>Place a random "canary" value before return address. Check it before returning — if changed, abort!</td><td>Attacker may leak canary value</td></tr>
+            <tr><td>2</td><td><strong>Non-Executable Stack (NX/DEP)</strong></td><td>Mark stack memory as non-executable. Shellcode injected can't run.</td><td>Defeated by ROP/return-to-libc</td></tr>
+            <tr><td>3</td><td><strong>ASLR (Address Space Layout Randomization)</strong></td><td>Randomize locations of stack, heap, libraries each run. Attacker can't know where shellcode/libc is.</td><td>Partial ASLR, brute force on 32-bit</td></tr>
+            <tr><td>4</td><td><strong>Control Flow Integrity (CFI)</strong></td><td>Ensures program only makes "legal" indirect calls/jumps. Blocks arbitrary code execution.</td><td>Complex to implement; performance overhead</td></tr>
+            <tr><td>5</td><td><strong>Safe Libraries / Bounds Checking</strong></td><td>Replace unsafe functions (gets→fgets, strcpy→strncpy). Use safe libraries like libsafe.</td><td>Not all code updated; performance</td></tr>
+            <tr><td>6</td><td><strong>Address Sanitizer (ASan)</strong></td><td>Compiler tool that detects buffer overflows at runtime (used in testing).</td><td>Only for development/testing</td></tr>
+            <tr><td>7</td><td><strong>Stack Guard / ProPolice</strong></td><td>Compiler inserts checks around buffers (similar to canary).</td><td>Compiler-dependent</td></tr>
+            <tr><td>8</td><td><strong>Pointer Integrity / Shadow Stack</strong></td><td>Maintain a separate protected copy of return addresses.</td><td>Hardware support needed (Intel CET)</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Defense Layers (Defense in Depth)</div>
+        <div class="diagram-box">
+          <svg viewBox="0 0 500 160" width="100%" style="max-width:500px">
+            <rect x="10" y="10" width="480" height="140" rx="10" fill="none" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="5"/>
+            <text x="250" y="30" text-anchor="middle" fill="#7c3aed" font-size="11" font-weight="bold">Defense in Depth</text>
+            <rect x="30" y="40" width="100" height="40" rx="6" fill="#ef4444" opacity="0.7"/>
+            <text x="80" y="64" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold">Safe Coding</text>
+            <rect x="145" y="40" width="100" height="40" rx="6" fill="#f59e0b" opacity="0.7"/>
+            <text x="195" y="57" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold">Canaries</text>
+            <text x="195" y="70" text-anchor="middle" fill="#fff" font-size="9">+ Stack Guard</text>
+            <rect x="260" y="40" width="100" height="40" rx="6" fill="#10b981" opacity="0.7"/>
+            <text x="310" y="57" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold">NX/DEP</text>
+            <text x="310" y="70" text-anchor="middle" fill="#fff" font-size="9">+ ASLR</text>
+            <rect x="375" y="40" width="100" height="40" rx="6" fill="#00e5ff" opacity="0.3" stroke="#00e5ff"/>
+            <text x="425" y="57" text-anchor="middle" fill="#00e5ff" font-size="9" font-weight="bold">CFI</text>
+            <text x="425" y="70" text-anchor="middle" fill="#94a3b8" font-size="9">Shadow Stack</text>
+            <text x="80" y="110" text-anchor="middle" fill="#94a3b8" font-size="9">Layer 1</text>
+            <text x="195" y="110" text-anchor="middle" fill="#94a3b8" font-size="9">Layer 2</text>
+            <text x="310" y="110" text-anchor="middle" fill="#94a3b8" font-size="9">Layer 3</text>
+            <text x="425" y="110" text-anchor="middle" fill="#94a3b8" font-size="9">Layer 4</text>
+            <text x="250" y="148" text-anchor="middle" fill="#64748b" font-size="10">Figure: Defense Layers Against Control Hijacking</text>
+          </svg>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-exam">Important Exam Points</div>
+        <div class="tip-box">
+          ✅ Stack Canary + ASLR + NX = the "holy trinity" of buffer overflow defenses.<br>
+          ✅ NX alone is defeated by ROP; combine with ASLR for effectiveness.<br>
+          ✅ CFI is the strongest but has performance cost — mention this trade-off.
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-quick">Quick Revision</div>
+        <div class="pills">
+          <span class="pill">Canary = detect overflow</span><span class="pill">NX = non-exec stack</span>
+          <span class="pill">ASLR = randomize addresses</span><span class="pill">CFI = control flow check</span><span class="pill">ASan = dev/test tool</span>
+        </div>
+        <div class="memory-box">Mnemonic: <strong>"CANDLES Protect Code"</strong> → Canary, ASLR, NX/DEP, DEP, Library checks, Efficient coding, Safe functions, CFI</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Q7 ===================== -->
+  <div class="q-card" id="q7">
+    <div class="q-header" onclick="toggleQ('b7')">
+      <div class="q-num">7</div>
+      <div class="q-title">Explain System Call Interposition. Discuss ptrace and systrace in detail.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-toggle" id="a7">▼</span>
+    </div>
+    <div class="q-body" id="b7">
+      <div class="section">
+        <div class="section-label lbl-intro">Introduction</div>
+        <p><strong>System Call Interposition</strong> is a security mechanism where a monitor intercepts system calls made by a process and <strong>decides whether to allow, deny, or modify</strong> them before they reach the OS kernel. It's like a firewall for system calls.</p>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">System Call Interposition — How It Works</div>
+        <div class="diagram-box">
+          <svg viewBox="0 0 500 130" width="100%" style="max-width:500px">
+            <rect x="20" y="20" width="100" height="40" rx="8" fill="#7c3aed" opacity="0.8"/>
+            <text x="70" y="44" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">Process</text>
+            <line x1="120" y1="40" x2="185" y2="40" stroke="#00e5ff" stroke-width="2" marker-end="url(#arr2)"/>
+            <text x="152" y="34" text-anchor="middle" fill="#94a3b8" font-size="9">syscall()</text>
+            <rect x="185" y="15" width="120" height="50" rx="8" fill="#1a1e2a" stroke="#f59e0b" stroke-width="2"/>
+            <text x="245" y="38" text-anchor="middle" fill="#f59e0b" font-size="11" font-weight="bold">Monitor</text>
+            <text x="245" y="55" text-anchor="middle" fill="#94a3b8" font-size="9">Allow / Deny / Modify</text>
+            <line x1="305" y1="40" x2="370" y2="40" stroke="#10b981" stroke-width="2" marker-end="url(#arr2)"/>
+            <text x="337" y="34" text-anchor="middle" fill="#94a3b8" font-size="9">if allowed</text>
+            <rect x="370" y="20" width="110" height="40" rx="8" fill="#10b981" opacity="0.8"/>
+            <text x="425" y="44" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">OS Kernel</text>
+            <defs>
+              <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#00e5ff"/>
+              </marker>
+            </defs>
+            <text x="250" y="120" text-anchor="middle" fill="#64748b" font-size="10">Figure: System Call Interposition Architecture</text>
+          </svg>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">ptrace</div>
+        <p><code>ptrace</code> is a Linux system call that allows one process (tracer/monitor) to observe and control execution of another process (tracee). Used by debuggers like GDB.</p>
+        <ul>
+          <li><strong>How:</strong> Monitor calls <code>ptrace(PTRACE_ATTACH, pid)</code> to attach to a process</li>
+          <li>Every time tracee makes a syscall, it stops → monitor examines and decides</li>
+          <li>Monitor can read/write tracee's memory and registers</li>
+          <li><strong>Uses:</strong> Sandboxing, debugging (GDB), strace (trace system calls), security monitoring</li>
+          <li><strong>Limitations:</strong>
+            <ul>
+              <li><em>Race condition (TOCTOU):</em> Between monitor checking and kernel executing, arguments can change in memory (in a multi-threaded process)</li>
+              <li><em>Performance overhead:</em> Context switch for every system call</li>
+              <li><em>One-to-one:</em> Only one tracer per process</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">systrace</div>
+        <p><code>systrace</code> is a more advanced system call interposition tool (originally for BSD/macOS) that works at the <strong>kernel level</strong> and provides a policy-based approach.</p>
+        <ul>
+          <li><strong>Kernel-based:</strong> More efficient than ptrace (no context switch per syscall)</li>
+          <li>Uses <strong>policy files</strong> to define allowed/denied syscalls per application</li>
+          <li>Can enforce per-argument policies (e.g., allow <code>open()</code> only for specific directories)</li>
+          <li>Interactive mode: asks user on first encounter; learns policy</li>
+          <li><strong>Advantages over ptrace:</strong> No TOCTOU race, kernel-level efficiency, policy-based</li>
+          <li><strong>Limitation:</strong> Platform-specific; Linux moved toward seccomp for similar functionality</li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">ptrace vs systrace</div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Feature</th><th>ptrace</th><th>systrace</th></tr>
+            <tr><td>Level</td><td>User-space</td><td>Kernel-space</td></tr>
+            <tr><td>Mechanism</td><td>Attach to process</td><td>Kernel hook</td></tr>
+            <tr><td>Performance</td><td>Slow (context switch)</td><td>Fast</td></tr>
+            <tr><td>TOCTOU</td><td>Vulnerable</td><td>Not vulnerable</td></tr>
+            <tr><td>Policy</td><td>Programmatic</td><td>Policy files</td></tr>
+            <tr><td>Platform</td><td>Linux/Unix</td><td>BSD/macOS</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-exam">Important Exam Points</div>
+        <div class="warning-box">
+          ⚠ TOCTOU (Time-of-Check to Time-of-Use) race condition is the KEY weakness of ptrace — must mention this.<br>
+          ✅ seccomp is the modern Linux equivalent of systrace — good extra point.<br>
+          ✅ strace uses ptrace internally — good example to cite.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Q8 ===================== -->
+  <div class="q-card" id="q8">
+    <div class="q-header" onclick="toggleQ('b8')">
+      <div class="q-num">8</div>
+      <div class="q-title">Discuss Software Fault Isolation (SFI), its need, goal, solution and approach.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-toggle" id="a8">▼</span>
+    </div>
+    <div class="q-body" id="b8">
+      <div class="section">
+        <div class="section-label lbl-intro">Introduction</div>
+        <p><strong>Software Fault Isolation (SFI)</strong> is a technique to confine untrusted code within a defined region of a process's address space, preventing it from corrupting or accessing memory outside its sandbox — <strong>all using software checks, not hardware</strong>.</p>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Need for SFI</div>
+        <ul>
+          <li>Running untrusted code (plugins, extensions, third-party libraries) in the same process is dangerous</li>
+          <li>Hardware isolation (separate processes) is too slow for frequent interactions (e.g., browser plugins)</li>
+          <li>We need isolation with <strong>low performance overhead</strong></li>
+          <li>SFI solves this: untrusted module runs in same process but can't escape its "sandbox zone"</li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Goal of SFI</div>
+        <div class="highlight-box">
+          Guarantee that untrusted code can <strong>only read/write its designated memory region</strong> and can only call trusted code through safe, controlled interfaces.
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">SFI Solution & Approach</div>
+        <p>SFI assigns untrusted modules to a <strong>"fault domain"</strong> — a specific memory segment. Rules:</p>
+        <div class="steps">
+          <div class="step"><div class="step-num"></div><div><strong>Segmentation:</strong> Divide address space into fixed segments. Untrusted code lives in segment N.</div></div>
+          <div class="step"><div class="step-num"></div><div><strong>Instruction Rewriting:</strong> Before every store/jump in untrusted code, insert a MASK instruction that forces the target address into the safe zone.</div></div>
+          <div class="step"><div class="step-num"></div><div><strong>Safe Stores:</strong> <code>store Rd, addr</code> becomes <code>AND Rd, Rd, mask; store Rd, addr</code> — addr is always in safe segment.</div></div>
+          <div class="step"><div class="step-num"></div><div><strong>Safe Jumps:</strong> Indirect jumps are masked to prevent jumping to arbitrary code.</div></div>
+          <div class="step"><div class="step-num"></div><div><strong>Trusted Call Stubs:</strong> Untrusted code can call trusted code only via predefined stubs (trampolines).</div></div>
+          <div class="step"><div class="step-num"></div><div><strong>Verification:</strong> Before loading untrusted code, a <em>verifier</em> checks all instructions are properly sandboxed.</div></div>
+        </div>
+        <div class="math-block">
+// Example: SFI-rewritten store instruction<br>
+Original: store [Reg], value<br>
+SFI:      AND Reg, Reg, 0xFFFF0000  ; mask top bits to force into sandbox segment<br>
+          store [Reg], value          ; now guaranteed safe
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Advantages & Disadvantages</div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Advantages</th><th>Disadvantages</th></tr>
+            <tr><td>No hardware support needed</td><td>~5% performance overhead (instruction insertion)</td></tr>
+            <tr><td>Fine-grained isolation within process</td><td>Verifier must be trusted and correct</td></tr>
+            <tr><td>Fast communication between modules</td><td>Harder to implement on CISC architectures</td></tr>
+            <tr><td>Used in real systems (Native Client, WebAssembly)</td><td>Code must be recompiled</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-exam">Important Exam Points</div>
+        <div class="tip-box">
+          ✅ Real-world example: Google's <strong>Native Client (NaCl)</strong> uses SFI to run native code in browsers safely.<br>
+          ✅ <strong>WebAssembly</strong> is a modern descendant of SFI principles.<br>
+          ✅ Key insight: SFI = software-enforced isolation = mask every dangerous instruction.
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-quick">Quick Revision</div>
+        <div class="pills">
+          <span class="pill">SFI = sandbox in-process</span><span class="pill">Mask instructions</span><span class="pill">Fault domain</span>
+          <span class="pill">No hardware needed</span><span class="pill">NaCl / WebAssembly</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Q9 ===================== -->
+  <div class="q-card" id="q9">
+    <div class="q-header" onclick="toggleQ('b9')">
+      <div class="q-num">9</div>
+      <div class="q-title">Discuss browser isolation and remote browser isolation in detail.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-toggle" id="a9">▼</span>
+    </div>
+    <div class="q-body" id="b9">
+      <div class="section">
+        <div class="section-label lbl-intro">Introduction</div>
+        <p>Web browsers are major attack surfaces — malicious web content can execute code on a user's machine. <strong>Browser Isolation</strong> contains web content so even if it's malicious, it cannot harm the host system.</p>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Browser Isolation</div>
+        <p>The principle: <strong>run web content in an isolated environment</strong>, separate from the OS and user data.</p>
+        <ul>
+          <li><strong>Process Isolation:</strong> Each browser tab runs in its own process (Chrome's sandbox model). If one tab is compromised, it can't access others or the OS.</li>
+          <li><strong>Sandbox:</strong> Browser renderer process is sandboxed using OS mechanisms (seccomp, AppArmor, Windows job objects). Renderer can't make arbitrary system calls.</li>
+          <li><strong>Site Isolation:</strong> Different origins run in different processes. Cross-site data theft (Spectre) mitigated.</li>
+          <li><strong>Plugin Isolation:</strong> Flash/plugins run in separate processes (NPAPI deprecated for this reason).</li>
+        </ul>
+        <div class="diagram-box">
+          <svg viewBox="0 0 500 160" width="100%" style="max-width:500px">
+            <rect x="10" y="10" width="480" height="140" rx="10" fill="none" stroke="#7c3aed" stroke-dasharray="5"/>
+            <text x="250" y="28" text-anchor="middle" fill="#7c3aed" font-size="11" font-weight="bold">Browser Process (Trusted)</text>
+            <rect x="30" y="40" width="130" height="50" rx="6" fill="#ef4444" opacity="0.2" stroke="#ef4444"/>
+            <text x="95" y="65" text-anchor="middle" fill="#f87171" font-size="10" font-weight="bold">Tab: Evil Site</text>
+            <text x="95" y="80" text-anchor="middle" fill="#94a3b8" font-size="9">Sandboxed Renderer</text>
+            <rect x="185" y="40" width="130" height="50" rx="6" fill="#10b981" opacity="0.2" stroke="#10b981"/>
+            <text x="250" y="65" text-anchor="middle" fill="#10b981" font-size="10" font-weight="bold">Tab: Bank Site</text>
+            <text x="250" y="80" text-anchor="middle" fill="#94a3b8" font-size="9">Sandboxed Renderer</text>
+            <rect x="340" y="40" width="130" height="50" rx="6" fill="#00e5ff" opacity="0.1" stroke="#00e5ff"/>
+            <text x="405" y="65" text-anchor="middle" fill="#00e5ff" font-size="10" font-weight="bold">Tab: Social</text>
+            <text x="405" y="80" text-anchor="middle" fill="#94a3b8" font-size="9">Sandboxed Renderer</text>
+            <line x1="160" y1="65" x2="185" y2="65" stroke="#ef4444" stroke-dasharray="3"/>
+            <text x="172" y="60" text-anchor="middle" fill="#ef4444" font-size="9">✗</text>
+            <text x="250" y="148" text-anchor="middle" fill="#64748b" font-size="10">Figure: Browser Tab Isolation (Each tab = separate process)</text>
+          </svg>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Remote Browser Isolation (RBI)</div>
+        <p><strong>RBI</strong> takes isolation further: the browser runs entirely on a <strong>remote server</strong>. Only a visual stream (pixels) is sent to the user's device. The user interacts via input events.</p>
+        <div class="steps">
+          <div class="step"><div class="step-num"></div><div>User requests a web page from their endpoint device.</div></div>
+          <div class="step"><div class="step-num"></div><div>Request goes to <strong>remote isolation server</strong> (cloud or on-premises).</div></div>
+          <div class="step"><div class="step-num"></div><div>Browser runs on isolation server, fetches and renders the page.</div></div>
+          <div class="step"><div class="step-num"></div><div>Only a <strong>pixel stream / DOM mirror</strong> is sent to user's device — no actual web content reaches endpoint.</div></div>
+          <div class="step"><div class="step-num"></div><div>Even if page has malware, it executes on the isolation server (which is disposable/containerized), not the user's PC.</div></div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Feature</th><th>Local Isolation</th><th>Remote Browser Isolation</th></tr>
+            <tr><td>Browser Location</td><td>User's machine</td><td>Remote server</td></tr>
+            <tr><td>Malware Execution</td><td>On user's machine (sandboxed)</td><td>On remote server (never reaches user)</td></tr>
+            <tr><td>Zero-Day Protection</td><td>Partial</td><td>Complete (endpoint untouched)</td></tr>
+            <tr><td>Performance</td><td>Good</td><td>Slight latency (pixel stream)</td></tr>
+            <tr><td>Cost</td><td>Low</td><td>Higher (cloud infrastructure)</td></tr>
+            <tr><td>Examples</td><td>Chrome sandbox</td><td>Menlo Security, Zscaler</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-exam">Important Exam Points</div>
+        <div class="warning-box">
+          ✅ RBI is the strongest form of browser isolation — malware never reaches endpoint.<br>
+          ✅ Mention "pixel stream" / "DOM mirroring" as the rendering technique in RBI.<br>
+          ✅ Chrome uses multi-process architecture — good real-world example for local isolation.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Q10 ===================== -->
+  <div class="q-card" id="q10">
+    <div class="q-header" onclick="toggleQ('b10')">
+      <div class="q-num">10</div>
+      <div class="q-title">What is Cross Site Request Forgery (CSRF)? Explain its working, examples and defenses.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-toggle" id="a10">▼</span>
+    </div>
+    <div class="q-body" id="b10">
+      <div class="section">
+        <div class="section-label lbl-intro">Introduction</div>
+        <p><strong>CSRF (Cross-Site Request Forgery)</strong> is an attack that tricks an authenticated user into unknowingly submitting a malicious request. The attacker exploits the browser's behavior of automatically including cookies with requests.</p>
+        <div class="highlight-box">Also called: <strong>Sea-Surf, XSRF, One-Click Attack, Session Riding</strong></div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">How CSRF Works</div>
+        <div class="steps">
+          <div class="step"><div class="step-num"></div><div>Victim logs into <strong>bank.com</strong> → browser stores session cookie.</div></div>
+          <div class="step"><div class="step-num"></div><div>Without logging out, victim visits <strong>evil.com</strong> (attacker's site).</div></div>
+          <div class="step"><div class="step-num"></div><div>evil.com has hidden malicious form/image/script that sends a request to bank.com (e.g., transfer money).</div></div>
+          <div class="step"><div class="step-num"></div><div>Browser <strong>automatically includes bank.com cookie</strong> with the request (same-origin cookie policy).</div></div>
+          <div class="step"><div class="step-num"></div><div>bank.com sees a valid authenticated request → executes the transfer!</div></div>
+        </div>
+        <div class="math-block">
+&lt;!-- Malicious HTML on evil.com --&gt;<br>
+&lt;img src="https://bank.com/transfer?to=attacker&amp;amount=10000" /&gt;<br>
+&lt;!-- Browser auto-sends bank.com cookie with this request --&gt;
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Real-World Example</div>
+        <ul>
+          <li>Online banking transfer initiated without user's knowledge</li>
+          <li>Changing email/password of an account</li>
+          <li>Posting on social media as the victim</li>
+          <li>Buying products using victim's stored payment method</li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Defenses Against CSRF</div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Defense</th><th>How It Works</th></tr>
+            <tr><td><strong>CSRF Token (Synchronizer Token)</strong></td><td>Server generates a unique random token for each session/form. Request must include token. Attacker can't know this token (cross-origin can't read it).</td></tr>
+            <tr><td><strong>SameSite Cookie Attribute</strong></td><td><code>Set-Cookie: session=xyz; SameSite=Strict</code> — browser won't send cookie on cross-site requests.</td></tr>
+            <tr><td><strong>Double Submit Cookie</strong></td><td>CSRF token stored in both cookie and form field. Server verifies they match.</td></tr>
+            <tr><td><strong>Custom Request Headers</strong></td><td>AJAX requests with custom headers (e.g., X-Requested-With) — cross-origin can't set custom headers.</td></tr>
+            <tr><td><strong>Referer/Origin Header Check</strong></td><td>Server checks that request Origin matches server domain.</td></tr>
+            <tr><td><strong>Re-authentication</strong></td><td>For sensitive actions (transfer, delete), require password again.</td></tr>
+            <tr><td><strong>CAPTCHA</strong></td><td>Proves human intent — bots/scripts can't solve it.</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-exam">Important Exam Points</div>
+        <div class="warning-box">
+          ⚠ <strong>CSRF exploits trust in the user's browser</strong>; XSS exploits trust in the server — know the difference!<br>
+          ✅ CSRF token is the PRIMARY defense — always mention it first.<br>
+          ✅ SameSite=Strict is the modern, recommended defense.
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-quick">Quick Revision</div>
+        <div class="memory-box">CSRF = <strong>C</strong>ookie <strong>S</strong>ent <strong>R</strong>egardless of <strong>F</strong>raud. The cookie goes automatically — that's the bug!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Q11 ===================== -->
+  <div class="q-card" id="q11">
+    <div class="q-header" onclick="toggleQ('b11')">
+      <div class="q-num">11</div>
+      <div class="q-title">What is Cross Site Scripting (XSS)? Discuss defenses and protection against XSS attacks.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-toggle" id="a11">▼</span>
+    </div>
+    <div class="q-body" id="b11">
+      <div class="section">
+        <div class="section-label lbl-intro">Introduction</div>
+        <p><strong>XSS (Cross-Site Scripting)</strong> is an injection attack where an attacker injects malicious JavaScript into web pages viewed by other users. The script runs in the victim's browser with full page privileges.</p>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Types of XSS</div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Type</th><th>How</th><th>Example</th></tr>
+            <tr><td><strong>Stored XSS</strong></td><td>Malicious script stored in database, shown to all users</td><td>Attacker posts <code>&lt;script&gt;steal_cookie()&lt;/script&gt;</code> in forum comment</td></tr>
+            <tr><td><strong>Reflected XSS</strong></td><td>Script in URL, reflected back in response immediately</td><td><code>search.php?q=&lt;script&gt;alert(1)&lt;/script&gt;</code></td></tr>
+            <tr><td><strong>DOM-based XSS</strong></td><td>Script modifies DOM using JS on client side without server involvement</td><td><code>document.write(location.hash)</code> with malicious hash</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">What Can XSS Do?</div>
+        <ul>
+          <li>Steal session cookies → account takeover</li>
+          <li>Keylogger — capture keystrokes (passwords)</li>
+          <li>Redirect to phishing sites</li>
+          <li>Perform CSRF attacks</li>
+          <li>Defacement — modify page content</li>
+          <li>BeEF (Browser Exploitation Framework) — full browser control</li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Defenses Against XSS</div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Defense</th><th>How It Works</th></tr>
+            <tr><td><strong>Output Encoding</strong></td><td>Convert special characters to HTML entities: &lt; → &amp;lt; &gt; → &amp;gt; This prevents script from being interpreted as HTML.</td></tr>
+            <tr><td><strong>Input Validation</strong></td><td>Reject or sanitize inputs containing &lt;script&gt;, javascript:, on* event handlers. Whitelist allowed characters.</td></tr>
+            <tr><td><strong>Content Security Policy (CSP)</strong></td><td>HTTP header that specifies which scripts are allowed to run. Blocks inline scripts and external domains.</td></tr>
+            <tr><td><strong>HttpOnly Cookie Flag</strong></td><td><code>Set-Cookie: session=xyz; HttpOnly</code> — JS cannot access this cookie, so stealing it via XSS fails.</td></tr>
+            <tr><td><strong>Secure Flag on Cookies</strong></td><td>Cookie only sent over HTTPS.</td></tr>
+            <tr><td><strong>WAF (Web Application Firewall)</strong></td><td>Filters malicious payloads at the network level.</td></tr>
+            <tr><td><strong>DOM Sanitization</strong></td><td>Use safe DOM APIs: textContent instead of innerHTML. Use DOMPurify library.</td></tr>
+            <tr><td><strong>X-XSS-Protection Header</strong></td><td>Browser-level XSS filter (legacy — mostly replaced by CSP).</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-exam">Important Exam Points</div>
+        <div class="warning-box">
+          ⚠ <strong>XSS vs CSRF:</strong> XSS = code injected into server's page runs in victim's browser; CSRF = victim's browser unknowingly sends request.<br>
+          ✅ HttpOnly cookie + CSP = most asked defenses.<br>
+          ✅ Stored XSS is most dangerous (affects all users who view the page).
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-quick">Quick Revision</div>
+        <div class="pills">
+          <span class="pill">Stored = persistent</span><span class="pill">Reflected = URL-based</span><span class="pill">DOM = client-side</span>
+          <span class="pill">HttpOnly = cookie safe</span><span class="pill">CSP = script policy</span><span class="pill">Encode output</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Q12 ===================== -->
+  <div class="q-card" id="q12">
+    <div class="q-header" onclick="toggleQ('b12')">
+      <div class="q-num">12</div>
+      <div class="q-title">Discuss SQL Injection, CSRF, XSS, Sessions and HTTP Authentication Problems.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-toggle" id="a12">▼</span>
+    </div>
+    <div class="q-body" id="b12">
+      <div class="section">
+        <div class="section-label lbl-answer">1. SQL Injection</div>
+        <p><strong>SQL Injection</strong> occurs when user input is directly embedded in SQL queries without sanitization.</p>
+        <div class="math-block">
+// Vulnerable code:<br>
+query = "SELECT * FROM users WHERE name='" + user_input + "'"<br>
+// Input: ' OR '1'='1<br>
+// Resulting query: SELECT * FROM users WHERE name='' OR '1'='1'<br>
+// Returns ALL users → authentication bypass!
+        </div>
+        <p><strong>Defenses:</strong> Use <em>Prepared Statements / Parameterized Queries</em>, input validation, ORM frameworks, WAF.</p>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">2. CSRF (Brief Recap)</div>
+        <p>Attacker tricks authenticated user's browser to send unauthorized requests. <strong>Defense:</strong> CSRF tokens, SameSite cookies.</p>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">3. XSS (Brief Recap)</div>
+        <p>Malicious JavaScript injected into web pages. <strong>Defense:</strong> Output encoding, CSP, HttpOnly cookies.</p>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">4. Session Problems</div>
+        <ul>
+          <li><strong>Session Prediction:</strong> Sequential/guessable session IDs → attacker guesses valid session. <em>Fix: Use cryptographically random session IDs.</em></li>
+          <li><strong>Session Fixation:</strong> Attacker sets victim's session ID before login. <em>Fix: Regenerate session ID after login.</em></li>
+          <li><strong>Session Hijacking:</strong> Steal session token via XSS, network sniffing. <em>Fix: HTTPS, HttpOnly, short session expiry.</em></li>
+          <li><strong>Session Expiry:</strong> Sessions not expired → old sessions reused. <em>Fix: Idle timeout, absolute expiry.</em></li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">5. HTTP Authentication Problems</div>
+        <ul>
+          <li><strong>Basic Auth:</strong> Credentials sent as Base64 (NOT encrypted) — easily decoded. Must use HTTPS.</li>
+          <li><strong>Digest Auth:</strong> Uses MD5 hash — better than basic but MD5 is weak.</li>
+          <li><strong>No Built-in Logout:</strong> HTTP is stateless — no native logout mechanism. Requires server-side session invalidation.</li>
+          <li><strong>Credential Exposure:</strong> HTTP sends credentials in plaintext — need HTTPS.</li>
+          <li><strong>Brute Force:</strong> No lockout in basic HTTP auth. Fix: Rate limiting, account lockout.</li>
+          <li><strong>Replay Attacks:</strong> Captured credentials can be replayed. Fix: Nonces (in Digest Auth), HTTPS.</li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-exam">Important Exam Points</div>
+        <div class="tip-box">
+          ✅ For SQL Injection: always say "Prepared Statements" as the primary fix.<br>
+          ✅ Base64 ≠ Encryption — a common misconception about Basic Auth.<br>
+          ✅ Session regeneration after login is the fix for Session Fixation.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Q13 ===================== -->
+  <div class="q-card" id="q13">
+    <div class="q-header" onclick="toggleQ('b13')">
+      <div class="q-num">13</div>
+      <div class="q-title">Explain SSL Encryption and the steps involved in SSL server authentication.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-toggle" id="a13">▼</span>
+    </div>
+    <div class="q-body" id="b13">
+      <div class="section">
+        <div class="section-label lbl-intro">Introduction</div>
+        <p><strong>SSL (Secure Socket Layer)</strong>, now succeeded by <strong>TLS (Transport Layer Security)</strong>, is a cryptographic protocol that provides <em>confidentiality, integrity, and authentication</em> for data transmitted over a network (typically HTTPS = HTTP + TLS).</p>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">SSL/TLS Services</div>
+        <ul>
+          <li><strong>Confidentiality:</strong> Symmetric encryption (AES) after handshake</li>
+          <li><strong>Integrity:</strong> MAC (Message Authentication Code) — detects tampering</li>
+          <li><strong>Authentication:</strong> X.509 certificates verify server identity</li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">SSL Server Authentication — Step by Step</div>
+        <div class="steps">
+          <div class="step"><div class="step-num"></div><div><strong>Client Hello:</strong> Client sends supported TLS version, cipher suites, and a random nonce (ClientRandom) to server.</div></div>
+          <div class="step"><div class="step-num"></div><div><strong>Server Hello:</strong> Server selects cipher suite, sends its own random nonce (ServerRandom), and a <strong>digital certificate (X.509)</strong> containing its public key.</div></div>
+          <div class="step"><div class="step-num"></div><div><strong>Certificate Verification:</strong> Client checks:<br>• Certificate signed by trusted CA (Certificate Authority)<br>• Certificate not expired<br>• Domain name matches (CN/SAN)<br>• Certificate not revoked (CRL/OCSP)</div></div>
+          <div class="step"><div class="step-num"></div><div><strong>Key Exchange:</strong> Client generates a <em>Pre-Master Secret</em>, encrypts it with server's public key, sends to server. (Or uses Diffie-Hellman for perfect forward secrecy.)</div></div>
+          <div class="step"><div class="step-num"></div><div><strong>Session Key Generation:</strong> Both sides compute <strong>Master Secret</strong> using Pre-Master Secret + both randoms → derive symmetric session keys.</div></div>
+          <div class="step"><div class="step-num"></div><div><strong>Finished Messages:</strong> Both send encrypted "Finished" message to verify handshake was not tampered with.</div></div>
+          <div class="step"><div class="step-num"></div><div><strong>Secure Communication:</strong> All subsequent data encrypted with symmetric session key (e.g., AES-256).</div></div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-diagram">SSL Handshake Diagram</div>
+        <div class="diagram-box">
+          <svg viewBox="0 0 500 220" width="100%" style="max-width:500px">
+            <text x="90" y="20" text-anchor="middle" fill="#00e5ff" font-size="12" font-weight="bold">CLIENT</text>
+            <text x="410" y="20" text-anchor="middle" fill="#10b981" font-size="12" font-weight="bold">SERVER</text>
+            <line x1="90" y1="25" x2="90" y2="210" stroke="#00e5ff" stroke-width="1.5"/>
+            <line x1="410" y1="25" x2="410" y2="210" stroke="#10b981" stroke-width="1.5"/>
+            <line x1="90" y1="50" x2="410" y2="50" stroke="#94a3b8" stroke-width="1" marker-end="url(#arr3)"/>
+            <text x="250" y="44" text-anchor="middle" fill="#f59e0b" font-size="9">1. Client Hello (version, cipher, ClientRandom)</text>
+            <line x1="410" y1="80" x2="90" y2="80" stroke="#94a3b8" stroke-width="1" marker-end="url(#arr3)"/>
+            <text x="250" y="74" text-anchor="middle" fill="#f59e0b" font-size="9">2. Server Hello + Certificate + ServerRandom</text>
+            <text x="90" y="108" text-anchor="middle" fill="#a78bfa" font-size="9">3. Verify Certificate</text>
+            <line x1="90" y1="120" x2="410" y2="120" stroke="#94a3b8" stroke-width="1" marker-end="url(#arr3)"/>
+            <text x="250" y="114" text-anchor="middle" fill="#f59e0b" font-size="9">4. Pre-Master Secret (encrypted with server pub key)</text>
+            <text x="250" y="148" text-anchor="middle" fill="#a78bfa" font-size="9">5. Both derive Session Keys from Master Secret</text>
+            <line x1="90" y1="165" x2="410" y2="165" stroke="#10b981" stroke-width="1" marker-end="url(#arr3)"/>
+            <text x="250" y="159" text-anchor="middle" fill="#f59e0b" font-size="9">6. Client Finished (encrypted)</text>
+            <line x1="410" y1="185" x2="90" y2="185" stroke="#10b981" stroke-width="1" marker-end="url(#arr3)"/>
+            <text x="250" y="179" text-anchor="middle" fill="#f59e0b" font-size="9">7. Server Finished → Encrypted Channel Ready!</text>
+            <defs><marker id="arr3" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#94a3b8"/></marker></defs>
+            <text x="250" y="215" text-anchor="middle" fill="#64748b" font-size="9">Figure: SSL/TLS Handshake Process</text>
+          </svg>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-exam">Important Exam Points</div>
+        <div class="warning-box">
+          ⚠ SSL is deprecated; TLS 1.2/1.3 is current. But AKTU still calls it SSL — use both terms.<br>
+          ✅ Certificate verification step is key — mention CA, expiry, domain match, revocation.<br>
+          ✅ Symmetric key for bulk data, asymmetric key only for handshake — efficiency!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Q14 ===================== -->
+  <div class="q-card" id="q14">
+    <div class="q-header" onclick="toggleQ('b14')">
+      <div class="q-num">14</div>
+      <div class="q-title">Discuss session hijacking, session fixation attacks and mitigation techniques against session-token theft.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-toggle" id="a14">▼</span>
+    </div>
+    <div class="q-body" id="b14">
+      <div class="section">
+        <div class="section-label lbl-answer">Session Hijacking</div>
+        <p><strong>Session Hijacking</strong> = stealing a valid session token and impersonating a logged-in user.</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Method</th><th>How Token is Stolen</th></tr>
+            <tr><td>XSS</td><td>Inject script to read document.cookie and send to attacker</td></tr>
+            <tr><td>Network Sniffing</td><td>On HTTP (no encryption), token visible in packets</td></tr>
+            <tr><td>Man-in-the-Middle</td><td>Intercept SSL (via evil proxy/bad cert)</td></tr>
+            <tr><td>Predictable Token</td><td>Guess sequential session IDs</td></tr>
+            <tr><td>URL-based Tokens</td><td>Session in URL → stolen via Referer header or browser history</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Session Fixation Attack</div>
+        <p>In session fixation, the attacker <strong>sets the victim's session ID before login</strong>, then waits for the victim to authenticate.</p>
+        <div class="steps">
+          <div class="step"><div class="step-num"></div><div>Attacker gets a valid session ID from the server (by visiting the site).</div></div>
+          <div class="step"><div class="step-num"></div><div>Attacker tricks victim to use this specific session ID (via crafted link: <code>login.php?sessionid=ATTACKER_ID</code>).</div></div>
+          <div class="step"><div class="step-num"></div><div>Victim logs in — server associates attacker's session ID with victim's account.</div></div>
+          <div class="step"><div class="step-num"></div><div>Attacker now uses that same session ID → fully authenticated as victim!</div></div>
+        </div>
+        <div class="warning-box">⚠ Key difference: Hijacking = steal AFTER login. Fixation = plant BEFORE login.</div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Mitigation Techniques</div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Mitigation</th><th>Protection Against</th></tr>
+            <tr><td><strong>HttpOnly Cookie</strong></td><td>XSS cannot steal cookie</td></tr>
+            <tr><td><strong>Secure Cookie Flag</strong></td><td>Cookie only over HTTPS — no sniffing</td></tr>
+            <tr><td><strong>Session Regeneration after Login</strong></td><td>Fixation — new ID on auth</td></tr>
+            <tr><td><strong>Short Session Expiry</strong></td><td>Limits hijacking window</td></tr>
+            <tr><td><strong>HTTPS Everywhere</strong></td><td>Network sniffing</td></tr>
+            <tr><td><strong>IP/User-Agent Binding</strong></td><td>Session not usable from different IP</td></tr>
+            <tr><td><strong>Cryptographically Random Session IDs</strong></td><td>Prediction attacks</td></tr>
+            <tr><td><strong>Idle Timeout</strong></td><td>Unattended sessions</td></tr>
+            <tr><td><strong>Never put session in URL</strong></td><td>Referer-based leakage</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-quick">Quick Revision</div>
+        <div class="memory-box">Session Fixation fix = <strong>Regenerate session ID immediately after successful login</strong>. Never reuse pre-auth session IDs.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Q15 ===================== -->
+  <div class="q-card" id="q15">
+    <div class="q-header" onclick="toggleQ('b15')">
+      <div class="q-num">15</div>
+      <div class="q-title">What are Asymmetric Algorithms / Public Key Cryptography? Explain advantages, disadvantages and RSA algorithm with suitable examples.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-toggle" id="a15">▼</span>
+    </div>
+    <div class="q-body" id="b15">
+      <div class="section">
+        <div class="section-label lbl-intro">Introduction</div>
+        <p><strong>Public Key Cryptography (Asymmetric Cryptography)</strong> uses a pair of mathematically related keys — a <em>Public Key</em> (shared openly) and a <em>Private Key</em> (kept secret). Data encrypted with one key can only be decrypted with the other.</p>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Key Principles</div>
+        <ul>
+          <li><strong>Encrypt with Public Key → Decrypt with Private Key</strong> (Confidentiality)</li>
+          <li><strong>Sign with Private Key → Verify with Public Key</strong> (Authentication / Digital Signature)</li>
+          <li>Based on mathematical "trapdoor" functions that are easy one way, hard to reverse</li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Advantages & Disadvantages</div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Advantages</th><th>Disadvantages</th></tr>
+            <tr><td>No need to share secret key over network</td><td>Much slower than symmetric encryption</td></tr>
+            <tr><td>Solves key distribution problem</td><td>Large key sizes (2048-bit RSA vs 128-bit AES)</td></tr>
+            <tr><td>Enables Digital Signatures</td><td>Computationally expensive</td></tr>
+            <tr><td>Enables Non-repudiation</td><td>Not suitable for bulk data encryption</td></tr>
+            <tr><td>N users need only 2N keys (vs N² in symmetric)</td><td>Vulnerable to quantum computing (future threat)</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">RSA Algorithm</div>
+        <p><strong>RSA</strong> (Rivest-Shamir-Adleman, 1977) is based on the difficulty of factoring large numbers. </p>
+        <div class="section-label lbl-answer" style="margin-top:0.8rem">RSA Key Generation Steps</div>
+        <div class="steps">
+          <div class="step"><div class="step-num"></div><div>Choose two large primes <strong>p</strong> and <strong>q</strong></div></div>
+          <div class="step"><div class="step-num"></div><div>Compute <strong>n = p × q</strong> (modulus)</div></div>
+          <div class="step"><div class="step-num"></div><div>Compute <strong>φ(n) = (p-1)(q-1)</strong> (Euler's totient)</div></div>
+          <div class="step"><div class="step-num"></div><div>Choose <strong>e</strong> such that 1 &lt; e &lt; φ(n) and gcd(e, φ(n)) = 1 (public exponent)</div></div>
+          <div class="step"><div class="step-num"></div><div>Compute <strong>d</strong> such that <strong>d × e ≡ 1 (mod φ(n))</strong> (private exponent)</div></div>
+          <div class="step"><div class="step-num"></div><div>Public Key = (e, n); Private Key = (d, n)</div></div>
+        </div>
+        <div class="math-block">
+Encryption: C = M^e mod n<br>
+Decryption: M = C^d mod n
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-exam">Important Exam Points</div>
+        <div class="tip-box">
+          ✅ RSA security = hard to factor n into p and q.<br>
+          ✅ In practice, RSA is used only to exchange symmetric keys (hybrid encryption).<br>
+          ✅ Other asymmetric algorithms: ECC (Elliptic Curve), DSA, ElGamal.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Q16 ===================== -->
+  <div class="q-card" id="q16">
+    <div class="q-header" onclick="toggleQ('b16')">
+      <div class="q-num">16</div>
+      <div class="q-title">Explain RSA algorithm. Perform Encryption and Decryption using RSA for p=11, q=13, e=7, m=9.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-toggle" id="a16">▼</span>
+    </div>
+    <div class="q-body" id="b16">
+      <div class="section">
+        <div class="section-label lbl-answer">RSA Worked Example: p=11, q=13, e=7, m=9</div>
+        <div class="math-block">
+STEP 1: Calculate n<br>
+  n = p × q = 11 × 13 = <strong>143</strong><br><br>
+
+STEP 2: Calculate φ(n)<br>
+  φ(n) = (p-1)(q-1) = (11-1)(13-1) = 10 × 12 = <strong>120</strong><br><br>
+
+STEP 3: Verify e<br>
+  e = 7<br>
+  Check: gcd(7, 120) = 1 ✓ (7 and 120 share no common factor)<br>
+  Public Key = (e=7, n=143)<br><br>
+
+STEP 4: Find d (Private Exponent)<br>
+  d × e ≡ 1 (mod φ(n))<br>
+  d × 7 ≡ 1 (mod 120)<br>
+  Using Extended Euclidean Algorithm:<br>
+  Try d=103: 103 × 7 = 721 = 6×120 + 1 ✓<br>
+  d = <strong>103</strong><br>
+  Private Key = (d=103, n=143)<br><br>
+
+STEP 5: Encryption<br>
+  C = M^e mod n = 9^7 mod 143<br>
+  9^2 = 81<br>
+  9^4 = 81^2 = 6561 mod 143 = 48  (6561 = 45×143 + 96 → 96)<br>
+  Wait, let's compute carefully:<br>
+  9^1 mod 143 = 9<br>
+  9^2 mod 143 = 81<br>
+  9^4 mod 143 = 81^2 mod 143 = 6561 mod 143<br>
+     6561 ÷ 143 = 45.87... → 45×143=6435 → 6561-6435=126<br>
+  9^4 mod 143 = 126<br>
+  9^7 = 9^4 × 9^2 × 9^1<br>
+       = 126 × 81 × 9 mod 143<br>
+  126 × 81 = 10206 mod 143: 10206 ÷ 143 = 71.36 → 71×143=10153 → 10206-10153=53<br>
+  53 × 9 = 477 mod 143: 477 ÷ 143 = 3.33 → 3×143=429 → 477-429=48<br>
+  <strong>C = 48</strong> (Ciphertext)<br><br>
+
+STEP 6: Decryption<br>
+  M = C^d mod n = 48^103 mod 143<br>
+  (Using repeated squaring method)<br>
+  103 in binary = 1100111<br>
+  After computation: <strong>M = 9</strong> ✓ (Original message recovered!)
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Summary Table</div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Parameter</th><th>Value</th><th>Role</th></tr>
+            <tr><td>p</td><td>11</td><td>Prime 1</td></tr>
+            <tr><td>q</td><td>13</td><td>Prime 2</td></tr>
+            <tr><td>n = p×q</td><td>143</td><td>Modulus (public)</td></tr>
+            <tr><td>φ(n)</td><td>120</td><td>Euler's totient</td></tr>
+            <tr><td>e</td><td>7</td><td>Public exponent</td></tr>
+            <tr><td>d</td><td>103</td><td>Private exponent</td></tr>
+            <tr><td>Public Key</td><td>(7, 143)</td><td>Share with all</td></tr>
+            <tr><td>Private Key</td><td>(103, 143)</td><td>Keep secret</td></tr>
+            <tr><td>Message (m)</td><td>9</td><td>Plaintext</td></tr>
+            <tr><td>Ciphertext (C)</td><td>48</td><td>Encrypted</td></tr>
+            <tr><td>Decrypted</td><td>9</td><td>✓ Match!</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-exam">Important Exam Points</div>
+        <div class="warning-box">
+          ⚠ Always verify d by: (d × e) mod φ(n) = 1. Here: (103 × 7) mod 120 = 721 mod 120 = 1 ✓<br>
+          ✅ Show each step clearly — marks are given for process, not just final answer.<br>
+          ✅ Public Key = (e, n); Private Key = (d, n). Memorize this!
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-quick">Quick Revision</div>
+        <div class="memory-box">RSA Formula Chain: n=pq → φ=(p-1)(q-1) → choose e → find d → Encrypt: C=M^e mod n → Decrypt: M=C^d mod n</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Q17 ===================== -->
+  <div class="q-card" id="q17">
+    <div class="q-header" onclick="toggleQ('b17')">
+      <div class="q-num">17</div>
+      <div class="q-title">Differentiate between Symmetric key and Asymmetric key cryptography with advantages and disadvantages.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-toggle" id="a17">▼</span>
+    </div>
+    <div class="q-body" id="b17">
+      <div class="section">
+        <div class="section-label lbl-answer">Symmetric vs Asymmetric Cryptography — Comparison</div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Feature</th><th>Symmetric Key</th><th>Asymmetric Key</th></tr>
+            <tr><td>Keys Used</td><td>Same key for encrypt &amp; decrypt</td><td>Different keys (public + private)</td></tr>
+            <tr><td>Key Sharing</td><td>Secret key must be shared securely</td><td>Public key shared openly; private key secret</td></tr>
+            <tr><td>Speed</td><td>Very Fast</td><td>Very Slow (100-1000x slower)</td></tr>
+            <tr><td>Key Size</td><td>Smaller (128-256 bit)</td><td>Larger (1024-4096 bit)</td></tr>
+            <tr><td>Security</td><td>Key distribution is the problem</td><td>Solves key distribution</td></tr>
+            <tr><td>Scalability</td><td>N² keys for N users</td><td>2N keys for N users</td></tr>
+            <tr><td>Digital Signature</td><td>Not possible</td><td>Possible (sign with private key)</td></tr>
+            <tr><td>Non-repudiation</td><td>No</td><td>Yes</td></tr>
+            <tr><td>Use Case</td><td>Bulk data encryption</td><td>Key exchange, digital signatures</td></tr>
+            <tr><td>Algorithms</td><td>AES, DES, 3DES, Blowfish, RC4</td><td>RSA, ECC, ElGamal, DSA</td></tr>
+            <tr><td>Example</td><td>AES encrypting file</td><td>RSA encrypting AES key (hybrid)</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-adv">Advantages & Disadvantages Summary</div>
+        <div class="table-wrap">
+          <table>
+            <tr><th></th><th>Symmetric</th><th>Asymmetric</th></tr>
+            <tr><td><strong>Pros</strong></td><td>Fast, efficient, simple</td><td>Key distribution solved, digital signature, non-repudiation</td></tr>
+            <tr><td><strong>Cons</strong></td><td>Key sharing problem, no digital signature, N² keys</td><td>Slow, large key size, computationally intensive</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Hybrid Cryptography (Best of Both)</div>
+        <div class="highlight-box">
+          Real-world systems use <strong>Hybrid Encryption</strong>:<br>
+          1. Use Asymmetric (RSA) to securely exchange a symmetric key<br>
+          2. Use Symmetric (AES) for actual data encryption<br>
+          <br>
+          Example: SSL/TLS uses RSA for handshake, AES for data transfer.
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-quick">Quick Revision</div>
+        <div class="pills">
+          <span class="pill">Symmetric = 1 key, fast</span><span class="pill">Asymmetric = 2 keys, slow</span>
+          <span class="pill">AES = symmetric</span><span class="pill">RSA = asymmetric</span><span class="pill">SSL = hybrid</span>
+        </div>
+        <div class="memory-box">Mnemonic: <strong>S</strong>ymmetric = <strong>S</strong>hared (same key). <strong>A</strong>symmetric = <strong>A</strong>pair (two different keys).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Q18 ===================== -->
+  <div class="q-card" id="q18">
+    <div class="q-header" onclick="toggleQ('b18')">
+      <div class="q-num">18</div>
+      <div class="q-title">Discuss single-key (secret key) and public-key cryptography.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-toggle" id="a18">▼</span>
+    </div>
+    <div class="q-body" id="b18">
+      <div class="section">
+        <div class="section-label lbl-answer">Single-Key (Secret Key / Symmetric) Cryptography</div>
+        <p>Both sender and receiver use the <strong>same single secret key</strong> for both encryption and decryption.</p>
+        <div class="math-block">
+Encryption: C = E(K, M)   [C=Ciphertext, K=Key, M=Message]<br>
+Decryption: M = D(K, C)   [Same key K used]
+        </div>
+        <ul>
+          <li><strong>Types:</strong>
+            <ul>
+              <li><em>Stream Ciphers:</em> Encrypt bit by bit (RC4, A5/1) — fast, used in mobile</li>
+              <li><em>Block Ciphers:</em> Encrypt fixed-size blocks (AES=128-bit, DES=64-bit) — more common</li>
+            </ul>
+          </li>
+          <li><strong>Algorithms:</strong> DES, 3DES, AES, Blowfish, RC4, ChaCha20</li>
+          <li><strong>Key Distribution Problem:</strong> Both parties must agree on the key securely — this is the fundamental weakness</li>
+          <li><strong>Block Cipher Modes:</strong> ECB, CBC, CTR, GCM — how blocks are chained together</li>
+        </ul>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Algorithm</th><th>Key Size</th><th>Block Size</th><th>Status</th></tr>
+            <tr><td>DES</td><td>56 bit</td><td>64 bit</td><td>Broken (too small)</td></tr>
+            <tr><td>3DES</td><td>168 bit</td><td>64 bit</td><td>Legacy</td></tr>
+            <tr><td>AES</td><td>128/192/256 bit</td><td>128 bit</td><td>Current Standard</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Public-Key (Asymmetric) Cryptography</div>
+        <p>Uses mathematically linked <strong>key pair</strong>: Public Key (encrypt/verify) and Private Key (decrypt/sign).</p>
+        <div class="math-block">
+Encryption: C = E(Kpub, M)    [Encrypt with receiver's Public Key]<br>
+Decryption: M = D(Kpriv, C)   [Decrypt with receiver's Private Key]<br><br>
+Signing:    S = Sign(Kpriv, M) [Sign with sender's Private Key]<br>
+Verify:     V = Verify(Kpub, S)[Verify with sender's Public Key]
+        </div>
+        <ul>
+          <li><strong>Mathematical Basis:</strong>
+            <ul>
+              <li>RSA: Difficulty of factoring large numbers</li>
+              <li>ECC: Elliptic curve discrete logarithm problem</li>
+              <li>DH: Discrete logarithm problem</li>
+            </ul>
+          </li>
+          <li><strong>Applications:</strong> SSL/TLS, PGP email, SSH, code signing, digital certificates</li>
+          <li><strong>Diffie-Hellman:</strong> Key exchange protocol — allows two parties to establish shared secret over public channel</li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-diagram">Comparison Diagram</div>
+        <div class="diagram-box">
+          <svg viewBox="0 0 500 140" width="100%" style="max-width:500px">
+            <rect x="10" y="10" width="220" height="100" rx="8" fill="none" stroke="#7c3aed" stroke-width="1.5"/>
+            <text x="120" y="30" text-anchor="middle" fill="#7c3aed" font-size="11" font-weight="bold">Symmetric</text>
+            <rect x="30" y="45" width="60" height="30" rx="4" fill="#10b981" opacity="0.7"/>
+            <text x="60" y="64" text-anchor="middle" fill="#fff" font-size="9">Alice</text>
+            <line x1="90" y1="60" x2="150" y2="60" stroke="#f59e0b" stroke-width="2"/>
+            <text x="120" y="54" text-anchor="middle" fill="#f59e0b" font-size="9">Key K</text>
+            <rect x="150" y="45" width="60" height="30" rx="4" fill="#10b981" opacity="0.7"/>
+            <text x="180" y="64" text-anchor="middle" fill="#fff" font-size="9">Bob</text>
+            <text x="120" y="100" text-anchor="middle" fill="#94a3b8" font-size="8">Same key both ways</text>
+            <rect x="270" y="10" width="220" height="100" rx="8" fill="none" stroke="#00e5ff" stroke-width="1.5"/>
+            <text x="380" y="30" text-anchor="middle" fill="#00e5ff" font-size="11" font-weight="bold">Asymmetric</text>
+            <rect x="285" y="45" width="60" height="30" rx="4" fill="#10b981" opacity="0.7"/>
+            <text x="315" y="64" text-anchor="middle" fill="#fff" font-size="9">Alice</text>
+            <line x1="345" y1="55" x2="420" y2="55" stroke="#f59e0b" stroke-width="2" marker-end="url(#arr4)"/>
+            <text x="382" y="50" text-anchor="middle" fill="#f59e0b" font-size="8">Encrypt(Bob_pub)</text>
+            <line x1="420" y1="65" x2="345" y2="65" stroke="#a78bfa" stroke-width="2" marker-end="url(#arr4)"/>
+            <text x="382" y="78" text-anchor="middle" fill="#a78bfa" font-size="8">Decrypt(Bob_priv)</text>
+            <rect x="420" y="45" width="55" height="30" rx="4" fill="#10b981" opacity="0.7"/>
+            <text x="447" y="64" text-anchor="middle" fill="#fff" font-size="9">Bob</text>
+            <text x="380" y="100" text-anchor="middle" fill="#94a3b8" font-size="8">Different keys</text>
+            <defs><marker id="arr4" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#f59e0b"/></marker></defs>
+            <text x="250" y="132" text-anchor="middle" fill="#64748b" font-size="9">Figure: Symmetric vs Asymmetric Key Exchange</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Q19 ===================== -->
+  <div class="q-card" id="q19">
+    <div class="q-header" onclick="toggleQ('b19')">
+      <div class="q-num">19</div>
+      <div class="q-title">What is Digital Signature? Explain its working, creation steps and real-world usage.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-toggle" id="a19">▼</span>
+    </div>
+    <div class="q-body" id="b19">
+      <div class="section">
+        <div class="section-label lbl-intro">Introduction</div>
+        <p>A <strong>Digital Signature</strong> is the electronic equivalent of a handwritten signature. It provides <em>authentication, integrity, and non-repudiation</em> for digital messages and documents.</p>
+        <div class="highlight-box">
+          Digital Signature = Hash of Message, encrypted with Sender's Private Key
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Properties Provided</div>
+        <ul>
+          <li><strong>Authentication:</strong> Proves who signed (only private key holder could create the signature)</li>
+          <li><strong>Integrity:</strong> Any change to message invalidates signature</li>
+          <li><strong>Non-repudiation:</strong> Signer cannot deny signing (they have the only private key)</li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">How Digital Signatures Work</div>
+        <div class="section-label lbl-answer" style="font-size:0.8rem; margin-top:0.5rem">SIGNING (Sender Side):</div>
+        <div class="steps">
+          <div class="step"><div class="step-num"></div><div>Sender hashes the message: <code>H = Hash(M)</code> using SHA-256</div></div>
+          <div class="step"><div class="step-num"></div><div>Encrypt hash with <strong>sender's private key</strong>: <code>S = RSA_decrypt(Kpriv, H)</code></div></div>
+          <div class="step"><div class="step-num"></div><div>Send <strong>Message + Signature (S)</strong> to receiver</div></div>
+        </div>
+        <div class="section-label lbl-answer" style="font-size:0.8rem; margin-top:0.5rem">VERIFICATION (Receiver Side):</div>
+        <div class="steps">
+          <div class="step"><div class="step-num"></div><div>Decrypt signature with <strong>sender's public key</strong>: <code>H' = RSA_encrypt(Kpub, S)</code></div></div>
+          <div class="step"><div class="step-num"></div><div>Hash the received message: <code>H'' = Hash(M)</code></div></div>
+          <div class="step"><div class="step-num"></div><div>Compare H' and H'': if equal → signature valid; message untampered!</div></div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-diagram">Digital Signature Flow</div>
+        <div class="diagram-box">
+          <svg viewBox="0 0 520 200" width="100%" style="max-width:520px">
+            <!-- Sender side -->
+            <rect x="10" y="10" width="230" height="170" rx="8" fill="none" stroke="#10b981" stroke-dasharray="4"/>
+            <text x="125" y="28" text-anchor="middle" fill="#10b981" font-size="10" font-weight="bold">SENDER</text>
+            <rect x="30" y="38" width="80" height="25" rx="4" fill="#7c3aed" opacity="0.7"/>
+            <text x="70" y="54" text-anchor="middle" fill="#fff" font-size="9">Message (M)</text>
+            <line x1="70" y1="63" x2="70" y2="85" stroke="#94a3b8" stroke-width="1" marker-end="url(#arr5)"/>
+            <rect x="30" y="85" width="80" height="25" rx="4" fill="#f59e0b" opacity="0.7"/>
+            <text x="70" y="100" text-anchor="middle" fill="#fff" font-size="9">Hash(M) = H</text>
+            <line x1="70" y1="110" x2="70" y2="132" stroke="#94a3b8" stroke-width="1" marker-end="url(#arr5)"/>
+            <rect x="20" y="132" width="100" height="25" rx="4" fill="#ef4444" opacity="0.6"/>
+            <text x="70" y="147" text-anchor="middle" fill="#fff" font-size="9">Sign(Kpriv, H) = S</text>
+            <text x="150" y="90" text-anchor="middle" fill="#94a3b8" font-size="8">Send M + S →</text>
+            <!-- Receiver side -->
+            <rect x="280" y="10" width="230" height="170" rx="8" fill="none" stroke="#00e5ff" stroke-dasharray="4"/>
+            <text x="395" y="28" text-anchor="middle" fill="#00e5ff" font-size="10" font-weight="bold">RECEIVER</text>
+            <rect x="300" y="38" width="80" height="25" rx="4" fill="#7c3aed" opacity="0.7"/>
+            <text x="340" y="54" text-anchor="middle" fill="#fff" font-size="9">Message (M)</text>
+            <line x1="340" y1="63" x2="340" y2="85" stroke="#94a3b8" stroke-width="1" marker-end="url(#arr5)"/>
+            <rect x="300" y="85" width="80" height="25" rx="4" fill="#f59e0b" opacity="0.7"/>
+            <text x="340" y="100" text-anchor="middle" fill="#fff" font-size="9">Hash(M) = H''</text>
+            <rect x="390" y="50" width="100" height="25" rx="4" fill="#ef4444" opacity="0.5"/>
+            <text x="440" y="66" text-anchor="middle" fill="#fff" font-size="9">Signature S</text>
+            <line x1="440" y1="75" x2="440" y2="110" stroke="#94a3b8" stroke-width="1" marker-end="url(#arr5)"/>
+            <rect x="390" y="110" width="100" height="30" rx="4" fill="#1a1e2a" stroke="#00e5ff"/>
+            <text x="440" y="125" text-anchor="middle" fill="#00e5ff" font-size="8">Decrypt(Kpub,S)</text>
+            <text x="440" y="137" text-anchor="middle" fill="#94a3b8" font-size="8">= H'</text>
+            <text x="395" y="165" text-anchor="middle" fill="#10b981" font-size="9" font-weight="bold">H' == H'' → VALID ✓</text>
+            <defs><marker id="arr5" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#94a3b8"/></marker></defs>
+            <text x="260" y="195" text-anchor="middle" fill="#64748b" font-size="9">Figure: Digital Signature — Sign & Verify</text>
+          </svg>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Real-World Uses</div>
+        <ul>
+          <li><strong>Email signing:</strong> S/MIME, PGP — prove email origin</li>
+          <li><strong>Code signing:</strong> Software updates signed by developer — verify authenticity</li>
+          <li><strong>SSL/TLS certificates:</strong> CA signs server certificate</li>
+          <li><strong>Legal documents:</strong> e-Signature on contracts</li>
+          <li><strong>Blockchain:</strong> Bitcoin transactions signed with private key</li>
+          <li><strong>Government:</strong> Aadhaar e-Sign, digital government documents (India)</li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-exam">Important Exam Points</div>
+        <div class="warning-box">
+          ⚠ <strong>Sign with PRIVATE key, verify with PUBLIC key</strong> — opposite of encryption! Common mistake.<br>
+          ✅ Hashing is done BEFORE signing (efficiency — sign the hash, not the whole document).<br>
+          ✅ Algorithms: RSA-SHA256, DSA, ECDSA.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Q20 ===================== -->
+  <div class="q-card" id="q20">
+    <div class="q-header" onclick="toggleQ('b20')">
+      <div class="q-num">20</div>
+      <div class="q-title">What is DES? Why were Double DES and Triple DES created?</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-toggle" id="a20">▼</span>
+    </div>
+    <div class="q-body" id="b20">
+      <div class="section">
+        <div class="section-label lbl-intro">Introduction</div>
+        <p><strong>DES (Data Encryption Standard)</strong> is a symmetric block cipher standardized by NIST in 1977. It was the dominant encryption standard for two decades before being broken.</p>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">DES — Technical Details</div>
+        <ul>
+          <li><strong>Key Size:</strong> 56 bits (64-bit key with 8 parity bits → effective 56 bits)</li>
+          <li><strong>Block Size:</strong> 64 bits</li>
+          <li><strong>Structure:</strong> 16 rounds of Feistel network</li>
+          <li><strong>Operations:</strong> Initial Permutation → 16 Feistel rounds → Final Permutation</li>
+          <li><strong>Problem:</strong> 56-bit key is too short! In 1998, EFF cracked DES in 22 hours using specialized hardware (Deep Crack). 2^56 = 72 quadrillion possibilities — brute force feasible.</li>
+        </ul>
+        <div class="diagram-box">
+          <svg viewBox="0 0 400 120" width="100%" style="max-width:400px">
+            <rect x="10" y="40" width="70" height="35" rx="4" fill="#7c3aed" opacity="0.7"/>
+            <text x="45" y="61" text-anchor="middle" fill="#fff" font-size="10">Plaintext</text>
+            <line x1="80" y1="57" x2="110" y2="57" stroke="#94a3b8" marker-end="url(#arr6)"/>
+            <rect x="110" y="30" width="80" height="55" rx="4" fill="#1a1e2a" stroke="#f59e0b" stroke-width="2"/>
+            <text x="150" y="52" text-anchor="middle" fill="#f59e0b" font-size="9" font-weight="bold">DES Engine</text>
+            <text x="150" y="66" text-anchor="middle" fill="#94a3b8" font-size="8">16 Feistel Rounds</text>
+            <text x="150" y="78" text-anchor="middle" fill="#94a3b8" font-size="8">56-bit Key</text>
+            <line x1="190" y1="57" x2="220" y2="57" stroke="#94a3b8" marker-end="url(#arr6)"/>
+            <rect x="220" y="40" width="70" height="35" rx="4" fill="#10b981" opacity="0.7"/>
+            <text x="255" y="61" text-anchor="middle" fill="#fff" font-size="10">Ciphertext</text>
+            <text x="350" y="57" text-anchor="middle" fill="#94a3b8" font-size="9">56-bit key</text>
+            <defs><marker id="arr6" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#94a3b8"/></marker></defs>
+            <text x="200" y="110" text-anchor="middle" fill="#64748b" font-size="9">Figure: DES Block Cipher (64-bit blocks, 16 rounds)</text>
+          </svg>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Double DES — Why Created & Why it Failed</div>
+        <p>To increase security, DES was applied twice with two different keys.</p>
+        <div class="math-block">
+Encryption: C = DES_K2(DES_K1(M))   [Effective key = 112 bits?]<br>
+Decryption: M = DES_K1⁻¹(DES_K2⁻¹(C))
+        </div>
+        <p><strong>Problem — Meet-in-the-Middle Attack:</strong></p>
+        <ul>
+          <li>Attacker encrypts plaintext with all 2^56 possible K1 values → stores results</li>
+          <li>Decrypts ciphertext with all 2^56 possible K2 values → finds match in table</li>
+          <li>Effective security = 2^57 (NOT 2^112 as hoped) — barely better than single DES!</li>
+          <li>Double DES was abandoned.</li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Triple DES (3DES) — Created as Fix</div>
+        <p>3DES applies DES <strong>three times</strong> to overcome the meet-in-the-middle attack.</p>
+        <div class="math-block">
+EDE Mode: C = DES_K3(DES_K2⁻¹(DES_K1(M)))<br>
+[Encrypt with K1, Decrypt with K2, Encrypt with K3]<br><br>
+3-Key 3DES: K1 ≠ K2 ≠ K3 → Effective key = 168 bits (but ~112 bit security)<br>
+2-Key 3DES: K1 = K3 ≠ K2 → Effective key = 112 bits
+        </div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Algorithm</th><th>Key Bits</th><th>Security Level</th><th>Status</th></tr>
+            <tr><td>DES</td><td>56</td><td>Broken (22 hours)</td><td>❌ Deprecated</td></tr>
+            <tr><td>Double DES</td><td>112</td><td>~57 bits (MITM)</td><td>❌ Vulnerable</td></tr>
+            <tr><td>3DES (2-key)</td><td>112</td><td>~80 bits</td><td>⚠ Legacy</td></tr>
+            <tr><td>3DES (3-key)</td><td>168</td><td>~112 bits</td><td>⚠ Legacy</td></tr>
+            <tr><td>AES-128</td><td>128</td><td>128 bits</td><td>✅ Current</td></tr>
+          </table>
+        </div>
+        <div class="highlight-box">
+          <strong>Why EDE?</strong> Encrypt-Decrypt-Encrypt pattern means when K1=K2=K3, 3DES is equivalent to single DES. This ensures backward compatibility with DES systems!
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-exam">Important Exam Points</div>
+        <div class="warning-box">
+          ⚠ Double DES is NOT secure — Meet-in-the-Middle attack reduces security to 2^57. This is the most asked exam trap.<br>
+          ✅ 3DES uses EDE (Encrypt-Decrypt-Encrypt) — this is a commonly asked detail.<br>
+          ✅ AES replaced 3DES in 2001 as the standard. NIST deprecated 3DES in 2017.
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-quick">Quick Revision</div>
+        <div class="pills">
+          <span class="pill">DES = 56-bit (broken)</span><span class="pill">Double DES = MITM attack</span>
+          <span class="pill">3DES = EDE mode</span><span class="pill">3DES 3-key = 168-bit</span><span class="pill">AES replaced 3DES</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Q21 ===================== -->
+  <div class="q-card" id="q21">
+    <div class="q-header" onclick="toggleQ('b21')">
+      <div class="q-num">21</div>
+      <div class="q-title">Give a short summary of IP Protocol functions.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-toggle" id="a21">▼</span>
+    </div>
+    <div class="q-body" id="b21">
+      <div class="section">
+        <div class="section-label lbl-intro">Introduction</div>
+        <p>The <strong>Internet Protocol (IP)</strong> is the fundamental network layer (Layer 3) protocol of the Internet. It provides addressing and routing of packets from source to destination across interconnected networks.</p>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Key Functions of IP Protocol</div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Function</th><th>Description</th></tr>
+            <tr><td><strong>Addressing</strong></td><td>Each device gets a unique IP address (IPv4: 32-bit e.g., 192.168.1.1; IPv6: 128-bit). Identifies source and destination.</td></tr>
+            <tr><td><strong>Routing</strong></td><td>IP packets are routed hop-by-hop across routers from source to destination. Routers use routing tables to decide the best path.</td></tr>
+            <tr><td><strong>Packet Fragmentation &amp; Reassembly</strong></td><td>Large packets are fragmented to fit smaller MTU (Maximum Transmission Unit) of intermediate networks. Reassembled at destination.</td></tr>
+            <tr><td><strong>Connectionless Service</strong></td><td>IP is connectionless — no prior connection setup. Each packet is independently routed (may take different paths).</td></tr>
+            <tr><td><strong>Best-Effort Delivery</strong></td><td>IP does NOT guarantee delivery, order, or error-free transmission. No acknowledgment. Reliability is handled by TCP (Layer 4).</td></tr>
+            <tr><td><strong>TTL (Time-to-Live)</strong></td><td>Each packet has a TTL counter. Decremented by 1 at each router. When TTL=0, packet is discarded. Prevents infinite loops.</td></tr>
+            <tr><td><strong>Header Checksum</strong></td><td>Verifies integrity of IP header (not data). If checksum fails, packet is discarded.</td></tr>
+            <tr><td><strong>Protocol Field</strong></td><td>Identifies upper-layer protocol carried (TCP=6, UDP=17, ICMP=1). IP demultiplexes packets to correct protocol.</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">IP Header Structure (Key Fields)</div>
+        <div class="math-block">
+| Version | IHL | DSCP | Total Length |<br>
+| Identification | Flags | Fragment Offset |<br>
+| TTL | Protocol | Header Checksum |<br>
+| Source IP Address (32 bits) |<br>
+| Destination IP Address (32 bits) |<br>
+| Options (if any) |<br>
+| Data (Payload) |
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">IPv4 vs IPv6</div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Feature</th><th>IPv4</th><th>IPv6</th></tr>
+            <tr><td>Address Size</td><td>32 bits (4 bytes)</td><td>128 bits (16 bytes)</td></tr>
+            <tr><td>Address Space</td><td>~4.3 billion</td><td>340 undecillion</td></tr>
+            <tr><td>Header</td><td>Variable length</td><td>Fixed 40 bytes</td></tr>
+            <tr><td>Fragmentation</td><td>Routers &amp; hosts</td><td>Only source host</td></tr>
+            <tr><td>Security</td><td>Optional (IPSec)</td><td>Built-in IPSec</td></tr>
+            <tr><td>Checksum</td><td>Header checksum</td><td>No header checksum</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-answer">Security Issues with IP</div>
+        <ul>
+          <li><strong>IP Spoofing:</strong> Attacker forges source IP address → used in DDoS amplification attacks</li>
+          <li><strong>Packet Sniffing:</strong> IP traffic is plaintext → need IPSec or TLS on top</li>
+          <li><strong>Routing Attacks:</strong> BGP hijacking — attacker advertises false routes to intercept traffic</li>
+          <li><strong>Fragmentation Attacks:</strong> Overlapping fragments to confuse firewalls (Teardrop attack)</li>
+          <li><strong>Solution: IPSec</strong> — adds confidentiality (ESP), authentication (AH), and integrity to IP layer</li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-exam">Important Exam Points</div>
+        <div class="tip-box">
+          ✅ IP = connectionless + best-effort (no guarantee of delivery) — fundamental property.<br>
+          ✅ TTL prevents routing loops — commonly asked.<br>
+          ✅ IP spoofing is the most common IP-layer attack.<br>
+          ✅ IPSec is the security extension for IP — works at network layer.
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label lbl-quick">Quick Revision</div>
+        <div class="pills">
+          <span class="pill">IP = Layer 3</span><span class="pill">Connectionless</span><span class="pill">Best-effort</span>
+          <span class="pill">TTL = loop prevention</span><span class="pill">Fragmentation</span><span class="pill">IP Spoofing = security threat</span>
+          <span class="pill">IPSec = IP security</span>
+        </div>
+        <div class="memory-box">IP = <strong>I</strong>dentify (addressing) + <strong>P</strong>ath (routing). Simple, stateless, no guarantees — TCP adds reliability on top.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="text-align:center; padding: 2rem 0; color: var(--text-dim); font-size: 0.8rem;">
+    <p>📚 AKTU B.Tech Cyber Security — Exam Answer Book</p>
+    <p style="margin-top:0.3rem">All 21 Questions Covered · Study Smart, Score High!</p>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+  function toggleTheme() {
+    const btn = document.querySelector('.theme-btn');
+    if (document.documentElement.hasAttribute('data-theme')) {
+      document.documentElement.removeAttribute('data-theme');
+      btn.textContent = '☀ Light';
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      btn.textContent = '🌙 Dark';
+    }
+  }
+
+  function toggleTOC() {
+    const body = document.getElementById('toc-body');
+    const arrow = document.getElementById('toc-arrow');
+    const isOpen = body.style.display !== 'none';
+    body.style.display = isOpen ? 'none' : 'block';
+    arrow.textContent = isOpen ? '▶' : '▼';
+  }
+
+  function toggleQ(bodyId) {
+    const body = document.getElementById(bodyId);
+    const num = bodyId.replace('b', '');
+    const arrow = document.getElementById('a' + num);
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    if (arrow) arrow.textContent = isOpen ? '▼' : '▲';
+  }
+
+  // Open first question by default
+  document.getElementById('b1').classList.add('open');
+  document.getElementById('a1').textContent = '▲';
+</script>
+</body>
+</html>

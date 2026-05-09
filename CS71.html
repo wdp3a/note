@@ -1,0 +1,2986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AKTU Cyber Security – 7 Mark Answers</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #0a0e17;
+    --surface: #111827;
+    --surface2: #1a2236;
+    --border: #1f2d45;
+    --accent: #00d4ff;
+    --accent2: #7c3aed;
+    --accent3: #10b981;
+    --accent4: #f59e0b;
+    --accent5: #ef4444;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --text-dim: #64748b;
+    --heading: #f0f6ff;
+    --card-glow: rgba(0,212,255,0.07);
+    --mono: 'Space Mono', monospace;
+    --sans: 'Inter', sans-serif;
+    --display: 'Syne', sans-serif;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 3px; }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, #0d1b2e 0%, #0a0e17 60%, #12072a 100%);
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(0,212,255,0.12), transparent);
+    pointer-events: none;
+  }
+  header .badge {
+    display: inline-block;
+    background: rgba(0,212,255,0.1);
+    border: 1px solid rgba(0,212,255,0.3);
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+  header h1 {
+    font-family: var(--display);
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 800;
+    color: var(--heading);
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+  header h1 span { color: var(--accent); }
+  header p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-num { font-family: var(--mono); font-size: 1.6rem; color: var(--accent); font-weight: 700; }
+  .stat-lbl { font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* ── LAYOUT ── */
+  .layout { display: flex; align-items: flex-start; max-width: 1300px; margin: 0 auto; padding: 1.5rem 1rem; gap: 1.5rem; }
+
+  /* ── TOC SIDEBAR ── */
+  .toc {
+    width: 270px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 1rem;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+  }
+  .toc::-webkit-scrollbar { width: 3px; }
+  .toc::-webkit-scrollbar-thumb { background: var(--accent2); }
+  .toc h3 {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .toc a {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 5px 8px;
+    border-radius: 6px;
+    margin-bottom: 2px;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+    line-height: 1.4;
+  }
+  .toc a:hover { background: var(--surface2); color: var(--accent); border-left-color: var(--accent); }
+  .toc .toc-num { color: var(--accent2); font-family: var(--mono); font-size: 0.7rem; margin-right: 4px; }
+
+  /* ── MAIN ── */
+  main { flex: 1; min-width: 0; }
+
+  /* ── QUESTION CARD ── */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+  }
+  .q-card:hover { box-shadow: 0 0 0 1px rgba(0,212,255,0.2), 0 8px 32px rgba(0,0,0,0.4); }
+
+  .q-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem 1.4rem;
+    background: linear-gradient(135deg, var(--surface2), var(--surface));
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+  }
+  .q-header:hover { background: linear-gradient(135deg, #1d2d48, var(--surface2)); }
+  .q-num {
+    min-width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--accent2), #4f46e5);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 0.8rem; font-weight: 700; color: #fff;
+    flex-shrink: 0;
+  }
+  .q-title {
+    font-family: var(--display);
+    font-size: 0.97rem;
+    font-weight: 600;
+    color: var(--heading);
+    flex: 1;
+    line-height: 1.4;
+  }
+  .q-toggle {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem;
+    transition: transform 0.3s, background 0.2s;
+    flex-shrink: 0;
+  }
+  .q-card.open .q-toggle { transform: rotate(180deg); background: var(--accent2); }
+
+  .q-body { display: none; padding: 1.4rem; }
+  .q-card.open .q-body { display: block; }
+
+  /* ── SECTIONS ── */
+  .section {
+    margin-bottom: 1.4rem;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .section-head {
+    padding: 0.6rem 1rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-body { padding: 1rem; background: rgba(0,0,0,0.2); }
+
+  /* Section color themes */
+  .sec-intro .section-head { background: rgba(0,212,255,0.12); color: var(--accent); }
+  .sec-boost .section-head { background: rgba(124,58,237,0.15); color: #a78bfa; }
+  .sec-answer .section-head { background: rgba(16,185,129,0.12); color: var(--accent3); }
+  .sec-diagram .section-head { background: rgba(245,158,11,0.12); color: var(--accent4); }
+  .sec-exam .section-head { background: rgba(239,68,68,0.15); color: #f87171; }
+  .sec-revision .section-head { background: rgba(99,102,241,0.15); color: #818cf8; }
+  .sec-adv .section-head { background: rgba(20,184,166,0.12); color: #2dd4bf; }
+
+  /* ── TYPOGRAPHY ── */
+  h2 { font-family: var(--display); font-size: 1.05rem; font-weight: 700; color: var(--accent); margin: 1rem 0 0.5rem; }
+  h3 { font-family: var(--display); font-size: 0.95rem; font-weight: 600; color: #7dd3fc; margin: 0.8rem 0 0.4rem; }
+  p { margin-bottom: 0.6rem; }
+  ul, ol { padding-left: 1.4rem; margin-bottom: 0.6rem; }
+  li { margin-bottom: 0.3rem; }
+  strong { color: var(--heading); }
+  em { color: var(--accent4); font-style: normal; }
+
+  /* ── HIGHLIGHT BOXES ── */
+  .box {
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin: 0.75rem 0;
+    font-size: 0.88rem;
+    border-left: 3px solid;
+  }
+  .box-blue { background: rgba(0,212,255,0.07); border-color: var(--accent); }
+  .box-green { background: rgba(16,185,129,0.07); border-color: var(--accent3); }
+  .box-yellow { background: rgba(245,158,11,0.08); border-color: var(--accent4); }
+  .box-red { background: rgba(239,68,68,0.07); border-color: var(--accent5); }
+  .box-purple { background: rgba(124,58,237,0.08); border-color: var(--accent2); }
+
+  /* ── TABLE ── */
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 0.75rem 0; }
+  th { background: var(--surface2); color: var(--accent); font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; padding: 8px 12px; text-align: left; border-bottom: 2px solid var(--accent2); }
+  td { padding: 7px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* ── CODE / MONO ── */
+  code {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    background: rgba(0,212,255,0.08);
+    color: var(--accent);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  /* ── STEPS ── */
+  .steps { counter-reset: step; list-style: none; padding: 0; }
+  .steps li {
+    counter-increment: step;
+    padding: 8px 12px 8px 44px;
+    position: relative;
+    margin-bottom: 6px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 10px; top: 50%; transform: translateY(-50%);
+    width: 24px; height: 24px;
+    background: var(--accent2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 0.7rem; font-weight: 700; color: #fff;
+    line-height: 24px; text-align: center;
+  }
+
+  /* ── MEMORY TRICK ── */
+  .memory {
+    background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(251,191,36,0.05));
+    border: 1px solid rgba(245,158,11,0.3);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin: 0.75rem 0;
+  }
+  .memory-label {
+    font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.12em;
+    color: var(--accent4); text-transform: uppercase; margin-bottom: 4px;
+  }
+  .memory-text { font-size: 0.9rem; color: var(--heading); font-weight: 600; }
+
+  /* ── REVISION CHIPS ── */
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    background: rgba(124,58,237,0.15);
+    border: 1px solid rgba(124,58,237,0.3);
+    color: #c4b5fd;
+    font-size: 0.78rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-family: var(--mono);
+  }
+
+  /* ── THEME TOGGLE ── */
+  .top-bar {
+    display: flex; justify-content: flex-end; align-items: center;
+    padding: 0.6rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    gap: 0.75rem;
+  }
+  .btn-sm {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    padding: 5px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+  .btn-sm:hover { background: var(--accent2); color: #fff; border-color: var(--accent2); }
+
+  /* ── DIAGRAM STYLES ── */
+  .diagram-wrap { overflow-x: auto; }
+  svg text { font-family: var(--sans); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .toc { display: none; }
+    .layout { padding: 0.75rem; }
+  }
+  @media (max-width: 600px) {
+    .q-title { font-size: 0.88rem; }
+    .q-body { padding: 1rem; }
+    .section-body { padding: 0.75rem; }
+  }
+
+  /* ── SEARCH ── */
+  .search-wrap { padding: 0.75rem 1.5rem; background: var(--surface); border-bottom: 1px solid var(--border); }
+  .search-input {
+    width: 100%; max-width: 500px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 0.88rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--accent); }
+  .search-input::placeholder { color: var(--text-dim); }
+
+  /* ── PROGRESS ── */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    width: 0%;
+    transition: width 0.1s;
+    z-index: 9999;
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="top-bar">
+  <button class="btn-sm" onclick="expandAll()">▼ Expand All</button>
+  <button class="btn-sm" onclick="collapseAll()">▲ Collapse All</button>
+</div>
+
+<header>
+  <div class="badge">AKTU B.Tech · Cyber Security · Unit-wise</div>
+  <h1>Cyber Security<br><span>7-Mark Exam Answers</span></h1>
+  <p>Complete exam-ready answers with diagrams, memory tricks & quick revision for every question.</p>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-num">26</div><div class="stat-lbl">Questions</div></div>
+    <div class="stat"><div class="stat-num">7</div><div class="stat-lbl">Marks Each</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-lbl">Exam Ready</div></div>
+  </div>
+</header>
+
+<div class="search-wrap">
+  <input class="search-input" id="searchBox" placeholder="🔍 Search questions..." oninput="filterQuestions(this.value)">
+</div>
+
+<div class="layout">
+  <!-- TOC -->
+  <aside class="toc" id="toc">
+    <h3>📚 Table of Contents</h3>
+    <a href="#q1"><span class="toc-num">01</span> DoS Attacks & Mitigation</a>
+    <a href="#q2"><span class="toc-num">02</span> Real-World Protocols</a>
+    <a href="#q3"><span class="toc-num">03</span> DNS & DNS Security</a>
+    <a href="#q4"><span class="toc-num">04</span> Routing Security</a>
+    <a href="#q5"><span class="toc-num">05</span> HTTPS Benefits & Limitations</a>
+    <a href="#q6"><span class="toc-num">06</span> Web App Vulnerabilities</a>
+    <a href="#q7"><span class="toc-num">07</span> Security Threats</a>
+    <a href="#q8"><span class="toc-num">08</span> Rootkits / Trojans</a>
+    <a href="#q9"><span class="toc-num">09</span> Why Own Machines?</a>
+    <a href="#q10"><span class="toc-num">10</span> Logout Process</a>
+    <a href="#q11"><span class="toc-num">11</span> Virtual OS on Desktops</a>
+    <a href="#q12"><span class="toc-num">12</span> Confinement Principle</a>
+    <a href="#q13"><span class="toc-num">13</span> Risk, Vulnerability & Threat</a>
+    <a href="#q14"><span class="toc-num">14</span> Firewall & Packet Filtering</a>
+    <a href="#q15"><span class="toc-num">15</span> Cybercrime Origins & Types</a>
+    <a href="#q16"><span class="toc-num">16</span> Cyber Criminals & Planning</a>
+    <a href="#q17"><span class="toc-num">17</span> Tools in Cybercrime</a>
+    <a href="#q18"><span class="toc-num">18</span> Digital Forensics Lifecycle</a>
+    <a href="#q19"><span class="toc-num">19</span> Information Security Policy</a>
+    <a href="#q20"><span class="toc-num">20</span> Wireless Devices & Security</a>
+    <a href="#q21"><span class="toc-num">21</span> Mobile Device Security</a>
+    <a href="#q22"><span class="toc-num">22</span> Identity Theft</a>
+    <a href="#q23"><span class="toc-num">23</span> Steganography</a>
+    <a href="#q24"><span class="toc-num">24</span> Email & Email Forensics</a>
+    <a href="#q25"><span class="toc-num">25</span> Privacy Threats</a>
+    <a href="#q26"><span class="toc-num">26</span> Cyber Law in India</a>
+  </aside>
+
+  <main id="mainContent">
+
+<!-- ════════════════════════════════════════════════ Q1 ════ -->
+<div class="q-card open" id="q1">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">01</div>
+    <div class="q-title">Explain DoS attacks and various mitigation techniques.</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-intro">
+      <div class="section-head">🔵 Introduction</div>
+      <div class="section-body">
+        <p>A <strong>Denial of Service (DoS)</strong> attack is a cyber attack that makes a machine or network resource <strong>unavailable</strong> to legitimate users by overwhelming it with traffic or requests. The goal is NOT to steal data, but to <em>crash or slow down</em> the service.</p>
+        <div class="box box-blue">📌 Simple analogy: Imagine 1000 people calling a restaurant's phone line at once — no real customer can get through.</div>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Types of DoS Attacks</div>
+      <div class="section-body">
+        <h3>1. Volume-Based Attacks</h3>
+        <ul>
+          <li>Flood the bandwidth with massive traffic</li>
+          <li>Examples: <strong>UDP Flood, ICMP Flood (Ping Flood), Amplification attacks</strong></li>
+        </ul>
+        <h3>2. Protocol Attacks</h3>
+        <ul>
+          <li>Exploit weaknesses in Layer 3/4 protocols</li>
+          <li>Examples: <strong>SYN Flood, Ping of Death, Smurf Attack</strong></li>
+        </ul>
+        <h3>3. Application Layer Attacks</h3>
+        <ul>
+          <li>Target web application layer (Layer 7)</li>
+          <li>Examples: <strong>HTTP Flood, Slowloris</strong></li>
+        </ul>
+        <h3>4. DDoS (Distributed DoS)</h3>
+        <p>Attack launched from <strong>multiple compromised machines</strong> (botnet) simultaneously — much harder to stop than regular DoS.</p>
+
+        <table>
+          <tr><th>Attack Type</th><th>Target</th><th>Method</th></tr>
+          <tr><td>SYN Flood</td><td>TCP handshake</td><td>Incomplete 3-way handshake</td></tr>
+          <tr><td>UDP Flood</td><td>Bandwidth</td><td>Massive UDP packets</td></tr>
+          <tr><td>Smurf Attack</td><td>Network</td><td>Spoofed ICMP broadcast</td></tr>
+          <tr><td>HTTP Flood</td><td>Web server</td><td>Fake GET/POST requests</td></tr>
+          <tr><td>Slowloris</td><td>Web server</td><td>Keep connections open slowly</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="section sec-diagram">
+      <div class="section-head">📊 Diagram – DDoS Attack Flow</div>
+      <div class="section-body diagram-wrap">
+        <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:600px">
+          <rect width="600" height="200" fill="#111827" rx="8"/>
+          <!-- Attacker -->
+          <rect x="10" y="80" width="80" height="40" rx="6" fill="#7c3aed"/>
+          <text x="50" y="96" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold">Attacker</text>
+          <text x="50" y="110" text-anchor="middle" font-size="9" fill="#ddd">C&amp;C Server</text>
+          <!-- Bots -->
+          <rect x="130" y="20" width="70" height="30" rx="5" fill="#1f2d45"/>
+          <text x="165" y="38" text-anchor="middle" font-size="9" fill="#94a3b8">Bot 1</text>
+          <rect x="130" y="65" width="70" height="30" rx="5" fill="#1f2d45"/>
+          <text x="165" y="83" text-anchor="middle" font-size="9" fill="#94a3b8">Bot 2</text>
+          <rect x="130" y="110" width="70" height="30" rx="5" fill="#1f2d45"/>
+          <text x="165" y="128" text-anchor="middle" font-size="9" fill="#94a3b8">Bot 3</text>
+          <rect x="130" y="155" width="70" height="30" rx="5" fill="#1f2d45"/>
+          <text x="165" y="173" text-anchor="middle" font-size="9" fill="#94a3b8">Bot 4</text>
+          <!-- Arrows attacker → bots -->
+          <line x1="90" y1="100" x2="130" y2="35" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <line x1="90" y1="100" x2="130" y2="80" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <line x1="90" y1="100" x2="130" y2="125" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <line x1="90" y1="100" x2="130" y2="170" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <!-- Target -->
+          <rect x="430" y="70" width="90" height="60" rx="6" fill="#ef4444"/>
+          <text x="475" y="92" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold">Target</text>
+          <text x="475" y="108" text-anchor="middle" font-size="9" fill="#fca5a5">Web Server</text>
+          <text x="475" y="122" text-anchor="middle" font-size="9" fill="#fca5a5">OVERWHELMED</text>
+          <!-- Arrows bots → target -->
+          <line x1="200" y1="35" x2="430" y2="85" stroke="#ef4444" stroke-width="1.5"/>
+          <line x1="200" y1="80" x2="430" y2="95" stroke="#ef4444" stroke-width="1.5"/>
+          <line x1="200" y1="125" x2="430" y2="110" stroke="#ef4444" stroke-width="1.5"/>
+          <line x1="200" y1="170" x2="430" y2="120" stroke="#ef4444" stroke-width="1.5"/>
+          <!-- Labels -->
+          <text x="300" y="50" text-anchor="middle" font-size="9" fill="#f87171">Flood Packets</text>
+          <rect x="260" y="88" width="120" height="24" rx="4" fill="rgba(239,68,68,0.15)" stroke="#ef4444" stroke-width="0.5"/>
+          <text x="320" y="103" text-anchor="middle" font-size="9" fill="#f87171">Millions of Requests</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Mitigation Techniques</div>
+      <div class="section-body">
+        <ol class="steps">
+          <li><strong>Rate Limiting:</strong> Limit number of requests from a single IP per second.</li>
+          <li><strong>Firewall Rules:</strong> Block suspicious IPs and unusual traffic patterns.</li>
+          <li><strong>Ingress Filtering:</strong> Block packets with spoofed source IP addresses.</li>
+          <li><strong>Load Balancers:</strong> Distribute incoming traffic across multiple servers.</li>
+          <li><strong>DDoS Protection Services:</strong> Use services like Cloudflare, AWS Shield to absorb attack traffic.</li>
+          <li><strong>SYN Cookies:</strong> Protect against SYN Flood by not allocating resources until handshake completes.</li>
+          <li><strong>Black-hole Routing:</strong> Route attack traffic to a "null" interface — drops all malicious packets.</li>
+          <li><strong>Anycast Diffusion:</strong> Spread traffic across distributed servers worldwide.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>DoS = single source; <strong>DDoS = multiple sources (botnet)</strong></li>
+            <li>SYN Flood exploits <strong>TCP 3-way handshake</strong></li>
+            <li>Smurf attack uses <strong>spoofed ICMP + broadcast</strong></li>
+            <li>Slowloris keeps connections open with partial HTTP headers — hard to detect</li>
+            <li>Common trap: DoS doesn't steal data, only disrupts availability</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="memory"><div class="memory-label">Memory Trick</div><div class="memory-text">DoS Types: "Volume Protocols Applications" → <strong>VPA</strong></div></div>
+        <div class="chips">
+          <span class="chip">DoS = Unavailability</span>
+          <span class="chip">DDoS = Botnet</span>
+          <span class="chip">SYN = TCP exploit</span>
+          <span class="chip">Mitigation = Rate Limit + Firewall</span>
+          <span class="chip">Slowloris = App layer</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q2 ════ -->
+<div class="q-card" id="q2">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">02</div>
+    <div class="q-title">Discuss Real-World Protocols and steps to use them in the real world.</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-intro">
+      <div class="section-head">🔵 Introduction</div>
+      <div class="section-body">
+        <p>Real-world protocols are <strong>standardized rules and procedures</strong> used by computers to communicate securely over networks. They define how data is formatted, transmitted, and authenticated.</p>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Major Real-World Security Protocols</div>
+      <div class="section-body">
+        <table>
+          <tr><th>Protocol</th><th>Full Form</th><th>Layer</th><th>Use</th></tr>
+          <tr><td><strong>SSL/TLS</strong></td><td>Secure Sockets Layer / Transport Layer Security</td><td>Transport</td><td>HTTPS web security</td></tr>
+          <tr><td><strong>IPSec</strong></td><td>Internet Protocol Security</td><td>Network</td><td>VPN tunneling</td></tr>
+          <tr><td><strong>SSH</strong></td><td>Secure Shell</td><td>Application</td><td>Secure remote login</td></tr>
+          <tr><td><strong>PGP</strong></td><td>Pretty Good Privacy</td><td>Application</td><td>Email encryption</td></tr>
+          <tr><td><strong>Kerberos</strong></td><td>—</td><td>Application</td><td>Authentication</td></tr>
+          <tr><td><strong>HTTPS</strong></td><td>HTTP Secure</td><td>Application</td><td>Secure web browsing</td></tr>
+          <tr><td><strong>DNSSEC</strong></td><td>DNS Security Extensions</td><td>Application</td><td>Secure DNS</td></tr>
+        </table>
+
+        <h3>TLS – How It Works (Real-World Steps)</h3>
+        <ol class="steps">
+          <li>Client sends <strong>ClientHello</strong> (supported cipher suites, TLS version)</li>
+          <li>Server responds with <strong>ServerHello</strong> + digital certificate</li>
+          <li>Client verifies server certificate with <strong>CA (Certificate Authority)</strong></li>
+          <li>Client sends <strong>pre-master secret</strong> encrypted with server's public key</li>
+          <li>Both derive <strong>session keys</strong> from pre-master secret</li>
+          <li>Secure encrypted channel established — data transferred safely</li>
+        </ol>
+
+        <h3>IPSec – Two Modes</h3>
+        <ul>
+          <li><strong>Transport Mode:</strong> Encrypts only payload (data)</li>
+          <li><strong>Tunnel Mode:</strong> Encrypts entire IP packet — used in VPNs</li>
+        </ul>
+
+        <h3>SSH – Steps to Use</h3>
+        <ol class="steps">
+          <li>Client initiates TCP connection to server port 22</li>
+          <li>Key exchange (Diffie-Hellman) to establish shared secret</li>
+          <li>Server authenticates using host key</li>
+          <li>User authenticates (password or public key auth)</li>
+          <li>Encrypted shell session begins</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>TLS replaced SSL — TLS 1.3 is current standard</li>
+            <li>IPSec uses <strong>AH</strong> (Authentication Header) and <strong>ESP</strong> (Encapsulating Security Payload)</li>
+            <li>SSH default port = <strong>22</strong>, HTTPS = <strong>443</strong></li>
+            <li>Kerberos uses <strong>tickets</strong> and <strong>KDC</strong> (Key Distribution Center)</li>
+            <li>PGP uses both symmetric + asymmetric encryption (hybrid)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="chips">
+          <span class="chip">TLS = Web security</span>
+          <span class="chip">IPSec = VPN</span>
+          <span class="chip">SSH port 22</span>
+          <span class="chip">PGP = Email encrypt</span>
+          <span class="chip">Kerberos = Tickets + KDC</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q3 ════ -->
+<div class="q-card" id="q3">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">03</div>
+    <div class="q-title">What is DNS? Explain DNS working, DNS cache poisoning and DNS security.</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-intro">
+      <div class="section-head">🔵 Introduction</div>
+      <div class="section-body">
+        <p><strong>DNS (Domain Name System)</strong> is the Internet's "phone book." It translates human-readable domain names (like <code>google.com</code>) into IP addresses (like <code>142.250.80.46</code>) that computers use to identify each other.</p>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 DNS Working – Step by Step</div>
+      <div class="section-body">
+        <ol class="steps">
+          <li>User types <code>www.example.com</code> in browser</li>
+          <li>Browser checks its <strong>local DNS cache</strong> — if found, done!</li>
+          <li>Query sent to <strong>Recursive Resolver</strong> (usually ISP's DNS server)</li>
+          <li>Resolver queries <strong>Root Name Server</strong> → gets address of TLD server</li>
+          <li>Resolver queries <strong>TLD Server</strong> (.com, .org) → gets address of Authoritative Server</li>
+          <li><strong>Authoritative Name Server</strong> returns the final IP address</li>
+          <li>Resolver caches result and returns IP to browser</li>
+          <li>Browser connects to the IP address</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="section sec-diagram">
+      <div class="section-head">📊 DNS Resolution Diagram</div>
+      <div class="section-body diagram-wrap">
+        <svg viewBox="0 0 560 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px">
+          <rect width="560" height="180" fill="#111827" rx="8"/>
+          <!-- User -->
+          <rect x="10" y="70" width="70" height="40" rx="5" fill="#1f2d45" stroke="#00d4ff" stroke-width="1"/>
+          <text x="45" y="88" text-anchor="middle" font-size="9" fill="#00d4ff">User</text>
+          <text x="45" y="101" text-anchor="middle" font-size="8" fill="#94a3b8">Browser</text>
+          <!-- Resolver -->
+          <rect x="120" y="70" width="80" height="40" rx="5" fill="#1f2d45" stroke="#7c3aed" stroke-width="1"/>
+          <text x="160" y="88" text-anchor="middle" font-size="9" fill="#a78bfa">Recursive</text>
+          <text x="160" y="101" text-anchor="middle" font-size="8" fill="#94a3b8">Resolver</text>
+          <!-- Root -->
+          <rect x="230" y="20" width="80" height="36" rx="5" fill="#1f2d45" stroke="#10b981" stroke-width="1"/>
+          <text x="270" y="34" text-anchor="middle" font-size="9" fill="#10b981">Root</text>
+          <text x="270" y="47" text-anchor="middle" font-size="8" fill="#94a3b8">Name Server</text>
+          <!-- TLD -->
+          <rect x="350" y="70" width="70" height="40" rx="5" fill="#1f2d45" stroke="#f59e0b" stroke-width="1"/>
+          <text x="385" y="88" text-anchor="middle" font-size="9" fill="#f59e0b">TLD</text>
+          <text x="385" y="101" text-anchor="middle" font-size="8" fill="#94a3b8">Server (.com)</text>
+          <!-- Auth -->
+          <rect x="455" y="70" width="85" height="40" rx="5" fill="#1f2d45" stroke="#ef4444" stroke-width="1"/>
+          <text x="497" y="88" text-anchor="middle" font-size="9" fill="#ef4444">Authoritative</text>
+          <text x="497" y="101" text-anchor="middle" font-size="8" fill="#94a3b8">Name Server</text>
+          <!-- Arrows -->
+          <line x1="80" y1="90" x2="120" y2="90" stroke="#00d4ff" stroke-width="1.5" marker-end="url(#arr)"/>
+          <line x1="160" y1="70" x2="270" y2="56" stroke="#7c3aed" stroke-width="1.5"/>
+          <line x1="270" y1="56" x2="385" y2="70" stroke="#10b981" stroke-width="1.5"/>
+          <line x1="200" y1="90" x2="350" y2="90" stroke="#7c3aed" stroke-width="1.5"/>
+          <line x1="420" y1="90" x2="455" y2="90" stroke="#f59e0b" stroke-width="1.5"/>
+          <!-- IP returned -->
+          <text x="280" y="155" text-anchor="middle" font-size="10" fill="#10b981">✓ IP Address returned to browser</text>
+          <defs>
+            <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" fill="#00d4ff"/>
+            </marker>
+          </defs>
+          <!-- Step numbers -->
+          <text x="100" y="82" font-size="8" fill="#64748b">①</text>
+          <text x="185" y="62" font-size="8" fill="#64748b">②</text>
+          <text x="325" y="82" font-size="8" fill="#64748b">③</text>
+          <text x="438" y="82" font-size="8" fill="#64748b">④</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 DNS Cache Poisoning</div>
+      <div class="section-body">
+        <p><strong>Definition:</strong> An attacker injects <em>fake/malicious DNS records</em> into a resolver's cache, redirecting users to malicious websites without their knowledge.</p>
+        <h3>How it Works:</h3>
+        <ol class="steps">
+          <li>Attacker sends many <strong>fake DNS responses</strong> to the resolver before the real response arrives</li>
+          <li>If fake response is accepted, malicious IP is cached</li>
+          <li>Users asking for <code>bank.com</code> are redirected to attacker's fake site</li>
+          <li>Users enter credentials on fake site → <strong>Credential Theft!</strong></li>
+        </ol>
+        <div class="box box-red">⚠️ Also called DNS Spoofing. Used for Phishing attacks.</div>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 DNS Security (DNSSEC)</div>
+      <div class="section-body">
+        <ul>
+          <li><strong>DNSSEC</strong> adds <strong>digital signatures</strong> to DNS records</li>
+          <li>Resolver can verify the response is authentic and untampered</li>
+          <li>Uses <strong>public key cryptography</strong> — zone signing keys (ZSK) and key signing keys (KSK)</li>
+          <li><strong>DNS over HTTPS (DoH)</strong>: Encrypts DNS queries inside HTTPS</li>
+          <li><strong>DNS over TLS (DoT)</strong>: Encrypts DNS traffic using TLS</li>
+        </ul>
+        <table>
+          <tr><th>Threat</th><th>Solution</th></tr>
+          <tr><td>Cache Poisoning</td><td>DNSSEC (digital signatures)</td></tr>
+          <tr><td>Eavesdropping</td><td>DoH / DoT (encryption)</td></tr>
+          <tr><td>DDoS on DNS</td><td>Anycast routing + rate limiting</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>DNS runs on <strong>UDP port 53</strong> (TCP for large responses)</li>
+            <li>TTL (Time To Live) determines how long DNS cache holds a record</li>
+            <li>Cache poisoning = Kaminsky Attack (famous 2008 attack)</li>
+            <li>DNSSEC does NOT encrypt, only authenticates</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="memory"><div class="memory-label">Memory Trick</div><div class="memory-text">DNS path: <strong>R → Root → TLD → Auth</strong> (Resolver goes Root-TLD-Authority)</div></div>
+        <div class="chips">
+          <span class="chip">DNS = Phone book</span>
+          <span class="chip">Port 53</span>
+          <span class="chip">Poisoning = Fake records</span>
+          <span class="chip">DNSSEC = Signatures</span>
+          <span class="chip">DoH = Encrypted DNS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q4 ════ -->
+<div class="q-card" id="q4">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">04</div>
+    <div class="q-title">Explain Routing Security.</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-intro">
+      <div class="section-head">🔵 Introduction</div>
+      <div class="section-body">
+        <p><strong>Routing Security</strong> deals with protecting the routing infrastructure of the Internet from attacks that could redirect, intercept, or disrupt data packets. Routers exchange routing information using protocols like <strong>BGP, OSPF, RIP</strong>.</p>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Routing Attacks</div>
+      <div class="section-body">
+        <h3>1. BGP Hijacking</h3>
+        <p>An attacker <strong>advertises false BGP routes</strong>, causing internet traffic to be redirected through their networks. Famous example: <em>Pakistan Telecom hijacking YouTube (2008)</em>.</p>
+        <h3>2. Route Injection / Spoofing</h3>
+        <p>Injecting <strong>false routing updates</strong> into routing protocols to create black holes or redirect traffic.</p>
+        <h3>3. Route Flapping</h3>
+        <p>Repeatedly <strong>adding/removing routes</strong> causing instability and service disruption.</p>
+        <h3>4. Man-in-the-Middle via Routing</h3>
+        <p>Attacker inserts malicious router in path to intercept all data.</p>
+
+        <table>
+          <tr><th>Attack</th><th>Protocol Affected</th><th>Impact</th></tr>
+          <tr><td>BGP Hijacking</td><td>BGP</td><td>Traffic redirection, blackholing</td></tr>
+          <tr><td>OSPF Spoofing</td><td>OSPF</td><td>False routes, loops</td></tr>
+          <tr><td>RIP Spoofing</td><td>RIP</td><td>Route poisoning</td></tr>
+        </table>
+
+        <h3>Routing Security Measures</h3>
+        <ul>
+          <li><strong>Route Filtering:</strong> Only accept routes from trusted neighbors</li>
+          <li><strong>Authentication:</strong> MD5/SHA authentication for routing protocols</li>
+          <li><strong>BGPsec:</strong> Cryptographic path validation for BGP</li>
+          <li><strong>RPKI (Resource Public Key Infrastructure):</strong> Associates IP prefixes with authorized ASes</li>
+          <li><strong>IRR (Internet Routing Registry):</strong> Validates announced routes</li>
+          <li><strong>Prefix Limits:</strong> Limit number of prefixes per neighbor</li>
+          <li><strong>Private AS filtering:</strong> Block routes with private AS numbers</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>BGP = Border Gateway Protocol = Internet's routing protocol</li>
+            <li>BGP Hijacking → traffic goes through wrong AS (Autonomous System)</li>
+            <li>RPKI = most important modern fix for BGP security</li>
+            <li>OSPF uses <strong>MD5 authentication</strong> to prevent spoofing</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="chips">
+          <span class="chip">BGP Hijack = Redirect</span>
+          <span class="chip">RPKI = Key fix</span>
+          <span class="chip">Route Filter = Defense</span>
+          <span class="chip">Auth = MD5/SHA</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q5 ════ -->
+<div class="q-card" id="q5">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">05</div>
+    <div class="q-title">What are the benefits of HTTPS and why is HTTPS not used for all web traffic?</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-intro">
+      <div class="section-head">🔵 Introduction</div>
+      <div class="section-body">
+        <p><strong>HTTPS (HyperText Transfer Protocol Secure)</strong> = HTTP + TLS/SSL encryption. It ensures secure communication between browser and web server. The lock icon 🔒 in browsers indicates HTTPS.</p>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Benefits of HTTPS</div>
+      <div class="section-body">
+        <table>
+          <tr><th>#</th><th>Benefit</th><th>Explanation</th></tr>
+          <tr><td>1</td><td><strong>Encryption</strong></td><td>Data in transit is encrypted — no eavesdropping</td></tr>
+          <tr><td>2</td><td><strong>Authentication</strong></td><td>Verifies server identity via digital certificate</td></tr>
+          <tr><td>3</td><td><strong>Data Integrity</strong></td><td>Detects tampering — data cannot be altered en route</td></tr>
+          <tr><td>4</td><td><strong>Trust</strong></td><td>Users see padlock — increases confidence</td></tr>
+          <tr><td>5</td><td><strong>SEO Benefit</strong></td><td>Google ranks HTTPS sites higher</td></tr>
+          <tr><td>6</td><td><strong>Prevents MitM</strong></td><td>No man-in-the-middle attacks possible</td></tr>
+          <tr><td>7</td><td><strong>Compliance</strong></td><td>Required for PCI-DSS, GDPR compliance</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Why HTTPS Is Not Used Everywhere</div>
+      <div class="section-body">
+        <ul>
+          <li>🔴 <strong>Performance Overhead:</strong> TLS handshake adds latency; encryption/decryption uses more CPU</li>
+          <li>🔴 <strong>Cost:</strong> SSL certificates (especially EV certs) cost money (though Let's Encrypt is free)</li>
+          <li>🔴 <strong>Configuration Complexity:</strong> Proper setup requires expertise</li>
+          <li>🔴 <strong>Legacy Systems:</strong> Old IoT devices, embedded systems can't handle TLS</li>
+          <li>🔴 <strong>Internal Networks:</strong> Intranet traffic sometimes uses plain HTTP assuming internal security</li>
+          <li>🔴 <strong>Cache Limitations:</strong> CDN caches work less effectively with end-to-end encryption</li>
+          <li>🔴 <strong>Certificate Management:</strong> Certificates expire, need renewal — operational burden</li>
+        </ul>
+        <div class="box box-yellow">⚡ Note: Modern trend is "HTTPS Everywhere." Browsers now show warning for HTTP sites.</div>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>HTTPS = HTTP + TLS (not SSL — SSL is deprecated)</li>
+            <li>HTTPS uses port <strong>443</strong>, HTTP uses port <strong>80</strong></li>
+            <li>Three properties: <strong>Confidentiality + Integrity + Authentication</strong> (CIA)</li>
+            <li>Even with HTTPS, server can still be hacked — HTTPS only protects transit</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="memory"><div class="memory-label">Memory Trick</div><div class="memory-text">HTTPS benefits: <strong>E-A-I-T</strong> = Encryption, Authentication, Integrity, Trust</div></div>
+        <div class="chips">
+          <span class="chip">Port 443</span>
+          <span class="chip">Lock icon = HTTPS</span>
+          <span class="chip">TLS not SSL</span>
+          <span class="chip">Overhead = Why not everywhere</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q6 ════ -->
+<div class="q-card" id="q6">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">06</div>
+    <div class="q-title">How are vulnerabilities exploited in web applications?</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-intro">
+      <div class="section-head">🔵 Introduction</div>
+      <div class="section-body">
+        <p>Web application vulnerabilities are weaknesses in the code, configuration, or logic of a web app that attackers exploit to gain unauthorized access, steal data, or disrupt services. <strong>OWASP Top 10</strong> lists the most critical ones.</p>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Key Vulnerabilities and How They're Exploited</div>
+      <div class="section-body">
+
+        <h3>1. SQL Injection (SQLi)</h3>
+        <ul>
+          <li>Attacker inserts malicious SQL code into input fields</li>
+          <li>Example: <code>' OR 1=1; --</code> in login form bypasses authentication</li>
+          <li>Fix: Use <strong>parameterized queries / prepared statements</strong></li>
+        </ul>
+
+        <h3>2. Cross-Site Scripting (XSS)</h3>
+        <ul>
+          <li>Attacker injects malicious JavaScript into web pages</li>
+          <li>Runs in victim's browser — steals cookies/sessions</li>
+          <li>Types: Stored XSS, Reflected XSS, DOM-based XSS</li>
+          <li>Fix: <strong>Input validation + Output encoding</strong></li>
+        </ul>
+
+        <h3>3. Cross-Site Request Forgery (CSRF)</h3>
+        <ul>
+          <li>Tricks authenticated user into making unwanted requests</li>
+          <li>Fix: <strong>CSRF tokens, SameSite cookies</strong></li>
+        </ul>
+
+        <h3>4. Broken Authentication</h3>
+        <ul>
+          <li>Weak passwords, session fixation, no account lockout</li>
+          <li>Fix: MFA, strong session management</li>
+        </ul>
+
+        <h3>5. Insecure Direct Object Reference (IDOR)</h3>
+        <ul>
+          <li>Changing <code>user_id=123</code> to <code>user_id=124</code> accesses another user's data</li>
+          <li>Fix: Authorization checks on every request</li>
+        </ul>
+
+        <h3>6. Command Injection</h3>
+        <ul>
+          <li>Attacker inserts OS commands via input fields</li>
+          <li>Example: <code>; rm -rf /</code></li>
+          <li>Fix: Input sanitization, avoid shell execution</li>
+        </ul>
+
+        <table>
+          <tr><th>Vulnerability</th><th>OWASP Rank</th><th>Impact</th></tr>
+          <tr><td>SQL Injection</td><td>#3</td><td>Data theft, auth bypass</td></tr>
+          <tr><td>XSS</td><td>#3</td><td>Session hijacking</td></tr>
+          <tr><td>Broken Auth</td><td>#2</td><td>Account takeover</td></tr>
+          <tr><td>IDOR</td><td>#1</td><td>Unauthorized access</td></tr>
+          <tr><td>CSRF</td><td>#10</td><td>Unwanted actions</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>SQLi = most common and dangerous web attack</li>
+            <li>XSS runs in <strong>client browser</strong>, not on server</li>
+            <li>CSRF = confused deputy attack</li>
+            <li>OWASP = Open Web Application Security Project</li>
+            <li>WAF (Web Application Firewall) helps block many of these attacks</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="memory"><div class="memory-label">Memory Trick</div><div class="memory-text">Common attacks: <strong>SXCI</strong> = SQL, XSS, CSRF, IDOR</div></div>
+        <div class="chips">
+          <span class="chip">SQLi = DB attack</span>
+          <span class="chip">XSS = JS inject</span>
+          <span class="chip">CSRF = Fake request</span>
+          <span class="chip">IDOR = Access control</span>
+          <span class="chip">Fix = Validate Input</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q7 ════ -->
+<div class="q-card" id="q7">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">07</div>
+    <div class="q-title">Describe various types of security threats in detail.</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-intro">
+      <div class="section-head">🔵 Introduction</div>
+      <div class="section-body">
+        <p>A <strong>security threat</strong> is any potential danger that could exploit a vulnerability to harm information systems. Threats can be <em>intentional</em> (attacks) or <em>unintentional</em> (accidents, natural disasters).</p>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Classification of Threats</div>
+      <div class="section-body">
+        <h3>A. Based on Source</h3>
+        <table>
+          <tr><th>Type</th><th>Description</th><th>Example</th></tr>
+          <tr><td><strong>Internal Threats</strong></td><td>From within the organization</td><td>Disgruntled employee, data theft</td></tr>
+          <tr><td><strong>External Threats</strong></td><td>From outside attackers</td><td>Hackers, state actors</td></tr>
+          <tr><td><strong>Unintentional</strong></td><td>Accidental damage</td><td>Wrong email recipient, human error</td></tr>
+        </table>
+
+        <h3>B. Major Threat Types</h3>
+
+        <h3>1. Malware (Malicious Software)</h3>
+        <ul>
+          <li><strong>Virus:</strong> Attaches to files, spreads when executed</li>
+          <li><strong>Worm:</strong> Self-replicates across networks without user action</li>
+          <li><strong>Trojan:</strong> Disguised as legitimate software</li>
+          <li><strong>Ransomware:</strong> Encrypts files, demands ransom</li>
+          <li><strong>Spyware:</strong> Secretly monitors user activity</li>
+          <li><strong>Rootkit:</strong> Hides malware at OS/kernel level</li>
+        </ul>
+
+        <h3>2. Social Engineering</h3>
+        <ul>
+          <li><strong>Phishing:</strong> Fake emails trick users into revealing credentials</li>
+          <li><strong>Vishing:</strong> Voice phishing via phone calls</li>
+          <li><strong>Smishing:</strong> SMS phishing</li>
+          <li><strong>Pretexting:</strong> Creating fake scenarios to extract info</li>
+        </ul>
+
+        <h3>3. Network Threats</h3>
+        <ul>
+          <li><strong>Sniffing:</strong> Capturing network packets to read data</li>
+          <li><strong>Spoofing:</strong> Faking IP/MAC address</li>
+          <li><strong>Man-in-the-Middle (MitM):</strong> Intercepting communication between two parties</li>
+        </ul>
+
+        <h3>4. Physical Threats</h3>
+        <ul>
+          <li>Theft of hardware, shoulder surfing, tailgating, dumpster diving</li>
+        </ul>
+
+        <h3>5. Advanced Persistent Threats (APT)</h3>
+        <p>Long-term, targeted attacks by skilled adversaries (often nation-states). Stay undetected for months.</p>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>Worm ≠ Virus: Worm spreads <strong>without human action</strong></li>
+            <li>Ransomware = most impactful modern threat (WannaCry, Petya)</li>
+            <li>APT = Advanced Persistent Threat — months-long attack</li>
+            <li>Social engineering attacks human psychology, not technical vulnerabilities</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="memory"><div class="memory-label">Memory Trick</div><div class="memory-text">Malware types: <strong>VWTRS</strong> = Virus, Worm, Trojan, Ransomware, Spyware</div></div>
+        <div class="chips">
+          <span class="chip">Worm = Self-replicates</span>
+          <span class="chip">Phishing = Social Eng</span>
+          <span class="chip">APT = Long-term</span>
+          <span class="chip">MitM = Intercept</span>
+          <span class="chip">Ransomware = Encrypt + Demand</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q8 ════ -->
+<div class="q-card" id="q8">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">08</div>
+    <div class="q-title">What are Rootkits / Knark / LRK v4 trojans? Explain features, types, detection and prevention.</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-intro">
+      <div class="section-head">🔵 Introduction</div>
+      <div class="section-body">
+        <p>A <strong>rootkit</strong> is a collection of malicious tools designed to give an attacker <strong>persistent, hidden root-level access</strong> to a computer. The attacker can control the system while remaining completely invisible to the victim and security tools.</p>
+        <div class="box box-blue">Analogy: A rootkit is like a ghost living in your house — it does things without you ever seeing it.</div>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Types of Rootkits</div>
+      <div class="section-body">
+        <table>
+          <tr><th>Type</th><th>Level</th><th>Description</th></tr>
+          <tr><td><strong>User-mode</strong></td><td>Application</td><td>Modify user-space programs (ls, ps, netstat)</td></tr>
+          <tr><td><strong>Kernel-mode</strong></td><td>OS Kernel</td><td>Modify kernel — most dangerous, hardest to detect</td></tr>
+          <tr><td><strong>Bootloader (Bootkit)</strong></td><td>Boot sector</td><td>Infects MBR, loads before OS</td></tr>
+          <tr><td><strong>Hypervisor</strong></td><td>Below OS</td><td>Runs actual OS as VM — very stealthy</td></tr>
+          <tr><td><strong>Firmware</strong></td><td>Hardware</td><td>Hidden in BIOS/UEFI firmware</td></tr>
+        </table>
+
+        <h3>Knark Rootkit</h3>
+        <ul>
+          <li>Linux kernel-level rootkit (kernel module / LKM)</li>
+          <li>Hides processes, files, network connections from the OS</li>
+          <li>Uses <code>/proc</code> filesystem manipulation</li>
+          <li>Allows attacker to execute commands remotely</li>
+        </ul>
+
+        <h3>LRK v4 (Linux Rootkit v4)</h3>
+        <ul>
+          <li>User-mode rootkit — replaces system binaries (ls, ps, who, netstat, etc.)</li>
+          <li>Modified binaries hide attacker's files, processes, connections</li>
+          <li>Installs backdoor sniffer to capture passwords</li>
+          <li>Hides itself from most detection tools</li>
+        </ul>
+
+        <h3>Features of Rootkits (General)</h3>
+        <ul>
+          <li>Process hiding — attacker processes invisible in <code>ps</code> list</li>
+          <li>File hiding — malicious files invisible in directory listing</li>
+          <li>Network hiding — open ports not shown in <code>netstat</code></li>
+          <li>Log tampering — removes traces from system logs</li>
+          <li>Backdoor installation — persistent remote access</li>
+          <li>Privilege escalation — gain root/admin access</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Detection Methods</div>
+      <div class="section-body">
+        <ul>
+          <li><strong>Integrity Checking:</strong> Use tools like <code>Tripwire</code> to detect modified system files</li>
+          <li><strong>Behavioral Analysis:</strong> Monitor unusual system behavior</li>
+          <li><strong>Memory Forensics:</strong> Analyze RAM dumps for hidden processes</li>
+          <li><strong>Bootable Antivirus:</strong> Scan from clean bootable media (bypasses infected OS)</li>
+          <li><strong>Rootkit Scanners:</strong> <code>chkrootkit</code>, <code>rkhunter</code>, <code>GMER</code></li>
+          <li><strong>Cross-view Analysis:</strong> Compare results from multiple tools</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section sec-adv">
+      <div class="section-head">🔵 Prevention</div>
+      <div class="section-body">
+        <ul>
+          <li>Keep OS and software updated</li>
+          <li>Use <strong>Secure Boot</strong> (UEFI) to prevent bootkit installation</li>
+          <li>Least privilege principle — don't run as root</li>
+          <li>Mandatory Access Controls (SELinux, AppArmor)</li>
+          <li>Regular integrity checks of system binaries</li>
+          <li>Strong authentication to prevent initial compromise</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>Rootkit ≠ Virus: rootkit provides <strong>access + hiding</strong>, not self-replication</li>
+            <li>Kernel-mode rootkit = most dangerous</li>
+            <li>LRK replaces system binaries (user mode)</li>
+            <li>Knark = LKM (Loadable Kernel Module) based rootkit</li>
+            <li>Best detection: <strong>boot from clean media</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="chips">
+          <span class="chip">Rootkit = Hide + Persist</span>
+          <span class="chip">Knark = Kernel LKM</span>
+          <span class="chip">LRK = Binary replace</span>
+          <span class="chip">Detect: chkrootkit</span>
+          <span class="chip">Prevent: Secure Boot</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q9 ════ -->
+<div class="q-card" id="q9">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">09</div>
+    <div class="q-title">Why do cyber criminals want to own machines?</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-intro">
+      <div class="section-head">🔵 Introduction</div>
+      <div class="section-body">
+        <p>"<strong>Owning a machine</strong>" means a hacker has gained full, unauthorized control over a computer. Cyber criminals invest significant effort to compromise and maintain control of victim machines for various profitable and malicious reasons.</p>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Reasons Why Criminals Want to Own Machines</div>
+      <div class="section-body">
+        <ol class="steps">
+          <li><strong>Botnet Building:</strong> Compromised machines become "bots" used for DDoS attacks, spam campaigns, or rented to other criminals (Botnet-as-a-Service)</li>
+          <li><strong>Data Theft:</strong> Steal personal data, credit card numbers, login credentials for financial gain or dark web sale</li>
+          <li><strong>Ransomware Deployment:</strong> Encrypt victim's files and demand cryptocurrency ransom</li>
+          <li><strong>Cryptocurrency Mining (Cryptojacking):</strong> Use victim's CPU/GPU to mine crypto without their knowledge — free computing power</li>
+          <li><strong>Spam Relay:</strong> Send spam/phishing emails through victim's machine to avoid detection</li>
+          <li><strong>Proxy / Anonymization:</strong> Route illegal activities through victim's IP to hide criminal's identity</li>
+          <li><strong>Corporate Espionage:</strong> Steal trade secrets, business plans, intellectual property</li>
+          <li><strong>Keylogging & Surveillance:</strong> Monitor keystrokes, webcam, microphone to gather sensitive info</li>
+          <li><strong>Click Fraud:</strong> Generate fake ad clicks for financial profit</li>
+          <li><strong>Infrastructure Attack Staging:</strong> Use compromised machine as launch point for attacks on other systems</li>
+        </ol>
+
+        <table>
+          <tr><th>Motive</th><th>Method</th><th>Gain</th></tr>
+          <tr><td>Financial</td><td>Data theft, ransomware</td><td>Direct money</td></tr>
+          <tr><td>Power</td><td>Botnet, DDoS</td><td>Leverage, extortion</td></tr>
+          <tr><td>Anonymity</td><td>Proxy routing</td><td>Hide identity</td></tr>
+          <tr><td>Resources</td><td>Cryptojacking</td><td>Free computing</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>Owned machine = <strong>zombie machine</strong> in botnet terminology</li>
+            <li>Cryptojacking became popular after 2017 (Bitcoin boom)</li>
+            <li>Criminals prefer "owned" machines over direct attacks — less traceable</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="chips">
+          <span class="chip">Botnet = DDoS army</span>
+          <span class="chip">Cryptojacking = Free CPU</span>
+          <span class="chip">Proxy = Hide identity</span>
+          <span class="chip">Ransomware = Encrypt files</span>
+          <span class="chip">Keylog = Steal passwords</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q10 ════ -->
+<div class="q-card" id="q10">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">10</div>
+    <div class="q-title">Explain logout process, its steps and potential problems.</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-intro">
+      <div class="section-head">🔵 Introduction</div>
+      <div class="section-body">
+        <p>The <strong>logout process</strong> is the mechanism by which a user ends an authenticated session with a web application. It is a critical security function — improper logout leaves sessions vulnerable to hijacking.</p>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Steps in a Proper Logout Process</div>
+      <div class="section-body">
+        <ol class="steps">
+          <li>User clicks "Logout" button</li>
+          <li>Client sends logout request to server (GET/POST to /logout)</li>
+          <li>Server <strong>invalidates/destroys the session</strong> on the server side (removes from session store)</li>
+          <li>Server <strong>clears session cookies</strong> (Set-Cookie with empty value + expired date)</li>
+          <li>Server deletes any authentication tokens (JWT, refresh tokens)</li>
+          <li>Redirect user to login page or homepage</li>
+          <li>Client-side cleanup: clear localStorage, sessionStorage, clear cached credentials</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Potential Problems with Logout</div>
+      <div class="section-body">
+        <table>
+          <tr><th>Problem</th><th>Description</th><th>Impact</th></tr>
+          <tr><td><strong>Incomplete Logout</strong></td><td>Cookie deleted client-side but session still active server-side</td><td>Session still valid if cookie is recovered</td></tr>
+          <tr><td><strong>Browser Back Button</strong></td><td>Cached pages still visible after logout</td><td>Sensitive data exposure</td></tr>
+          <tr><td><strong>JWT Invalidation</strong></td><td>Stateless JWTs can't be easily revoked</td><td>Token valid until expiry even after logout</td></tr>
+          <tr><td><strong>Single Sign-On (SSO)</strong></td><td>Logging out of one app doesn't log out of all apps</td><td>Partial logout, still vulnerable</td></tr>
+          <tr><td><strong>Shared Computers</strong></td><td>User forgets to logout on public computers</td><td>Next user can access account</td></tr>
+          <tr><td><strong>Session Fixation</strong></td><td>Attacker pre-sets session ID before authentication</td><td>Session hijack after logout/login</td></tr>
+          <tr><td><strong>CSRF on Logout</strong></td><td>Attacker forces user to logout via malicious link</td><td>Denial of service, disruption</td></tr>
+        </table>
+
+        <h3>Best Practices</h3>
+        <ul>
+          <li>Always destroy sessions <strong>server-side</strong>, not just client-side</li>
+          <li>Use <code>Cache-Control: no-store</code> for sensitive pages</li>
+          <li>Implement session timeouts (idle + absolute)</li>
+          <li>Use CSRF tokens for logout endpoint</li>
+          <li>Implement global logout for SSO systems</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>Most common mistake: deleting cookie client-side only (server session still valid)</li>
+            <li>JWT tokens are <strong>stateless</strong> — blacklist needed for revocation</li>
+            <li>Add <code>Cache-Control: no-cache, no-store</code> to prevent back-button attacks</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="chips">
+          <span class="chip">Server-side invalidation</span>
+          <span class="chip">Clear cookies</span>
+          <span class="chip">JWT = Hard to revoke</span>
+          <span class="chip">Back button = Cache issue</span>
+          <span class="chip">SSO partial logout</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q11 ════ -->
+<div class="q-card" id="q11">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">11</div>
+    <div class="q-title">How are Virtual Operating Systems used on desktops? Explain different approaches.</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-intro">
+      <div class="section-head">🔵 Introduction</div>
+      <div class="section-body">
+        <p><strong>Virtualization</strong> allows running multiple operating systems on a single physical machine. Each virtual OS runs in an isolated environment called a <strong>Virtual Machine (VM)</strong>, managed by a <strong>Hypervisor</strong>.</p>
+        <div class="box box-blue">Security benefit: Malware in a VM cannot (usually) escape to the host OS — strong isolation.</div>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Approaches to Desktop Virtualization</div>
+      <div class="section-body">
+        <h3>1. Type 1 Hypervisor (Bare Metal)</h3>
+        <ul>
+          <li>Runs <strong>directly on hardware</strong>, no host OS</li>
+          <li>Examples: <strong>VMware ESXi, Hyper-V, Xen</strong></li>
+          <li>Used in enterprise/servers</li>
+          <li>Best performance and security</li>
+        </ul>
+
+        <h3>2. Type 2 Hypervisor (Hosted)</h3>
+        <ul>
+          <li>Runs <strong>on top of a host OS</strong></li>
+          <li>Examples: <strong>VirtualBox, VMware Workstation, Parallels</strong></li>
+          <li>Used on desktops for testing, development</li>
+          <li>Easier to set up, slightly less performance</li>
+        </ul>
+
+        <h3>3. OS-level Virtualization (Containers)</h3>
+        <ul>
+          <li>Shares host OS kernel but isolates processes</li>
+          <li>Examples: <strong>Docker, LXC</strong></li>
+          <li>Lightweight — no full OS needed</li>
+          <li>Less security isolation than full VMs</li>
+        </ul>
+
+        <h3>4. Security Applications of VMs</h3>
+        <ul>
+          <li><strong>Sandboxing:</strong> Run suspicious files in isolated VM — malware can't escape</li>
+          <li><strong>Malware Analysis:</strong> Analyze viruses safely in disposable VMs</li>
+          <li><strong>Browser Isolation:</strong> Run untrusted web browsing in separate VM</li>
+          <li><strong>Honeypots:</strong> VMs simulating vulnerable systems to attract and study attackers</li>
+          <li><strong>Snapshot/Rollback:</strong> Take VM snapshots before risky operations — roll back if infected</li>
+        </ul>
+
+        <table>
+          <tr><th>Approach</th><th>Isolation</th><th>Performance</th><th>Use Case</th></tr>
+          <tr><td>Type 1 Hypervisor</td><td>High</td><td>High</td><td>Enterprise servers</td></tr>
+          <tr><td>Type 2 Hypervisor</td><td>High</td><td>Medium</td><td>Developer desktop</td></tr>
+          <tr><td>Container</td><td>Medium</td><td>Very High</td><td>App deployment</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>VM escape = vulnerability where malware breaks out of VM to host</li>
+            <li>Snapshots are excellent recovery tools after security incidents</li>
+            <li>Containers share kernel — less isolated than VMs</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="chips">
+          <span class="chip">Type 1 = Bare metal</span>
+          <span class="chip">Type 2 = On host OS</span>
+          <span class="chip">Sandbox = Malware isolation</span>
+          <span class="chip">Snapshot = Rollback</span>
+          <span class="chip">Container = Shared kernel</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q12 ════ -->
+<div class="q-card" id="q12">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">12</div>
+    <div class="q-title">Define confinement principle and discuss confinement approaches at different levels.</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-intro">
+      <div class="section-head">🔵 Introduction</div>
+      <div class="section-body">
+        <p>The <strong>Confinement Principle</strong> (proposed by Butler Lampson, 1973) states that a process/program should be <strong>restricted to perform only authorized operations</strong> and cannot leak information to unauthorized parties. It limits what a program can access.</p>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Confinement Approaches</div>
+      <div class="section-body">
+
+        <h3>1. Physical Confinement</h3>
+        <ul>
+          <li>Run untrusted code on an <strong>isolated, air-gapped machine</strong></li>
+          <li>No network connection, no shared media</li>
+          <li>Impractical for most cases but most secure</li>
+        </ul>
+
+        <h3>2. OS-Level Confinement</h3>
+        <ul>
+          <li><strong>chroot jail:</strong> Restricts process to a subtree of filesystem</li>
+          <li><strong>Sandboxing:</strong> Limits syscalls available to a process</li>
+          <li><strong>SELinux / AppArmor:</strong> Mandatory Access Control — limits process capabilities</li>
+          <li><strong>Linux Namespaces:</strong> Isolate PID, network, filesystem namespaces</li>
+        </ul>
+
+        <h3>3. Virtual Machine Confinement</h3>
+        <ul>
+          <li>Run untrusted code in a <strong>VM with hypervisor isolation</strong></li>
+          <li>VM boundaries prevent escape to host</li>
+          <li>Used in cloud computing for tenant isolation</li>
+        </ul>
+
+        <h3>4. Language-Based Confinement</h3>
+        <ul>
+          <li><strong>Java sandbox:</strong> JVM controls what untrusted code can access</li>
+          <li><strong>WebAssembly sandbox:</strong> Browser-level isolation</li>
+          <li>Type-safe languages prevent buffer overflows</li>
+        </ul>
+
+        <h3>5. Cryptographic Confinement</h3>
+        <ul>
+          <li>Data encrypted so even if extracted, unusable without key</li>
+          <li>DRM systems use this approach</li>
+        </ul>
+
+        <div class="box box-yellow">⚠️ Covert Channels: A clever attacker can leak info even in confined systems through timing, power consumption, or storage channels — defeating confinement!</div>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>Confinement is about <strong>limiting access/action</strong>, not just authentication</li>
+            <li>Covert channels are the main challenge for confinement</li>
+            <li>chroot jail ≠ complete isolation — just filesystem restriction</li>
+            <li>Lampson's confinement = exam favorite historical reference</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="chips">
+          <span class="chip">Lampson 1973</span>
+          <span class="chip">chroot = FS jail</span>
+          <span class="chip">VM = Best isolation</span>
+          <span class="chip">Covert channel = Leak risk</span>
+          <span class="chip">SELinux = MAC</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q13 ════ -->
+<div class="q-card" id="q13">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">13</div>
+    <div class="q-title">Explain Risk, Vulnerability and Threat in Network Security.</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-intro">
+      <div class="section-head">🔵 Introduction</div>
+      <div class="section-body">
+        <p>These three terms are the foundation of <strong>Information Security Risk Management</strong>. They are distinct but interconnected concepts. Understanding them is essential for building any security strategy.</p>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Definitions and Differences</div>
+      <div class="section-body">
+
+        <h3>1. Vulnerability</h3>
+        <p>A <strong>weakness or flaw</strong> in a system, application, network, or process that can be exploited by a threat.</p>
+        <ul>
+          <li>Unpatched software, weak passwords, misconfigured firewall</li>
+          <li>SQL injection flaw, open unnecessary ports</li>
+        </ul>
+
+        <h3>2. Threat</h3>
+        <p>Any <strong>potential danger</strong> that could exploit a vulnerability to cause harm. A threat is the "who/what" that could attack.</p>
+        <ul>
+          <li>Hackers, malware, disgruntled employees, natural disasters</li>
+          <li>Can be intentional or accidental</li>
+        </ul>
+
+        <h3>3. Risk</h3>
+        <p>The <strong>probability and impact</strong> of a threat successfully exploiting a vulnerability. Risk is what we measure and manage.</p>
+        <div class="box box-blue" style="font-family:var(--mono); font-size:0.95rem; text-align:center;">Risk = Threat × Vulnerability × Impact</div>
+
+        <table>
+          <tr><th>Term</th><th>Definition</th><th>Example</th><th>Nature</th></tr>
+          <tr><td><strong>Vulnerability</strong></td><td>Weakness in system</td><td>Unpatched Apache server</td><td>Internal/Static</td></tr>
+          <tr><td><strong>Threat</strong></td><td>Potential danger</td><td>Hacker with exploit tool</td><td>External/Dynamic</td></tr>
+          <tr><td><strong>Risk</strong></td><td>Probability × Impact</td><td>Server being compromised</td><td>Calculated value</td></tr>
+        </table>
+
+        <h3>Threat Agents vs Threat</h3>
+        <ul>
+          <li><strong>Threat Agent:</strong> The entity that carries out the attack (human hacker, worm)</li>
+          <li><strong>Threat:</strong> The action/event itself (hacking attempt, infection)</li>
+        </ul>
+
+        <h3>Risk Management Steps</h3>
+        <ol class="steps">
+          <li><strong>Identify Assets</strong> — what needs protection?</li>
+          <li><strong>Identify Threats</strong> — what could go wrong?</li>
+          <li><strong>Identify Vulnerabilities</strong> — how could it go wrong?</li>
+          <li><strong>Assess Risk</strong> — how likely and how bad?</li>
+          <li><strong>Mitigate Risk</strong> — patch, reduce, transfer, or accept</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>A threat without a vulnerability = <strong>no risk</strong></li>
+            <li>A vulnerability without a threat = <strong>no immediate risk</strong></li>
+            <li>Risk = Threat × Vulnerability × Impact (formula!)</li>
+            <li>CVE (Common Vulnerabilities and Exposures) is global vulnerability database</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="memory"><div class="memory-label">Memory Trick</div><div class="memory-text"><strong>TVR</strong>: Threat attacks → Vulnerability → causes → Risk</div></div>
+        <div class="chips">
+          <span class="chip">Vulnerability = Weakness</span>
+          <span class="chip">Threat = Potential danger</span>
+          <span class="chip">Risk = T × V × I</span>
+          <span class="chip">CVE = Vuln Database</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q14 ════ -->
+<div class="q-card" id="q14">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">14</div>
+    <div class="q-title">What is Firewall? Explain packet filtering firewall in detail.</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-intro">
+      <div class="section-head">🔵 Introduction</div>
+      <div class="section-body">
+        <p>A <strong>Firewall</strong> is a network security device (hardware or software) that <strong>monitors and controls incoming/outgoing network traffic</strong> based on predefined security rules. It acts as a barrier between trusted internal networks and untrusted external networks.</p>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Types of Firewalls</div>
+      <div class="section-body">
+        <table>
+          <tr><th>Type</th><th>Layer</th><th>How it works</th></tr>
+          <tr><td><strong>Packet Filtering</strong></td><td>Network (L3/L4)</td><td>Inspects packet headers</td></tr>
+          <tr><td><strong>Stateful Inspection</strong></td><td>Network+Transport</td><td>Tracks connection state</td></tr>
+          <tr><td><strong>Application Gateway (Proxy)</strong></td><td>Application (L7)</td><td>Understands app protocols</td></tr>
+          <tr><td><strong>Next-Gen Firewall (NGFW)</strong></td><td>All layers</td><td>DPI + IPS + App awareness</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Packet Filtering Firewall – In Detail</div>
+      <div class="section-body">
+        <p>The simplest and oldest type. Examines each packet <strong>independently</strong> based on its header information without tracking connection state.</p>
+
+        <h3>What it Checks (Packet Header Fields):</h3>
+        <ul>
+          <li><strong>Source IP Address</strong></li>
+          <li><strong>Destination IP Address</strong></li>
+          <li><strong>Source Port</strong></li>
+          <li><strong>Destination Port</strong></li>
+          <li><strong>Protocol</strong> (TCP, UDP, ICMP)</li>
+          <li><strong>Flags</strong> (SYN, ACK, FIN)</li>
+        </ul>
+
+        <h3>How ACL Rules Work:</h3>
+        <div class="box box-blue">
+          <strong>Example Firewall Rules (ACL):</strong><br>
+          DENY any from 10.0.0.0/8 to any port 23 (block Telnet)<br>
+          PERMIT any from any to 192.168.1.1 port 80 (allow HTTP)<br>
+          DENY all (default deny)
+        </div>
+
+        <h3>Advantages:</h3>
+        <ul>
+          <li>Fast — operates at network layer</li>
+          <li>Simple to configure</li>
+          <li>Low resource consumption</li>
+          <li>Transparent to applications</li>
+        </ul>
+
+        <h3>Disadvantages:</h3>
+        <ul>
+          <li>Cannot inspect packet <em>content</em> (payload)</li>
+          <li>Vulnerable to IP spoofing</li>
+          <li>Cannot detect fragmented packet attacks</li>
+          <li>No awareness of connection state</li>
+          <li>Cannot understand application-level protocols</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section sec-diagram">
+      <div class="section-head">📊 Packet Filtering Diagram</div>
+      <div class="section-body diagram-wrap">
+        <svg viewBox="0 0 500 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:500px">
+          <rect width="500" height="160" fill="#111827" rx="8"/>
+          <rect x="10" y="60" width="90" height="40" rx="5" fill="#1f2d45" stroke="#94a3b8"/>
+          <text x="55" y="78" text-anchor="middle" font-size="9" fill="#e2e8f0">Internet</text>
+          <text x="55" y="92" text-anchor="middle" font-size="8" fill="#64748b">(Untrusted)</text>
+          <!-- Arrow -->
+          <line x1="100" y1="80" x2="160" y2="80" stroke="#94a3b8" stroke-width="2"/>
+          <!-- Firewall -->
+          <rect x="160" y="45" width="100" height="70" rx="6" fill="#7c3aed" opacity="0.8"/>
+          <text x="210" y="72" text-anchor="middle" font-size="9" fill="#fff" font-weight="bold">PACKET</text>
+          <text x="210" y="84" text-anchor="middle" font-size="9" fill="#fff" font-weight="bold">FILTER</text>
+          <text x="210" y="98" text-anchor="middle" font-size="8" fill="#ddd">ACL Rules</text>
+          <!-- ALLOW arrow -->
+          <line x1="260" y1="70" x2="350" y2="55" stroke="#10b981" stroke-width="2"/>
+          <text x="305" y="53" text-anchor="middle" font-size="8" fill="#10b981">✓ ALLOW</text>
+          <!-- DENY arrow -->
+          <line x1="260" y1="95" x2="350" y2="115" stroke="#ef4444" stroke-width="2"/>
+          <text x="305" y="128" text-anchor="middle" font-size="8" fill="#ef4444">✗ DENY / DROP</text>
+          <!-- Internal -->
+          <rect x="360" y="40" width="90" height="40" rx="5" fill="#1f2d45" stroke="#10b981"/>
+          <text x="405" y="58" text-anchor="middle" font-size="9" fill="#10b981">Internal</text>
+          <text x="405" y="72" text-anchor="middle" font-size="8" fill="#64748b">Network</text>
+          <!-- Rule text -->
+          <text x="210" y="136" text-anchor="middle" font-size="8" fill="#94a3b8">Checks: IP, Port, Protocol</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>Packet filtering = <strong>stateless</strong> (no connection tracking)</li>
+            <li>Stateful inspection = <strong>improved version</strong> that tracks connection state</li>
+            <li>DMZ (Demilitarized Zone) = network between two firewalls</li>
+            <li>Default deny rule = "deny all" at end of ACL — exam favorite!</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="chips">
+          <span class="chip">Firewall = Traffic gate</span>
+          <span class="chip">Packet filter = Stateless</span>
+          <span class="chip">Checks IP+Port+Protocol</span>
+          <span class="chip">Fast but no payload inspect</span>
+          <span class="chip">ACL = Allow/Deny rules</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q15 ════ -->
+<div class="q-card" id="q15">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">15</div>
+    <div class="q-title">Explain how cybercrime originated. State and classify cyber crimes.</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-intro">
+      <div class="section-head">🔵 Introduction</div>
+      <div class="section-body">
+        <p><strong>Cybercrime</strong> refers to criminal activities conducted using computers, networks, or the internet as either tools or targets. The term originated alongside the growth of digital computing and internet connectivity.</p>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Origin and History</div>
+      <div class="section-body">
+        <table>
+          <tr><th>Era</th><th>Development</th></tr>
+          <tr><td>1960s-70s</td><td><strong>Phone Phreaking</strong> — manipulating telephone systems (John Draper / "Cap'n Crunch")</td></tr>
+          <tr><td>1980s</td><td>First computer viruses (Brain virus, Morris Worm 1988 — first major internet attack)</td></tr>
+          <tr><td>1990s</td><td>Rise of internet → financial fraud, hacking, email spam, piracy</td></tr>
+          <tr><td>2000s</td><td>Organized cybercrime, phishing, identity theft, botnets</td></tr>
+          <tr><td>2010s</td><td>Ransomware, APTs, state-sponsored attacks, dark web markets</td></tr>
+          <tr><td>2020s</td><td>AI-powered attacks, deepfakes, crypto crime, supply chain attacks</td></tr>
+        </table>
+        <div class="box box-blue">The term "cybercrime" became mainstream with the growth of commercial internet in the 1990s.</div>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Classification of Cyber Crimes</div>
+      <div class="section-body">
+        <h3>A. Based on Target</h3>
+        <table>
+          <tr><th>Type</th><th>Example</th></tr>
+          <tr><td><strong>Crimes against individuals</strong></td><td>Identity theft, harassment, stalking, phishing</td></tr>
+          <tr><td><strong>Crimes against organizations</strong></td><td>Corporate espionage, DDoS, data breach</td></tr>
+          <tr><td><strong>Crimes against government</strong></td><td>Cyberterrorism, critical infrastructure attacks</td></tr>
+          <tr><td><strong>Crimes against property</strong></td><td>Hacking, IP theft, vandalism</td></tr>
+        </table>
+
+        <h3>B. Based on Nature</h3>
+        <ul>
+          <li><strong>Computer as target:</strong> Hacking, DDoS, malware infection</li>
+          <li><strong>Computer as tool:</strong> Phishing, fraud, child pornography distribution</li>
+          <li><strong>Computer as incidental:</strong> Drug trafficking record-keeping, money laundering</li>
+        </ul>
+
+        <h3>C. Major Categories</h3>
+        <ul>
+          <li>Financial Crimes (fraud, identity theft)</li>
+          <li>Privacy Crimes (stalking, data theft)</li>
+          <li>Intellectual Property Crimes (piracy, trade secret theft)</li>
+          <li>Cyber Terrorism</li>
+          <li>Hacking and Unauthorized Access</li>
+          <li>Child Exploitation</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>Morris Worm (1988) = first widely recognized internet worm</li>
+            <li>Phone phreaking = precursor to cybercrime</li>
+            <li>IT Act 2000 (India) = first Indian cyber crime law</li>
+            <li>Three roles of computer: Target / Tool / Incidental</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="chips">
+          <span class="chip">Phreaking = 1970s origin</span>
+          <span class="chip">Morris Worm = 1988</span>
+          <span class="chip">Target / Tool / Incidental</span>
+          <span class="chip">IT Act 2000 = India</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q16 ════ -->
+<div class="q-card" id="q16">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">16</div>
+    <div class="q-title">Who are cyber criminals? Explain how criminals plan cybercrime.</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Types of Cyber Criminals</div>
+      <div class="section-body">
+        <table>
+          <tr><th>Type</th><th>Description</th><th>Motivation</th></tr>
+          <tr><td><strong>Hackers (Script Kiddies)</strong></td><td>Low-skill, use existing tools</td><td>Fun, fame</td></tr>
+          <tr><td><strong>Black Hat Hackers</strong></td><td>Skilled, malicious intent</td><td>Financial gain</td></tr>
+          <tr><td><strong>White Hat Hackers</strong></td><td>Ethical hackers, find vulnerabilities</td><td>Security improvement</td></tr>
+          <tr><td><strong>Grey Hat Hackers</strong></td><td>Break in without permission but report findings</td><td>Mixed</td></tr>
+          <tr><td><strong>Insiders</strong></td><td>Employees with authorized access</td><td>Revenge, financial</td></tr>
+          <tr><td><strong>Hacktivists</strong></td><td>Attack for political/social causes</td><td>Ideology (Anonymous)</td></tr>
+          <tr><td><strong>State-sponsored</strong></td><td>Government-backed attackers</td><td>Espionage, warfare</td></tr>
+          <tr><td><strong>Organized Crime Groups</strong></td><td>Criminal organizations running cyber ops</td><td>Large-scale financial gain</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 How Criminals Plan Cybercrime</div>
+      <div class="section-body">
+        <p>Cybercrime follows a structured methodology similar to the <strong>Cyber Kill Chain</strong>:</p>
+        <ol class="steps">
+          <li><strong>Reconnaissance:</strong> Gather information about target (OSINT, social media, Google dorking)</li>
+          <li><strong>Scanning & Enumeration:</strong> Port scanning (Nmap), vulnerability scanning, service enumeration</li>
+          <li><strong>Target Selection:</strong> Choose the most vulnerable entry point</li>
+          <li><strong>Exploitation:</strong> Exploit vulnerability using tools or custom code</li>
+          <li><strong>Gaining Access:</strong> Install backdoor, gain shell/root access</li>
+          <li><strong>Privilege Escalation:</strong> Gain admin/root privileges</li>
+          <li><strong>Maintaining Access:</strong> Install rootkit, create hidden accounts</li>
+          <li><strong>Covering Tracks:</strong> Delete logs, hide activity</li>
+          <li><strong>Executing Goal:</strong> Data theft, sabotage, ransomware deployment</li>
+        </ol>
+        <div class="box box-blue">This methodology is also called the <strong>Cyber Kill Chain</strong> (Lockheed Martin model)</div>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>Cyber Kill Chain has 7 stages (Lockheed Martin)</li>
+            <li>Insider threats are harder to detect than external attacks</li>
+            <li>OSINT = Open Source Intelligence gathering</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="memory"><div class="memory-label">Memory Trick – Kill Chain</div><div class="memory-text"><strong>RSTEPMCC</strong>: Recon, Scan, Target, Exploit, Privilege, Maintain, Cover, Crime</div></div>
+        <div class="chips">
+          <span class="chip">Black hat = Malicious</span>
+          <span class="chip">White hat = Ethical</span>
+          <span class="chip">Kill Chain = 7 steps</span>
+          <span class="chip">Insider = Hardest detect</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q17 ════ -->
+<div class="q-card" id="q17">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">17</div>
+    <div class="q-title">Explain tools used in cyber crime.</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Cyber Crime Tools by Category</div>
+      <div class="section-body">
+
+        <h3>1. Reconnaissance Tools</h3>
+        <table>
+          <tr><th>Tool</th><th>Purpose</th></tr>
+          <tr><td><strong>Maltego</strong></td><td>OSINT and link analysis</td></tr>
+          <tr><td><strong>Shodan</strong></td><td>Search engine for internet-connected devices</td></tr>
+          <tr><td><strong>theHarvester</strong></td><td>Email, subdomain, IP gathering</td></tr>
+          <tr><td><strong>WHOIS</strong></td><td>Domain registration info</td></tr>
+        </table>
+
+        <h3>2. Scanning Tools</h3>
+        <table>
+          <tr><th>Tool</th><th>Purpose</th></tr>
+          <tr><td><strong>Nmap</strong></td><td>Port/service/OS scanning</td></tr>
+          <tr><td><strong>Nessus</strong></td><td>Vulnerability scanning</td></tr>
+          <tr><td><strong>OpenVAS</strong></td><td>Open-source vulnerability scanner</td></tr>
+        </table>
+
+        <h3>3. Exploitation Tools</h3>
+        <table>
+          <tr><th>Tool</th><th>Purpose</th></tr>
+          <tr><td><strong>Metasploit</strong></td><td>Automated exploit framework</td></tr>
+          <tr><td><strong>BeEF</strong></td><td>Browser exploitation framework</td></tr>
+          <tr><td><strong>SQLmap</strong></td><td>Automated SQL injection</td></tr>
+        </table>
+
+        <h3>4. Password Attack Tools</h3>
+        <ul>
+          <li><strong>Hashcat:</strong> GPU-based password cracker</li>
+          <li><strong>John the Ripper:</strong> CPU-based password cracker</li>
+          <li><strong>Hydra:</strong> Network login brute forcer</li>
+        </ul>
+
+        <h3>5. Sniffing Tools</h3>
+        <ul>
+          <li><strong>Wireshark:</strong> Network packet analyzer</li>
+          <li><strong>tcpdump:</strong> Command-line packet capture</li>
+        </ul>
+
+        <h3>6. Malware / RAT Tools</h3>
+        <ul>
+          <li><strong>Poison Ivy, DarkComet:</strong> Remote Access Trojans</li>
+          <li><strong>Cobalt Strike:</strong> Advanced threat simulation (often abused)</li>
+        </ul>
+
+        <h3>7. Anonymization Tools</h3>
+        <ul>
+          <li><strong>Tor Browser:</strong> Anonymous browsing via onion routing</li>
+          <li><strong>ProxyChains:</strong> Route traffic through multiple proxies</li>
+          <li><strong>VPN:</strong> Hide real IP address</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>Metasploit = most famous exploit framework (Kali Linux)</li>
+            <li>Wireshark is used for both attack (sniffing) and defense (forensics)</li>
+            <li>These tools are dual-use — legal for pen testing, illegal when used for crime</li>
+            <li>Kali Linux = OS with all hacking tools pre-installed</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="chips">
+          <span class="chip">Nmap = Scan</span>
+          <span class="chip">Metasploit = Exploit</span>
+          <span class="chip">Wireshark = Sniff</span>
+          <span class="chip">Hashcat = Crack</span>
+          <span class="chip">Tor = Anonymous</span>
+          <span class="chip">SQLmap = SQLi</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q18 ════ -->
+<div class="q-card" id="q18">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">18</div>
+    <div class="q-title">Explain Digital Forensics life cycle.</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-intro">
+      <div class="section-head">🔵 Introduction</div>
+      <div class="section-body">
+        <p><strong>Digital Forensics</strong> is the process of collecting, preserving, analyzing, and presenting digital evidence from computers and networks for use in criminal investigations or legal proceedings. It follows a strict lifecycle to ensure evidence admissibility.</p>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Digital Forensics Life Cycle – Phases</div>
+      <div class="section-body">
+        <ol class="steps">
+          <li>
+            <strong>Identification:</strong> Identify potential sources of digital evidence (HDD, RAM, USB, mobile, cloud). Define scope of investigation.
+          </li>
+          <li>
+            <strong>Preservation:</strong> Protect evidence from modification or destruction. Create a <em>forensic image/clone</em> using write blockers. Maintain <strong>Chain of Custody</strong>.
+          </li>
+          <li>
+            <strong>Collection:</strong> Acquire physical and logical copies of evidence. Use tools: <code>dd</code>, FTK Imager, Autopsy. Document everything.
+          </li>
+          <li>
+            <strong>Examination:</strong> Filter and extract relevant data from acquired evidence. Recover deleted files, extract metadata, parse logs.
+          </li>
+          <li>
+            <strong>Analysis:</strong> Analyze extracted data to reconstruct events. Timeline analysis, correlate events, identify attacker's actions.
+          </li>
+          <li>
+            <strong>Documentation:</strong> Create detailed, reproducible documentation of findings. Step-by-step methodology must be documented.
+          </li>
+          <li>
+            <strong>Presentation:</strong> Present findings in court or to stakeholders. Use clear, non-technical language. Expert testimony if required.
+          </li>
+        </ol>
+
+        <div class="box box-yellow">⚠️ Chain of Custody: Documentation of who handled evidence, when and where. Any break in chain can make evidence inadmissible in court.</div>
+
+        <h3>Key Forensic Principles</h3>
+        <ul>
+          <li><strong>Locard's Exchange Principle:</strong> Every contact leaves a trace</li>
+          <li>Never work on original evidence — always work on <strong>forensic copy</strong></li>
+          <li>Verify copy integrity using <strong>hash (MD5/SHA-256)</strong></li>
+          <li>Document everything in real-time</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>Chain of Custody = most critical concept in forensics</li>
+            <li>Write blocker prevents modification of evidence during imaging</li>
+            <li>Forensic tools: Autopsy, FTK, EnCase, Volatility (RAM analysis)</li>
+            <li>Volatile data (RAM) should be collected FIRST — it's lost on shutdown</li>
+            <li>7 phases exam order: <strong>IPCEADP</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="memory"><div class="memory-label">Memory Trick</div><div class="memory-text"><strong>I-P-C-E-A-D-P</strong>: Identify, Preserve, Collect, Examine, Analyze, Document, Present</div></div>
+        <div class="chips">
+          <span class="chip">Chain of Custody</span>
+          <span class="chip">Write Blocker</span>
+          <span class="chip">Hash for integrity</span>
+          <span class="chip">RAM = Volatile first</span>
+          <span class="chip">Autopsy/FTK = Tools</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q19 ════ -->
+<div class="q-card" id="q19">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">19</div>
+    <div class="q-title">What is the need of Information Security Policy?</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-intro">
+      <div class="section-head">🔵 Introduction</div>
+      <div class="section-body">
+        <p>An <strong>Information Security Policy (ISP)</strong> is a formal document that defines the rules, guidelines, and procedures for protecting an organization's information assets. It is the <em>foundation of an organization's security posture</em>.</p>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Need / Importance of Information Security Policy</div>
+      <div class="section-body">
+        <ol class="steps">
+          <li><strong>Establish Security Baseline:</strong> Defines minimum acceptable security standards for all systems and users</li>
+          <li><strong>Legal and Regulatory Compliance:</strong> Ensures compliance with laws (GDPR, IT Act, HIPAA, PCI-DSS)</li>
+          <li><strong>Protect Sensitive Data:</strong> Defines how confidential data should be handled, stored, shared</li>
+          <li><strong>Define Roles & Responsibilities:</strong> Who is responsible for what security task</li>
+          <li><strong>Employee Awareness:</strong> Educates employees about acceptable use and security expectations</li>
+          <li><strong>Incident Response:</strong> Guides how to respond to security breaches</li>
+          <li><strong>Business Continuity:</strong> Ensures operations can continue after a security event</li>
+          <li><strong>Vendor/Third-party Management:</strong> Defines security requirements for partners</li>
+          <li><strong>Risk Management:</strong> Provides framework for identifying and mitigating risks</li>
+          <li><strong>Evidence in Disputes:</strong> Policy violations can be used in legal proceedings</li>
+        </ol>
+
+        <h3>Key Types of Security Policies</h3>
+        <table>
+          <tr><th>Policy Type</th><th>Purpose</th></tr>
+          <tr><td>Acceptable Use Policy (AUP)</td><td>What employees can/cannot do on company systems</td></tr>
+          <tr><td>Password Policy</td><td>Rules for creating/managing passwords</td></tr>
+          <tr><td>Access Control Policy</td><td>Who can access what resources</td></tr>
+          <tr><td>Incident Response Policy</td><td>Steps to take when breach occurs</td></tr>
+          <tr><td>Data Classification Policy</td><td>How to classify and handle different data types</td></tr>
+          <tr><td>BYOD Policy</td><td>Rules for personal devices in workplace</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>CIA Triad = basis for any security policy (Confidentiality, Integrity, Availability)</li>
+            <li>Policy → Standards → Procedures → Guidelines (hierarchy)</li>
+            <li>Policy must be approved by top management to be effective</li>
+            <li>ISO 27001 = international standard for information security management</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="chips">
+          <span class="chip">CIA Triad basis</span>
+          <span class="chip">Legal compliance</span>
+          <span class="chip">Roles & Responsibility</span>
+          <span class="chip">ISO 27001</span>
+          <span class="chip">AUP = Employee policy</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q20 ════ -->
+<div class="q-card" id="q20">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">20</div>
+    <div class="q-title">Explain wireless devices with examples and discuss their security challenges.</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-intro">
+      <div class="section-head">🔵 Introduction</div>
+      <div class="section-body">
+        <p>Wireless devices are electronic devices that communicate using wireless protocols (radio waves, infrared, Bluetooth) without physical cables. They are ubiquitous but introduce unique security challenges due to the broadcast nature of wireless signals.</p>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Types of Wireless Devices</div>
+      <div class="section-body">
+        <table>
+          <tr><th>Category</th><th>Examples</th><th>Protocol Used</th></tr>
+          <tr><td>Mobile Phones</td><td>Smartphones</td><td>4G/5G, WiFi, Bluetooth</td></tr>
+          <tr><td>Laptops/Tablets</td><td>MacBook, iPad</td><td>WiFi 802.11</td></tr>
+          <tr><td>IoT Devices</td><td>Smart home, cameras, sensors</td><td>WiFi, Zigbee, Z-Wave</td></tr>
+          <tr><td>Wearables</td><td>Smartwatch, fitness band</td><td>Bluetooth BLE</td></tr>
+          <tr><td>Network Equipment</td><td>Routers, Access Points</td><td>WiFi 802.11 a/b/g/n/ac/ax</td></tr>
+          <tr><td>RFID/NFC</td><td>Access cards, contactless payments</td><td>RFID/NFC</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Security Challenges</div>
+      <div class="section-body">
+        <h3>1. WiFi Security Threats</h3>
+        <ul>
+          <li><strong>Eavesdropping:</strong> Anyone within range can capture unencrypted traffic</li>
+          <li><strong>Evil Twin Attack:</strong> Fake WiFi hotspot mimics legitimate AP to intercept traffic</li>
+          <li><strong>War Driving:</strong> Driving around to find unsecured WiFi networks</li>
+          <li><strong>WEP/WPA Cracking:</strong> Old protocols (WEP, WPA1) can be cracked</li>
+          <li><strong>KRACK:</strong> Key Reinstallation Attack against WPA2 (2017)</li>
+        </ul>
+
+        <h3>2. Bluetooth Threats</h3>
+        <ul>
+          <li><strong>Bluejacking:</strong> Sending unsolicited messages</li>
+          <li><strong>Bluesnarfing:</strong> Unauthorized access to contacts, calendars</li>
+          <li><strong>Bluebugging:</strong> Taking control of device via Bluetooth</li>
+        </ul>
+
+        <h3>3. General Wireless Challenges</h3>
+        <ul>
+          <li>Broadcast nature — everyone receives signal</li>
+          <li>Physical boundary is difficult to define</li>
+          <li>Rogue access points and rouge devices</li>
+          <li>IoT devices often have weak/default credentials</li>
+        </ul>
+
+        <h3>Security Measures</h3>
+        <ul>
+          <li>Use <strong>WPA3</strong> (strongest WiFi encryption) or at minimum WPA2</li>
+          <li>Disable WPS (WiFi Protected Setup)</li>
+          <li>Use VPN on public WiFi</li>
+          <li>Keep Bluetooth off when not in use</li>
+          <li>Change default router credentials</li>
+          <li>Use network segmentation — IoT on separate VLAN</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>WEP = Broken (never use), WPA2 = acceptable, WPA3 = best</li>
+            <li>Evil Twin = most dangerous public WiFi attack</li>
+            <li>Bluesnarfing ≠ Bluejacking (snarfing = data theft)</li>
+            <li>802.11ax = WiFi 6 (latest standard)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="chips">
+          <span class="chip">WPA3 = Best WiFi</span>
+          <span class="chip">Evil Twin = Fake AP</span>
+          <span class="chip">Bluesnarfing = BT theft</span>
+          <span class="chip">War Driving</span>
+          <span class="chip">IoT = Weak creds</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q21 ════ -->
+<div class="q-card" id="q21">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">21</div>
+    <div class="q-title">Explain security measures, policies and attacks related to mobile devices along with organizational security implications.</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Mobile Security Attacks</div>
+      <div class="section-body">
+        <table>
+          <tr><th>Attack</th><th>Description</th></tr>
+          <tr><td><strong>Smishing</strong></td><td>SMS phishing — malicious links via text messages</td></tr>
+          <tr><td><strong>Vishing</strong></td><td>Voice phishing calls</td></tr>
+          <tr><td><strong>Malicious Apps</strong></td><td>Apps disguised as legitimate but contain malware</td></tr>
+          <tr><td><strong>Man-in-the-Middle</strong></td><td>Intercept mobile traffic on unsecured WiFi</td></tr>
+          <tr><td><strong>SIM Swapping</strong></td><td>Social engineer carrier to transfer victim's SIM to attacker</td></tr>
+          <tr><td><strong>SS7 Attack</strong></td><td>Exploit signaling protocol to intercept calls/SMS</td></tr>
+          <tr><td><strong>Jailbreak/Root Exploits</strong></td><td>Remove OS restrictions, exposing to attack</td></tr>
+          <tr><td><strong>Adware/Spyware</strong></td><td>Hidden data-collecting apps</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Security Measures & Policies</div>
+      <div class="section-body">
+        <h3>Technical Measures</h3>
+        <ul>
+          <li>Enable <strong>full-disk encryption</strong> (Android: default since 6.0; iOS: always encrypted)</li>
+          <li>Use <strong>biometric + PIN</strong> authentication</li>
+          <li>Enable <strong>remote wipe</strong> capability</li>
+          <li>Install only from official app stores</li>
+          <li>Keep OS and apps updated</li>
+          <li>Use VPN for sensitive communications</li>
+          <li>Enable <strong>MDM (Mobile Device Management)</strong> in organizations</li>
+        </ul>
+
+        <h3>Organizational Policies</h3>
+        <ul>
+          <li><strong>BYOD Policy:</strong> Rules for personal devices accessing corporate resources</li>
+          <li><strong>COPE (Corporate Owned, Personally Enabled):</strong> Company-provided devices</li>
+          <li><strong>MDM/EMM:</strong> Centrally manage, monitor, wipe corporate mobile devices</li>
+          <li>Containerization — separate work and personal data on same device</li>
+          <li>Mandatory screen lock + encryption policy</li>
+          <li>App whitelisting — only approved apps allowed</li>
+        </ul>
+
+        <h3>Organizational Implications</h3>
+        <ul>
+          <li>Data breach risk from lost/stolen devices</li>
+          <li>Shadow IT — employees using unapproved apps</li>
+          <li>Compliance challenges (GDPR, HIPAA)</li>
+          <li>Network security perimeter blurred by mobile workers</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>MDM = key tool for enterprise mobile management</li>
+            <li>BYOD = security nightmare without proper policy</li>
+            <li>SIM Swap = major threat to 2FA based on SMS</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="chips">
+          <span class="chip">MDM = Central manage</span>
+          <span class="chip">BYOD = Policy needed</span>
+          <span class="chip">SIM Swap = 2FA bypass</span>
+          <span class="chip">Encrypt + PIN</span>
+          <span class="chip">Remote wipe</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q22 ════ -->
+<div class="q-card" id="q22">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">22</div>
+    <div class="q-title">What is Identity Theft? Explain how it is done and how it can be handled.</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-intro">
+      <div class="section-head">🔵 Introduction</div>
+      <div class="section-body">
+        <p><strong>Identity Theft</strong> is a crime in which someone <strong>steals another person's personal information</strong> (name, SSN/Aadhaar, credit card number, etc.) to impersonate them for financial gain, fraud, or other crimes. It's one of the fastest-growing cybercrimes globally.</p>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 How Identity Theft Is Done</div>
+      <div class="section-body">
+        <h3>Methods of Stealing Identity:</h3>
+        <ol class="steps">
+          <li><strong>Phishing:</strong> Fake emails/websites trick users into entering personal info</li>
+          <li><strong>Data Breaches:</strong> Hackers steal databases from companies (Aadhaar leaks, etc.)</li>
+          <li><strong>Social Engineering:</strong> Pretexting calls impersonating banks, government agencies</li>
+          <li><strong>Skimming:</strong> Devices attached to ATMs capture card details + PIN</li>
+          <li><strong>Dumpster Diving:</strong> Retrieving discarded bank statements, receipts</li>
+          <li><strong>Shoulder Surfing:</strong> Watching someone enter PIN or personal info</li>
+          <li><strong>Malware/Keylogger:</strong> Software captures passwords and personal data</li>
+          <li><strong>Dark Web Purchase:</strong> Buy stolen credentials from dark web markets</li>
+          <li><strong>SIM Cloning:</strong> Duplicate SIM to intercept OTPs</li>
+        </ol>
+
+        <h3>Types of Identity Theft</h3>
+        <table>
+          <tr><th>Type</th><th>Description</th></tr>
+          <tr><td><strong>Financial</strong></td><td>Open credit cards, take loans in victim's name</td></tr>
+          <tr><td><strong>Medical</strong></td><td>Use victim's insurance for medical services</td></tr>
+          <tr><td><strong>Criminal</strong></td><td>Use victim's identity when arrested</td></tr>
+          <tr><td><strong>Synthetic</strong></td><td>Combine real + fake info to create new identity</td></tr>
+          <tr><td><strong>Child Identity</strong></td><td>Steal minor's identity — detected years later</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 How to Handle / Prevent Identity Theft</div>
+      <div class="section-body">
+        <h3>Prevention:</h3>
+        <ul>
+          <li>Use <strong>strong, unique passwords</strong> for every account + Password Manager</li>
+          <li>Enable <strong>Two-Factor Authentication (2FA)</strong></li>
+          <li>Shred documents before discarding</li>
+          <li>Monitor credit reports regularly</li>
+          <li>Be cautious of phishing emails/calls</li>
+          <li>Use VPN on public networks</li>
+        </ul>
+        <h3>If Identity Theft Occurs:</h3>
+        <ol class="steps">
+          <li>Alert bank/credit card companies immediately</li>
+          <li>File a police complaint (FIR)</li>
+          <li>Report to CERT-In (India) or FTC (USA)</li>
+          <li>Place a fraud alert on credit files</li>
+          <li>Change all compromised passwords</li>
+          <li>Document all incidents for legal use</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>Section 66C of IT Act 2000 = identity theft in India (imprisonment up to 3 years + fine)</li>
+            <li>Synthetic identity theft = hardest to detect</li>
+            <li>Credit freeze = best protection against financial identity theft</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="chips">
+          <span class="chip">Section 66C IT Act</span>
+          <span class="chip">Phishing + Skimming</span>
+          <span class="chip">2FA = Prevention</span>
+          <span class="chip">Credit Freeze</span>
+          <span class="chip">Dark Web = Buy IDs</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q23 ════ -->
+<div class="q-card" id="q23">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">23</div>
+    <div class="q-title">What is Steganography? Explain in detail.</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-intro">
+      <div class="section-head">🔵 Introduction</div>
+      <div class="section-body">
+        <p><strong>Steganography</strong> is the practice of <strong>hiding secret data within ordinary, non-secret files</strong> or messages to avoid detection. Unlike cryptography (which scrambles data), steganography <em>hides the existence</em> of the secret message.</p>
+        <div class="box box-blue">Steganography = Hidden writing (Greek: steganos = covered + graphia = writing)</div>
+        <div class="box box-green">Crypto makes data unreadable. Stego makes data invisible. They're complementary.</div>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Types of Steganography</div>
+      <div class="section-body">
+        <table>
+          <tr><th>Type</th><th>Carrier</th><th>Method</th></tr>
+          <tr><td><strong>Image Steganography</strong></td><td>JPEG, PNG, BMP</td><td>LSB modification (Least Significant Bit)</td></tr>
+          <tr><td><strong>Audio Steganography</strong></td><td>MP3, WAV</td><td>Echo hiding, phase coding, LSB</td></tr>
+          <tr><td><strong>Video Steganography</strong></td><td>AVI, MP4</td><td>Hide in frames (image stego per frame)</td></tr>
+          <tr><td><strong>Text Steganography</strong></td><td>Text files</td><td>Extra spaces, null chars, invisible chars</td></tr>
+          <tr><td><strong>Network Steganography</strong></td><td>TCP/IP packets</td><td>Use unused header fields to carry data</td></tr>
+          <tr><td><strong>Document Stego</strong></td><td>PDF, DOCX</td><td>White text on white background, tiny fonts</td></tr>
+        </table>
+
+        <h3>LSB (Least Significant Bit) Technique – Most Common</h3>
+        <p>In an image, each pixel has RGB values (e.g., 11001010). The <strong>last bit (LSB)</strong> can be changed without visible difference to the human eye.</p>
+        <div class="box box-blue">Original pixel R: <code>11001010</code> → After hiding bit '1': <code>11001011</code> → No visible change, but secret bit stored!</div>
+        <p>A 1MP image (1,000,000 pixels × 3 channels) can store ~375,000 bytes of hidden data!</p>
+
+        <h3>Applications</h3>
+        <ul>
+          <li><strong>Malicious use:</strong> Criminals hide malware instructions, C2 communication, exfiltrate data in images</li>
+          <li><strong>Legitimate use:</strong> Digital watermarking, copyright protection, covert communication</li>
+          <li><strong>Intelligence:</strong> Spies use stego for covert communication</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Steganalysis (Detection)</div>
+      <div class="section-body">
+        <ul>
+          <li><strong>Visual Analysis:</strong> Look for visual anomalies in images</li>
+          <li><strong>Statistical Analysis:</strong> Detect LSB modification patterns (Chi-square attack)</li>
+          <li><strong>File Size Analysis:</strong> Unusual file size for given image dimensions</li>
+          <li><strong>Tools:</strong> StegExpose, StegDetect, binwalk</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>Stego ≠ Encryption — stego hides existence, crypto hides meaning</li>
+            <li>LSB = most popular technique for image stego</li>
+            <li>Terrorists used steganography in images posted to public websites</li>
+            <li>Tools: Steghide, OpenStego, DeepSound (audio)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="chips">
+          <span class="chip">Hides existence of data</span>
+          <span class="chip">LSB = Popular method</span>
+          <span class="chip">Stego ≠ Crypto</span>
+          <span class="chip">Steganalysis = Detection</span>
+          <span class="chip">Watermarking = Legit use</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q24 ════ -->
+<div class="q-card" id="q24">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">24</div>
+    <div class="q-title">What is Email? Explain Email Forensics.</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-intro">
+      <div class="section-head">🔵 Introduction</div>
+      <div class="section-body">
+        <p><strong>Email (Electronic Mail)</strong> is a method of exchanging digital messages over computer networks. It uses protocols like <strong>SMTP</strong> (sending), <strong>POP3/IMAP</strong> (receiving) to transmit messages.</p>
+        <p><strong>Email Forensics</strong> is the process of analyzing email evidence to investigate cybercrime, fraud, harassment, or other illegal activities.</p>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Email Architecture</div>
+      <div class="section-body">
+        <table>
+          <tr><th>Protocol</th><th>Port</th><th>Purpose</th></tr>
+          <tr><td><strong>SMTP</strong></td><td>25, 587</td><td>Sending emails</td></tr>
+          <tr><td><strong>POP3</strong></td><td>110</td><td>Downloading emails (deletes from server)</td></tr>
+          <tr><td><strong>IMAP</strong></td><td>143</td><td>Reading emails (kept on server)</td></tr>
+          <tr><td>SMTP over SSL</td><td>465</td><td>Secure sending</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Email Forensics</div>
+      <div class="section-body">
+
+        <h3>Key Evidence in Email:</h3>
+        <ul>
+          <li><strong>Email Headers:</strong> Most important! Contains actual routing info:
+            <ul>
+              <li>Received: from (actual originating server, IP)</li>
+              <li>X-Originating-IP (sender's real IP)</li>
+              <li>Message-ID (unique identifier)</li>
+              <li>Date, From, To, Reply-To</li>
+            </ul>
+          </li>
+          <li><strong>Email Body:</strong> Content, embedded links, HTML code</li>
+          <li><strong>Attachments:</strong> Metadata, embedded objects, malware</li>
+          <li><strong>Metadata:</strong> Creation time, modification time</li>
+        </ul>
+
+        <h3>Email Forensics Process:</h3>
+        <ol class="steps">
+          <li><strong>Collect Email:</strong> Extract from email client, server, or PST/MBOX files</li>
+          <li><strong>Analyze Headers:</strong> Trace the <em>actual route</em> of email — Received headers are read <strong>bottom to top</strong></li>
+          <li><strong>IP Tracing:</strong> Extract originating IP, use WHOIS/GeoIP to identify location</li>
+          <li><strong>Examine Attachments:</strong> Scan for malware, extract metadata</li>
+          <li><strong>Authentication Check:</strong> Verify SPF, DKIM, DMARC records</li>
+          <li><strong>Timeline Analysis:</strong> Create chronology of email activity</li>
+          <li><strong>Document Findings:</strong> Preserve as evidence</li>
+        </ol>
+
+        <h3>Email Spoofing Detection</h3>
+        <ul>
+          <li><strong>SPF (Sender Policy Framework):</strong> Lists authorized sending servers for a domain</li>
+          <li><strong>DKIM (DomainKeys Identified Mail):</strong> Digital signature added by sending server</li>
+          <li><strong>DMARC:</strong> Policy for handling SPF/DKIM failures</li>
+        </ul>
+
+        <div class="box box-yellow">⚠️ "From" field in email can be easily spoofed! Always analyze the <strong>Received headers</strong> for actual origin.</div>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>Email headers are read <strong>bottom to top</strong> for routing analysis</li>
+            <li>X-Originating-IP shows real sender IP</li>
+            <li>SPF/DKIM/DMARC = email authentication trinity</li>
+            <li>Tools: Emailtrackerpro, eMailTrackerPro, MXToolbox</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="chips">
+          <span class="chip">SMTP = Send (port 25)</span>
+          <span class="chip">IMAP = Read (port 143)</span>
+          <span class="chip">Header bottom→top</span>
+          <span class="chip">SPF+DKIM+DMARC</span>
+          <span class="chip">X-Originating-IP</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q25 ════ -->
+<div class="q-card" id="q25">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">25</div>
+    <div class="q-title">What are privacy threats and challenges?</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-intro">
+      <div class="section-head">🔵 Introduction</div>
+      <div class="section-body">
+        <p><strong>Privacy</strong> refers to the right of individuals to control their personal information. In the digital age, privacy threats arise from technological capabilities, corporate data collection, government surveillance, and cybercriminals.</p>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Privacy Threats</div>
+      <div class="section-body">
+        <h3>1. Data Collection by Companies</h3>
+        <ul>
+          <li>Tech giants (Google, Facebook) collect vast behavioral data</li>
+          <li>Targeted advertising profiles based on browsing habits</li>
+          <li>Third-party tracking cookies follow users across websites</li>
+        </ul>
+
+        <h3>2. Government Surveillance</h3>
+        <ul>
+          <li>Mass surveillance programs (NSA's PRISM program exposed by Snowden)</li>
+          <li>CCTV with facial recognition</li>
+          <li>Social media monitoring</li>
+        </ul>
+
+        <h3>3. Data Breaches</h3>
+        <ul>
+          <li>Exposure of personal data through hacked databases</li>
+          <li>Examples: Aadhaar data leaks, Equifax breach (2017 — 147 million affected)</li>
+        </ul>
+
+        <h3>4. Social Media Privacy</h3>
+        <ul>
+          <li>Oversharing personal information publicly</li>
+          <li>Location check-ins reveal movements</li>
+          <li>Facial recognition in photos</li>
+        </ul>
+
+        <h3>5. IoT Privacy</h3>
+        <ul>
+          <li>Smart devices (Alexa, smart TV) always listening/watching</li>
+          <li>Data sent to vendor servers without user knowledge</li>
+        </ul>
+
+        <h3>6. Emerging Threats</h3>
+        <ul>
+          <li><strong>Deepfakes:</strong> AI-generated fake videos/images of individuals</li>
+          <li><strong>Behavioral Fingerprinting:</strong> Tracking via browser behavior patterns</li>
+          <li><strong>Location Tracking:</strong> Phone apps tracking physical location 24/7</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Privacy Challenges</div>
+      <div class="section-body">
+        <table>
+          <tr><th>Challenge</th><th>Description</th></tr>
+          <tr><td><strong>Consent</strong></td><td>Users don't read privacy policies — "I Agree" without understanding</td></tr>
+          <tr><td><strong>Data Minimization</strong></td><td>Companies collect more data than necessary</td></tr>
+          <tr><td><strong>Anonymization</strong></td><td>Anonymized data can often be re-identified</td></tr>
+          <tr><td><strong>Jurisdiction</strong></td><td>Data stored in foreign countries — different laws apply</td></tr>
+          <tr><td><strong>Right to be Forgotten</strong></td><td>Difficult to delete all copies of personal data</td></tr>
+          <tr><td><strong>Children's Privacy</strong></td><td>Apps targeting children collect sensitive data</td></tr>
+        </table>
+
+        <h3>Privacy Protection Measures</h3>
+        <ul>
+          <li>Use VPN to mask IP and encrypt traffic</li>
+          <li>Use privacy-focused browsers (Firefox, Tor)</li>
+          <li>Enable 2FA on all accounts</li>
+          <li>Review app permissions regularly</li>
+          <li>Use encrypted messaging (Signal, WhatsApp)</li>
+          <li>GDPR (EU) / PDPB (India) = legal protections</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>GDPR = EU's data privacy regulation (2018) — global gold standard</li>
+            <li>India's PDPB (Personal Data Protection Bill) = India's equivalent</li>
+            <li>Snowden revelations (2013) = turning point for privacy awareness</li>
+            <li>"If the service is free, you are the product" — data as currency</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="chips">
+          <span class="chip">GDPR = EU privacy law</span>
+          <span class="chip">Deepfakes = New threat</span>
+          <span class="chip">Tracking cookies</span>
+          <span class="chip">IoT always listens</span>
+          <span class="chip">Snowden = Surveillance</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ Q26 ════ -->
+<div class="q-card" id="q26">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-num">26</div>
+    <div class="q-title">What is Cyber Law? State cyber laws and Intellectual Property related legislation in India.</div>
+    <div class="q-toggle">▼</div>
+  </div>
+  <div class="q-body">
+
+    <div class="section sec-intro">
+      <div class="section-head">🔵 Introduction</div>
+      <div class="section-body">
+        <p><strong>Cyber Law</strong> (also called Internet Law or IT Law) is a body of law that governs the use of computers, the internet, and digital technologies. It covers issues like digital contracts, cybercrime, data protection, intellectual property, and electronic commerce.</p>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Cyber Laws in India</div>
+      <div class="section-body">
+        <h3>1. Information Technology Act, 2000 (IT Act)</h3>
+        <p>India's primary cyber law. Key sections:</p>
+        <table>
+          <tr><th>Section</th><th>Offence</th><th>Punishment</th></tr>
+          <tr><td><strong>Sec 43</strong></td><td>Unauthorized computer access, damage</td><td>Compensation</td></tr>
+          <tr><td><strong>Sec 66</strong></td><td>Computer-related offences (hacking)</td><td>3 years + ₹5 lakh fine</td></tr>
+          <tr><td><strong>Sec 66A</strong></td><td>Offensive messages (STRUCK DOWN by SC 2015)</td><td>—</td></tr>
+          <tr><td><strong>Sec 66B</strong></td><td>Receiving stolen computer resource</td><td>3 years + ₹1 lakh</td></tr>
+          <tr><td><strong>Sec 66C</strong></td><td>Identity theft</td><td>3 years + ₹1 lakh</td></tr>
+          <tr><td><strong>Sec 66D</strong></td><td>Cheating by personation using computer</td><td>3 years + ₹1 lakh</td></tr>
+          <tr><td><strong>Sec 66E</strong></td><td>Violation of privacy (publishing private images)</td><td>3 years + ₹2 lakh</td></tr>
+          <tr><td><strong>Sec 66F</strong></td><td>Cyber terrorism</td><td>Life imprisonment</td></tr>
+          <tr><td><strong>Sec 67</strong></td><td>Publishing obscene material</td><td>5 years + ₹10 lakh</td></tr>
+          <tr><td><strong>Sec 70</strong></td><td>Unauthorized access to protected system</td><td>10 years + fine</td></tr>
+          <tr><td><strong>Sec 72</strong></td><td>Breach of confidentiality by intermediary</td><td>2 years + ₹1 lakh</td></tr>
+        </table>
+
+        <h3>IT (Amendment) Act, 2008</h3>
+        <ul>
+          <li>Added provisions for cyber terrorism (Sec 66F)</li>
+          <li>Data protection requirements for corporates (Sec 43A)</li>
+          <li>Intermediary liability framework</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section sec-answer">
+      <div class="section-head">🟢 Intellectual Property (IP) Legislation in India</div>
+      <div class="section-body">
+        <table>
+          <tr><th>IP Type</th><th>Governing Law</th><th>Duration</th></tr>
+          <tr><td><strong>Copyright</strong></td><td>Copyright Act, 1957</td><td>Life + 60 years</td></tr>
+          <tr><td><strong>Patent</strong></td><td>Patents Act, 1970</td><td>20 years</td></tr>
+          <tr><td><strong>Trademark</strong></td><td>Trade Marks Act, 1999</td><td>10 years (renewable)</td></tr>
+          <tr><td><strong>Industrial Design</strong></td><td>Designs Act, 2000</td><td>10+5 years</td></tr>
+          <tr><td><strong>Geographical Indication</strong></td><td>GI of Goods Act, 1999</td><td>10 years (renewable)</td></tr>
+        </table>
+
+        <h3>Digital IP Issues</h3>
+        <ul>
+          <li><strong>Software Piracy:</strong> Unauthorized copying/distribution of software — Copyright violation</li>
+          <li><strong>Domain Name Disputes:</strong> Cybersquatting — registering company names as domains</li>
+          <li><strong>Online Copyright Infringement:</strong> Streaming/downloading pirated movies, music</li>
+          <li><strong>Database Protection:</strong> Sec 43 IT Act protects digital databases</li>
+        </ul>
+
+        <h3>CERT-In (Computer Emergency Response Team – India)</h3>
+        <ul>
+          <li>Nodal agency for cybersecurity in India</li>
+          <li>Under Ministry of Electronics and IT (MeitY)</li>
+          <li>Issues alerts, handles cyber incidents</li>
+          <li>Mandatory breach reporting within 6 hours (2022 directive)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section sec-exam">
+      <div class="section-head">🔴 Important Exam Points</div>
+      <div class="section-body">
+        <div class="box box-red">
+          <ul>
+            <li>IT Act 2000 = India's main cyber law</li>
+            <li>Sec 66F = Cyber Terrorism = <strong>Life Imprisonment</strong> (most severe)</li>
+            <li>Sec 66A struck down by Supreme Court in <strong>Shreya Singhal v. Union of India (2015)</strong></li>
+            <li>CERT-In = India's cyber security watchdog</li>
+            <li>Copyright = Literary + Software works, Patent = Inventions</li>
+            <li>Sec 43A = Corporate data protection liability</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section sec-revision">
+      <div class="section-head">⚡ Quick Revision</div>
+      <div class="section-body">
+        <div class="memory"><div class="memory-label">Key Section Mnemonics</div><div class="memory-text">Sec 66 = Hacking | Sec 66C = Identity Theft | Sec 66F = Terrorism (Life) | Sec 67 = Obscene</div></div>
+        <div class="chips">
+          <span class="chip">IT Act 2000</span>
+          <span class="chip">66F = Life term</span>
+          <span class="chip">CERT-In</span>
+          <span class="chip">Copyright = 60yr</span>
+          <span class="chip">Patent = 20yr</span>
+          <span class="chip">Shreya Singhal 2015</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer style="text-align:center; padding:2rem; color:var(--text-dim); font-size:0.8rem; border-top:1px solid var(--border); margin-top:1rem;">
+  <p>AKTU B.Tech Cyber Security — 7 Mark Answers | Study Guide</p>
+  <p style="margin-top:0.3rem;">26 Questions | Complete Answers | Diagrams | Memory Tricks</p>
+</footer>
+
+<script>
+  // Toggle individual card
+  function toggle(header) {
+    const card = header.parentElement;
+    card.classList.toggle('open');
+  }
+
+  // Expand all
+  function expandAll() {
+    document.querySelectorAll('.q-card').forEach(c => c.classList.add('open'));
+  }
+
+  // Collapse all
+  function collapseAll() {
+    document.querySelectorAll('.q-card').forEach(c => c.classList.remove('open'));
+  }
+
+  // Search / filter
+  function filterQuestions(val) {
+    const q = val.toLowerCase();
+    document.querySelectorAll('.q-card').forEach(card => {
+      const title = card.querySelector('.q-title').textContent.toLowerCase();
+      const body = card.querySelector('.q-body').textContent.toLowerCase();
+      if (!q || title.includes(q) || body.includes(q)) {
+        card.style.display = '';
+        if (q) card.classList.add('open');
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const el = document.getElementById('progress');
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    el.style.width = (scrolled / total * 100) + '%';
+  });
+</script>
+</body>
+</html>
