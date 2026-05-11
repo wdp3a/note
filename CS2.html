@@ -3,394 +3,400 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AKTU Cyber Security – 2 Marks Answers</title>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<title>AKTU Cyber Security – 2 Marks Answers [gruvbox]</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+  /* ─── Gruvbox Dark (Apple HIG × Gruvbox) ─── */
   :root {
-    --bg: #f0f4ff;
-    --surface: #ffffff;
-    --surface2: #f7f9ff;
-    --border: #dce3f5;
-    --text: #1a1f3a;
-    --text-muted: #5a6080;
-    --accent: #2d5be3;
-    --accent2: #7c3aed;
-    --accent3: #0891b2;
-    --success: #059669;
-    --warn: #d97706;
-    --danger: #dc2626;
-    --card-shadow: 0 2px 16px rgba(45,91,227,0.07);
-    --card-shadow-hover: 0 6px 32px rgba(45,91,227,0.14);
-    --booster-bg: #fffbeb;
-    --booster-border: #f59e0b;
-    --def-bg: #eff6ff;
-    --def-border: #3b82f6;
-    --point-bg: #f0fdf4;
-    --point-border: #22c55e;
-    --radius: 14px;
-    --radius-sm: 8px;
-  }
-  [data-theme="dark"] {
-    --bg: #0f1220;
-    --surface: #1a1f35;
-    --surface2: #141828;
-    --border: #2a3055;
-    --text: #e8eaf6;
-    --text-muted: #8890b0;
-    --accent: #5b8af5;
-    --accent2: #a78bfa;
-    --accent3: #22d3ee;
-    --success: #34d399;
-    --warn: #fbbf24;
-    --danger: #f87171;
-    --card-shadow: 0 2px 16px rgba(0,0,0,0.4);
-    --card-shadow-hover: 0 6px 32px rgba(91,138,245,0.2);
-    --booster-bg: #1f1a0a;
-    --booster-border: #f59e0b;
-    --def-bg: #0d1a33;
-    --def-border: #3b82f6;
-    --point-bg: #0a1f14;
-    --point-border: #22c55e;
+    --bg:        #282828;
+    --bg1:       #3c3836;
+    --bg2:       #504945;
+    --bg3:       #665c54;
+    --bg4:       #7c6f64;
+    --fg:        #ebdbb2;
+    --fg2:       #d5c4a1;
+    --fg3:       #bdae93;
+    --fg4:       #a89984;
+    --yellow-b:  #fabd2f;
+    --yellow:    #d79921;
+    --orange-b:  #fe8019;
+    --green-b:   #b8bb26;
+    --blue-b:    #83a598;
+    --purple-b:  #d3869b;
+    --aqua-b:    #8ec07c;
+    --border:    #665c54;
+
+    --font-display: 'SF Pro Display', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-text:    'SF Pro Text', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono:    'SF Mono', 'JetBrains Mono', ui-monospace, monospace;
   }
 
-  * { margin:0; padding:0; box-sizing:border-box; }
+  /* ─── Gruvbox Light ─── */
+  [data-theme="light"] {
+    --bg:        #fbf1c7;
+    --bg1:       #ebdbb2;
+    --bg2:       #d5c4a1;
+    --bg3:       #bdae93;
+    --bg4:       #a89984;
+    --fg:        #3c3836;
+    --fg2:       #504945;
+    --fg3:       #665c54;
+    --fg4:       #7c6f64;
+    --yellow-b:  #b57614;
+    --yellow:    #d79921;
+    --orange-b:  #af3a03;
+    --green-b:   #79740e;
+    --blue-b:    #076678;
+    --purple-b:  #8f3f71;
+    --aqua-b:    #427b58;
+    --border:    #bdae93;
+  }
 
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: 'Nunito', sans-serif;
+    font-family: var(--font-text);
     background: var(--bg);
-    color: var(--text);
+    color: var(--fg);
     line-height: 1.7;
-    transition: background 0.3s, color 0.3s;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* ─── HEADER ─── */
-  header {
-    background: linear-gradient(135deg, #1e3a8a 0%, #2d5be3 50%, #7c3aed 100%);
-    color: #fff;
-    padding: 2.5rem 1.5rem 2rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
+  /* ─── Progress Bar ─── */
+  .progress-bar-wrap {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 999; height: 2px;
+    background: transparent;
   }
-  header::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  .progress-bar {
+    height: 2px;
+    background: var(--yellow-b);
+    width: 0%;
+  }
+
+  /* ─── Top Bar ─── */
+  .top-bar {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid rgba(102,92,84,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.75rem;
+    height: 44px;
+    gap: 1rem;
+  }
+  .top-bar-left {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--fg4);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .btn-theme {
+    display: flex; align-items: center; gap: 5px;
+    padding: 5px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(102,92,84,0.4);
+    background: var(--bg1);
+    color: var(--fg3);
+    font-family: var(--font-text);
+    font-size: 0.78rem;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 0.01em;
+    flex-shrink: 0;
+  }
+
+  /* ─── Header ─── */
+  header {
+    background: var(--bg);
+    padding: 3.5rem 1.75rem 2.75rem;
+    text-align: center;
   }
   header .badge {
-    display: inline-block;
-    background: rgba(255,255,255,0.18);
-    border: 1px solid rgba(255,255,255,0.3);
-    border-radius: 50px;
-    padding: 0.3rem 1rem;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 1.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg1);
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    margin-bottom: 0.8rem;
-    font-family: 'IBM Plex Mono', monospace;
+    margin-bottom: 1.25rem;
+    color: var(--yellow-b);
+    font-family: var(--font-mono);
   }
   header h1 {
-    font-family: 'Sora', sans-serif;
-    font-size: clamp(1.5rem, 5vw, 2.4rem);
-    font-weight: 800;
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 5vw, 2.75rem);
+    font-weight: 600;
     line-height: 1.2;
     margin-bottom: 0.5rem;
+    color: var(--fg);
+    letter-spacing: -0.02em;
+  }
+  header h1 em {
+    font-style: normal;
+    color: var(--yellow-b);
   }
   header p {
-    font-size: 0.95rem;
-    opacity: 0.85;
-    max-width: 500px;
+    font-size: 0.85rem;
+    color: var(--fg4);
+    max-width: 380px;
     margin: 0 auto;
+    font-family: var(--font-mono);
+    letter-spacing: 0.04em;
   }
 
-  /* ─── CONTROLS ─── */
-  .controls {
-    display: flex;
-    gap: 0.6rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding: 1rem 1rem 0;
-  }
-  .btn {
-    padding: 0.5rem 1.2rem;
-    border-radius: 50px;
-    border: 2px solid var(--border);
-    background: var(--surface);
-    color: var(--text);
-    font-family: 'Nunito', sans-serif;
-    font-weight: 700;
-    font-size: 0.82rem;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
-  .btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-  #darkToggle { font-size: 1rem; padding: 0.5rem 0.9rem; }
-
-  /* ─── SEARCH ─── */
+  /* ─── Search ─── */
   .search-wrap {
-    padding: 1rem 1rem 0;
-    max-width: 700px;
-    margin: 0 auto;
+    max-width: 760px;
+    margin: 1.75rem auto 0;
+    padding: 0 1.75rem;
   }
   .search-wrap input {
     width: 100%;
-    padding: 0.75rem 1.2rem;
-    border-radius: 50px;
-    border: 2px solid var(--border);
-    background: var(--surface);
-    color: var(--text);
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.95rem;
+    padding: 9px 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(102,92,84,0.4);
+    background: var(--bg1);
+    color: var(--fg);
+    font-family: var(--font-text);
+    font-size: 0.9rem;
     outline: none;
-    transition: border 0.2s;
   }
-  .search-wrap input:focus { border-color: var(--accent); }
-
-  /* ─── PROGRESS ─── */
-  .progress-bar-wrap {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 999; height: 3px;
-  }
-  .progress-bar {
-    height: 3px;
-    background: linear-gradient(90deg, #2d5be3, #7c3aed);
-    width: 0%;
-    transition: width 0.1s;
+  .search-wrap input::placeholder { color: var(--fg4); }
+  .search-wrap input:focus {
+    border-color: rgba(250,189,47,0.5);
+    box-shadow: 0 0 0 3px rgba(250,189,47,0.1);
   }
 
   /* ─── TOC ─── */
   .toc-wrap {
-    max-width: 900px;
-    margin: 1.5rem auto 0;
-    padding: 0 1rem;
+    max-width: 760px;
+    margin: 0.75rem auto 0;
+    padding: 0 1.75rem;
   }
   .toc-toggle {
-    background: var(--surface);
-    border: 2px solid var(--border);
-    border-radius: var(--radius);
-    padding: 0.9rem 1.2rem;
+    background: var(--bg1);
+    border: 1px solid rgba(102,92,84,0.4);
+    border-radius: 10px;
+    padding: 0.7rem 1rem;
     cursor: pointer;
-    font-weight: 700;
-    font-size: 0.95rem;
-    color: var(--accent);
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: var(--fg3);
     width: 100%;
     text-align: left;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-family: 'Nunito', sans-serif;
-    transition: all 0.2s;
+    font-family: var(--font-text);
   }
-  .toc-toggle:hover { background: var(--def-bg); }
   .toc-body {
     display: none;
-    background: var(--surface);
-    border: 2px solid var(--border);
+    background: var(--bg1);
+    border: 1px solid rgba(102,92,84,0.4);
     border-top: none;
-    border-radius: 0 0 var(--radius) var(--radius);
-    padding: 1rem 1.2rem;
+    border-radius: 0 0 10px 10px;
+    padding: 1rem 1.25rem 1.2rem;
   }
   .toc-body.open { display: block; }
   .toc-body ol {
     column-count: 2;
     column-gap: 1.5rem;
     list-style: none;
+    padding: 0;
   }
-  @media(max-width:500px){ .toc-body ol { column-count: 1; } }
-  .toc-body li { padding: 0.2rem 0; }
+  @media(max-width:500px) { .toc-body ol { column-count: 1; } }
+  .toc-body li { padding: 0.15rem 0; }
   .toc-body a {
-    color: var(--accent);
+    color: var(--fg4);
     text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 600;
-    line-height: 1.4;
+    font-size: 0.83rem;
+    font-weight: 400;
+    line-height: 1.6;
+    font-family: var(--font-text);
   }
-  .toc-body a:hover { text-decoration: underline; }
+  .toc-body a::before {
+    content: attr(data-num) '. ';
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--yellow-b);
+    margin-right: 2px;
+    opacity: 0.7;
+  }
 
-  /* ─── MAIN CONTENT ─── */
-  .main { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+  /* ─── Main layout ─── */
+  .main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 1.75rem 1.75rem 6rem;
+  }
 
-  /* ─── QUESTION CARD ─── */
+  /* ─── Question Card ─── */
   .q-card {
-    background: var(--surface);
-    border: 2px solid var(--border);
-    border-radius: var(--radius);
-    margin-bottom: 1.5rem;
-    box-shadow: var(--card-shadow);
-    transition: box-shadow 0.2s, transform 0.2s;
+    background: var(--bg1);
+    border-radius: 12px;
+    margin-bottom: 0.75rem;
     overflow: hidden;
   }
-  .q-card:hover { box-shadow: var(--card-shadow-hover); transform: translateY(-1px); }
 
+  /* Q header */
   .q-header {
-    padding: 1rem 1.2rem;
-    cursor: pointer;
-    display: flex;
-    align-items: flex-start;
-    gap: 0.9rem;
-    user-select: none;
-  }
-  .q-num {
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    color: #fff;
-    border-radius: 50px;
-    min-width: 2rem;
-    height: 2rem;
+    padding: 0.9rem 1.1rem;
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.78rem;
-    font-weight: 500;
+    gap: 0.85rem;
+  }
+  .q-num {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--yellow-b);
+    background: rgba(250,189,47,0.1);
+    border-radius: 6px;
+    padding: 3px 8px;
     flex-shrink: 0;
-    margin-top: 0.1rem;
+    letter-spacing: 0.05em;
+    min-width: 2rem;
+    text-align: center;
   }
   .q-text {
-    font-family: 'Sora', sans-serif;
-    font-size: 0.97rem;
-    font-weight: 700;
-    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--fg);
     flex: 1;
-    line-height: 1.4;
+    line-height: 1.5;
   }
-  .q-chevron {
-    color: var(--text-muted);
-    font-size: 1.1rem;
-    transition: transform 0.3s;
-    flex-shrink: 0;
-    margin-top: 0.15rem;
-  }
-  .q-card.open .q-chevron { transform: rotate(180deg); }
 
+  /* Q body */
   .q-body {
-    display: none;
-    border-top: 2px solid var(--border);
-    padding: 1.2rem;
+    border-top: 1px solid rgba(102,92,84,0.3);
+    padding: 1rem 1.1rem 1.2rem;
+    background: var(--bg);
   }
-  .q-card.open .q-body { display: block; }
 
-  /* ─── BOOSTER ─── */
+  /* ─── Content blocks ─── */
   .booster {
-    background: var(--booster-bg);
-    border-left: 4px solid var(--booster-border);
-    border-radius: var(--radius-sm);
-    padding: 0.9rem 1rem;
+    background: rgba(254,128,25,0.06);
+    border-left: 2px solid var(--orange-b);
+    border-radius: 0 8px 8px 0;
+    padding: 0.8rem 1rem;
     margin-bottom: 1rem;
   }
   .booster-title {
-    font-family: 'Sora', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 800;
-    letter-spacing: 1px;
+    font-family: var(--font-mono);
+    font-size: 0.67rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--warn);
+    color: var(--orange-b);
     margin-bottom: 0.4rem;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
+    opacity: 0.9;
   }
-  .booster p { font-size: 0.9rem; color: var(--text); }
+  .booster p { font-size: 0.9rem; color: var(--fg3); line-height: 1.7; }
 
-  /* ─── DEFINITION BOX ─── */
   .def-box {
-    background: var(--def-bg);
-    border-left: 4px solid var(--def-border);
-    border-radius: var(--radius-sm);
-    padding: 0.9rem 1rem;
-    margin-bottom: 0.9rem;
+    background: rgba(131,165,152,0.07);
+    border-left: 2px solid var(--blue-b);
+    border-radius: 0 8px 8px 0;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.85rem;
   }
-  .def-box p { font-size: 0.92rem; }
+  .def-box p { font-size: 0.9rem; line-height: 1.75; color: var(--fg2); }
 
-  /* ─── POINTS ─── */
   .points {
-    background: var(--point-bg);
-    border-left: 4px solid var(--point-border);
-    border-radius: var(--radius-sm);
-    padding: 0.9rem 1rem;
-    margin-bottom: 0.9rem;
+    background: rgba(184,187,38,0.06);
+    border-left: 2px solid var(--green-b);
+    border-radius: 0 8px 8px 0;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.85rem;
   }
   .points ul { padding-left: 1.2rem; }
-  .points ul li { font-size: 0.92rem; margin-bottom: 0.45rem; }
+  .points ul li { font-size: 0.9rem; margin-bottom: 0.4rem; line-height: 1.7; color: var(--fg2); }
   .points ul li:last-child { margin-bottom: 0; }
 
-  /* ─── CONCLUSION ─── */
   .conclusion {
-    background: var(--surface2);
-    border: 2px dashed var(--border);
-    border-radius: var(--radius-sm);
+    background: rgba(211,134,155,0.07);
+    border-left: 2px solid var(--purple-b);
+    border-radius: 0 8px 8px 0;
     padding: 0.75rem 1rem;
-    font-size: 0.88rem;
-    color: var(--text-muted);
+    font-size: 0.9rem;
+    color: var(--fg3);
     font-style: italic;
+    line-height: 1.72;
   }
 
-  /* ─── LABELS ─── */
+  /* ─── Labels ─── */
   .label {
-    display: inline-block;
-    font-size: 0.7rem;
-    font-weight: 800;
-    letter-spacing: 1px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
     text-transform: uppercase;
-    padding: 0.15rem 0.6rem;
-    border-radius: 50px;
+    padding: 2px 8px;
+    border-radius: 4px;
     margin-bottom: 0.5rem;
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: var(--font-mono);
   }
-  .label-def { background: #dbeafe; color: #1d4ed8; }
-  .label-points { background: #dcfce7; color: #15803d; }
-  .label-concl { background: #f3f4f6; color: #4b5563; }
-  [data-theme="dark"] .label-def { background: #1e3a8a; color: #93c5fd; }
-  [data-theme="dark"] .label-points { background: #14532d; color: #86efac; }
-  [data-theme="dark"] .label-concl { background: #1f2937; color: #9ca3af; }
+  .label-def    { background: rgba(131,165,152,0.12); color: var(--blue-b); }
+  .label-points { background: rgba(184,187,38,0.1);   color: var(--green-b); }
+  .label-concl  { background: rgba(211,134,155,0.1);  color: var(--purple-b); }
 
-  keyword { color: var(--accent); font-weight: 700; }
-  strong { color: var(--accent2); }
+  keyword { color: var(--yellow-b); font-weight: 600; }
+  strong   { color: var(--orange-b); font-weight: 600; }
 
+  /* ─── Section divider ─── */
   .section-divider {
     text-align: center;
-    padding: 1rem 0 0.5rem;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    letter-spacing: 2px;
+    padding: 1.25rem 0 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--bg3);
+    letter-spacing: 0.18em;
     text-transform: uppercase;
   }
+  .section-divider::before { content: '── '; }
+  .section-divider::after  { content: ' ──'; }
 
-  /* ─── BACK TO TOP ─── */
+  /* ─── Back to top ─── */
   #backToTop {
     position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    width: 44px; height: 44px;
-    font-size: 1.2rem;
+    bottom: 1.75rem; right: 1.75rem;
+    background: var(--bg2);
+    border: 1px solid rgba(102,92,84,0.5);
+    color: var(--fg3);
+    border-radius: 10px;
+    width: 40px; height: 40px;
+    font-size: 1rem;
     cursor: pointer;
-    box-shadow: 0 4px 16px rgba(45,91,227,0.4);
     display: none;
     align-items: center;
     justify-content: center;
     z-index: 998;
-    transition: transform 0.2s;
+    font-family: var(--font-mono);
   }
-  #backToTop:hover { transform: scale(1.1); }
 
-  /* hidden by search */
   .q-card.hidden { display: none; }
 
-  /* expand all state */
-  .q-card.force-open .q-body { display: block; }
-  .q-card.force-open .q-chevron { transform: rotate(180deg); }
-
-  @media(max-width:600px){
-    header { padding: 2rem 1rem 1.5rem; }
-    .q-header { padding: 0.9rem 1rem; }
-    .q-body { padding: 1rem; }
+  /* ─── Mobile ─── */
+  @media (max-width: 600px) {
+    body { font-size: 14px; }
+    header { padding: 2.5rem 1.25rem 2rem; }
+    .top-bar { padding: 0 1.25rem; }
+    .q-header { padding: 0.8rem 1rem; }
+    .q-body { padding: 0.9rem 1rem 1.1rem; }
+    .search-wrap, .toc-wrap { padding: 0 1.25rem; }
+    .main { padding: 1.25rem 1.25rem 5rem; }
+    .booster, .def-box, .points, .conclusion { padding: 0.7rem 0.85rem; }
   }
 </style>
 </head>
@@ -398,17 +404,18 @@
 
 <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
 
+<div class="top-bar">
+  <span class="top-bar-left">AKTU · Cyber Security · 2 Marks</span>
+  <button class="btn-theme" id="themeToggle">☀ Light Mode</button>
+</div>
+
 <header>
   <div class="badge">🔐 AKTU B.Tech · Cyber Security</div>
-  <h1>2 Marks Questions<br>Perfect Answers</h1>
+  <h1>2 Marks Questions<br><em>Perfect Answers</em></h1>
   <p>35 Questions · Exam-Ready · Simple Language · Mobile Friendly</p>
 </header>
 
-<div class="controls">
-  <button class="btn" id="expandAll">Expand All</button>
-  <button class="btn" id="collapseAll">Collapse All</button>
-  <button class="btn" id="darkToggle">🌙 Dark Mode</button>
-</div>
+
 
 <div class="search-wrap">
   <input type="text" id="searchInput" placeholder="🔍  Search questions...">
@@ -464,7 +471,6 @@
   <div class="q-header">
     <div class="q-num">01</div>
     <div class="q-text">What is computer security? Discuss confidentiality and integrity.</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="label label-def">Definition</div>
@@ -489,7 +495,6 @@
   <div class="q-header">
     <div class="q-num">02</div>
     <div class="q-text">What is Encryption and Decryption in cryptography?</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="booster">
@@ -521,7 +526,6 @@
   <div class="q-header">
     <div class="q-num">03</div>
     <div class="q-text">What are the roles of cipher and key in cryptography?</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="label label-def">Definition</div>
@@ -547,7 +551,6 @@
   <div class="q-header">
     <div class="q-num">04</div>
     <div class="q-text">What are the principles of secure design / secure architecture principles?</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="label label-def">Introduction</div>
@@ -576,7 +579,6 @@
   <div class="q-header">
     <div class="q-num">05</div>
     <div class="q-text">What is SSL and how does it work? Differentiate between HTTPS, SSL and TLS.</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="booster">
@@ -615,7 +617,6 @@
   <div class="q-header">
     <div class="q-num">06</div>
     <div class="q-text">Explain System Call Interposition.</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="booster">
@@ -646,7 +647,6 @@
   <div class="q-header">
     <div class="q-num">07</div>
     <div class="q-text">Discuss problems associated with ptrace.</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="booster">
@@ -677,7 +677,6 @@
   <div class="q-header">
     <div class="q-num">08</div>
     <div class="q-text">What is the difference between Discretionary Access Control, Mandatory Access Control, UNIX access control and Windows access control?</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="booster">
@@ -703,7 +702,6 @@
   <div class="q-header">
     <div class="q-num">09</div>
     <div class="q-text">What is Web Security?</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="label label-def">Definition</div>
@@ -730,7 +728,6 @@
   <div class="q-header">
     <div class="q-num">10</div>
     <div class="q-text">What is SQL injection attack? Explain briefly.</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="booster">
@@ -759,7 +756,6 @@
   <div class="q-header">
     <div class="q-num">11</div>
     <div class="q-text">What is Cross Site Scripting (XSS)? Mention anti-XSS tools/protection.</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="booster">
@@ -794,7 +790,6 @@
   <div class="q-header">
     <div class="q-num">12</div>
     <div class="q-text">What is Cross Site Request Forgery (CSRF)?</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="booster">
@@ -824,7 +819,6 @@
   <div class="q-header">
     <div class="q-num">13</div>
     <div class="q-text">What are covert channels and their disadvantages/problems in VMM security?</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="booster">
@@ -855,7 +849,6 @@
   <div class="q-header">
     <div class="q-num">14</div>
     <div class="q-text">Give benefits of IPsec.</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="booster">
@@ -887,7 +880,6 @@
   <div class="q-header">
     <div class="q-num">15</div>
     <div class="q-text">Why would you recommend using DNSSEC?</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="booster">
@@ -918,7 +910,6 @@
   <div class="q-header">
     <div class="q-num">16</div>
     <div class="q-text">How many look-up zones are in DNS?</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="booster">
@@ -946,7 +937,6 @@
   <div class="q-header">
     <div class="q-num">17</div>
     <div class="q-text">Define Firewall and its uses.</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="label label-def">Definition</div>
@@ -974,7 +964,6 @@
   <div class="q-header">
     <div class="q-num">18</div>
     <div class="q-text">What is Session Hijacking and why is it successful?</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="booster">
@@ -1005,7 +994,6 @@
   <div class="q-header">
     <div class="q-num">19</div>
     <div class="q-text">What is the significance of Confinement Principle?</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="booster">
@@ -1036,7 +1024,6 @@
   <div class="q-header">
     <div class="q-num">20</div>
     <div class="q-text">Discuss software fault isolation.</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="booster">
@@ -1067,7 +1054,6 @@
   <div class="q-header">
     <div class="q-num">21</div>
     <div class="q-text">What is the use of kernel in UNIX operating system?</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="booster">
@@ -1099,7 +1085,6 @@
   <div class="q-header">
     <div class="q-num">22</div>
     <div class="q-text">What are some advantages and limitations of UNIX?</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="label label-points">Advantages of UNIX</div>
@@ -1132,7 +1117,6 @@
   <div class="q-header">
     <div class="q-num">23</div>
     <div class="q-text">What is a privilege? Explain ways to drop privileges.</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="booster">
@@ -1163,7 +1147,6 @@
   <div class="q-header">
     <div class="q-num">24</div>
     <div class="q-text">What are the goals of confidentiality policies?</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="booster">
@@ -1194,7 +1177,6 @@
   <div class="q-header">
     <div class="q-num">25</div>
     <div class="q-text">Define hash function. What is its use?</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="label label-def">Definition</div>
@@ -1223,7 +1205,6 @@
   <div class="q-header">
     <div class="q-num">26</div>
     <div class="q-text">What is the main difference between virus and worm?</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="label label-def">Quick Definitions</div>
@@ -1251,7 +1232,6 @@
   <div class="q-header">
     <div class="q-num">27</div>
     <div class="q-text">What is Ransomware?</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="label label-def">Definition</div>
@@ -1278,7 +1258,6 @@
   <div class="q-header">
     <div class="q-num">28</div>
     <div class="q-text">What is the use of frame busting in web security?</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="booster">
@@ -1308,7 +1287,6 @@
   <div class="q-header">
     <div class="q-num">29</div>
     <div class="q-text">What is the difference between Cache Memory and RAM?</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="booster">
@@ -1337,7 +1315,6 @@
   <div class="q-header">
     <div class="q-num">30</div>
     <div class="q-text">Define Cyber Crime.</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="label label-def">Definition</div>
@@ -1370,7 +1347,6 @@
   <div class="q-header">
     <div class="q-num">31</div>
     <div class="q-text">What is Botnet?</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="booster">
@@ -1406,7 +1382,6 @@
   <div class="q-header">
     <div class="q-num">32</div>
     <div class="q-text">Why do mobile devices need security?</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="label label-def">Introduction</div>
@@ -1435,7 +1410,6 @@
   <div class="q-header">
     <div class="q-num">33</div>
     <div class="q-text">Define Authentication and Authorization.</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="booster">
@@ -1468,7 +1442,6 @@
   <div class="q-header">
     <div class="q-num">34</div>
     <div class="q-text">Explain digital evidence.</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="booster">
@@ -1505,7 +1478,6 @@
   <div class="q-header">
     <div class="q-num">35</div>
     <div class="q-text">Why is cyber security needed?</div>
-    <div class="q-chevron">▼</div>
   </div>
   <div class="q-body">
     <div class="label label-def">Introduction</div>
@@ -1534,39 +1506,25 @@
 <button id="backToTop" title="Back to Top">↑</button>
 
 <script>
-  // ─── Dark Mode ───
-  const darkToggle = document.getElementById('darkToggle');
+  // ─── Theme Toggle ───
+  const themeBtn = document.getElementById('themeToggle');
   const html = document.documentElement;
-  const saved = localStorage.getItem('theme');
-  if (saved === 'dark') { html.setAttribute('data-theme','dark'); darkToggle.textContent = '☀️ Light Mode'; }
-
-  darkToggle.addEventListener('click', () => {
-    const isDark = html.getAttribute('data-theme') === 'dark';
-    if (isDark) {
+  const saved = localStorage.getItem('gruvbox-theme');
+  if (saved === 'light') {
+    html.setAttribute('data-theme', 'light');
+    themeBtn.textContent = '🌑 Dark Mode';
+  }
+  themeBtn.addEventListener('click', () => {
+    const isLight = html.getAttribute('data-theme') === 'light';
+    if (isLight) {
       html.removeAttribute('data-theme');
-      darkToggle.textContent = '🌙 Dark Mode';
-      localStorage.setItem('theme','light');
+      themeBtn.textContent = '☀ Light Mode';
+      localStorage.setItem('gruvbox-theme', 'dark');
     } else {
-      html.setAttribute('data-theme','dark');
-      darkToggle.textContent = '☀️ Light Mode';
-      localStorage.setItem('theme','dark');
+      html.setAttribute('data-theme', 'light');
+      themeBtn.textContent = '🌑 Dark Mode';
+      localStorage.setItem('gruvbox-theme', 'light');
     }
-  });
-
-  // ─── Collapsible Cards ───
-  document.querySelectorAll('.q-header').forEach(header => {
-    header.addEventListener('click', () => {
-      const card = header.parentElement;
-      card.classList.toggle('open');
-    });
-  });
-
-  // ─── Expand / Collapse All ───
-  document.getElementById('expandAll').addEventListener('click', () => {
-    document.querySelectorAll('.q-card').forEach(c => c.classList.add('open'));
-  });
-  document.getElementById('collapseAll').addEventListener('click', () => {
-    document.querySelectorAll('.q-card').forEach(c => c.classList.remove('open'));
   });
 
   // ─── TOC Toggle ───
@@ -1581,13 +1539,8 @@
   document.getElementById('searchInput').addEventListener('input', function() {
     const val = this.value.toLowerCase();
     document.querySelectorAll('.q-card').forEach(card => {
-      const text = card.getAttribute('data-question') + ' ' + card.innerText.toLowerCase();
-      if (val === '' || text.includes(val)) {
-        card.classList.remove('hidden');
-        if (val !== '') card.classList.add('open');
-      } else {
-        card.classList.add('hidden');
-      }
+      const text = (card.getAttribute('data-question') || '') + ' ' + card.innerText.toLowerCase();
+      card.classList.toggle('hidden', val !== '' && !text.includes(val));
     });
   });
 
@@ -1597,7 +1550,6 @@
     const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     const pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
     document.getElementById('progressBar').style.width = pct + '%';
-
     const backBtn = document.getElementById('backToTop');
     backBtn.style.display = scrollTop > 400 ? 'flex' : 'none';
   });
