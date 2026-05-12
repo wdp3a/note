@@ -1,0 +1,1781 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="gruvbox">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AKTU Digital Electronics — 7 Mark Questions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Recursive:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== THEME VARIABLES ===== */
+[data-theme="gruvbox"] {
+  --bg: #282828;
+  --bg1: #3c3836;
+  --bg2: #504945;
+  --bg3: #665c54;
+  --fg: #ebdbb2;
+  --fg2: #d5c4a1;
+  --fg3: #bdae93;
+  --accent: #d79921;
+  --accent2: #b57614;
+  --green: #98971a;
+  --blue: #458588;
+  --red: #cc241d;
+  --purple: #b16286;
+  --aqua: #689d6a;
+  --orange: #d65d0e;
+  --sidebar-bg: #1d2021;
+  --card-bg: #32302f;
+  --border: #504945;
+  --code-bg: #1d2021;
+  --tag-bg: #3c3836;
+  --shadow: rgba(0,0,0,0.5);
+  --heading-font: 'Recursive', sans-serif;
+  --body-font: 'Recursive', sans-serif;
+  --mono-font: 'JetBrains Mono', monospace;
+}
+[data-theme="rose-pine"] {
+  --bg: #191724;
+  --bg1: #1f1d2e;
+  --bg2: #26233a;
+  --bg3: #403d52;
+  --fg: #e0def4;
+  --fg2: #c4b8e8;
+  --fg3: #908caa;
+  --accent: #ebbcba;
+  --accent2: #eb6f92;
+  --green: #31748f;
+  --blue: #9ccfd8;
+  --red: #eb6f92;
+  --purple: #c4a7e7;
+  --aqua: #9ccfd8;
+  --orange: #f6c177;
+  --sidebar-bg: #13111e;
+  --card-bg: #1f1d2e;
+  --border: #403d52;
+  --code-bg: #13111e;
+  --tag-bg: #26233a;
+  --shadow: rgba(0,0,0,0.6);
+  --heading-font: 'Recursive', sans-serif;
+  --body-font: 'Recursive', sans-serif;
+  --mono-font: 'JetBrains Mono', monospace;
+}
+[data-theme="rose-pine-nordic"] {
+  --bg: #faf4ed;
+  --bg1: #fffaf3;
+  --bg2: #f2e9de;
+  --bg3: #dfd8ca;
+  --fg: #575279;
+  --fg2: #6e6a86;
+  --fg3: #9893a5;
+  --accent: #d7827a;
+  --accent2: #b4637a;
+  --green: #56949f;
+  --blue: #286983;
+  --red: #b4637a;
+  --purple: #907aa9;
+  --aqua: #56949f;
+  --orange: #ea9d34;
+  --sidebar-bg: #f2e9de;
+  --card-bg: #fffaf3;
+  --border: #dfd8ca;
+  --code-bg: #f2e9de;
+  --tag-bg: #f2e9de;
+  --shadow: rgba(87,82,121,0.12);
+  --heading-font: 'Recursive', sans-serif;
+  --body-font: 'Recursive', sans-serif;
+  --mono-font: 'JetBrains Mono', monospace;
+}
+
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 17px; scroll-behavior: auto; }
+body {
+  font-family: var(--body-font);
+  background: var(--bg);
+  color: var(--fg);
+  min-height: 100vh;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== LAYOUT ===== */
+.app-shell {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  grid-template-rows: auto 1fr;
+  min-height: 100vh;
+}
+.topbar {
+  grid-column: 1 / -1;
+  background: var(--sidebar-bg);
+  border-bottom: 2px solid var(--accent);
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 60px;
+  /* position: sticky; */
+  top: 0;
+  z-index: 100;
+}
+.topbar-title {
+  font-family: var(--heading-font);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.01em;
+  flex: 1;
+}
+.topbar-title span { color: var(--fg3); font-size: 0.85rem; font-family: var(--body-font); font-weight: 400; }
+
+.sidebar {
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  padding: 1rem 0;
+  overflow-y: auto;
+  height: 100vh;
+  position: sticky;
+  top: 0px;
+}
+.main-content {
+  padding: 2rem 2.5rem;
+  overflow-y: auto;
+  max-width: 860px;
+}
+
+/* ===== SEARCH ===== */
+.search-wrap { padding: 0.75rem 1rem; }
+.search-input {
+  width: 100%;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem 0.5rem 2.2rem;
+  color: var(--fg);
+  font-family: var(--body-font);
+  font-size: 0.9rem;
+  outline: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23908caa' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 0.6rem center;
+}
+.search-input:focus { border-color: var(--accent); }
+.search-input::placeholder { color: var(--fg3); }
+
+/* ===== SIDEBAR NAV ===== */
+.nav-section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg3);
+  padding: 1rem 1rem 0.3rem;
+}
+.nav-item {
+  display: block;
+  padding: 0.45rem 1rem;
+  color: var(--fg2);
+  font-size: 0.88rem;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  text-decoration: none;
+  line-height: 1.4;
+}
+.nav-item:hover { background: var(--bg1); color: var(--fg); border-left-color: var(--accent2); }
+.nav-item.active { background: var(--bg1); color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+.nav-item.hidden { display: none; }
+
+/* ===== THEME SWITCHER ===== */
+.theme-wrap { padding: 0.75rem 1rem; border-top: 1px solid var(--border); margin-top: auto; }
+.theme-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg3); margin-bottom: 0.5rem; display: block; }
+.theme-btns { display: flex; flex-direction: column; gap: 0.3rem; }
+.theme-btn {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.35rem 0.7rem;
+  color: var(--fg2);
+  font-family: var(--body-font);
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-align: left;
+}
+.theme-btn:hover { border-color: var(--accent); color: var(--accent); }
+.theme-btn.active { border-color: var(--accent); color: var(--accent); background: var(--bg1); }
+
+/* ===== MOBILE MENU ===== */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--fg);
+  cursor: pointer;
+  padding: 0.3rem;
+}
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 90;
+}
+
+/* ===== QUESTION CARDS ===== */
+.question-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+.question-card.hidden { display: none; }
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  background: var(--bg1);
+}
+.card-header:hover { background: var(--bg2); }
+.q-number {
+  background: var(--accent);
+  color: var(--bg);
+  font-family: var(--mono-font);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+.q-title {
+  font-family: var(--heading-font);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--fg);
+  flex: 1;
+  line-height: 1.4;
+}
+.card-toggle {
+  color: var(--fg3);
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  font-family: var(--mono-font);
+}
+.card-body {
+  padding: 1.5rem;
+  border-top: 1px solid var(--border);
+  display: none;
+}
+.card-body.open { display: block; }
+
+/* ===== CONTENT STYLES ===== */
+.card-body h2 {
+  font-family: var(--heading-font);
+  font-size: 1.15rem;
+  color: var(--accent);
+  margin: 1.5rem 0 0.6rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--border);
+}
+.card-body h2:first-child { margin-top: 0; }
+.card-body h3 {
+  font-family: var(--heading-font);
+  font-size: 1rem;
+  color: var(--aqua);
+  margin: 1.2rem 0 0.4rem;
+}
+.card-body h4 {
+  font-family: var(--body-font);
+  font-size: 0.95rem;
+  color: var(--orange);
+  font-weight: 700;
+  margin: 1rem 0 0.3rem;
+}
+.card-body p { margin-bottom: 0.8rem; font-size: 1rem; }
+.card-body ul, .card-body ol { margin: 0.5rem 0 0.8rem 1.4rem; }
+.card-body li { margin-bottom: 0.35rem; font-size: 1rem; }
+
+/* Definition box */
+.def-box {
+  background: var(--bg);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  padding: 0.75rem 1rem;
+  margin: 0.75rem 0;
+}
+.def-box strong { color: var(--accent); }
+
+/* Step box */
+.step-box {
+  background: var(--bg);
+  border-left: 4px solid var(--aqua);
+  border-radius: 0 8px 8px 0;
+  padding: 0.75rem 1rem;
+  margin: 0.75rem 0;
+}
+.step-box .step-num { color: var(--aqua); font-weight: 700; font-family: var(--mono-font); font-size: 0.85rem; }
+
+/* Warning box */
+.warn-box {
+  background: var(--bg);
+  border-left: 4px solid var(--red);
+  border-radius: 0 8px 8px 0;
+  padding: 0.75rem 1rem;
+  margin: 0.75rem 0;
+}
+.warn-box strong { color: var(--red); }
+
+/* Tip box */
+.tip-box {
+  background: var(--bg);
+  border-left: 4px solid var(--green);
+  border-radius: 0 8px 8px 0;
+  padding: 0.75rem 1rem;
+  margin: 0.75rem 0;
+}
+.tip-box strong { color: var(--green); }
+
+/* Tables */
+.tbl-wrap { overflow-x: auto; margin: 0.75rem 0; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  font-family: var(--mono-font);
+}
+th {
+  background: var(--bg2);
+  color: var(--accent);
+  padding: 0.5rem 0.75rem;
+  text-align: center;
+  border: 1px solid var(--border);
+  font-weight: 600;
+}
+td {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--border);
+  text-align: center;
+  color: var(--fg2);
+}
+tr:nth-child(even) td { background: var(--bg1); }
+
+/* Code / formula */
+.formula {
+  font-family: var(--mono-font);
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  color: var(--aqua);
+  margin: 0.5rem 0;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* Tags / badges */
+.tag {
+  display: inline-block;
+  background: var(--tag-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-family: var(--mono-font);
+  font-size: 0.75rem;
+  padding: 0.1rem 0.45rem;
+  color: var(--fg3);
+  margin: 0.1rem;
+}
+.tag.marks { border-color: var(--accent); color: var(--accent); }
+
+/* SVG diagrams */
+.diagram-wrap {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+  text-align: center;
+}
+.diagram-label {
+  font-size: 0.78rem;
+  color: var(--fg3);
+  font-family: var(--mono-font);
+  margin-top: 0.5rem;
+  display: block;
+}
+
+/* Divider */
+.divider { border: none; border-top: 1px solid var(--border); margin: 1.2rem 0; }
+
+/* Marks badge on card */
+.marks-badge {
+  font-family: var(--mono-font);
+  font-size: 0.72rem;
+  color: var(--green);
+  background: var(--bg);
+  border: 1px solid var(--green);
+  border-radius: 4px;
+  padding: 0.1rem 0.4rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .app-shell { grid-template-columns: 1fr; }
+  .sidebar {
+    position: fixed;
+    left: -300px;
+    top: 60px;
+    width: 280px;
+    height: calc(100vh - 60px);
+    z-index: 95;
+  }
+  .sidebar.open { left: 0; }
+  .sidebar-overlay.open { display: block; }
+  .hamburger { display: block; }
+  .main-content { padding: 1rem; grid-column: 1; }
+  .topbar-title span { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <button class="hamburger" id="menuBtn" aria-label="Menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="topbar-title">
+      ⚡ AKTU Digital Electronics
+      <span>— 7 Mark Exam Guide</span>
+    </div>
+    <span class="tag marks">7 Marks</span>
+    <span class="tag">Unit 4–5</span>
+  </header>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search questions…" autocomplete="off">
+    </div>
+    <div class="nav-section-label">Sequential Circuits</div>
+    <a class="nav-item active" onclick="scrollTo('q1')" href="#q1">Q1. State Table / Diagram</a>
+    <a class="nav-item" onclick="scrollTo('q2')" href="#q2">Q2. Async Transition Tables</a>
+    <div class="nav-section-label">Hazards</div>
+    <a class="nav-item" onclick="scrollTo('q3')" href="#q3">Q3. Hazards in Digital Circuits</a>
+    <a class="nav-item" onclick="scrollTo('q4')" href="#q4">Q4. Static & Dynamic Hazards</a>
+    <div class="nav-section-label">Memory Devices</div>
+    <a class="nav-item" onclick="scrollTo('q5')" href="#q5">Q5. SRAM Cell</a>
+    <a class="nav-item" onclick="scrollTo('q6')" href="#q6">Q6. DRAM vs SRAM</a>
+    <a class="nav-item" onclick="scrollTo('q7')" href="#q7">Q7. EEPROM</a>
+    <a class="nav-item" onclick="scrollTo('q8')" href="#q8">Q8. RAM Memory Systems</a>
+    <div class="nav-section-label">Programmable Logic</div>
+    <a class="nav-item" onclick="scrollTo('q9')" href="#q9">Q9. ROM Structure</a>
+    <a class="nav-item" onclick="scrollTo('q10')" href="#q10">Q10. PLA / PAL</a>
+    <div class="theme-wrap">
+      <span class="theme-label">Theme</span>
+      <div class="theme-btns">
+        <button class="theme-btn active" data-theme="gruvbox">🟡 Gruvbox Dark</button>
+        <button class="theme-btn" data-theme="rose-pine">🌸 Rosé Pine</button>
+        <button class="theme-btn" data-theme="rose-pine-nordic">🌸 Rosé Pine Dawn</button>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-overlay" id="overlay"></div>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content" id="mainContent">
+
+    <!-- Q1 -->
+    <div class="question-card" id="q1" data-keywords="state table state diagram sequential circuit flip flop mealy moore">
+      <div class="card-header" onclick="toggleCard(this)">
+        <span class="q-number">Q1</span>
+        <span class="q-title">Derive State Table and State Diagram for Sequential Circuits</span>
+        <span class="marks-badge">7M</span>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body open">
+
+        <h2>🧠 What is a Sequential Circuit?</h2>
+        <div class="def-box">
+          <strong>Sequential Circuit</strong>: A circuit whose output depends on <em>current inputs</em> AND <em>previous state</em> (memory). It uses flip-flops to store state.
+        </div>
+        <p>Two types: <strong>Mealy</strong> (output depends on state + input) and <strong>Moore</strong> (output depends only on state).</p>
+
+        <h2>📋 Key Terms</h2>
+        <ul>
+          <li><strong>Present State (PS)</strong>: Current state stored in flip-flops</li>
+          <li><strong>Next State (NS)</strong>: State after the clock pulse</li>
+          <li><strong>Output (Z)</strong>: Produced by the circuit</li>
+          <li><strong>Excitation equations</strong>: Boolean equations for NS and output</li>
+        </ul>
+
+        <h2>📌 How to Derive State Table (Steps)</h2>
+        <div class="step-box"><span class="step-num">STEP 1</span> Write down the excitation equations for each flip-flop (JK, SR, D, T) and output from the given circuit.</div>
+        <div class="step-box"><span class="step-num">STEP 2</span> Assume all possible present states (e.g., for 2 flip-flops: 00, 01, 10, 11) and all input combinations.</div>
+        <div class="step-box"><span class="step-num">STEP 3</span> For each row, substitute PS and Input into excitation equations → get JK/D/T values.</div>
+        <div class="step-box"><span class="step-num">STEP 4</span> Use flip-flop truth table to find Next State.</div>
+        <div class="step-box"><span class="step-num">STEP 5</span> Calculate Output Z from output equation.</div>
+
+        <h2>📊 Example: JK Flip-Flop Circuit</h2>
+        <p>Suppose we have 2 JK flip-flops (A, B) and 1 input X with equations:</p>
+        <div class="formula">JA = BX,  KA = B'X'
+JB = X,   KB = X'
+Z  = AB</div>
+
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>PS A</th><th>PS B</th><th>X</th><th>JA</th><th>KA</th><th>JB</th><th>KB</th><th>NS A</th><th>NS B</th><th>Z</th></tr>
+            <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+            <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+            <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+            <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+            <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+          </table>
+        </div>
+        <div class="tip-box"><strong>JK Flip-Flop Rule:</strong> J=0,K=0→No change | J=1,K=0→Set(1) | J=0,K=1→Reset(0) | J=1,K=1→Toggle</div>
+
+        <h2>🔄 State Diagram</h2>
+        <p>Draw a circle for each state. Draw arrows to show transitions. Label arrows with <code>Input / Output</code>.</p>
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 520 300" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:520px">
+            <defs>
+              <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#d79921"/>
+              </marker>
+            </defs>
+            <!-- States -->
+            <circle cx="100" cy="150" r="38" fill="#1d2021" stroke="#d79921" stroke-width="2"/>
+            <text x="100" y="145" text-anchor="middle" fill="#ebdbb2" font-family="JetBrains Mono,monospace" font-size="13" font-weight="600">S0</text>
+            <text x="100" y="163" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="11">AB=00</text>
+
+            <circle cx="280" cy="80" r="38" fill="#1d2021" stroke="#d79921" stroke-width="2"/>
+            <text x="280" y="75" text-anchor="middle" fill="#ebdbb2" font-family="JetBrains Mono,monospace" font-size="13" font-weight="600">S1</text>
+            <text x="280" y="93" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="11">AB=01</text>
+
+            <circle cx="280" cy="220" r="38" fill="#1d2021" stroke="#d79921" stroke-width="2"/>
+            <text x="280" y="215" text-anchor="middle" fill="#ebdbb2" font-family="JetBrains Mono,monospace" font-size="13" font-weight="600">S2</text>
+            <text x="280" y="233" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="11">AB=10</text>
+
+            <circle cx="450" cy="150" r="38" fill="#1d2021" stroke="#b57614" stroke-width="2.5"/>
+            <circle cx="450" cy="150" r="32" fill="none" stroke="#b57614" stroke-width="1.2"/>
+            <text x="450" y="145" text-anchor="middle" fill="#ebdbb2" font-family="JetBrains Mono,monospace" font-size="13" font-weight="600">S3</text>
+            <text x="450" y="163" text-anchor="middle" fill="#d65d0e" font-family="JetBrains Mono,monospace" font-size="11">AB=11</text>
+
+            <!-- Arrows -->
+            <line x1="136" y1="135" x2="244" y2="93" stroke="#d79921" stroke-width="1.5" marker-end="url(#arr)"/>
+            <text x="178" y="107" fill="#689d6a" font-family="JetBrains Mono,monospace" font-size="10">X=1/0</text>
+
+            <line x1="136" y1="162" x2="244" y2="207" stroke="#d79921" stroke-width="1.5" marker-end="url(#arr)"/>
+            <text x="165" y="198" fill="#689d6a" font-family="JetBrains Mono,monospace" font-size="10">X=0/0</text>
+
+            <line x1="316" y1="92" x2="416" y2="132" stroke="#d79921" stroke-width="1.5" marker-end="url(#arr)"/>
+            <text x="358" y="105" fill="#689d6a" font-family="JetBrains Mono,monospace" font-size="10">X=1/0</text>
+
+            <line x1="316" y1="208" x2="416" y2="168" stroke="#d79921" stroke-width="1.5" marker-end="url(#arr)"/>
+            <text x="348" y="200" fill="#689d6a" font-family="JetBrains Mono,monospace" font-size="10">X=1/0</text>
+
+            <!-- Self loop S3 with output=1 -->
+            <path d="M488,135 Q520,100 488,115" fill="none" stroke="#d79921" stroke-width="1.5" marker-end="url(#arr)"/>
+            <text x="500" y="112" fill="#cc241d" font-family="JetBrains Mono,monospace" font-size="10">Z=1</text>
+          </svg>
+          <span class="diagram-label">Fig: State Diagram — circles = states, arrows = transitions labeled Input/Output</span>
+        </div>
+
+        <h2>📝 Exam Tips</h2>
+        <div class="tip-box"><strong>✅ Remember:</strong> State table rows = 2ⁿ states × 2ⁿ inputs. Draw neat circles and arrows in state diagram. Label every arrow with input/output.</div>
+        <ul>
+          <li>State table ≈ 3 marks | State diagram ≈ 4 marks</li>
+          <li>Always show intermediate JK/D/T values in the table</li>
+          <li>If circuit uses D flip-flop: Next State = D directly</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question-card" id="q2" data-keywords="asynchronous sequential transition table internal state race fundamental mode">
+      <div class="card-header" onclick="toggleCard(this)">
+        <span class="q-number">Q2</span>
+        <span class="q-title">Transition Tables for Asynchronous Sequential Circuits</span>
+        <span class="marks-badge">7M</span>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+
+        <h2>📖 Asynchronous vs Synchronous</h2>
+        <div class="def-box">
+          <strong>Asynchronous Circuit</strong>: No clock! The circuit changes state whenever input changes. It uses latches (SR, D) or simple logic as memory.
+        </div>
+        <p><strong>Synchronous</strong>: All changes happen on clock edge. <strong>Asynchronous</strong>: Changes happen immediately after input change.</p>
+
+        <h2>📌 Key Concepts</h2>
+        <ul>
+          <li><strong>Secondary variables (y)</strong>: Internal state variables (like flip-flop outputs) — act as memory</li>
+          <li><strong>Excitation variables (Y)</strong>: Next values of y after input change</li>
+          <li><strong>Stable state</strong>: When Y = y (circuit is at rest, no more changes)</li>
+          <li><strong>Unstable state</strong>: When Y ≠ y (circuit is still changing)</li>
+          <li><strong>Fundamental mode assumption</strong>: Only one input changes at a time</li>
+        </ul>
+
+        <h2>🔧 Transition Table / Flow Table</h2>
+        <p>It shows the <em>next state Y</em> and <em>output Z</em> for each combination of present state (y) and input (x).</p>
+        <ul>
+          <li>Circles ⊙ in the table mean <strong>stable states</strong> (Y = y)</li>
+          <li>Non-circled entries are <strong>unstable</strong> — the circuit will keep changing until it reaches a stable state</li>
+        </ul>
+
+        <h2>📊 Example: One Secondary Variable (y), One Input (x)</h2>
+        <p>Let excitation equation be: <code>Y = x + y</code>, Output: <code>Z = xy</code></p>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>y\x</th><th>x=0</th><th>x=1</th><th>Z(x=0)</th><th>Z(x=1)</th></tr>
+            <tr><td>y=0</td><td>⊙ 0</td><td>1 (unstable)</td><td>0</td><td>0</td></tr>
+            <tr><td>y=1</td><td>0 (unstable)</td><td>⊙ 1</td><td>0</td><td>1</td></tr>
+          </table>
+        </div>
+        <div class="tip-box"><strong>Read the table:</strong> When y=0, x=0 → Y=0+0=0=y → Stable ⊙. When y=0, x=1 → Y=1+0=1≠y=0 → Unstable → moves to y=1.</div>
+
+        <h2>📊 Internal State Sequence</h2>
+        <p>This is the path the circuit takes through states for a given input sequence.</p>
+        <div class="step-box"><span class="step-num">STEP 1</span> Start from initial state (say y=0, x=0 — stable)</div>
+        <div class="step-box"><span class="step-num">STEP 2</span> Change x from 0→1: find Y from table → Y=1 ≠ y=0 (unstable) → move to y=1</div>
+        <div class="step-box"><span class="step-num">STEP 3</span> At y=1, x=1: Y=1=y → Stable ⊙. Circuit stops here.</div>
+        <div class="step-box"><span class="step-num">STEP 4</span> Change x from 1→0: Y=0+1=1=y → Stable ⊙ at y=1</div>
+
+        <h2>📊 State Sequence Table for Input x: 0→1→0</h2>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>Time</th><th>x</th><th>y (present)</th><th>Y (next)</th><th>Stable?</th><th>Z</th></tr>
+            <tr><td>t0</td><td>0</td><td>0</td><td>0</td><td>✅ Yes</td><td>0</td></tr>
+            <tr><td>t1</td><td>1</td><td>0</td><td>1</td><td>❌ No</td><td>0</td></tr>
+            <tr><td>t2</td><td>1</td><td>1</td><td>1</td><td>✅ Yes</td><td>1</td></tr>
+            <tr><td>t3</td><td>0</td><td>1</td><td>1</td><td>✅ Yes</td><td>0</td></tr>
+          </table>
+        </div>
+
+        <h2>⚠️ Race Condition in Async Circuits</h2>
+        <div class="warn-box"><strong>Race Condition</strong>: When two or more secondary variables try to change simultaneously. If they reach the stable state in different orders → circuit may end up in the wrong state!</div>
+        <ul>
+          <li><strong>Non-critical race</strong>: Different paths lead to the SAME final stable state — OK ✅</li>
+          <li><strong>Critical race</strong>: Different paths lead to DIFFERENT final stable states — BAD ❌</li>
+        </ul>
+        <div class="tip-box"><strong>✅ Exam Tip:</strong> Always circle stable states in the transition table. State sequence = show each y, Y, and stability step-by-step. 3 marks for table + 4 marks for explanation.</div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question-card" id="q3" data-keywords="hazards digital asynchronous static dynamic race glitch detection elimination reduction">
+      <div class="card-header" onclick="toggleCard(this)">
+        <span class="q-number">Q3</span>
+        <span class="q-title">Hazards in Digital Circuits — Types, Detection, Elimination &amp; Race Avoidance</span>
+        <span class="marks-badge">7M</span>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+
+        <h2>📖 What is a Hazard?</h2>
+        <div class="def-box">
+          <strong>Hazard</strong>: An unwanted, temporary glitch (pulse) in the output of a digital circuit caused by unequal propagation delays of signals through different gate paths.
+        </div>
+        <p>Hazards cause <em>incorrect outputs</em> for a short time, which is dangerous in asynchronous circuits where there is no clock to filter them.</p>
+
+        <h2>🔴 Types of Hazards</h2>
+
+        <h3>1. Static Hazard</h3>
+        <div class="def-box">The output <em>should remain constant</em> (at 0 or 1), but momentarily glitches to the other value due to delay.</div>
+        <ul>
+          <li><strong>Static-1 Hazard</strong>: Output should stay at 1, but briefly goes to 0 (a 0-glitch)</li>
+          <li><strong>Static-0 Hazard</strong>: Output should stay at 0, but briefly goes to 1 (a 1-glitch)</li>
+        </ul>
+
+        <h3>2. Dynamic Hazard</h3>
+        <div class="def-box">The output should change from 0→1 or 1→0 exactly once, but instead it changes <em>multiple times</em> (e.g., 0→1→0→1) before settling.</div>
+        <p>Dynamic hazards only occur in multi-level (3+ levels of gates) circuits.</p>
+
+        <h3>3. Functional Hazard</h3>
+        <div class="def-box">Caused by the <em>nature of the function itself</em> when two inputs change simultaneously. Cannot be fixed by redesign of the circuit (inherent to the function).</div>
+
+        <h2>🔍 Detection of Static-1 Hazard (K-map method)</h2>
+        <p>This is the most exam-important method. Use K-map!</p>
+        <div class="step-box"><span class="step-num">STEP 1</span> Draw the K-map for the Boolean function.</div>
+        <div class="step-box"><span class="step-num">STEP 2</span> Group 1s as usual (SOP terms).</div>
+        <div class="step-box"><span class="step-num">STEP 3</span> If two adjacent 1s in the K-map are NOT covered by the same group, a Static-1 Hazard exists between those two cells.</div>
+
+        <h4>Example Function: F(A,B,C) = Σm(1,2,3,5,6,7)</h4>
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 340 220" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:340px">
+            <rect x="20" y="20" width="300" height="180" fill="#1d2021" stroke="#504945" stroke-width="1" rx="4"/>
+            <!-- Grid lines -->
+            <line x1="80" y1="20" x2="80" y2="200" stroke="#504945" stroke-width="1"/>
+            <line x1="155" y1="20" x2="155" y2="200" stroke="#504945" stroke-width="1"/>
+            <line x1="230" y1="20" x2="230" y2="200" stroke="#504945" stroke-width="1"/>
+            <line x1="20" y1="75" x2="320" y2="75" stroke="#504945" stroke-width="1"/>
+            <line x1="20" y1="137" x2="320" y2="137" stroke="#504945" stroke-width="1"/>
+            <!-- Labels -->
+            <text x="45" y="15" fill="#d79921" font-family="JetBrains Mono,monospace" font-size="11">AB\C</text>
+            <text x="95" y="15" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="11">C=0</text>
+            <text x="168" y="15" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="11">C=1</text>
+            <text x="25" y="58" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="10">AB=00</text>
+            <text x="25" y="112" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="10">AB=01</text>
+            <text x="25" y="168" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="10">AB=11</text>
+            <text x="245" y="15" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="11">C=0</text>
+            <text x="25" y="195" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="10">AB=10</text>
+            <!-- Cell values -->
+            <text x="113" y="56" text-anchor="middle" fill="#cc241d" font-family="JetBrains Mono,monospace" font-size="14">0</text>
+            <text x="188" y="56" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="14">1</text>
+            <text x="113" y="112" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="14">1</text>
+            <text x="188" y="112" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="14">1</text>
+            <text x="113" y="168" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="14">1</text>
+            <text x="188" y="168" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="14">1</text>
+            <text x="268" y="56" text-anchor="middle" fill="#cc241d" font-family="JetBrains Mono,monospace" font-size="14">0</text>
+            <text x="268" y="112" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="14">1</text>
+            <text x="268" y="168" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="14">1</text>
+            <text x="268" y="195" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="14">1</text>
+            <!-- Hazard gap indicator -->
+            <rect x="83" y="80" width="145" height="50" fill="none" stroke="#cc241d" stroke-width="1.5" stroke-dasharray="4,2" rx="4"/>
+            <text x="110" y="145" fill="#cc241d" font-family="JetBrains Mono,monospace" font-size="9">← Hazard gap here</text>
+          </svg>
+          <span class="diagram-label">Fig: K-map showing Static-1 Hazard — adjacent 1s not covered by same group</span>
+        </div>
+
+        <h2>🛡️ Elimination / Reduction of Hazards</h2>
+
+        <h3>Method 1: Add Redundant Term (K-map method)</h3>
+        <div class="step-box"><span class="step-num">STEP 1</span> Identify the two adjacent 1s not covered by the same group.</div>
+        <div class="step-box"><span class="step-num">STEP 2</span> Add an extra K-map group that covers BOTH these adjacent 1s.</div>
+        <div class="step-box"><span class="step-num">STEP 3</span> Add the new product term to the Boolean expression.</div>
+        <div class="tip-box"><strong>Result:</strong> The new term acts as a "bridge" — when the circuit transitions between the two groups, the extra term keeps output = 1, preventing the glitch.</div>
+
+        <h3>Method 2: Use D Flip-Flops (for async circuits)</h3>
+        <p>Adding registers/flip-flops filters out short glitches because they only sample output at clock edges.</p>
+
+        <h3>Method 3: Increase path delay uniformly</h3>
+        <p>Make all signal paths have equal delays — but this is impractical in real circuits.</p>
+
+        <h2>🏁 Race Condition Avoidance</h2>
+        <div class="warn-box"><strong>Race</strong>: Multiple state variables try to change at the same time in async circuits. Solution: Use <strong>shared row assignment</strong> in state assignment so only ONE variable changes at a time (unit distance / Gray code assignment).</div>
+        <ul>
+          <li>Assign states such that only 1 bit changes between consecutive states</li>
+          <li>Use <strong>Gray code</strong> state assignment: 00→01→11→10</li>
+          <li>Introduce <strong>extra states</strong> (transition states) if direct Gray code is not possible</li>
+        </ul>
+
+        <h2>📝 Summary Table</h2>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>Hazard Type</th><th>What Happens</th><th>Cause</th><th>Fix</th></tr>
+            <tr><td>Static-1</td><td>1 glitches to 0</td><td>Two SOP groups, no bridge</td><td>Add redundant K-map group</td></tr>
+            <tr><td>Static-0</td><td>0 glitches to 1</td><td>Two POS groups, no bridge</td><td>Add redundant POS term</td></tr>
+            <tr><td>Dynamic</td><td>Output flips 2+ times</td><td>3+ gate levels, unequal delay</td><td>Redesign to 2-level circuit</td></tr>
+            <tr><td>Race</td><td>Wrong final state</td><td>Multiple bits change at once</td><td>Gray code state assignment</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question-card" id="q4" data-keywords="static dynamic hazard combinational circuit removal elimination SOP POS">
+      <div class="card-header" onclick="toggleCard(this)">
+        <span class="q-number">Q4</span>
+        <span class="q-title">Static and Dynamic Hazards — Methods to Remove from Combinational Circuits</span>
+        <span class="marks-badge">7M</span>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+
+        <h2>📖 Quick Recap: What is a Hazard?</h2>
+        <div class="def-box"><strong>Hazard</strong>: A momentary wrong output (glitch) in a combinational circuit when an input changes, due to different signal path delays.</div>
+
+        <h2>🔴 Static-1 Hazard (Most Important for Exams)</h2>
+        <h3>Definition</h3>
+        <p>Output should stay at <strong>1</strong>, but briefly becomes <strong>0</strong> (unwanted LOW pulse).</p>
+        <h3>When does it occur?</h3>
+        <p>In a 2-level AND-OR (SOP) circuit, when a transition takes the circuit between two product terms (AND gates) and neither product term covers that moment.</p>
+
+        <h3>Example</h3>
+        <div class="formula">F = AB + BC</div>
+        <p>When A=1, B=1, C=1: both terms = 1, output = 1 ✅<br>
+        Now change A from 1→0 (while B=1, C=1):<br>
+        — AB goes 0 (delay in A propagating)<br>
+        — BC should go 1 immediately<br>
+        — But if AB goes 0 before BC goes 1 → short glitch!</p>
+
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 460 200" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:460px">
+            <defs>
+              <marker id="arr2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#d79921"/>
+              </marker>
+            </defs>
+            <!-- AND gate 1: AB -->
+            <rect x="40" y="40" width="60" height="36" rx="4" fill="#1d2021" stroke="#458588" stroke-width="1.5"/>
+            <text x="70" y="63" text-anchor="middle" fill="#9ccfd8" font-family="JetBrains Mono,monospace" font-size="11">AND</text>
+            <text x="30" y="52" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="10">A</text>
+            <text x="30" y="68" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="10">B</text>
+            <line x1="40" y1="50" x2="40" y2="50" stroke="#504945"/>
+            <line x1="38" y1="50" x2="40" y2="50" stroke="#d5c4a1" stroke-width="1.2"/>
+            <line x1="38" y1="65" x2="40" y2="65" stroke="#d5c4a1" stroke-width="1.2"/>
+
+            <!-- AND gate 2: BC -->
+            <rect x="40" y="110" width="60" height="36" rx="4" fill="#1d2021" stroke="#458588" stroke-width="1.5"/>
+            <text x="70" y="133" text-anchor="middle" fill="#9ccfd8" font-family="JetBrains Mono,monospace" font-size="11">AND</text>
+            <text x="30" y="122" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="10">B</text>
+            <text x="30" y="138" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="10">C</text>
+            <line x1="38" y1="120" x2="40" y2="120" stroke="#d5c4a1" stroke-width="1.2"/>
+            <line x1="38" y1="135" x2="40" y2="135" stroke="#d5c4a1" stroke-width="1.2"/>
+
+            <!-- OR gate -->
+            <rect x="170" y="75" width="60" height="36" rx="4" fill="#1d2021" stroke="#98971a" stroke-width="1.5"/>
+            <text x="200" y="98" text-anchor="middle" fill="#b8bb26" font-family="JetBrains Mono,monospace" font-size="11">OR</text>
+            <line x1="100" y1="58" x2="170" y2="85" stroke="#d5c4a1" stroke-width="1.2"/>
+            <line x1="100" y1="128" x2="170" y2="102" stroke="#d5c4a1" stroke-width="1.2"/>
+            <line x1="230" y1="93" x2="280" y2="93" stroke="#d5c4a1" stroke-width="1.2"/>
+            <text x="290" y="97" fill="#ebdbb2" font-family="JetBrains Mono,monospace" font-size="12">F</text>
+
+            <!-- Redundant AND gate -->
+            <rect x="40" y="165" width="60" height="36" rx="4" fill="#1d2021" stroke="#d65d0e" stroke-width="2" stroke-dasharray="4,2"/>
+            <text x="70" y="183" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono,monospace" font-size="9">AND(AC)</text>
+            <text x="30" y="178" fill="#d65d0e" font-family="JetBrains Mono,monospace" font-size="9">A</text>
+            <text x="30" y="192" fill="#d65d0e" font-family="JetBrains Mono,monospace" font-size="9">C</text>
+            <line x1="100" y1="183" x2="170" y2="107" stroke="#d65d0e" stroke-width="1.2" stroke-dasharray="4,2"/>
+            <text x="310" y="80" fill="#d65d0e" font-family="JetBrains Mono,monospace" font-size="9">← Add AC</text>
+            <text x="310" y="93" fill="#d65d0e" font-family="JetBrains Mono,monospace" font-size="9">  (bridge)</text>
+          </svg>
+          <span class="diagram-label">Fig: Adding redundant AND gate (AC) to remove Static-1 Hazard in F = AB + BC</span>
+        </div>
+
+        <h3>Fix: Add redundant term AC</h3>
+        <div class="formula">F = AB + BC + AC   ← Hazard-free SOP</div>
+        <p>Now AC = 1 during the transition (A=1, C=1, B changing), so output stays 1. No glitch! ✅</p>
+
+        <h2>🔵 Static-0 Hazard</h2>
+        <p>Output should stay at <strong>0</strong>, but briefly becomes <strong>1</strong>.</p>
+        <p>Occurs in <strong>POS (Product of Sums)</strong> circuits. Fix: Add redundant sum term to cover adjacent 0s in K-map.</p>
+        <div class="formula">Fix: Use K-map on 0s (POS simplification) and add bridge sum term</div>
+
+        <h2>🟡 Dynamic Hazard</h2>
+        <h3>Definition</h3>
+        <p>Output changes more than once (e.g., 0→1→0→1) during a single input transition.</p>
+        <h3>Cause</h3>
+        <p>Only possible in circuits with <strong>3 or more levels of gates</strong>. Multiple paths reach the output with different delays.</p>
+        <h3>Fix</h3>
+        <ul>
+          <li>Redesign as a 2-level (SOP or POS) circuit — eliminates dynamic hazards</li>
+          <li>Remove all static hazards from the 2-level circuit first</li>
+        </ul>
+
+        <h2>🗺️ Complete K-map Hazard Removal Procedure</h2>
+        <div class="step-box"><span class="step-num">STEP 1</span> Write the Boolean function and draw its K-map.</div>
+        <div class="step-box"><span class="step-num">STEP 2</span> Group all 1s using minimum essential prime implicants (standard SOP).</div>
+        <div class="step-box"><span class="step-num">STEP 3</span> Check if any two adjacent 1s (differing in exactly 1 variable) are NOT covered by a common group.</div>
+        <div class="step-box"><span class="step-num">STEP 4</span> For each such uncovered adjacent pair, add an extra group (redundant prime implicant) that covers both.</div>
+        <div class="step-box"><span class="step-num">STEP 5</span> The final expression with all extra groups = Hazard-free SOP.</div>
+
+        <h2>📝 Summary</h2>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>Hazard</th><th>Circuit Type</th><th>Glitch</th><th>Fix</th></tr>
+            <tr><td>Static-1</td><td>SOP (2-level)</td><td>1→0→1</td><td>Add redundant product term (K-map)</td></tr>
+            <tr><td>Static-0</td><td>POS (2-level)</td><td>0→1→0</td><td>Add redundant sum term</td></tr>
+            <tr><td>Dynamic</td><td>3+ levels</td><td>Multiple transitions</td><td>Convert to 2-level + fix static hazards</td></tr>
+          </table>
+        </div>
+        <div class="tip-box"><strong>✅ Key Rule:</strong> Every pair of adjacent 1s in K-map must be covered by at least ONE common group. If not → Static-1 Hazard exists.</div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question-card" id="q5" data-keywords="SRAM static RAM cell 6T transistor working circuit applications">
+      <div class="card-header" onclick="toggleCard(this)">
+        <span class="q-number">Q5</span>
+        <span class="q-title">SRAM Cell — Working, Circuit Diagram and Applications</span>
+        <span class="marks-badge">7M</span>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+
+        <h2>📖 What is SRAM?</h2>
+        <div class="def-box">
+          <strong>SRAM (Static Random Access Memory)</strong>: A type of RAM that stores data using a <em>bistable latch</em> (two cross-coupled inverters). It does NOT need refresh. Data is retained as long as power is ON.
+        </div>
+        <p>"Static" means the data stays without needing periodic refresh — unlike DRAM.</p>
+
+        <h2>🔧 SRAM Cell Structure (6-Transistor Cell)</h2>
+        <p>The standard SRAM cell uses <strong>6 MOSFETs (transistors)</strong>:</p>
+        <ul>
+          <li><strong>M1, M2</strong> — PMOS load transistors (pull-up)</li>
+          <li><strong>M3, M4</strong> — NMOS driver transistors (pull-down)</li>
+          <li><strong>M5, M6</strong> — NMOS access transistors (controlled by Word Line)</li>
+        </ul>
+        <p>M1–M3 form one inverter, M2–M4 form another. They are cross-coupled to form a <strong>bistable latch</strong> (SR latch).</p>
+
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 480 300" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:480px">
+            <!-- Cell boundary -->
+            <rect x="10" y="10" width="460" height="280" rx="8" fill="#1d2021" stroke="#504945" stroke-width="1"/>
+            <!-- VDD line -->
+            <line x1="80" y1="40" x2="400" y2="40" stroke="#cc241d" stroke-width="2"/>
+            <text x="20" y="45" fill="#cc241d" font-family="JetBrains Mono,monospace" font-size="11">VDD</text>
+            <!-- GND line -->
+            <line x1="80" y1="265" x2="400" y2="265" stroke="#458588" stroke-width="2"/>
+            <text x="20" y="270" fill="#458588" font-family="JetBrains Mono,monospace" font-size="11">GND</text>
+
+            <!-- Left inverter (M1 PMOS + M3 NMOS) -->
+            <line x1="160" y1="40" x2="160" y2="90" stroke="#d5c4a1" stroke-width="1.5"/>
+            <rect x="135" y="90" width="50" height="28" rx="3" fill="#282828" stroke="#b16286" stroke-width="1.5"/>
+            <text x="160" y="109" text-anchor="middle" fill="#b16286" font-family="JetBrains Mono,monospace" font-size="9">M1(PMOS)</text>
+            <line x1="160" y1="118" x2="160" y2="158" stroke="#d5c4a1" stroke-width="1.5"/>
+            <circle cx="160" cy="155" r="4" fill="#d79921"/>
+            <text x="170" y="152" fill="#d79921" font-family="JetBrains Mono,monospace" font-size="10">Q</text>
+            <rect x="135" y="158" width="50" height="28" rx="3" fill="#282828" stroke="#98971a" stroke-width="1.5"/>
+            <text x="160" y="177" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="9">M3(NMOS)</text>
+            <line x1="160" y1="186" x2="160" y2="265" stroke="#d5c4a1" stroke-width="1.5"/>
+
+            <!-- Right inverter (M2 PMOS + M4 NMOS) -->
+            <line x1="320" y1="40" x2="320" y2="90" stroke="#d5c4a1" stroke-width="1.5"/>
+            <rect x="295" y="90" width="50" height="28" rx="3" fill="#282828" stroke="#b16286" stroke-width="1.5"/>
+            <text x="320" y="109" text-anchor="middle" fill="#b16286" font-family="JetBrains Mono,monospace" font-size="9">M2(PMOS)</text>
+            <line x1="320" y1="118" x2="320" y2="158" stroke="#d5c4a1" stroke-width="1.5"/>
+            <circle cx="320" cy="155" r="4" fill="#458588"/>
+            <text x="330" y="152" fill="#458588" font-family="JetBrains Mono,monospace" font-size="10">Q'</text>
+            <rect x="295" y="158" width="50" height="28" rx="3" fill="#282828" stroke="#98971a" stroke-width="1.5"/>
+            <text x="320" y="177" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="9">M4(NMOS)</text>
+            <line x1="320" y1="186" x2="320" y2="265" stroke="#d5c4a1" stroke-width="1.5"/>
+
+            <!-- Cross-coupling -->
+            <line x1="160" y1="155" x2="160" y2="140" stroke="#d79921" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="160" y1="140" x2="295" y2="140" stroke="#d79921" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="295" y1="140" x2="295" y2="168" stroke="#d79921" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="320" y1="155" x2="320" y2="130" stroke="#458588" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="320" y1="130" x2="185" y2="130" stroke="#458588" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="185" y1="130" x2="185" y2="168" stroke="#458588" stroke-width="1" stroke-dasharray="3,2"/>
+
+            <!-- Access transistors M5, M6 -->
+            <rect x="80" y="143" width="45" height="24" rx="3" fill="#282828" stroke="#d65d0e" stroke-width="1.5"/>
+            <text x="102" y="159" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono,monospace" font-size="9">M5</text>
+            <line x1="135" y1="155" x2="160" y2="155" stroke="#d5c4a1" stroke-width="1.2"/>
+            <line x1="60" y1="155" x2="80" y2="155" stroke="#d5c4a1" stroke-width="1.2"/>
+            <text x="25" y="159" fill="#ebdbb2" font-family="JetBrains Mono,monospace" font-size="10">BL</text>
+
+            <rect x="355" y="143" width="45" height="24" rx="3" fill="#282828" stroke="#d65d0e" stroke-width="1.5"/>
+            <text x="377" y="159" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono,monospace" font-size="9">M6</text>
+            <line x1="320" y1="155" x2="355" y2="155" stroke="#d5c4a1" stroke-width="1.2"/>
+            <line x1="400" y1="155" x2="420" y2="155" stroke="#d5c4a1" stroke-width="1.2"/>
+            <text x="425" y="159" fill="#ebdbb2" font-family="JetBrains Mono,monospace" font-size="10">BL'</text>
+
+            <!-- Word Line -->
+            <line x1="102" y1="143" x2="102" y2="120" stroke="#689d6a" stroke-width="1.5"/>
+            <line x1="377" y1="143" x2="377" y2="120" stroke="#689d6a" stroke-width="1.5"/>
+            <line x1="102" y1="120" x2="377" y2="120" stroke="#689d6a" stroke-width="2"/>
+            <text x="215" y="115" fill="#689d6a" font-family="JetBrains Mono,monospace" font-size="11">Word Line (WL)</text>
+
+            <!-- Labels -->
+            <text x="155" y="290" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="9">Left Inverter</text>
+            <text x="295" y="290" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="9">Right Inverter</text>
+          </svg>
+          <span class="diagram-label">Fig: 6-Transistor SRAM Cell — BL=Bit Line, BL'=Complement Bit Line, WL=Word Line</span>
+        </div>
+
+        <h2>⚙️ Working of SRAM Cell</h2>
+        <h3>Storage (Standby Mode)</h3>
+        <p>Word Line (WL) = 0 → Access transistors M5, M6 are OFF → The latch (M1–M4) holds the data stably. No current flows in or out. Q stays at 0 or 1.</p>
+
+        <h3>Read Operation</h3>
+        <div class="step-box"><span class="step-num">STEP 1</span> Both Bit Lines (BL and BL') are pre-charged to VDD (logic 1).</div>
+        <div class="step-box"><span class="step-num">STEP 2</span> Word Line WL = 1 → M5 and M6 turn ON.</div>
+        <div class="step-box"><span class="step-num">STEP 3</span> The latch pulls one bit line low (toward Q or Q'). A sense amplifier detects the small voltage difference and reads the data.</div>
+
+        <h3>Write Operation</h3>
+        <div class="step-box"><span class="step-num">STEP 1</span> Bit Lines are forced to the data values: BL = new data, BL' = complement.</div>
+        <div class="step-box"><span class="step-num">STEP 2</span> WL = 1 → M5, M6 ON → strong write drivers overpower the latch and flip it to new state.</div>
+
+        <h2>📋 Characteristics</h2>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>Parameter</th><th>Value / Info</th></tr>
+            <tr><td>Transistors per cell</td><td>6 (standard)</td></tr>
+            <tr><td>Refresh required</td><td>No</td></tr>
+            <tr><td>Speed</td><td>Very fast (nanoseconds)</td></tr>
+            <tr><td>Power</td><td>Higher than DRAM</td></tr>
+            <tr><td>Cost per bit</td><td>Expensive</td></tr>
+            <tr><td>Volatility</td><td>Volatile (loses data on power OFF)</td></tr>
+          </table>
+        </div>
+
+        <h2>🏭 Applications of SRAM</h2>
+        <ul>
+          <li>CPU <strong>Cache memory</strong> (L1, L2, L3) — fastest memory in computer</li>
+          <li><strong>Registers</strong> in microprocessors</li>
+          <li>Buffer memory in networking equipment</li>
+          <li>FPGA configuration and lookup tables</li>
+          <li>Embedded systems where fast memory is needed</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="question-card" id="q6" data-keywords="DRAM dynamic RAM SRAM compare structure operation refresh capacitor">
+      <div class="card-header" onclick="toggleCard(this)">
+        <span class="q-number">Q6</span>
+        <span class="q-title">DRAM Structure and Operation — Compare DRAM vs SRAM</span>
+        <span class="marks-badge">7M</span>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+
+        <h2>📖 What is DRAM?</h2>
+        <div class="def-box">
+          <strong>DRAM (Dynamic RAM)</strong>: Stores each bit as charge in a <em>tiny capacitor</em>. It is "dynamic" because the capacitor leaks charge and must be <em>periodically refreshed</em> (every ~64ms) to retain data.
+        </div>
+
+        <h2>🔧 DRAM Cell Structure (1T-1C Cell)</h2>
+        <p>Each DRAM cell has only <strong>1 transistor + 1 capacitor</strong>:</p>
+        <ul>
+          <li><strong>Capacitor (C)</strong>: Stores charge. Charged = 1, Discharged = 0</li>
+          <li><strong>Access transistor (T)</strong>: NMOS controlled by Word Line (WL)</li>
+        </ul>
+
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 360 220" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:360px">
+            <rect x="10" y="10" width="340" height="200" rx="8" fill="#1d2021" stroke="#504945" stroke-width="1"/>
+            <!-- Bit Line vertical -->
+            <line x1="180" y1="20" x2="180" y2="80" stroke="#d5c4a1" stroke-width="2"/>
+            <text x="185" y="36" fill="#ebdbb2" font-family="JetBrains Mono,monospace" font-size="11">Bit Line (BL)</text>
+
+            <!-- Transistor box -->
+            <rect x="150" y="80" width="60" height="35" rx="4" fill="#282828" stroke="#98971a" stroke-width="1.8"/>
+            <text x="180" y="103" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="11">NMOS</text>
+
+            <!-- Word Line horizontal -->
+            <line x1="40" y1="97" x2="150" y2="97" stroke="#689d6a" stroke-width="2"/>
+            <text x="44" y="92" fill="#689d6a" font-family="JetBrains Mono,monospace" font-size="11">Word Line (WL)</text>
+
+            <!-- Wire down to capacitor -->
+            <line x1="180" y1="115" x2="180" y2="145" stroke="#d5c4a1" stroke-width="2"/>
+
+            <!-- Capacitor symbol -->
+            <line x1="145" y1="148" x2="215" y2="148" stroke="#9ccfd8" stroke-width="2.5"/>
+            <line x1="145" y1="162" x2="215" y2="162" stroke="#9ccfd8" stroke-width="2.5"/>
+            <line x1="180" y1="162" x2="180" y2="185" stroke="#d5c4a1" stroke-width="2"/>
+
+            <!-- GND -->
+            <line x1="155" y1="185" x2="205" y2="185" stroke="#458588" stroke-width="2"/>
+            <line x1="163" y1="190" x2="197" y2="190" stroke="#458588" stroke-width="1.5"/>
+            <line x1="170" y1="195" x2="190" y2="195" stroke="#458588" stroke-width="1"/>
+            <text x="210" y="190" fill="#458588" font-family="JetBrains Mono,monospace" font-size="10">GND</text>
+
+            <!-- Labels -->
+            <text x="228" y="158" fill="#9ccfd8" font-family="JetBrains Mono,monospace" font-size="11">C</text>
+            <text x="40" y="170" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="10">Charged=1</text>
+            <text x="40" y="183" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="10">Discharged=0</text>
+          </svg>
+          <span class="diagram-label">Fig: DRAM Cell (1T-1C) — 1 Transistor + 1 Capacitor</span>
+        </div>
+
+        <h2>⚙️ DRAM Operation</h2>
+        <h3>Write:</h3>
+        <p>WL = 1 (transistor ON) → Bit Line drives charge into/out of capacitor → Capacitor charges (write 1) or discharges (write 0)</p>
+
+        <h3>Read:</h3>
+        <p>WL = 1 → capacitor charge shared with bit line → Sense amplifier detects tiny voltage → amplifies → restores data (destructive read, so write-back needed)</p>
+
+        <h3>Refresh:</h3>
+        <div class="warn-box"><strong>Why refresh?</strong> The capacitor slowly leaks charge. Every ~64ms, each row must be read and rewritten to prevent data loss.</div>
+
+        <h2>📊 SRAM vs DRAM — Complete Comparison</h2>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>Parameter</th><th>SRAM</th><th>DRAM</th></tr>
+            <tr><td>Storage element</td><td>6 transistors (latch)</td><td>1 transistor + 1 capacitor</td></tr>
+            <tr><td>Refresh needed</td><td>❌ No</td><td>✅ Yes (every ~64ms)</td></tr>
+            <tr><td>Speed</td><td>Very Fast (1–10 ns)</td><td>Slower (50–100 ns)</td></tr>
+            <tr><td>Power consumption</td><td>Higher (active)</td><td>Lower (standby)</td></tr>
+            <tr><td>Density</td><td>Low (less bits/area)</td><td>High (more bits/area)</td></tr>
+            <tr><td>Cost</td><td>Expensive</td><td>Cheap</td></tr>
+            <tr><td>Complexity</td><td>Complex cell</td><td>Simple cell</td></tr>
+            <tr><td>Data retention</td><td>Stable (as long as power ON)</td><td>Needs refresh</td></tr>
+            <tr><td>Application</td><td>Cache (L1/L2), registers</td><td>Main memory (RAM in PC)</td></tr>
+            <tr><td>Volatility</td><td>Volatile</td><td>Volatile</td></tr>
+          </table>
+        </div>
+
+        <h2>📝 Simple Memory Hierarchy</h2>
+        <div class="formula">Registers (fastest) → SRAM Cache → DRAM Main Memory → SSD/HDD (slowest)</div>
+        <div class="tip-box"><strong>✅ Exam Tip:</strong> SRAM = 6T, fast, expensive, no refresh. DRAM = 1T+1C, slow, cheap, needs refresh. This comparison table alone = 4+ marks.</div>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="question-card" id="q7" data-keywords="EEPROM electrically erasable programmable ROM cell structure working floating gate">
+      <div class="card-header" onclick="toggleCard(this)">
+        <span class="q-number">Q7</span>
+        <span class="q-title">EEPROM — Cell Structure and Working</span>
+        <span class="marks-badge">7M</span>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+
+        <h2>📖 Evolution of ROM Family</h2>
+        <div class="def-box">ROM → PROM → EPROM → EEPROM → Flash Memory (each step = more flexible erasure)</div>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>Type</th><th>Erasure</th><th>Reprogrammable?</th></tr>
+            <tr><td>ROM</td><td>Never</td><td>No</td></tr>
+            <tr><td>PROM</td><td>Fuse blow (once)</td><td>No</td></tr>
+            <tr><td>EPROM</td><td>UV light (whole chip)</td><td>Yes, but slow</td></tr>
+            <tr><td>EEPROM</td><td>Electrically (byte-by-byte)</td><td>Yes ✅</td></tr>
+            <tr><td>Flash</td><td>Electrically (blocks)</td><td>Yes ✅</td></tr>
+          </table>
+        </div>
+
+        <h2>📖 What is EEPROM?</h2>
+        <div class="def-box">
+          <strong>EEPROM</strong>: Electrically Erasable Programmable Read-Only Memory. It can be erased and reprogrammed <em>electrically</em>, <em>byte-by-byte</em>, without removing it from the circuit.
+        </div>
+
+        <h2>🔧 EEPROM Cell Structure</h2>
+        <p>Each EEPROM cell uses a special transistor called <strong>FLOTOX (Floating gate Tunnel Oxide) transistor</strong>:</p>
+        <ul>
+          <li><strong>Control Gate (CG)</strong>: Connected to the word line — external control</li>
+          <li><strong>Floating Gate (FG)</strong>: Completely surrounded by insulator (oxide) — stores charge permanently</li>
+          <li><strong>Tunnel Oxide</strong>: Very thin SiO₂ layer between floating gate and drain — allows Fowler-Nordheim tunneling</li>
+          <li><strong>Select Transistor</strong>: Connected in series with FLOTOX — used during erase/write to protect unselected cells</li>
+        </ul>
+
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 460 260" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:460px">
+            <rect x="10" y="10" width="440" height="240" rx="8" fill="#1d2021" stroke="#504945" stroke-width="1"/>
+            <!-- Silicon substrate -->
+            <rect x="60" y="185" width="340" height="40" rx="4" fill="#3c3836" stroke="#665c54" stroke-width="1"/>
+            <text x="210" y="210" text-anchor="middle" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="11">p-type Silicon Substrate</text>
+
+            <!-- Source -->
+            <rect x="65" y="160" width="60" height="28" rx="2" fill="#458588" stroke="#689d6a" stroke-width="1"/>
+            <text x="95" y="178" text-anchor="middle" fill="#d5c4a1" font-family="JetBrains Mono,monospace" font-size="10">Source</text>
+
+            <!-- Drain -->
+            <rect x="335" y="160" width="60" height="28" rx="2" fill="#b57614" stroke="#d79921" stroke-width="1"/>
+            <text x="365" y="178" text-anchor="middle" fill="#d5c4a1" font-family="JetBrains Mono,monospace" font-size="10">Drain</text>
+
+            <!-- Tunnel Oxide (thin) -->
+            <rect x="320" y="148" width="70" height="14" rx="1" fill="#cc241d" stroke="#cc241d" stroke-width="0.5" opacity="0.7"/>
+            <text x="357" y="141" text-anchor="middle" fill="#cc241d" font-family="JetBrains Mono,monospace" font-size="9">Tunnel Oxide</text>
+            <line x1="357" y1="143" x2="357" y2="148" stroke="#cc241d" stroke-width="1" stroke-dasharray="2,1"/>
+
+            <!-- Gate oxide (thick) -->
+            <rect x="130" y="145" width="185" height="17" rx="1" fill="#504945" stroke="#665c54" stroke-width="1"/>
+            <text x="215" y="156" text-anchor="middle" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="9">Gate Oxide (thick SiO₂)</text>
+
+            <!-- Floating Gate -->
+            <rect x="115" y="110" width="250" height="32" rx="3" fill="#282828" stroke="#b16286" stroke-width="2"/>
+            <text x="240" y="131" text-anchor="middle" fill="#b16286" font-family="JetBrains Mono,monospace" font-size="11" font-weight="600">Floating Gate (FG)</text>
+            <text x="380" y="131" fill="#b16286" font-family="JetBrains Mono,monospace" font-size="9">←→ Charge stored here</text>
+
+            <!-- Inter-poly oxide -->
+            <rect x="115" y="88" width="250" height="20" rx="1" fill="#3c3836" stroke="#504945" stroke-width="1"/>
+            <text x="240" y="101" text-anchor="middle" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="9">Inter-poly Oxide (insulator)</text>
+
+            <!-- Control Gate -->
+            <rect x="115" y="60" width="250" height="26" rx="3" fill="#282828" stroke="#98971a" stroke-width="1.8"/>
+            <text x="240" y="78" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="11" font-weight="600">Control Gate (CG)</text>
+
+            <!-- Word Line -->
+            <line x1="115" y1="73" x2="50" y2="73" stroke="#689d6a" stroke-width="1.5"/>
+            <text x="20" y="77" fill="#689d6a" font-family="JetBrains Mono,monospace" font-size="9">WL</text>
+
+            <!-- Source/Drain terminals -->
+            <line x1="95" y1="160" x2="95" y2="145" stroke="#458588" stroke-width="1.5"/>
+            <line x1="365" y1="160" x2="365" y2="162" stroke="#d79921" stroke-width="1.5"/>
+
+            <!-- Select transistor (series) -->
+            <rect x="30" y="155" width="40" height="28" rx="3" fill="#282828" stroke="#d65d0e" stroke-width="1.5"/>
+            <text x="50" y="166" text-anchor="middle" fill="#d65d0e" font-family="JetBrains Mono,monospace" font-size="8">Select</text>
+            <text x="50" y="177" text-anchor="middle" fill="#d65d0e" font-family="JetBrains Mono,monospace" font-size="8">Trans.</text>
+            <line x1="70" y1="169" x2="65" y2="169" stroke="#d5c4a1" stroke-width="1.2"/>
+            <line x1="30" y1="169" x2="20" y2="169" stroke="#d5c4a1" stroke-width="1.2"/>
+            <text x="5" y="173" fill="#ebdbb2" font-family="JetBrains Mono,monospace" font-size="8">BL</text>
+          </svg>
+          <span class="diagram-label">Fig: EEPROM FLOTOX Cell — Floating Gate surrounded by insulators traps charge</span>
+        </div>
+
+        <h2>⚙️ Working Principle: Fowler-Nordheim Tunneling</h2>
+        <p>Electrons can tunnel through the very thin oxide layer when a high voltage is applied. This is called <strong>Fowler-Nordheim (FN) Tunneling</strong>.</p>
+
+        <h3>Programming (Write 0):</h3>
+        <div class="step-box"><span class="step-num">STEP 1</span> Apply high positive voltage (~12–20V) on Control Gate.</div>
+        <div class="step-box"><span class="step-num">STEP 2</span> Strong electric field attracts electrons from substrate through tunnel oxide into Floating Gate.</div>
+        <div class="step-box"><span class="step-num">STEP 3</span> Floating gate gets negatively charged → threshold voltage of transistor increases → transistor is OFF even when WL = 1 → reads as 0.</div>
+
+        <h3>Erasing (Write 1):</h3>
+        <div class="step-box"><span class="step-num">STEP 1</span> Apply high positive voltage on Drain (or WL = 0, Drain high).</div>
+        <div class="step-box"><span class="step-num">STEP 2</span> Electrons tunnel back from floating gate to drain through tunnel oxide.</div>
+        <div class="step-box"><span class="step-num">STEP 3</span> Floating gate becomes neutral/positive → threshold voltage decreases → transistor conducts normally → reads as 1.</div>
+
+        <h3>Reading:</h3>
+        <p>Apply normal voltage on WL. If floating gate is charged → transistor OFF → output = 0. If neutral → transistor ON → output = 1.</p>
+
+        <h2>✅ Advantages of EEPROM</h2>
+        <ul>
+          <li>Byte-level erasure (erase only what you want)</li>
+          <li>In-circuit programmable (no need to remove chip)</li>
+          <li>Non-volatile (data retained even after power OFF)</li>
+          <li>Endurance: ~1 million erase/write cycles</li>
+        </ul>
+
+        <h2>🏭 Applications</h2>
+        <ul>
+          <li>BIOS/UEFI firmware storage in computers</li>
+          <li>Smart cards and security tokens</li>
+          <li>Microcontroller configuration storage</li>
+          <li>Calibration data in sensors and instruments</li>
+          <li>Serial number and settings storage in embedded systems</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="question-card" id="q8" data-keywords="RAM memory system design IC chips address decoder memory expansion word bit">
+      <div class="card-header" onclick="toggleCard(this)">
+        <span class="q-number">Q8</span>
+        <span class="q-title">Design RAM Memory Systems Using Memory ICs</span>
+        <span class="marks-badge">7M</span>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+
+        <h2>📖 Why Expand Memory?</h2>
+        <div class="def-box">A single RAM IC has limited capacity. To build a larger memory, we connect multiple ICs. There are two ways: <strong>Word Capacity Expansion</strong> (more addresses) and <strong>Bit Capacity Expansion</strong> (more bits per address).</div>
+
+        <h2>📌 Key Terms</h2>
+        <ul>
+          <li><strong>Address lines (A)</strong>: 2ᴬ = number of locations (words)</li>
+          <li><strong>Data lines (D)</strong>: Number of bits stored per location</li>
+          <li><strong>Chip Select (CS) / Enable (CE)</strong>: Activates a specific chip</li>
+          <li><strong>Notation</strong>: A chip is described as <code>Words × Bits</code> e.g. <code>1K × 4</code> = 1024 locations, 4 bits each</li>
+        </ul>
+
+        <h2>📐 Type 1: Word Expansion (More Addresses)</h2>
+        <p>Goal: Increase the number of addressable locations.</p>
+        <p><strong>Example</strong>: Build a 4K × 8 RAM using 1K × 8 chips</p>
+        <p>Number of chips needed = 4K / 1K = <strong>4 chips</strong></p>
+
+        <div class="step-box"><span class="step-num">STEP 1</span> Each chip has 10 address lines (A0–A9) for 1K locations. Connect all A0–A9 to the same address bus.</div>
+        <div class="step-box"><span class="step-num">STEP 2</span> Use the upper 2 address bits (A10, A11) as chip select signals. Use a 2:4 Decoder to activate one chip at a time.</div>
+        <div class="step-box"><span class="step-num">STEP 3</span> All data lines are connected to the common data bus (D0–D7).</div>
+
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 460 280" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:460px">
+            <rect x="10" y="10" width="440" height="260" rx="6" fill="#1d2021" stroke="#504945"/>
+            <!-- Address Bus -->
+            <text x="20" y="30" fill="#d79921" font-family="JetBrains Mono,monospace" font-size="10">Address Bus (A0–A11)</text>
+            <line x1="20" y1="35" x2="440" y2="35" stroke="#d79921" stroke-width="2"/>
+
+            <!-- Decoder -->
+            <rect x="30" y="50" width="70" height="60" rx="4" fill="#282828" stroke="#98971a" stroke-width="1.5"/>
+            <text x="65" y="75" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="9">2:4</text>
+            <text x="65" y="88" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="9">Decoder</text>
+            <text x="65" y="101" text-anchor="middle" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="8">A10,A11</text>
+            <!-- Decoder input from bus -->
+            <line x1="65" y1="50" x2="65" y2="35" stroke="#d79921" stroke-width="1.2"/>
+
+            <!-- 4 RAM chips -->
+            <rect x="160" y="45" width="70" height="45" rx="4" fill="#282828" stroke="#458588" stroke-width="1.5"/>
+            <text x="195" y="67" text-anchor="middle" fill="#9ccfd8" font-family="JetBrains Mono,monospace" font-size="9">RAM #1</text>
+            <text x="195" y="80" text-anchor="middle" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="8">1K×8</text>
+
+            <rect x="250" y="45" width="70" height="45" rx="4" fill="#282828" stroke="#458588" stroke-width="1.5"/>
+            <text x="285" y="67" text-anchor="middle" fill="#9ccfd8" font-family="JetBrains Mono,monospace" font-size="9">RAM #2</text>
+            <text x="285" y="80" text-anchor="middle" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="8">1K×8</text>
+
+            <rect x="160" y="120" width="70" height="45" rx="4" fill="#282828" stroke="#458588" stroke-width="1.5"/>
+            <text x="195" y="142" text-anchor="middle" fill="#9ccfd8" font-family="JetBrains Mono,monospace" font-size="9">RAM #3</text>
+            <text x="195" y="155" text-anchor="middle" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="8">1K×8</text>
+
+            <rect x="250" y="120" width="70" height="45" rx="4" fill="#282828" stroke="#458588" stroke-width="1.5"/>
+            <text x="285" y="142" text-anchor="middle" fill="#9ccfd8" font-family="JetBrains Mono,monospace" font-size="9">RAM #4</text>
+            <text x="285" y="155" text-anchor="middle" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="8">1K×8</text>
+
+            <!-- CS lines from decoder -->
+            <line x1="100" y1="68" x2="160" y2="68" stroke="#689d6a" stroke-width="1.2"/>
+            <line x1="100" y1="78" x2="130" y2="78" stroke="#689d6a" stroke-width="1.2"/>
+            <line x1="130" y1="78" x2="130" y2="143" stroke="#689d6a" stroke-width="1.2"/>
+            <line x1="130" y1="143" x2="160" y2="143" stroke="#689d6a" stroke-width="1.2"/>
+            <text x="104" y="65" fill="#689d6a" font-family="JetBrains Mono,monospace" font-size="8">CS</text>
+
+            <!-- Lower address lines to all chips -->
+            <line x1="195" y1="35" x2="195" y2="45" stroke="#d79921" stroke-width="1.2"/>
+            <line x1="285" y1="35" x2="285" y2="45" stroke="#d79921" stroke-width="1.2"/>
+            <line x1="195" y1="35" x2="195" y2="120" stroke="#d79921" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="285" y1="35" x2="285" y2="120" stroke="#d79921" stroke-width="1" stroke-dasharray="3,2"/>
+
+            <!-- Data bus -->
+            <text x="20" y="220" fill="#b16286" font-family="JetBrains Mono,monospace" font-size="10">Data Bus (D0–D7)</text>
+            <line x1="20" y1="225" x2="440" y2="225" stroke="#b16286" stroke-width="2"/>
+            <line x1="195" y1="90" x2="195" y2="225" stroke="#b16286" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="285" y1="90" x2="285" y2="225" stroke="#b16286" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="195" y1="165" x2="195" y2="225" stroke="#b16286" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="285" y1="165" x2="285" y2="225" stroke="#b16286" stroke-width="1" stroke-dasharray="3,2"/>
+
+            <!-- Address ranges -->
+            <text x="340" y="67" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="8">0000–03FF</text>
+            <text x="340" y="142" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="8">0800–0BFF</text>
+            <text x="340" y="80" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="8">0400–07FF</text>
+            <text x="340" y="155" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="8">0C00–0FFF</text>
+
+            <text x="100" y="255" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="9">Total: 4K×8 RAM | A10,A11 select chip via 2:4 Decoder</text>
+          </svg>
+          <span class="diagram-label">Fig: Word Expansion — 4 chips of 1K×8 → 4K×8 RAM using 2:4 decoder</span>
+        </div>
+
+        <h2>📐 Type 2: Bit Expansion (More Data Bits)</h2>
+        <p>Goal: Increase word width (bits per address).</p>
+        <p><strong>Example</strong>: Build a 1K × 16 RAM using 1K × 4 chips</p>
+        <p>Number of chips needed = 16 / 4 = <strong>4 chips</strong> (connected in parallel on data bus)</p>
+        <div class="step-box"><span class="step-num">STEP 1</span> All chips share the same address lines (A0–A9) — same location is accessed simultaneously.</div>
+        <div class="step-box"><span class="step-num">STEP 2</span> All chips share the same Chip Select (CS) signal.</div>
+        <div class="step-box"><span class="step-num">STEP 3</span> Data lines are split: Chip1 → D0–D3, Chip2 → D4–D7, Chip3 → D8–D11, Chip4 → D12–D15.</div>
+
+        <h2>📊 Formula Summary</h2>
+        <div class="formula">Word Expansion:
+  Chips needed = Desired words / Chip words
+  Need: Address decoder for upper bits
+
+Bit Expansion:
+  Chips needed = Desired bits / Chip bits
+  No decoder needed (all same CS)</div>
+
+        <h2>📝 Mixed Expansion Example</h2>
+        <p>Build 4K × 16 using 1K × 4 chips:</p>
+        <ul>
+          <li>Word expansion: 4K/1K = 4 groups</li>
+          <li>Bit expansion: 16/4 = 4 chips per group</li>
+          <li>Total chips = 4 × 4 = <strong>16 chips</strong></li>
+          <li>Decoder: 2:4 (for A10, A11)</li>
+        </ul>
+        <div class="tip-box"><strong>✅ Exam Formula:</strong> Total chips = (Desired Words / Chip Words) × (Desired Bits / Chip Bits)</div>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="question-card" id="q9" data-keywords="ROM structure implementation Boolean function read only memory address decoder">
+      <div class="card-header" onclick="toggleCard(this)">
+        <span class="q-number">Q9</span>
+        <span class="q-title">ROM Structure and Implementation for Boolean Functions</span>
+        <span class="marks-badge">7M</span>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+
+        <h2>📖 What is ROM?</h2>
+        <div class="def-box">
+          <strong>ROM (Read-Only Memory)</strong>: A memory that is <em>permanently programmed</em> at the time of manufacture. You can only read from it — you cannot write during normal operation. It is <em>non-volatile</em>.
+        </div>
+
+        <h2>🔧 ROM Structure</h2>
+        <p>A ROM has two main parts:</p>
+        <ul>
+          <li><strong>Decoder</strong>: Converts the input address to one of the 2ⁿ word lines</li>
+          <li><strong>Programmable connections (OR array)</strong>: Each word line connects to output lines through fuses/transistors to produce the desired output bits</li>
+        </ul>
+        <p>ROM with <strong>n input lines</strong> and <strong>m output lines</strong>:<br>
+        — Decoder generates <strong>2ⁿ product terms</strong> (all minterms)<br>
+        — OR array selects which minterms to include for each output</p>
+
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 460 280" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:460px">
+            <rect x="10" y="10" width="440" height="260" rx="6" fill="#1d2021" stroke="#504945"/>
+
+            <!-- Input lines -->
+            <text x="20" y="28" fill="#d79921" font-family="JetBrains Mono,monospace" font-size="10">Inputs (Address)</text>
+            <line x1="50" y1="40" x2="50" y2="70" stroke="#d79921" stroke-width="1.5"/>
+            <text x="42" y="38" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="10">A</text>
+            <line x1="80" y1="40" x2="80" y2="70" stroke="#d79921" stroke-width="1.5"/>
+            <text x="72" y="38" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="10">B</text>
+
+            <!-- Decoder block -->
+            <rect x="35" y="70" width="70" height="100" rx="4" fill="#282828" stroke="#98971a" stroke-width="1.8"/>
+            <text x="70" y="115" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="10">2:4</text>
+            <text x="70" y="130" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="10">Decoder</text>
+            <text x="70" y="145" text-anchor="middle" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="8">(AND array)</text>
+
+            <!-- Minterm outputs from decoder -->
+            <line x1="105" y1="85" x2="200" y2="85" stroke="#458588" stroke-width="1.2"/>
+            <text x="110" y="82" fill="#9ccfd8" font-family="JetBrains Mono,monospace" font-size="9">m0: A'B'</text>
+            <line x1="105" y1="105" x2="200" y2="105" stroke="#458588" stroke-width="1.2"/>
+            <text x="110" y="102" fill="#9ccfd8" font-family="JetBrains Mono,monospace" font-size="9">m1: A'B</text>
+            <line x1="105" y1="125" x2="200" y2="125" stroke="#458588" stroke-width="1.2"/>
+            <text x="110" y="122" fill="#9ccfd8" font-family="JetBrains Mono,monospace" font-size="9">m2: AB'</text>
+            <line x1="105" y1="145" x2="200" y2="145" stroke="#458588" stroke-width="1.2"/>
+            <text x="110" y="142" fill="#9ccfd8" font-family="JetBrains Mono,monospace" font-size="9">m3: AB</text>
+
+            <!-- OR gates / OR array -->
+            <rect x="200" y="70" width="140" height="90" rx="4" fill="#282828" stroke="#b16286" stroke-width="1.8"/>
+            <text x="270" y="110" text-anchor="middle" fill="#b16286" font-family="JetBrains Mono,monospace" font-size="10">OR Array</text>
+            <text x="270" y="125" text-anchor="middle" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="8">(Programmable connections)</text>
+            <text x="270" y="140" text-anchor="middle" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="8">● = connection exists</text>
+
+            <!-- Output lines -->
+            <line x1="340" y1="95" x2="400" y2="95" stroke="#689d6a" stroke-width="1.5"/>
+            <text x="405" y="99" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="10">F1</text>
+            <line x1="340" y1="130" x2="400" y2="130" stroke="#689d6a" stroke-width="1.5"/>
+            <text x="405" y="134" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="10">F2</text>
+
+            <!-- Connections (dots) -->
+            <circle cx="230" cy="85" r="4" fill="#d79921"/>
+            <circle cx="230" cy="125" r="4" fill="#d79921"/>
+            <circle cx="260" cy="105" r="4" fill="#d79921"/>
+            <circle cx="260" cy="145" r="4" fill="#d79921"/>
+            <line x1="230" y1="85" x2="230" y2="95" stroke="#d79921" stroke-width="1"/>
+            <line x1="230" y1="125" x2="230" y2="95" stroke="#d79921" stroke-width="0.8" stroke-dasharray="2,2"/>
+            <text x="20" y="220" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="9">• Fixed AND array (decoder generates ALL minterms)</text>
+            <text x="20" y="235" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="9">• Programmable OR array (select minterms for each output)</text>
+          </svg>
+          <span class="diagram-label">Fig: ROM Structure — fixed decoder (AND) + programmable OR array</span>
+        </div>
+
+        <h2>🔣 ROM Implementation of Boolean Functions</h2>
+        <p>Any combinational function can be implemented using ROM by using the <strong>truth table directly</strong>.</p>
+
+        <h3>Example: Implement F1(A,B,C) = Σm(1,3,5,7) and F2(A,B,C) = Σm(0,2,4,6)</h3>
+        <p>We need: 3 inputs → 8 locations (8 minterms), 2 outputs</p>
+        <p>ROM size needed: <strong>8 × 2 ROM</strong></p>
+
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>Address</th><th>A</th><th>B</th><th>C</th><th>F1</th><th>F2</th><th>ROM Word</th></tr>
+            <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>01</td></tr>
+            <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>10</td></tr>
+            <tr><td>2</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>01</td></tr>
+            <tr><td>3</td><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td>10</td></tr>
+            <tr><td>4</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>01</td></tr>
+            <tr><td>5</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>10</td></tr>
+            <tr><td>6</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>01</td></tr>
+            <tr><td>7</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>10</td></tr>
+          </table>
+        </div>
+
+        <p>The ROM stores each row as a <strong>word</strong>. When you apply address A,B,C, the corresponding F1,F2 output is read out immediately.</p>
+
+        <h2>📋 Steps to Design ROM for Boolean Functions</h2>
+        <div class="step-box"><span class="step-num">STEP 1</span> Write the truth table for all functions together.</div>
+        <div class="step-box"><span class="step-num">STEP 2</span> Count inputs (n) → ROM needs 2ⁿ addresses. Count outputs (m).</div>
+        <div class="step-box"><span class="step-num">STEP 3</span> ROM size = 2ⁿ × m bits.</div>
+        <div class="step-box"><span class="step-num">STEP 4</span> Each output column becomes the ROM's OR array programming (which minterm lines are connected to each output).</div>
+
+        <h2>✅ Advantages of ROM</h2>
+        <ul>
+          <li>No minimization needed — use truth table directly</li>
+          <li>Easy to implement multiple functions together</li>
+          <li>Non-volatile, fast read</li>
+          <li>Good for lookup tables, character generators, code converters</li>
+        </ul>
+        <div class="tip-box"><strong>ROM size formula:</strong> ROM = 2ⁿ × m, where n = input bits, m = output bits. No K-map needed!</div>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="question-card" id="q10" data-keywords="PLA PAL programmable logic array array implementation applications structure">
+      <div class="card-header" onclick="toggleCard(this)">
+        <span class="q-number">Q10</span>
+        <span class="q-title">PLA and PAL — Structure, Working, Implementation and Applications</span>
+        <span class="marks-badge">7M</span>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+
+        <h2>📖 Why PLA/PAL? (The Problem with ROM)</h2>
+        <div class="def-box">ROM implements ALL 2ⁿ minterms even if most are unused → wastes hardware. PLA and PAL implement only the <em>required product terms</em> → more efficient.</div>
+
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>Device</th><th>AND array</th><th>OR array</th><th>Flexibility</th></tr>
+            <tr><td>ROM</td><td>Fixed (all minterms)</td><td>Programmable</td><td>Low</td></tr>
+            <tr><td>PLA</td><td>Programmable</td><td>Programmable</td><td>Highest ✅</td></tr>
+            <tr><td>PAL</td><td>Programmable</td><td>Fixed</td><td>Medium</td></tr>
+          </table>
+        </div>
+
+        <h2>🔶 PLA — Programmable Logic Array</h2>
+        <h3>Structure</h3>
+        <ul>
+          <li><strong>Both AND array and OR array are programmable</strong></li>
+          <li>You choose which inputs go into each AND gate (product term)</li>
+          <li>You choose which product terms go into each OR gate (sum)</li>
+          <li>Typically has: n inputs, k product terms, m outputs</li>
+        </ul>
+
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 460 310" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:460px">
+            <rect x="10" y="10" width="440" height="290" rx="6" fill="#1d2021" stroke="#504945"/>
+
+            <!-- Input lines vertical -->
+            <text x="110" y="25" text-anchor="middle" fill="#d79921" font-family="JetBrains Mono,monospace" font-size="10">Programmable AND Array</text>
+            <text x="340" y="25" text-anchor="middle" fill="#b16286" font-family="JetBrains Mono,monospace" font-size="10">Programmable OR Array</text>
+            <line x1="50" y1="32" x2="50" y2="190" stroke="#d79921" stroke-width="1.5"/>
+            <text x="44" y="30" fill="#ebdbb2" font-family="JetBrains Mono,monospace" font-size="10">A</text>
+            <line x1="75" y1="32" x2="75" y2="190" stroke="#d79921" stroke-width="1.5"/>
+            <text x="69" y="30" fill="#ebdbb2" font-family="JetBrains Mono,monospace" font-size="10">B</text>
+            <line x1="100" y1="32" x2="100" y2="190" stroke="#d79921" stroke-width="1.5"/>
+            <text x="94" y="30" fill="#ebdbb2" font-family="JetBrains Mono,monospace" font-size="10">C</text>
+            <!-- Complements -->
+            <line x1="60" y1="32" x2="60" y2="190" stroke="#d79921" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="85" y1="32" x2="85" y2="190" stroke="#d79921" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="110" y1="32" x2="110" y2="190" stroke="#d79921" stroke-width="1" stroke-dasharray="3,2"/>
+
+            <!-- Product term rows (AND gates) -->
+            <rect x="120" y="45" width="130" height="22" rx="3" fill="#282828" stroke="#98971a" stroke-width="1.3"/>
+            <text x="185" y="60" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="9">PT1: AND gate</text>
+            <!-- Dots on PT1 -->
+            <circle cx="50" cy="56" r="3.5" fill="#d79921"/>
+            <circle cx="85" cy="56" r="3.5" fill="#d79921"/>
+
+            <rect x="120" y="80" width="130" height="22" rx="3" fill="#282828" stroke="#98971a" stroke-width="1.3"/>
+            <text x="185" y="95" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="9">PT2: AND gate</text>
+            <circle cx="60" cy="91" r="3.5" fill="#d79921"/>
+            <circle cx="100" cy="91" r="3.5" fill="#d79921"/>
+
+            <rect x="120" y="115" width="130" height="22" rx="3" fill="#282828" stroke="#98971a" stroke-width="1.3"/>
+            <text x="185" y="130" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="9">PT3: AND gate</text>
+            <circle cx="75" cy="126" r="3.5" fill="#d79921"/>
+            <circle cx="110" cy="126" r="3.5" fill="#d79921"/>
+
+            <!-- PT lines horizontal going to OR array -->
+            <line x1="250" y1="56" x2="270" y2="56" stroke="#9ccfd8" stroke-width="1.5"/>
+            <line x1="250" y1="91" x2="270" y2="91" stroke="#9ccfd8" stroke-width="1.5"/>
+            <line x1="250" y1="126" x2="270" y2="126" stroke="#9ccfd8" stroke-width="1.5"/>
+
+            <!-- Vertical lines in OR array -->
+            <line x1="290" y1="40" x2="290" y2="170" stroke="#b16286" stroke-width="1.5"/>
+            <line x1="340" y1="40" x2="340" y2="170" stroke="#b16286" stroke-width="1.5"/>
+
+            <!-- OR array connections (dots) -->
+            <circle cx="290" cy="56" r="3.5" fill="#b16286"/>
+            <circle cx="290" cy="91" r="3.5" fill="#b16286"/>
+            <circle cx="340" cy="91" r="3.5" fill="#b16286"/>
+            <circle cx="340" cy="126" r="3.5" fill="#b16286"/>
+
+            <!-- OR gates -->
+            <rect x="300" y="155" width="50" height="25" rx="3" fill="#282828" stroke="#b16286" stroke-width="1.5"/>
+            <text x="325" y="172" text-anchor="middle" fill="#b16286" font-family="JetBrains Mono,monospace" font-size="9">OR gate</text>
+            <rect x="360" y="155" width="50" height="25" rx="3" fill="#282828" stroke="#b16286" stroke-width="1.5"/>
+            <text x="385" y="172" text-anchor="middle" fill="#b16286" font-family="JetBrains Mono,monospace" font-size="9">OR gate</text>
+            <line x1="290" y1="170" x2="300" y2="167" stroke="#b16286" stroke-width="1.2"/>
+            <line x1="340" y1="170" x2="360" y2="167" stroke="#b16286" stroke-width="1.2"/>
+
+            <!-- Outputs -->
+            <line x1="325" y1="180" x2="325" y2="200" stroke="#689d6a" stroke-width="1.5"/>
+            <text x="320" y="215" fill="#689d6a" font-family="JetBrains Mono,monospace" font-size="10">F1</text>
+            <line x1="385" y1="180" x2="385" y2="200" stroke="#689d6a" stroke-width="1.5"/>
+            <text x="380" y="215" fill="#689d6a" font-family="JetBrains Mono,monospace" font-size="10">F2</text>
+
+            <!-- Legend -->
+            <circle cx="30" cy="240" r="4" fill="#d79921"/>
+            <text x="38" y="244" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="9">● = Programmed connection</text>
+            <text x="20" y="262" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="9">Both AND and OR arrays are programmable in PLA</text>
+          </svg>
+          <span class="diagram-label">Fig: PLA Structure — programmable AND + OR arrays with 3 inputs, 3 product terms, 2 outputs</span>
+        </div>
+
+        <h3>PLA Implementation Example</h3>
+        <p>Implement: F1 = AB + BC, F2 = A'B + AC</p>
+        <p>Product terms needed: AB, BC, A'B, AC → 4 product terms</p>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>Product Term</th><th>A</th><th>A'</th><th>B</th><th>B'</th><th>C</th><th>C'</th><th>→F1</th><th>→F2</th></tr>
+            <tr><td>PT1: AB</td><td>●</td><td>-</td><td>●</td><td>-</td><td>-</td><td>-</td><td>✓</td><td>-</td></tr>
+            <tr><td>PT2: BC</td><td>-</td><td>-</td><td>●</td><td>-</td><td>●</td><td>-</td><td>✓</td><td>-</td></tr>
+            <tr><td>PT3: A'B</td><td>-</td><td>●</td><td>●</td><td>-</td><td>-</td><td>-</td><td>-</td><td>✓</td></tr>
+            <tr><td>PT4: AC</td><td>●</td><td>-</td><td>-</td><td>-</td><td>●</td><td>-</td><td>-</td><td>✓</td></tr>
+          </table>
+        </div>
+        <p>● = connection present (fuse intact), - = no connection (fuse blown)</p>
+
+        <h2>🔷 PAL — Programmable Array Logic</h2>
+        <h3>Structure</h3>
+        <ul>
+          <li><strong>AND array is programmable</strong> (you choose product terms)</li>
+          <li><strong>OR array is fixed</strong> (each output OR gate has a fixed set of AND gate inputs)</li>
+          <li>Simpler and faster than PLA, but less flexible</li>
+        </ul>
+
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 420 200" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:420px">
+            <rect x="10" y="10" width="400" height="180" rx="6" fill="#1d2021" stroke="#504945"/>
+            <text x="110" y="28" text-anchor="middle" fill="#d79921" font-family="JetBrains Mono,monospace" font-size="10">Programmable AND</text>
+            <text x="330" y="28" text-anchor="middle" fill="#504945" font-family="JetBrains Mono,monospace" font-size="10">Fixed OR</text>
+
+            <line x1="40" y1="35" x2="40" y2="150" stroke="#d79921" stroke-width="1.5"/>
+            <text x="34" y="33" fill="#ebdbb2" font-family="JetBrains Mono,monospace" font-size="10">A</text>
+            <line x1="65" y1="35" x2="65" y2="150" stroke="#d79921" stroke-width="1.5"/>
+            <text x="59" y="33" fill="#ebdbb2" font-family="JetBrains Mono,monospace" font-size="10">B</text>
+
+            <rect x="90" y="50" width="120" height="20" rx="3" fill="#282828" stroke="#98971a" stroke-width="1.3"/>
+            <text x="150" y="64" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="9">AND gate (prog.)</text>
+            <circle cx="40" cy="60" r="3" fill="#d79921"/>
+            <circle cx="65" cy="60" r="3" fill="#d79921"/>
+
+            <rect x="90" y="85" width="120" height="20" rx="3" fill="#282828" stroke="#98971a" stroke-width="1.3"/>
+            <text x="150" y="99" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="9">AND gate (prog.)</text>
+            <circle cx="40" cy="95" r="3" fill="#d79921"/>
+
+            <rect x="90" y="120" width="120" height="20" rx="3" fill="#282828" stroke="#98971a" stroke-width="1.3"/>
+            <text x="150" y="134" text-anchor="middle" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="9">AND gate (prog.)</text>
+            <circle cx="65" cy="130" r="3" fill="#d79921"/>
+
+            <!-- Fixed OR -->
+            <rect x="250" y="50" width="80" height="60" rx="3" fill="#282828" stroke="#504945" stroke-width="2"/>
+            <text x="290" y="75" text-anchor="middle" fill="#665c54" font-family="JetBrains Mono,monospace" font-size="9">Fixed OR</text>
+            <text x="290" y="90" text-anchor="middle" fill="#665c54" font-family="JetBrains Mono,monospace" font-size="8">(hardwired)</text>
+            <line x1="210" y1="60" x2="250" y2="65" stroke="#9ccfd8" stroke-width="1.2"/>
+            <line x1="210" y1="95" x2="250" y2="80" stroke="#9ccfd8" stroke-width="1.2"/>
+            <line x1="210" y1="130" x2="250" y2="100" stroke="#9ccfd8" stroke-width="1.2"/>
+            <line x1="330" y1="80" x2="380" y2="80" stroke="#689d6a" stroke-width="1.5"/>
+            <text x="385" y="84" fill="#98971a" font-family="JetBrains Mono,monospace" font-size="10">F</text>
+            <text x="20" y="170" fill="#bdae93" font-family="JetBrains Mono,monospace" font-size="9">PAL: Programmable AND, Fixed OR → simpler, faster, less flexible</text>
+          </svg>
+          <span class="diagram-label">Fig: PAL Structure — programmable AND, fixed OR</span>
+        </div>
+
+        <h2>📊 PLA vs PAL Comparison</h2>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>Feature</th><th>PLA</th><th>PAL</th></tr>
+            <tr><td>AND array</td><td>Programmable</td><td>Programmable</td></tr>
+            <tr><td>OR array</td><td>Programmable</td><td>Fixed</td></tr>
+            <tr><td>Flexibility</td><td>Maximum</td><td>Medium</td></tr>
+            <tr><td>Speed</td><td>Slower (more connections)</td><td>Faster</td></tr>
+            <tr><td>Cost</td><td>Higher</td><td>Lower</td></tr>
+            <tr><td>Product terms</td><td>Shared among outputs</td><td>Dedicated per output</td></tr>
+            <tr><td>Usage</td><td>Complex multi-output functions</td><td>Simpler, faster designs</td></tr>
+          </table>
+        </div>
+
+        <h2>✅ Advantages Over ROM</h2>
+        <ul>
+          <li>Much smaller hardware — only required product terms, not all minterms</li>
+          <li>Lower power, smaller chip area</li>
+          <li>Faster for sparse functions (few minterms)</li>
+        </ul>
+
+        <h2>🏭 Applications</h2>
+        <ul>
+          <li>Implementation of <strong>state machines</strong> (next state and output logic)</li>
+          <li><strong>Address decoding</strong> in microprocessor systems</li>
+          <li><strong>Code converters</strong> (BCD to 7-segment, Gray to binary)</li>
+          <li><strong>ALU functions</strong> in simple processors</li>
+          <li>Bus interface and glue logic in embedded systems</li>
+        </ul>
+
+        <div class="tip-box"><strong>✅ Quick Exam Trick:</strong> PLA = both programmable = most flexible. PAL = OR fixed = faster but less flexible. ROM = AND fixed = all minterms = easiest but wastes area.</div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// ===== THEME SWITCHER =====
+const themeBtns = document.querySelectorAll('.theme-btn');
+themeBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const theme = btn.dataset.theme;
+    document.documentElement.setAttribute('data-theme', theme);
+    themeBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    localStorage.setItem('de-theme', theme);
+  });
+});
+const savedTheme = localStorage.getItem('de-theme');
+if (savedTheme) {
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  themeBtns.forEach(b => {
+    b.classList.toggle('active', b.dataset.theme === savedTheme);
+  });
+}
+
+// ===== CARD TOGGLE =====
+function toggleCard(header) {
+  const body = header.nextElementSibling;
+  const toggle = header.querySelector('.card-toggle');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  toggle.textContent = isOpen ? '▼' : '▲';
+}
+
+// ===== SEARCH =====
+const searchInput = document.getElementById('searchInput');
+const cards = document.querySelectorAll('.question-card');
+const navItems = document.querySelectorAll('.nav-item');
+
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.toLowerCase().trim();
+  cards.forEach((card, i) => {
+    const text = (card.dataset.keywords + ' ' + card.innerText).toLowerCase();
+    const match = !q || text.includes(q);
+    card.classList.toggle('hidden', !match);
+    if (navItems[i]) navItems[i].classList.toggle('hidden', !match);
+  });
+});
+
+// ===== MOBILE MENU =====
+const menuBtn = document.getElementById('menuBtn');
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+
+menuBtn.addEventListener('click', () => {
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('open');
+});
+overlay.addEventListener('click', () => {
+  sidebar.classList.remove('open');
+  overlay.classList.remove('open');
+});
+
+// ===== ACTIVE NAV ON SCROLL =====
+const allCards = document.querySelectorAll('.question-card');
+const allNavItems = document.querySelectorAll('.nav-item');
+
+function updateActiveNav() {
+  let current = '';
+  allCards.forEach(card => {
+    const rect = card.getBoundingClientRect();
+    if (rect.top <= 120) current = card.id;
+  });
+  allNavItems.forEach(item => {
+    const href = item.getAttribute('href');
+    item.classList.toggle('active', href === '#' + current);
+  });
+}
+window.addEventListener('scroll', updateActiveNav, { passive: true });
+
+// ===== SCROLL TO =====
+function scrollTo(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    const top = el.getBoundingClientRect().top + window.scrollY - 75;
+    window.scrollTo({ top, behavior: 'auto' });
+    // Auto-open card
+    const body = el.querySelector('.card-body');
+    const toggle = el.querySelector('.card-toggle');
+    if (body && !body.classList.contains('open')) {
+      body.classList.add('open');
+      toggle.textContent = '▲';
+    }
+    // Close mobile sidebar
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+  }
+}
+</script>
+</body>
+</html>

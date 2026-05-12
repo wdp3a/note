@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="gruvbox">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AKTU Digital Electronics — 7-Mark Study Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Recursive:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== THEME VARIABLES ===== */
+[data-theme="gruvbox"] {
+  --bg:       #282828;
+  --bg1:      #3c3836;
+  --bg2:      #504945;
+  --bg3:      #665c54;
+  --fg:       #ebdbb2;
+  --fg2:      #d5c4a1;
+  --fg3:      #bdae93;
+  --accent:   #d79921;
+  --accent2:  #b8bb26;
+  --accent3:  #83a598;
+  --accent4:  #fb4934;
+  --accent5:  #d3869b;
+  --border:   #504945;
+  --sidebar:  #1d2021;
+  --card:     #32302f;
+  --tag-bg:   #3c3836;
+  --code-bg:  #1d2021;
+  --shadow:   rgba(0,0,0,0.5);
+}
+[data-theme="rose-pine"] {
+  --bg:       #191724;
+  --bg1:      #1f1d2e;
+  --bg2:      #26233a;
+  --bg3:      #403d52;
+  --fg:       #e0def4;
+  --fg2:      #c8c5d8;
+  --fg3:      #908caa;
+  --accent:   #f6c177;
+  --accent2:  #31748f;
+  --accent3:  #9ccfd8;
+  --accent4:  #eb6f92;
+  --accent5:  #c4a7e7;
+  --border:   #26233a;
+  --sidebar:  #120f1e;
+  --card:     #1f1d2e;
+  --tag-bg:   #26233a;
+  --code-bg:  #120f1e;
+  --shadow:   rgba(0,0,0,0.6);
+}
+[data-theme="rose-pine-dawn"] {
+  --bg:       #faf4ed;
+  --bg1:      #fffaf3;
+  --bg2:      #f2e9de;
+  --bg3:      #e4dfde;
+  --fg:       #575279;
+  --fg2:      #797593;
+  --fg3:      #9893a5;
+  --accent:   #ea9d34;
+  --accent2:  #286983;
+  --accent3:  #56949f;
+  --accent4:  #b4637a;
+  --accent5:  #907aa9;
+  --border:   #cecacd;
+  --sidebar:  #f2e9de;
+  --card:     #fffaf3;
+  --tag-bg:   #f2e9de;
+  --code-bg:  #f2e9de;
+  --shadow:   rgba(87,82,121,0.15);
+}
+
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 18px; scroll-behavior: auto; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Recursive', sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+a { color: var(--accent3); text-decoration: none; }
+a:hover { color: var(--accent); }
+
+/* ===== LAYOUT ===== */
+.app-layout {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ===== TOPBAR ===== */
+.topbar {
+  background: var(--sidebar);
+  border-bottom: 2px solid var(--border);
+  padding: 0.7rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  /* position: sticky; */
+  top: 0;
+  z-index: 100;
+  flex-wrap: wrap;
+}
+.topbar-title {
+  font-family: 'Recursive', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--accent);
+  flex: 0 0 auto;
+  letter-spacing: 0.01em;
+}
+.topbar-title span { color: var(--fg3); font-size: 0.82rem; font-weight: 400; display: block; font-family: 'Recursive', sans-serif; }
+.search-bar {
+  flex: 1;
+  min-width: 160px;
+  max-width: 380px;
+  background: var(--bg2);
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  padding: 0.38rem 0.8rem;
+  color: var(--fg);
+  font-size: 0.95rem;
+  font-family: 'Recursive', sans-serif;
+  outline: none;
+}
+.search-bar:focus { border-color: var(--accent); }
+.search-bar::placeholder { color: var(--fg3); }
+.theme-switcher {
+  display: flex;
+  gap: 0.35rem;
+  flex: 0 0 auto;
+}
+.theme-btn {
+  border: 1.5px solid var(--border);
+  border-radius: 5px;
+  padding: 0.28rem 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--bg2);
+  color: var(--fg2);
+  white-space: nowrap;
+  font-family: 'JetBrains Mono', monospace;
+}
+.theme-btn.active, .theme-btn:hover { background: var(--accent); color: var(--sidebar); border-color: var(--accent); }
+.menu-toggle {
+  display: none;
+  background: var(--bg2);
+  border: 1.5px solid var(--border);
+  border-radius: 5px;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  color: var(--fg);
+  font-size: 1.1rem;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 280px;
+  flex: 0 0 280px;
+  background: var(--sidebar);
+  border-right: 2px solid var(--border);
+  overflow-y: auto;
+  height: 100vh;
+  position: sticky;
+  top: 0px;
+  padding: 0.8rem 0;
+}
+.sidebar-section { margin-bottom: 0.3rem; }
+.sidebar-section-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--fg3);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 0.6rem 1.1rem 0.3rem;
+}
+.sidebar-link {
+  display: block;
+  padding: 0.42rem 1.1rem 0.42rem 1.3rem;
+  color: var(--fg2);
+  font-size: 0.9rem;
+  border-left: 3px solid transparent;
+  cursor: pointer;
+}
+.sidebar-link:hover, .sidebar-link.active {
+  background: var(--bg2);
+  color: var(--accent);
+  border-left-color: var(--accent);
+}
+.sidebar-link.active { font-weight: 700; }
+
+/* ===== MAIN CONTENT ===== */
+.main-content {
+  flex: 1;
+  min-width: 0;
+  padding: 1.6rem 2rem 3rem;
+  overflow-y: auto;
+}
+
+/* ===== TOPIC CARD ===== */
+.topic-card {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 1.4rem;
+  overflow: hidden;
+}
+.topic-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1.2rem;
+  cursor: pointer;
+  background: var(--bg1);
+  border-bottom: 1.5px solid var(--border);
+  gap: 0.8rem;
+}
+.topic-header:hover { background: var(--bg2); }
+.topic-title {
+  font-family: 'Recursive', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--accent);
+  flex: 1;
+  line-height: 1.35;
+}
+.topic-marks {
+  background: var(--accent);
+  color: var(--sidebar);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.18rem 0.55rem;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  flex: 0 0 auto;
+}
+.topic-chevron {
+  color: var(--fg3);
+  font-size: 1rem;
+  flex: 0 0 auto;
+}
+.topic-body {
+  padding: 1.4rem 1.5rem;
+  display: none;
+}
+.topic-body.open { display: block; }
+
+/* ===== TYPOGRAPHY IN ANSWERS ===== */
+.topic-body h2 {
+  font-family: 'Recursive', sans-serif;
+  font-size: 1.1rem;
+  color: var(--accent2);
+  margin: 1.3rem 0 0.5rem;
+  font-weight: 700;
+  border-bottom: 1.5px solid var(--border);
+  padding-bottom: 0.3rem;
+}
+.topic-body h3 {
+  font-family: 'Recursive', sans-serif;
+  font-size: 1rem;
+  color: var(--accent3);
+  margin: 1rem 0 0.35rem;
+  font-weight: 700;
+}
+.topic-body h4 {
+  color: var(--accent5);
+  font-size: 0.95rem;
+  margin: 0.8rem 0 0.25rem;
+  font-weight: 700;
+}
+.topic-body p { margin-bottom: 0.7rem; color: var(--fg); font-size: 1rem; }
+.topic-body ul, .topic-body ol {
+  margin: 0.4rem 0 0.8rem 1.4rem;
+  color: var(--fg);
+}
+.topic-body li { margin-bottom: 0.3rem; font-size: 1rem; }
+.topic-body strong { color: var(--accent); font-weight: 700; }
+.topic-body em { color: var(--accent5); font-style: italic; }
+.topic-body code {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.35rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.88rem;
+  color: var(--accent2);
+}
+.topic-body pre {
+  background: var(--code-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 7px;
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  margin: 0.7rem 0 1rem;
+}
+.topic-body pre code { background: none; border: none; padding: 0; font-size: 0.88rem; }
+
+/* ===== CALLOUT BOXES ===== */
+.callout {
+  border-left: 4px solid var(--accent);
+  background: var(--bg2);
+  border-radius: 0 6px 6px 0;
+  padding: 0.7rem 1rem;
+  margin: 0.8rem 0;
+  font-size: 0.97rem;
+}
+.callout.tip { border-left-color: var(--accent2); }
+.callout.note { border-left-color: var(--accent3); }
+.callout.warn { border-left-color: var(--accent4); }
+.callout-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.25rem;
+}
+.callout.tip .callout-label { color: var(--accent2); }
+.callout.note .callout-label { color: var(--accent3); }
+.callout.warn .callout-label { color: var(--accent4); }
+
+/* ===== TABLES ===== */
+.topic-body table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.7rem 0 1rem;
+  font-size: 0.93rem;
+  background: var(--bg1);
+  border-radius: 7px;
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+}
+.topic-body th {
+  background: var(--bg3);
+  color: var(--accent);
+  padding: 0.5rem 0.8rem;
+  text-align: left;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.topic-body td {
+  padding: 0.45rem 0.8rem;
+  border-top: 1px solid var(--border);
+  color: var(--fg2);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.88rem;
+}
+.topic-body tr:hover td { background: var(--bg2); }
+
+/* ===== SVG DIAGRAMS ===== */
+.diagram-wrap {
+  background: var(--code-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 1.1rem;
+  margin: 0.9rem 0 1.1rem;
+  overflow-x: auto;
+  text-align: center;
+}
+.diagram-caption {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--fg3);
+  margin-top: 0.5rem;
+  font-family: 'JetBrains Mono', monospace;
+}
+svg text { font-family: 'Recursive', sans-serif; }
+
+/* ===== TAG CHIPS ===== */
+.tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.3rem 0 0.9rem; }
+.tag {
+  background: var(--tag-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.75rem;
+  color: var(--fg3);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ===== NO RESULT ===== */
+#no-result {
+  display: none;
+  text-align: center;
+  color: var(--fg3);
+  font-size: 1rem;
+  margin-top: 2rem;
+  font-family: 'Recursive', sans-serif;
+  font-style: italic;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 800px) {
+  .menu-toggle { display: block; }
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    height: 100vh;
+    width: 280px;
+    z-index: 200;
+    transition: left 0.2s;
+  }
+  .sidebar.open { left: 0; }
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 199;
+  }
+  .sidebar-overlay.open { display: block; }
+  .main-content { padding: 1rem 1rem 3rem; }
+  html { font-size: 17px; }
+  .topbar-title span { display: none; }
+}
+@media (max-width: 500px) {
+  .theme-btn { font-size: 0.7rem; padding: 0.22rem 0.45rem; }
+  html { font-size: 16px; }
+}
+
+/* ===== HEADER HERO ===== */
+.hero {
+  background: var(--bg1);
+  border-bottom: 2px solid var(--border);
+  padding: 1.2rem 2rem 1rem;
+}
+.hero h1 {
+  font-family: 'Recursive', sans-serif;
+  font-size: 1.5rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+.hero p { color: var(--fg3); font-size: 0.92rem; margin-top: 0.2rem; }
+
+/* ===== STEP BLOCKS ===== */
+.step-block {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 0.7rem 1rem;
+  margin: 0.5rem 0;
+  position: relative;
+  padding-left: 3rem;
+}
+.step-num {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.65rem;
+  background: var(--accent);
+  color: var(--sidebar);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: 3px;
+  padding: 0.1rem 0.32rem;
+  line-height: 1.4;
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+  <div class="topbar-title">
+    AKTU Digital Electronics
+    <span>7-Mark Questions · Sequential Circuits</span>
+  </div>
+  <input class="search-bar" id="searchInput" type="search" placeholder="Search topics…" oninput="doSearch(this.value)" autocomplete="off">
+  <div class="theme-switcher">
+    <button class="theme-btn active" onclick="setTheme('gruvbox',this)">Gruvbox</button>
+    <button class="theme-btn" onclick="setTheme('rose-pine',this)">Rosé Pine</button>
+    <button class="theme-btn" onclick="setTheme('rose-pine-dawn',this)">Dawn</button>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<div class="app-layout">
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Flip-Flops</div>
+    <a class="sidebar-link" onclick="jumpTo('q1')">JK using T Flip-Flop</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Shift Registers</div>
+    <a class="sidebar-link" onclick="jumpTo('q2')">SISO / SIPO / Bidirectional</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Counters</div>
+    <a class="sidebar-link" onclick="jumpTo('q3')">Ripple / Sync / Async Counters</a>
+    <a class="sidebar-link" onclick="jumpTo('q4')">MOD-10 / Decade Counter</a>
+    <a class="sidebar-link" onclick="jumpTo('q5')">Johnson Counter</a>
+    <a class="sidebar-link" onclick="jumpTo('q6')">3-bit UP/DOWN Counter</a>
+    <a class="sidebar-link" onclick="jumpTo('q7')">Modulo-5 Counter</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">FSM &amp; State Design</div>
+    <a class="sidebar-link" onclick="jumpTo('q8')">Mealy &amp; Moore FSM</a>
+    <a class="sidebar-link" onclick="jumpTo('q9')">State Reduction</a>
+    <a class="sidebar-link" onclick="jumpTo('q10')">Race-Free State Assignment</a>
+    <a class="sidebar-link" onclick="jumpTo('q11')">Async Sequential Design</a>
+    <a class="sidebar-link" onclick="jumpTo('q12')">Flow Tables</a>
+    <a class="sidebar-link" onclick="jumpTo('q13')">Sequential Circuit Design</a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main-content" id="mainContent">
+
+<div class="hero">
+  <h1>Digital Electronics — 7-Mark Study Guide</h1>
+  <p>All questions are exam-focused, beginner-friendly, and written for AKTU pattern. Click any topic to expand the full answer.</p>
+</div>
+
+<div style="height:1.2rem"></div>
+<div id="no-result">No topics match your search. Try different keywords.</div>
+
+<!-- ============================== Q1 ============================== -->
+<div class="topic-card" id="q1" data-tags="jk flip-flop t flip-flop design conversion excitation table">
+<div class="topic-header" onclick="toggleTopic(this)">
+  <div class="topic-title">Design JK Flip-Flop using T Flip-Flop</div>
+  <span class="topic-marks">7 Marks</span>
+  <span class="topic-chevron">▼</span>
+</div>
+<div class="topic-body">
+<div class="tags"><span class="tag">flip-flop</span><span class="tag">conversion</span><span class="tag">excitation table</span><span class="tag">K-map</span></div>
+
+<h2>Step 0 — What is a T Flip-Flop?</h2>
+<p>A <strong>T flip-flop</strong> has one input called <strong>T (Toggle)</strong>.</p>
+<ul>
+  <li>If T = 0 → output Q does <strong>not change</strong> (stays same)</li>
+  <li>If T = 1 → output Q <strong>toggles</strong> (0→1 or 1→0)</li>
+</ul>
+<table>
+  <tr><th>T</th><th>Q (present)</th><th>Q⁺ (next)</th></tr>
+  <tr><td>0</td><td>0</td><td>0</td></tr>
+  <tr><td>0</td><td>1</td><td>1</td></tr>
+  <tr><td>1</td><td>0</td><td>1</td></tr>
+  <tr><td>1</td><td>1</td><td>0</td></tr>
+</table>
+<p>Formula: <code>Q⁺ = T ⊕ Q</code></p>
+
+<h2>Step 1 — What is a JK Flip-Flop?</h2>
+<p>A <strong>JK flip-flop</strong> has two inputs <strong>J</strong> and <strong>K</strong>:</p>
+<ul>
+  <li>J=0, K=0 → No change</li>
+  <li>J=0, K=1 → Reset (Q=0)</li>
+  <li>J=1, K=0 → Set (Q=1)</li>
+  <li>J=1, K=1 → Toggle</li>
+</ul>
+<p>Formula: <code>Q⁺ = J·Q' + K'·Q</code></p>
+
+<h2>Step 2 — Method: Find T in terms of J, K, Q</h2>
+<p>We want to build JK using T. We need to find: <strong>what value of T is needed for every combination of J, K, Q?</strong></p>
+<div class="callout tip"><div class="callout-label">💡 Tip</div>Since T flips when T=1, and stays when T=0, we need T=1 whenever Q has to change.</div>
+
+<h2>Step 3 — Truth Table with T excitation</h2>
+<table>
+  <tr><th>J</th><th>K</th><th>Q</th><th>Q⁺ (JK behavior)</th><th>T needed</th></tr>
+  <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+  <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+  <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+  <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+  <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+  <tr><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+  <tr><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+  <tr><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+</table>
+
+<h2>Step 4 — K-map for T</h2>
+<p>Variables: J, K, Q (3 variables → 8 cells)</p>
+<table>
+  <tr><th>JK \ Q</th><th>Q=0</th><th>Q=1</th></tr>
+  <tr><td>JK=00</td><td>0</td><td>0</td></tr>
+  <tr><td>JK=01</td><td>0</td><td>1</td></tr>
+  <tr><td>JK=11</td><td>1</td><td>1</td></tr>
+  <tr><td>JK=10</td><td>1</td><td>0</td></tr>
+</table>
+<p>Group the 1s:</p>
+<ul>
+  <li>JK=01, Q=1 and JK=11, Q=1 → group: <strong>K·Q</strong></li>
+  <li>JK=10, Q=0 and JK=11, Q=0 → group: <strong>J·Q'</strong></li>
+</ul>
+<p><strong>Result: T = J·Q' + K·Q</strong></p>
+
+<h2>Step 5 — Circuit Diagram</h2>
+<div class="diagram-wrap">
+<svg viewBox="0 0 480 200" width="100%" style="max-width:480px">
+  <!-- T flip-flop box -->
+  <rect x="260" y="70" width="100" height="70" rx="6" fill="none" stroke="#d79921" stroke-width="2"/>
+  <text x="310" y="112" text-anchor="middle" fill="#ebdbb2" font-size="15" font-weight="bold">T-FF</text>
+  <!-- Labels inside -->
+  <text x="272" y="95" fill="#83a598" font-size="12">T</text>
+  <text x="272" y="118" fill="#83a598" font-size="12">CLK</text>
+  <text x="345" y="110" fill="#b8bb26" font-size="12">Q</text>
+
+  <!-- AND gate 1: J.Q' -->
+  <rect x="120" y="58" width="70" height="32" rx="14" fill="none" stroke="#83a598" stroke-width="1.5"/>
+  <text x="155" y="79" text-anchor="middle" fill="#83a598" font-size="12">J · Q'</text>
+
+  <!-- AND gate 2: K.Q -->
+  <rect x="120" y="108" width="70" height="32" rx="14" fill="none" stroke="#83a598" stroke-width="1.5"/>
+  <text x="155" y="129" text-anchor="middle" fill="#83a598" font-size="12">K · Q</text>
+
+  <!-- OR gate -->
+  <rect x="205" y="83" width="48" height="32" rx="14" fill="none" stroke="#d3869b" stroke-width="1.5"/>
+  <text x="229" y="104" text-anchor="middle" fill="#d3869b" font-size="12">OR</text>
+
+  <!-- Wires -->
+  <line x1="190" y1="74" x2="205" y2="92" stroke="#d5c4a1" stroke-width="1.5"/>
+  <line x1="190" y1="124" x2="205" y2="110" stroke="#d5c4a1" stroke-width="1.5"/>
+  <line x1="253" y1="99" x2="260" y2="99" stroke="#d5c4a1" stroke-width="1.5"/>
+
+  <!-- Input J -->
+  <line x1="50" y1="74" x2="120" y2="74" stroke="#b8bb26" stroke-width="1.5"/>
+  <text x="30" y="78" fill="#b8bb26" font-size="13" font-weight="bold">J</text>
+
+  <!-- Input K -->
+  <line x1="50" y1="124" x2="120" y2="124" stroke="#fb4934" stroke-width="1.5"/>
+  <text x="30" y="128" fill="#fb4934" font-size="13" font-weight="bold">K</text>
+
+  <!-- Input CLK -->
+  <line x1="200" y1="140" x2="260" y2="135" stroke="#d5c4a1" stroke-width="1.5"/>
+  <text x="160" y="144" fill="#d5c4a1" font-size="12">CLK</text>
+
+  <!-- Q feedback lines -->
+  <line x1="360" y1="105" x2="400" y2="105" stroke="#b8bb26" stroke-width="1.5"/>
+  <line x1="400" y1="105" x2="400" y2="165" stroke="#b8bb26" stroke-width="1.5"/>
+  <line x1="400" y1="165" x2="80" y2="165" stroke="#b8bb26" stroke-width="1.5"/>
+  <line x1="80" y1="165" x2="80" y2="124" stroke="#b8bb26" stroke-width="1.5"/>
+  <line x1="80" y1="124" x2="120" y2="124" stroke="#fb4934" stroke-width="1.5"/>
+  <line x1="80" y1="165" x2="80" y2="145" stroke="#b8bb26" stroke-width="1"/>
+  <!-- Q' inverter hint -->
+  <line x1="80" y1="74" x2="90" y2="74" stroke="#b8bb26" stroke-width="1"/>
+  <circle cx="93" cy="74" r="3" fill="none" stroke="#b8bb26" stroke-width="1.5"/>
+  <line x1="96" y1="74" x2="120" y2="74" stroke="#b8bb26" stroke-width="1.5"/>
+  <text x="405" y="110" fill="#b8bb26" font-size="13" font-weight="bold">Q</text>
+  <text x="40" y="168" fill="#bdae93" font-size="10">Q feedback</text>
+  <text x="86" y="68" fill="#bdae93" font-size="10">Q'(inv)</text>
+</svg>
+</div>
+<div class="diagram-caption">Fig: JK Flip-Flop built using T Flip-Flop + gates</div>
+
+<h2>Final Answer (for exam)</h2>
+<div class="callout tip">
+<div class="callout-label">Key Formula</div>
+<strong>T = J·Q' + K·Q</strong><br>
+This expression is implemented using two AND gates and one OR gate. The output T is fed to the T flip-flop. Q and Q' (complement of Q) are fed back from the T flip-flop output.
+</div>
+</div>
+</div>
+
+<!-- ============================== Q2 ============================== -->
+<div class="topic-card" id="q2" data-tags="shift register siso sipo serial parallel bidirectional">
+<div class="topic-header" onclick="toggleTopic(this)">
+  <div class="topic-title">Shift Registers — SISO, SIPO &amp; Bidirectional</div>
+  <span class="topic-marks">7 Marks</span>
+  <span class="topic-chevron">▼</span>
+</div>
+<div class="topic-body">
+<div class="tags"><span class="tag">shift register</span><span class="tag">SISO</span><span class="tag">SIPO</span><span class="tag">bidirectional</span><span class="tag">D flip-flop</span></div>
+
+<h2>What is a Shift Register?</h2>
+<p>A <strong>shift register</strong> is a group of flip-flops connected in a chain. Data enters one flip-flop at a time and <strong>shifts</strong> to the next on every clock pulse.</p>
+<div class="callout note"><div class="callout-label">Building Block</div>Each flip-flop stores 1 bit. A 4-bit shift register = 4 D flip-flops connected in series.</div>
+
+<h2>1. Serial-In Serial-Out (SISO)</h2>
+<p>Data enters <strong>serially (1 bit per clock)</strong> and leaves <strong>serially (1 bit per clock)</strong>.</p>
+<ul>
+  <li>Input: 1 wire (serial)</li>
+  <li>Output: 1 wire (serial)</li>
+  <li>4 bits need 4 clock pulses to enter and 4 pulses to exit</li>
+</ul>
+<h3>SISO Diagram (4-bit)</h3>
+<div class="diagram-wrap">
+<svg viewBox="0 0 480 120" width="100%" style="max-width:480px">
+  <defs>
+    <marker id="arr" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+      <polygon points="0 0, 7 3.5, 0 7" fill="#d5c4a1"/>
+    </marker>
+  </defs>
+  <!-- 4 D flip-flops -->
+  <g transform="translate(60,30)"><rect width="60" height="55" rx="5" fill="none" stroke="#d79921" stroke-width="2"/><text x="30" y="22" text-anchor="middle" fill="#ebdbb2" font-size="11" font-weight="bold">D-FF</text><text x="8" y="38" fill="#83a598" font-size="10">D</text><text x="8" y="50" fill="#83a598" font-size="10">CLK</text><text x="44" y="38" fill="#b8bb26" font-size="10">Q</text></g>
+  <g transform="translate(155,30)"><rect width="60" height="55" rx="5" fill="none" stroke="#d79921" stroke-width="2"/><text x="30" y="22" text-anchor="middle" fill="#ebdbb2" font-size="11" font-weight="bold">D-FF</text><text x="8" y="38" fill="#83a598" font-size="10">D</text><text x="8" y="50" fill="#83a598" font-size="10">CLK</text><text x="44" y="38" fill="#b8bb26" font-size="10">Q</text></g>
+  <g transform="translate(250,30)"><rect width="60" height="55" rx="5" fill="none" stroke="#d79921" stroke-width="2"/><text x="30" y="22" text-anchor="middle" fill="#ebdbb2" font-size="11" font-weight="bold">D-FF</text><text x="8" y="38" fill="#83a598" font-size="10">D</text><text x="8" y="50" fill="#83a598" font-size="10">CLK</text><text x="44" y="38" fill="#b8bb26" font-size="10">Q</text></g>
+  <g transform="translate(345,30)"><rect width="60" height="55" rx="5" fill="none" stroke="#d79921" stroke-width="2"/><text x="30" y="22" text-anchor="middle" fill="#ebdbb2" font-size="11" font-weight="bold">D-FF</text><text x="8" y="38" fill="#83a598" font-size="10">D</text><text x="8" y="50" fill="#83a598" font-size="10">CLK</text><text x="44" y="38" fill="#b8bb26" font-size="10">Q</text></g>
+  <!-- Connections -->
+  <line x1="20" y1="57" x2="60" y2="57" stroke="#d5c4a1" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="5" y="53" fill="#b8bb26" font-size="11" font-weight="bold">IN</text>
+  <line x1="120" y1="57" x2="155" y2="57" stroke="#d5c4a1" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="215" y1="57" x2="250" y2="57" stroke="#d5c4a1" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="310" y1="57" x2="345" y2="57" stroke="#d5c4a1" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="405" y1="57" x2="430" y2="57" stroke="#d5c4a1" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="432" y="61" fill="#b8bb26" font-size="11" font-weight="bold">OUT</text>
+  <!-- CLK bus -->
+  <line x1="90" y1="85" x2="375" y2="85" stroke="#d3869b" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="90" y="100" fill="#d3869b" font-size="10">CLK (common to all)</text>
+</svg>
+</div>
+<div class="diagram-caption">Fig: 4-bit SISO Shift Register</div>
+
+<h3>Operation — Example: Input 1011</h3>
+<table>
+  <tr><th>Clock</th><th>FF1</th><th>FF2</th><th>FF3</th><th>FF4</th></tr>
+  <tr><td>0 (start)</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+  <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+  <tr><td>2</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+  <tr><td>3</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+  <tr><td>4</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+</table>
+<p><strong>Applications of SISO:</strong> Data transmission over single wire, delay lines (time delay buffer), serial communication interfaces.</p>
+
+<h2>2. Serial-In Parallel-Out (SIPO)</h2>
+<p>Data enters <strong>serially</strong> but all bits are available at output <strong>simultaneously (parallel)</strong>.</p>
+<ul>
+  <li>Input: 1 wire</li>
+  <li>Output: 4 wires (one per flip-flop Q)</li>
+  <li>After 4 clock pulses, all 4 bits are on the output at the same time</li>
+</ul>
+<div class="diagram-wrap">
+<svg viewBox="0 0 480 150" width="100%" style="max-width:480px">
+  <g transform="translate(60,30)"><rect width="60" height="55" rx="5" fill="none" stroke="#d79921" stroke-width="2"/><text x="30" y="22" text-anchor="middle" fill="#ebdbb2" font-size="11" font-weight="bold">D-FF</text><text x="8" y="38" fill="#83a598" font-size="10">D</text><text x="44" y="38" fill="#b8bb26" font-size="10">Q</text><line x1="55" y1="35" x2="55" y2="90" stroke="#b8bb26" stroke-width="1.5"/><text x="58" y="100" fill="#b8bb26" font-size="9">Q₀</text></g>
+  <g transform="translate(155,30)"><rect width="60" height="55" rx="5" fill="none" stroke="#d79921" stroke-width="2"/><text x="30" y="22" text-anchor="middle" fill="#ebdbb2" font-size="11" font-weight="bold">D-FF</text><text x="8" y="38" fill="#83a598" font-size="10">D</text><text x="44" y="38" fill="#b8bb26" font-size="10">Q</text><line x1="55" y1="35" x2="55" y2="90" stroke="#b8bb26" stroke-width="1.5"/><text x="158" y="100" fill="#b8bb26" font-size="9">Q₁</text></g>
+  <g transform="translate(250,30)"><rect width="60" height="55" rx="5" fill="none" stroke="#d79921" stroke-width="2"/><text x="30" y="22" text-anchor="middle" fill="#ebdbb2" font-size="11" font-weight="bold">D-FF</text><text x="8" y="38" fill="#83a598" font-size="10">D</text><text x="44" y="38" fill="#b8bb26" font-size="10">Q</text><line x1="55" y1="35" x2="55" y2="90" stroke="#b8bb26" stroke-width="1.5"/><text x="253" y="100" fill="#b8bb26" font-size="9">Q₂</text></g>
+  <g transform="translate(345,30)"><rect width="60" height="55" rx="5" fill="none" stroke="#d79921" stroke-width="2"/><text x="30" y="22" text-anchor="middle" fill="#ebdbb2" font-size="11" font-weight="bold">D-FF</text><text x="8" y="38" fill="#83a598" font-size="10">D</text><text x="44" y="38" fill="#b8bb26" font-size="10">Q</text><line x1="55" y1="35" x2="55" y2="90" stroke="#b8bb26" stroke-width="1.5"/><text x="348" y="100" fill="#b8bb26" font-size="9">Q₃</text></g>
+  <line x1="20" y1="57" x2="60" y2="57" stroke="#d5c4a1" stroke-width="1.5"/>
+  <text x="5" y="53" fill="#b8bb26" font-size="11" font-weight="bold">IN</text>
+  <line x1="120" y1="57" x2="155" y2="57" stroke="#d5c4a1" stroke-width="1.5"/>
+  <line x1="215" y1="57" x2="250" y2="57" stroke="#d5c4a1" stroke-width="1.5"/>
+  <line x1="310" y1="57" x2="345" y2="57" stroke="#d5c4a1" stroke-width="1.5"/>
+  <text x="120" y="120" fill="#d3869b" font-size="10">← Parallel outputs Q₀ Q₁ Q₂ Q₃ available simultaneously →</text>
+</svg>
+</div>
+<div class="diagram-caption">Fig: 4-bit SIPO Shift Register</div>
+<p><strong>Applications of SIPO:</strong> Serial-to-parallel data conversion, keyboard input scanning, microcontroller data loading.</p>
+
+<h2>3. Bidirectional Shift Register</h2>
+<p>Data can shift <strong>left</strong> or <strong>right</strong> based on a control signal.</p>
+<ul>
+  <li>Control = 1 → data shifts <strong>Right</strong></li>
+  <li>Control = 0 → data shifts <strong>Left</strong></li>
+  <li>Uses <strong>multiplexer (MUX)</strong> at input of each flip-flop to select direction</li>
+</ul>
+<div class="diagram-wrap">
+<svg viewBox="0 0 480 160" width="100%" style="max-width:480px">
+  <!-- 3 FF blocks -->
+  <g transform="translate(80,50)"><rect width="60" height="55" rx="5" fill="none" stroke="#d79921" stroke-width="2"/><text x="30" y="25" text-anchor="middle" fill="#ebdbb2" font-size="10" font-weight="bold">D-FF₁</text><text x="8" y="41" fill="#83a598" font-size="10">D</text><text x="44" y="41" fill="#b8bb26" font-size="10">Q</text></g>
+  <g transform="translate(200,50)"><rect width="60" height="55" rx="5" fill="none" stroke="#d79921" stroke-width="2"/><text x="30" y="25" text-anchor="middle" fill="#ebdbb2" font-size="10" font-weight="bold">D-FF₂</text><text x="8" y="41" fill="#83a598" font-size="10">D</text><text x="44" y="41" fill="#b8bb26" font-size="10">Q</text></g>
+  <g transform="translate(320,50)"><rect width="60" height="55" rx="5" fill="none" stroke="#d79921" stroke-width="2"/><text x="30" y="25" text-anchor="middle" fill="#ebdbb2" font-size="10" font-weight="bold">D-FF₃</text><text x="8" y="41" fill="#83a598" font-size="10">D</text><text x="44" y="41" fill="#b8bb26" font-size="10">Q</text></g>
+  <!-- Right-shift arrows (top) -->
+  <line x1="140" y1="68" x2="200" y2="68" stroke="#b8bb26" stroke-width="2" stroke-dasharray="4,2"/>
+  <line x1="260" y1="68" x2="320" y2="68" stroke="#b8bb26" stroke-width="2" stroke-dasharray="4,2"/>
+  <text x="160" y="63" fill="#b8bb26" font-size="9">→ Shift Right</text>
+  <!-- Left-shift arrows (bottom) -->
+  <line x1="200" y1="90" x2="140" y2="90" stroke="#d3869b" stroke-width="2" stroke-dasharray="4,2"/>
+  <line x1="320" y1="90" x2="260" y2="90" stroke="#d3869b" stroke-width="2" stroke-dasharray="4,2"/>
+  <text x="155" y="103" fill="#d3869b" font-size="9">← Shift Left</text>
+  <!-- Control -->
+  <text x="180" y="145" fill="#d79921" font-size="11" font-weight="bold">Control = 1 → Right  |  Control = 0 → Left</text>
+  <!-- Input labels -->
+  <text x="25" y="72" fill="#bdae93" font-size="10">SR-IN</text>
+  <text x="390" y="72" fill="#bdae93" font-size="10">SL-IN</text>
+</svg>
+</div>
+<div class="diagram-caption">Fig: Bidirectional Shift Register with direction control</div>
+
+<p><strong>Applications of Bidirectional Shift Register:</strong></p>
+<ul>
+  <li>Arithmetic shift operations (multiply/divide by 2)</li>
+  <li>Serial data transmission in both directions</li>
+  <li>Universal shift registers (IC 74194)</li>
+  <li>Ring counters and Johnson counters</li>
+</ul>
+</div>
+</div>
+
+<!-- ============================== Q3 ============================== -->
+<div class="topic-card" id="q3" data-tags="ripple counter synchronous asynchronous counter design">
+<div class="topic-header" onclick="toggleTopic(this)">
+  <div class="topic-title">Ripple, Synchronous &amp; Asynchronous Counters</div>
+  <span class="topic-marks">7 Marks</span>
+  <span class="topic-chevron">▼</span>
+</div>
+<div class="topic-body">
+<div class="tags"><span class="tag">counter</span><span class="tag">ripple</span><span class="tag">synchronous</span><span class="tag">asynchronous</span><span class="tag">JK flip-flop</span></div>
+
+<h2>What is a Counter?</h2>
+<p>A <strong>counter</strong> is a digital circuit that counts clock pulses in a fixed sequence. It is made using flip-flops. Each flip-flop stores one bit.</p>
+
+<h2>1. Ripple Counter (Asynchronous Counter)</h2>
+<p>In a ripple counter, the <strong>clock is given only to the first flip-flop</strong>. The output of each flip-flop acts as the clock for the next. This causes a ripple effect.</p>
+<div class="callout note"><div class="callout-label">Why "ripple"?</div>Because the change ripples from FF1 → FF2 → FF3, one after another. There is a time delay.</div>
+
+<h3>2-bit Ripple Counter using JK Flip-Flops</h3>
+<p>Connect J=K=1 (toggle mode) on every flip-flop. Each flip-flop divides frequency by 2.</p>
+<div class="diagram-wrap">
+<svg viewBox="0 0 420 130" width="100%" style="max-width:420px">
+  <g transform="translate(60,30)">
+    <rect width="70" height="55" rx="5" fill="none" stroke="#d79921" stroke-width="2"/>
+    <text x="35" y="22" text-anchor="middle" fill="#ebdbb2" font-size="12" font-weight="bold">JK-FF₀</text>
+    <text x="7" y="37" fill="#83a598" font-size="10">J=K=1</text>
+    <text x="7" y="50" fill="#83a598" font-size="10">CLK</text>
+    <text x="55" y="37" fill="#b8bb26" font-size="10">Q₀</text>
+  </g>
+  <g transform="translate(220,30)">
+    <rect width="70" height="55" rx="5" fill="none" stroke="#d79921" stroke-width="2"/>
+    <text x="35" y="22" text-anchor="middle" fill="#ebdbb2" font-size="12" font-weight="bold">JK-FF₁</text>
+    <text x="7" y="37" fill="#83a598" font-size="10">J=K=1</text>
+    <text x="7" y="50" fill="#83a598" font-size="10">CLK</text>
+    <text x="55" y="37" fill="#b8bb26" font-size="10">Q₁</text>
+  </g>
+  <!-- CLK to FF0 -->
+  <line x1="20" y1="55" x2="60" y2="55" stroke="#d3869b" stroke-width="2"/>
+  <text x="5" y="51" fill="#d3869b" font-size="11">CLK</text>
+  <!-- Q0 to CLK of FF1 -->
+  <line x1="130" y1="47" x2="175" y2="47" stroke="#d5c4a1" stroke-width="2"/>
+  <line x1="175" y1="47" x2="175" y2="82" stroke="#d5c4a1" stroke-width="2"/>
+  <line x1="175" y1="82" x2="220" y2="82" stroke="#d5c4a1" stroke-width="2"/>
+  <text x="140" y="43" fill="#bdae93" font-size="9">Q₀ → CLK of FF₁</text>
+  <!-- Output Q1 -->
+  <line x1="290" y1="47" x2="330" y2="47" stroke="#b8bb26" stroke-width="2"/>
+  <text x="335" y="51" fill="#b8bb26" font-size="11">Q₁ out</text>
+</svg>
+</div>
+<div class="diagram-caption">Fig: 2-bit Ripple Counter</div>
+
+<h3>State Sequence (2-bit, counts 0→1→2→3→0)</h3>
+<table>
+  <tr><th>Clock Pulse</th><th>Q₁</th><th>Q₀</th><th>Decimal</th></tr>
+  <tr><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+  <tr><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+  <tr><td>2</td><td>1</td><td>0</td><td>2</td></tr>
+  <tr><td>3</td><td>1</td><td>1</td><td>3</td></tr>
+  <tr><td>4</td><td>0</td><td>0</td><td>0 (reset)</td></tr>
+</table>
+<p><strong>Disadvantage:</strong> Propagation delay (ripple delay) increases with more flip-flops. Not suitable for high-speed circuits.</p>
+
+<h2>2. Synchronous Counter</h2>
+<p>In a synchronous counter, the <strong>same clock is given to all flip-flops at the same time</strong>. All flip-flops change together — no ripple delay.</p>
+<div class="callout tip"><div class="callout-label">Key Difference</div>Synchronous = all flip-flops clocked simultaneously. Asynchronous (Ripple) = each FF clocked by the previous FF's output.</div>
+
+<h3>3-bit Synchronous Counter Design</h3>
+<p>For a 3-bit synchronous counter, use JK flip-flops. The toggle conditions are:</p>
+<ul>
+  <li><strong>FF₀ (LSB):</strong> Toggles every clock. J₀ = K₀ = 1</li>
+  <li><strong>FF₁:</strong> Toggles when Q₀ = 1. J₁ = K₁ = Q₀</li>
+  <li><strong>FF₂:</strong> Toggles when Q₀ = 1 AND Q₁ = 1. J₂ = K₂ = Q₀·Q₁</li>
+</ul>
+<div class="diagram-wrap">
+<svg viewBox="0 0 480 140" width="100%" style="max-width:480px">
+  <g transform="translate(30,30)"><rect width="65" height="55" rx="5" fill="none" stroke="#d79921" stroke-width="2"/><text x="32" y="22" text-anchor="middle" fill="#ebdbb2" font-size="10" font-weight="bold">JK-FF₀</text><text x="5" y="38" fill="#83a598" font-size="9">J=K=1</text><text x="5" y="50" fill="#83a598" font-size="9">CLK</text><text x="52" y="38" fill="#b8bb26" font-size="10">Q₀</text></g>
+  <g transform="translate(185,30)"><rect width="65" height="55" rx="5" fill="none" stroke="#d79921" stroke-width="2"/><text x="32" y="22" text-anchor="middle" fill="#ebdbb2" font-size="10" font-weight="bold">JK-FF₁</text><text x="5" y="38" fill="#83a598" font-size="9">J=K=Q₀</text><text x="5" y="50" fill="#83a598" font-size="9">CLK</text><text x="52" y="38" fill="#b8bb26" font-size="10">Q₁</text></g>
+  <g transform="translate(340,30)"><rect width="65" height="55" rx="5" fill="none" stroke="#d79921" stroke-width="2"/><text x="32" y="22" text-anchor="middle" fill="#ebdbb2" font-size="10" font-weight="bold">JK-FF₂</text><text x="5" y="38" fill="#83a598" font-size="9">J=K=Q₀Q₁</text><text x="5" y="50" fill="#83a598" font-size="9">CLK</text><text x="52" y="38" fill="#b8bb26" font-size="10">Q₂</text></g>
+  <!-- common CLK -->
+  <line x1="5" y1="105" x2="460" y2="105" stroke="#d3869b" stroke-width="2" stroke-dasharray="5,3"/>
+  <line x1="62" y1="80" x2="62" y2="105" stroke="#d3869b" stroke-width="1.5"/>
+  <line x1="217" y1="80" x2="217" y2="105" stroke="#d3869b" stroke-width="1.5"/>
+  <line x1="372" y1="80" x2="372" y2="105" stroke="#d3869b" stroke-width="1.5"/>
+  <text x="10" y="120" fill="#d3869b" font-size="10">Common CLK to all flip-flops</text>
+  <!-- Q0 to FF1 -->
+  <line x1="95" y1="47" x2="150" y2="47" stroke="#d5c4a1" stroke-width="1.5"/>
+  <line x1="150" y1="47" x2="185" y2="47" stroke="#d5c4a1" stroke-width="1.5"/>
+  <!-- Q0,Q1 AND gate to FF2 -->
+  <line x1="250" y1="47" x2="310" y2="47" stroke="#d5c4a1" stroke-width="1.5"/>
+  <rect x="310" y="38" width="28" height="18" rx="8" fill="none" stroke="#83a598" stroke-width="1"/>
+  <text x="324" y="51" text-anchor="middle" fill="#83a598" font-size="8">AND</text>
+  <line x1="338" y1="47" x2="340" y2="47" stroke="#d5c4a1" stroke-width="1.5"/>
+</svg>
+</div>
+<div class="diagram-caption">Fig: 3-bit Synchronous Counter (common CLK)</div>
+
+<h2>3. Comparison</h2>
+<table>
+  <tr><th>Feature</th><th>Asynchronous (Ripple)</th><th>Synchronous</th></tr>
+  <tr><td>Clock</td><td>Only to first FF</td><td>Common to all FF</td></tr>
+  <tr><td>Speed</td><td>Slow (ripple delay)</td><td>Fast (no delay)</td></tr>
+  <tr><td>Circuit</td><td>Simple</td><td>Complex (AND gates)</td></tr>
+  <tr><td>Glitches</td><td>Yes</td><td>No</td></tr>
+  <tr><td>Example IC</td><td>7493</td><td>74163</td></tr>
+</table>
+</div>
+</div>
+
+<!-- ============================== Q4 ============================== -->
+<div class="topic-card" id="q4" data-tags="mod-10 decade counter synchronous BCD 0-9">
+<div class="topic-header" onclick="toggleTopic(this)">
+  <div class="topic-title">MOD-10 Synchronous Counter / Decade Counter</div>
+  <span class="topic-marks">7 Marks</span>
+  <span class="topic-chevron">▼</span>
+</div>
+<div class="topic-body">
+<div class="tags"><span class="tag">MOD-10</span><span class="tag">decade counter</span><span class="tag">BCD</span><span class="tag">synchronous</span><span class="tag">reset logic</span></div>
+
+<h2>What is MOD-10 Counter?</h2>
+<p>A <strong>MOD-10 counter</strong> (also called a <strong>Decade Counter</strong>) counts from <strong>0 to 9</strong>, then resets to 0. It has <strong>10 states</strong> (0000 to 1001 in BCD).</p>
+<p>We need <strong>4 flip-flops</strong> (since 2⁴ = 16 > 10). States 10 to 15 are <strong>skipped</strong> using reset logic.</p>
+
+<h2>State Sequence</h2>
+<table>
+  <tr><th>Count</th><th>Q₃</th><th>Q₂</th><th>Q₁</th><th>Q₀</th></tr>
+  <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+  <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+  <tr><td>2</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+  <tr><td>3</td><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+  <tr><td>4</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+  <tr><td>5</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+  <tr><td>6</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+  <tr><td>7</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+  <tr><td>8</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+  <tr><td>9</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+  <tr><td>10 → RESET</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+</table>
+
+<h2>Reset Logic</h2>
+<p>When count reaches <strong>10 (1010)</strong>, Q₃=1 AND Q₁=1. We use this to immediately <strong>clear (reset)</strong> all flip-flops.</p>
+<p><strong>Clear signal:</strong> <code>CLR = Q₃ · Q₁</code></p>
+<p>This NAND gate output is connected to the CLR (clear) pin of all flip-flops.</p>
+<div class="callout warn"><div class="callout-label">Important</div>State 1010 appears only momentarily (glitch) before the counter resets. So the counter effectively has 10 stable states: 0–9.</div>
+
+<h2>Circuit Diagram</h2>
+<div class="diagram-wrap">
+<svg viewBox="0 0 480 170" width="100%" style="max-width:480px">
+  <!-- 4 FF boxes -->
+  <g transform="translate(20,20)"><rect width="55" height="55" rx="4" fill="none" stroke="#d79921" stroke-width="2"/><text x="27" y="19" text-anchor="middle" fill="#ebdbb2" font-size="9" font-weight="bold">JK-FF₀</text><text x="4" y="33" fill="#83a598" font-size="9">J=K=1</text><text x="4" y="45" fill="#83a598" font-size="8">CLR</text><text x="43" y="33" fill="#b8bb26" font-size="9">Q₀</text></g>
+  <g transform="translate(115,20)"><rect width="55" height="55" rx="4" fill="none" stroke="#d79921" stroke-width="2"/><text x="27" y="19" text-anchor="middle" fill="#ebdbb2" font-size="9" font-weight="bold">JK-FF₁</text><text x="4" y="33" fill="#83a598" font-size="9">J=K=Q₀</text><text x="4" y="45" fill="#83a598" font-size="8">CLR</text><text x="43" y="33" fill="#b8bb26" font-size="9">Q₁</text></g>
+  <g transform="translate(210,20)"><rect width="55" height="55" rx="4" fill="none" stroke="#d79921" stroke-width="2"/><text x="27" y="19" text-anchor="middle" fill="#ebdbb2" font-size="9" font-weight="bold">JK-FF₂</text><text x="4" y="33" fill="#83a598" font-size="9">J=K=Q₀Q₁</text><text x="4" y="45" fill="#83a598" font-size="8">CLR</text><text x="43" y="33" fill="#b8bb26" font-size="9">Q₂</text></g>
+  <g transform="translate(305,20)"><rect width="55" height="55" rx="4" fill="none" stroke="#d79921" stroke-width="2"/><text x="27" y="19" text-anchor="middle" fill="#ebdbb2" font-size="9" font-weight="bold">JK-FF₃</text><text x="4" y="33" fill="#83a598" font-size="9">complex J</text><text x="4" y="45" fill="#83a598" font-size="8">CLR</text><text x="43" y="33" fill="#b8bb26" font-size="9">Q₃</text></g>
+  <!-- CLR logic: NAND(Q3,Q1) -->
+  <rect x="390" y="50" width="55" height="30" rx="12" fill="none" stroke="#fb4934" stroke-width="1.5"/>
+  <text x="417" y="70" text-anchor="middle" fill="#fb4934" font-size="10">NAND</text>
+  <!-- Q3 to NAND -->
+  <line x1="360" y1="37" x2="380" y2="37" stroke="#b8bb26" stroke-width="1.5"/>
+  <line x1="380" y1="37" x2="380" y2="58" stroke="#b8bb26" stroke-width="1.5"/>
+  <line x1="380" y1="58" x2="390" y2="58" stroke="#b8bb26" stroke-width="1.5"/>
+  <!-- Q1 to NAND -->
+  <line x1="170" y1="37" x2="170" y2="135" stroke="#d3869b" stroke-width="1.5"/>
+  <line x1="170" y1="135" x2="380" y2="135" stroke="#d3869b" stroke-width="1.5"/>
+  <line x1="380" y1="135" x2="380" y2="70" stroke="#d3869b" stroke-width="1.5"/>
+  <line x1="380" y1="70" x2="390" y2="70" stroke="#d3869b" stroke-width="1.5"/>
+  <!-- NAND to CLR of all -->
+  <line x1="445" y1="65" x2="460" y2="65" stroke="#fb4934" stroke-width="2"/>
+  <line x1="460" y1="65" x2="460" y2="150" stroke="#fb4934" stroke-width="2"/>
+  <line x1="460" y1="150" x2="47" y2="150" stroke="#fb4934" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="50" y="165" fill="#fb4934" font-size="9">CLR line → clears all FFs when Q₃·Q₁=1 (count=10)</text>
+  <text x="463" y="61" fill="#fb4934" font-size="9">CLR</text>
+  <!-- Common CLK -->
+  <line x1="5" y1="118" x2="380" y2="118" stroke="#d3869b" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <text x="5" y="113" fill="#d3869b" font-size="9">CLK</text>
+</svg>
+</div>
+<div class="diagram-caption">Fig: MOD-10 (Decade) Counter — 4 JK FF + Reset Logic</div>
+
+<h2>Applications</h2>
+<ul>
+  <li>Digital clocks (seconds, minutes: 0–59, using two decade counters)</li>
+  <li>Frequency dividers (divide by 10)</li>
+  <li>BCD counters in calculators</li>
+  <li>Event counting in industrial systems</li>
+</ul>
+</div>
+</div>
+
+<!-- ============================== Q5 ============================== -->
+<div class="topic-card" id="q5" data-tags="johnson counter timing diagram ring counter applications">
+<div class="topic-header" onclick="toggleTopic(this)">
+  <div class="topic-title">Johnson Counter — Timing Diagram &amp; Applications</div>
+  <span class="topic-marks">7 Marks</span>
+  <span class="topic-chevron">▼</span>
+</div>
+<div class="topic-body">
+<div class="tags"><span class="tag">Johnson counter</span><span class="tag">ring counter</span><span class="tag">shift register</span><span class="tag">timing diagram</span></div>
+
+<h2>What is a Johnson Counter?</h2>
+<p>A <strong>Johnson Counter</strong> (also called <strong>Twisted Ring Counter</strong>) is a shift register where the <strong>complemented (inverted) output Q' of the last flip-flop</strong> is fed back to the input of the first flip-flop.</p>
+<div class="callout note"><div class="callout-label">Johnson vs Ring</div>In a <strong>Ring Counter</strong>, Q (output) is fed back. In a <strong>Johnson Counter</strong>, Q' (complement) is fed back. This gives <strong>2n states</strong> for n flip-flops (Ring gives only n states).</div>
+
+<h2>Circuit Diagram (3-bit Johnson Counter)</h2>
+<div class="diagram-wrap">
+<svg viewBox="0 0 480 160" width="100%" style="max-width:480px">
+  <g transform="translate(50,40)"><rect width="70" height="55" rx="5" fill="none" stroke="#d79921" stroke-width="2"/><text x="35" y="22" text-anchor="middle" fill="#ebdbb2" font-size="11" font-weight="bold">D-FF₀</text><text x="7" y="38" fill="#83a598" font-size="10">D</text><text x="55" y="38" fill="#b8bb26" font-size="10">Q₀</text><text x="55" y="52" fill="#d3869b" font-size="10">Q₀'</text></g>
+  <g transform="translate(195,40)"><rect width="70" height="55" rx="5" fill="none" stroke="#d79921" stroke-width="2"/><text x="35" y="22" text-anchor="middle" fill="#ebdbb2" font-size="11" font-weight="bold">D-FF₁</text><text x="7" y="38" fill="#83a598" font-size="10">D</text><text x="55" y="38" fill="#b8bb26" font-size="10">Q₁</text><text x="55" y="52" fill="#d3869b" font-size="10">Q₁'</text></g>
+  <g transform="translate(340,40)"><rect width="70" height="55" rx="5" fill="none" stroke="#d79921" stroke-width="2"/><text x="35" y="22" text-anchor="middle" fill="#ebdbb2" font-size="11" font-weight="bold">D-FF₂</text><text x="7" y="38" fill="#83a598" font-size="10">D</text><text x="55" y="38" fill="#b8bb26" font-size="10">Q₂</text><text x="55" y="52" fill="#d3869b" font-size="10">Q₂'</text></g>
+  <!-- Right-shift connections -->
+  <line x1="120" y1="68" x2="195" y2="68" stroke="#b8bb26" stroke-width="2"/>
+  <line x1="265" y1="68" x2="340" y2="68" stroke="#b8bb26" stroke-width="2"/>
+  <!-- Q2' feedback to D0 (TWISTED) -->
+  <line x1="410" y1="81" x2="430" y2="81" stroke="#fb4934" stroke-width="2"/>
+  <line x1="430" y1="81" x2="430" y2="140" stroke="#fb4934" stroke-width="2"/>
+  <line x1="430" y1="140" x2="25" y2="140" stroke="#fb4934" stroke-width="2"/>
+  <line x1="25" y1="140" x2="25" y2="68" stroke="#fb4934" stroke-width="2"/>
+  <line x1="25" y1="68" x2="50" y2="68" stroke="#fb4934" stroke-width="2"/>
+  <text x="160" y="135" fill="#fb4934" font-size="10">Q₂' (inverted) fed back to D₀ — TWISTED connection</text>
+  <!-- CLK bus -->
+  <line x1="85" y1="95" x2="375" y2="95" stroke="#d3869b" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="85" y="110" fill="#d3869b" font-size="9">CLK</text>
+</svg>
+</div>
+<div class="diagram-caption">Fig: 3-bit Johnson Counter (Q₂' fed back to D₀)</div>
+
+<h2>State Sequence (3-bit = 6 states)</h2>
+<p>Initial state = 000. Count sequence:</p>
+<table>
+  <tr><th>Clock</th><th>Q₀</th><th>Q₁</th><th>Q₂</th></tr>
+  <tr><td>0 (initial)</td><td>0</td><td>0</td><td>0</td></tr>
+  <tr><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+  <tr><td>2</td><td>1</td><td>1</td><td>0</td></tr>
+  <tr><td>3</td><td>1</td><td>1</td><td>1</td></tr>
+  <tr><td>4</td><td>0</td><td>1</td><td>1</td></tr>
+  <tr><td>5</td><td>0</td><td>0</td><td>1</td></tr>
+  <tr><td>6</td><td>0</td><td>0</td><td>0</td></tr>
+</table>
+<p>For n=3 flip-flops → <strong>2×3 = 6 unique states</strong>. For n=4 → 8 states.</p>
+
+<h2>Timing Diagram</h2>
+<div class="diagram-wrap">
+<svg viewBox="0 0 460 180" width="100%" style="max-width:460px">
+  <!-- CLK -->
+  <text x="10" y="25" fill="#d3869b" font-size="11" font-weight="bold">CLK</text>
+  <polyline points="40,30 40,10 80,10 80,30 120,30 120,10 160,10 160,30 200,30 200,10 240,10 240,30 280,30 280,10 320,10 320,30 360,30 360,10 400,10 400,30 440,30" fill="none" stroke="#d3869b" stroke-width="1.5"/>
+  <!-- Q0: 0,1,1,1,0,0 -->
+  <text x="10" y="60" fill="#b8bb26" font-size="11" font-weight="bold">Q₀</text>
+  <polyline points="40,65 80,65 80,45 200,45 200,65 360,65 360,65 440,65" fill="none" stroke="#b8bb26" stroke-width="1.5"/>
+  <!-- Q1: 0,0,1,1,1,0 -->
+  <text x="10" y="100" fill="#83a598" font-size="11" font-weight="bold">Q₁</text>
+  <polyline points="40,105 120,105 120,85 280,85 280,105 440,105" fill="none" stroke="#83a598" stroke-width="1.5"/>
+  <!-- Q2: 0,0,0,1,1,1 -->
+  <text x="10" y="140" fill="#d3869b" font-size="11" font-weight="bold">Q₂</text>
+  <polyline points="40,145 160,145 160,125 360,125 360,145 440,145" fill="none" stroke="#d3869b" stroke-width="1.5"/>
+  <!-- Clock labels -->
+  <text x="55" y="170" text-anchor="middle" fill="#bdae93" font-size="9">T1</text>
+  <text x="95" y="170" text-anchor="middle" fill="#bdae93" font-size="9">T2</text>
+  <text x="135" y="170" text-anchor="middle" fill="#bdae93" font-size="9">T3</text>
+  <text x="175" y="170" text-anchor="middle" fill="#bdae93" font-size="9">T4</text>
+  <text x="215" y="170" text-anchor="middle" fill="#bdae93" font-size="9">T5</text>
+  <text x="255" y="170" text-anchor="middle" fill="#bdae93" font-size="9">T6</text>
+  <text x="295" y="170" text-anchor="middle" fill="#bdae93" font-size="9">→</text>
+</svg>
+</div>
+<div class="diagram-caption">Fig: Timing Diagram of 3-bit Johnson Counter</div>
+
+<h2>Applications</h2>
+<ul>
+  <li><strong>Sequence generator</strong> — generates non-repeating patterns</li>
+  <li><strong>Ring decoder</strong> — each state drives one output; used in display multiplexing</li>
+  <li><strong>Frequency divider</strong> — divides clock by 2n</li>
+  <li><strong>Digital clocks and phase generators</strong></li>
+  <li><strong>Control sequencers</strong> in digital systems</li>
+</ul>
+</div>
+</div>
+
+<!-- ============================== Q6 ============================== -->
+<div class="topic-card" id="q6" data-tags="3-bit up down counter JK flip-flop design mode control">
+<div class="topic-header" onclick="toggleTopic(this)">
+  <div class="topic-title">Design 3-bit UP/DOWN Counter using JK Flip-Flops</div>
+  <span class="topic-marks">7 Marks</span>
+  <span class="topic-chevron">▼</span>
+</div>
+<div class="topic-body">
+<div class="tags"><span class="tag">3-bit counter</span><span class="tag">UP/DOWN</span><span class="tag">JK flip-flop</span><span class="tag">mode control</span><span class="tag">K-map</span></div>
+
+<h2>Introduction</h2>
+<p>A <strong>3-bit UP/DOWN counter</strong> counts from 0 to 7 (UP mode) or from 7 to 0 (DOWN mode), selected by a control input <strong>M</strong>.</p>
+<ul>
+  <li><strong>M = 1</strong> → Count UP (0 → 1 → 2 → ... → 7 → 0)</li>
+  <li><strong>M = 0</strong> → Count DOWN (7 → 6 → 5 → ... → 0 → 7)</li>
+</ul>
+
+<h2>State Table</h2>
+<table>
+  <tr><th>Count</th><th>Q₂</th><th>Q₁</th><th>Q₀</th></tr>
+  <tr><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+  <tr><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+  <tr><td>2</td><td>0</td><td>1</td><td>0</td></tr>
+  <tr><td>3</td><td>0</td><td>1</td><td>1</td></tr>
+  <tr><td>4</td><td>1</td><td>0</td><td>0</td></tr>
+  <tr><td>5</td><td>1</td><td>0</td><td>1</td></tr>
+  <tr><td>6</td><td>1</td><td>1</td><td>0</td></tr>
+  <tr><td>7</td><td>1</td><td>1</td><td>1</td></tr>
+</table>
+
+<h2>Toggle Conditions</h2>
+<p>In a JK flip-flop in toggle mode (J=K), the flip-flop toggles when its J=K=1 condition is met.</p>
+<ul>
+  <li><strong>FF₀ (LSB):</strong> Toggles every clock → J₀ = K₀ = 1</li>
+  <li><strong>FF₁:</strong>
+    <ul>
+      <li>UP (M=1): Toggles when Q₀ = 1</li>
+      <li>DOWN (M=0): Toggles when Q₀ = 0 (i.e., Q₀' = 1)</li>
+      <li>Combined: <code>J₁ = K₁ = M·Q₀ + M'·Q₀'</code></li>
+    </ul>
+  </li>
+  <li><strong>FF₂:</strong>
+    <ul>
+      <li>UP (M=1): Toggles when Q₀=1 AND Q₁=1</li>
+      <li>DOWN (M=0): Toggles when Q₀=0 AND Q₁=0</li>
+      <li>Combined: <code>J₂ = K₂ = M·Q₀·Q₁ + M'·Q₀'·Q₁'</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Circuit Diagram</h2>
+<div class="diagram-wrap">
+<svg viewBox="0 0 480 200" width="100%" style="max-width:480px">
+  <!-- FF0 -->
+  <g transform="translate(20,60)"><rect width="65" height="60" rx="5" fill="none" stroke="#d79921" stroke-width="2"/><text x="32" y="20" text-anchor="middle" fill="#ebdbb2" font-size="10" font-weight="bold">JK-FF₀</text><text x="5" y="36" fill="#83a598" font-size="9">J=K=1</text><text x="5" y="48" fill="#83a598" font-size="9">CLK</text><text x="52" y="36" fill="#b8bb26" font-size="10">Q₀</text></g>
+  <!-- FF1 -->
+  <g transform="translate(190,60)"><rect width="65" height="60" rx="5" fill="none" stroke="#d79921" stroke-width="2"/><text x="32" y="20" text-anchor="middle" fill="#ebdbb2" font-size="10" font-weight="bold">JK-FF₁</text><text x="5" y="36" fill="#83a598" font-size="9">J=K=f(M,Q₀)</text><text x="5" y="48" fill="#83a598" font-size="9">CLK</text><text x="52" y="36" fill="#b8bb26" font-size="10">Q₁</text></g>
+  <!-- FF2 -->
+  <g transform="translate(360,60)"><rect width="65" height="60" rx="5" fill="none" stroke="#d79921" stroke-width="2"/><text x="32" y="20" text-anchor="middle" fill="#ebdbb2" font-size="10" font-weight="bold">JK-FF₂</text><text x="5" y="36" fill="#83a598" font-size="9">J=K=f(M,Q₀,Q₁)</text><text x="5" y="48" fill="#83a598" font-size="9">CLK</text><text x="52" y="36" fill="#b8bb26" font-size="10">Q₂</text></g>
+  <!-- Mode control M -->
+  <text x="10" y="25" fill="#d3869b" font-size="11" font-weight="bold">M</text>
+  <line x1="20" y1="22" x2="20" y2="185" stroke="#d3869b" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <!-- Logic for FF1: MUX symbol -->
+  <rect x="130" y="75" width="48" height="30" rx="8" fill="none" stroke="#d3869b" stroke-width="1.5"/>
+  <text x="154" y="95" text-anchor="middle" fill="#d3869b" font-size="9">MUX/AND</text>
+  <line x1="85" y1="90" x2="130" y2="90" stroke="#d5c4a1" stroke-width="1.5"/>
+  <line x1="178" y1="90" x2="190" y2="90" stroke="#d5c4a1" stroke-width="1.5"/>
+  <!-- Logic for FF2 -->
+  <rect x="300" y="75" width="48" height="30" rx="8" fill="none" stroke="#d3869b" stroke-width="1.5"/>
+  <text x="324" y="95" text-anchor="middle" fill="#d3869b" font-size="9">Logic</text>
+  <line x1="255" y1="90" x2="300" y2="90" stroke="#d5c4a1" stroke-width="1.5"/>
+  <line x1="348" y1="90" x2="360" y2="90" stroke="#d5c4a1" stroke-width="1.5"/>
+  <!-- CLK bus -->
+  <line x1="10" y1="175" x2="450" y2="175" stroke="#d3869b" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <line x1="52" y1="115" x2="52" y2="175" stroke="#d3869b" stroke-width="1"/>
+  <line x1="222" y1="115" x2="222" y2="175" stroke="#d3869b" stroke-width="1"/>
+  <line x1="392" y1="115" x2="392" y2="175" stroke="#d3869b" stroke-width="1"/>
+  <text x="5" y="190" fill="#d3869b" font-size="9">CLK common to all</text>
+  <text x="10" y="40" fill="#d79921" font-size="10">M=1 → UP, M=0 → DOWN</text>
+</svg>
+</div>
+<div class="diagram-caption">Fig: 3-bit Synchronous UP/DOWN Counter</div>
+
+<h2>Summary of Equations</h2>
+<table>
+  <tr><th>Flip-Flop</th><th>J = K =</th></tr>
+  <tr><td>FF₀</td><td>1</td></tr>
+  <tr><td>FF₁</td><td>M·Q₀ + M'·Q₀'</td></tr>
+  <tr><td>FF₂</td><td>M·Q₁·Q₀ + M'·Q₁'·Q₀'</td></tr>
+</table>
+<div class="callout tip"><div class="callout-label">Exam Tip</div>In UP mode, each FF toggles when all lower FFs = 1. In DOWN mode, each FF toggles when all lower FFs = 0. The mode control M selects between these two conditions.</div>
+</div>
+</div>
+
+<!-- ============================== Q7 ============================== -->
+<div class="topic-card" id="q7" data-tags="modulo-5 counter mod-5 gate design JK">
+<div class="topic-header" onclick="toggleTopic(this)">
+  <div class="topic-title">Modulo-5 Counter using Gates</div>
+  <span class="topic-marks">7 Marks</span>
+  <span class="topic-chevron">▼</span>
+</div>
+<div class="topic-body">
+<div class="tags"><span class="tag">MOD-5</span><span class="tag">modulo counter</span><span class="tag">JK flip-flop</span><span class="tag">reset logic</span></div>
+
+<h2>What is Modulo-5 Counter?</h2>
+<p>A <strong>MOD-5 counter</strong> counts from <strong>0 to 4</strong> (5 states), then resets to 0. We need <strong>3 flip-flops</strong> (2³=8 > 5). States 5,6,7 are <strong>not used</strong>.</p>
+
+<h2>State Sequence</h2>
+<table>
+  <tr><th>Count</th><th>Q₂</th><th>Q₁</th><th>Q₀</th></tr>
+  <tr><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+  <tr><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+  <tr><td>2</td><td>0</td><td>1</td><td>0</td></tr>
+  <tr><td>3</td><td>0</td><td>1</td><td>1</td></tr>
+  <tr><td>4</td><td>1</td><td>0</td><td>0</td></tr>
+  <tr><td>5 → RESET</td><td>1</td><td>0</td><td>1 ← reset here</td></tr>
+</table>
+
+<h2>Reset Logic</h2>
+<p>When count = 5 → Q₂=1, Q₁=0, Q₀=1. We detect this state using: <code>CLR = Q₂ · Q₀</code></p>
+<p>Connect Q₂ and Q₀ to a NAND gate. Connect NAND output to CLR (active-low reset) of all flip-flops.</p>
+<div class="callout note"><div class="callout-label">How it works</div>When Q₂=1 and Q₀=1, NAND output goes LOW → triggers reset → all FFs go to 0. State 5 is seen only for a tiny moment (nanoseconds).</div>
+
+<h2>Circuit Diagram</h2>
+<div class="diagram-wrap">
+<svg viewBox="0 0 460 170" width="100%" style="max-width:460px">
+  <!-- 3 FF boxes -->
+  <g transform="translate(20,30)"><rect width="65" height="55" rx="5" fill="none" stroke="#d79921" stroke-width="2"/><text x="32" y="20" text-anchor="middle" fill="#ebdbb2" font-size="10" font-weight="bold">JK-FF₀</text><text x="4" y="36" fill="#83a598" font-size="9">J=K=1</text><text x="4" y="48" fill="#83a598" font-size="9">CLR</text><text x="53" y="36" fill="#b8bb26" font-size="10">Q₀</text></g>
+  <g transform="translate(160,30)"><rect width="65" height="55" rx="5" fill="none" stroke="#d79921" stroke-width="2"/><text x="32" y="20" text-anchor="middle" fill="#ebdbb2" font-size="10" font-weight="bold">JK-FF₁</text><text x="4" y="36" fill="#83a598" font-size="9">J=K=Q₀</text><text x="4" y="48" fill="#83a598" font-size="9">CLR</text><text x="53" y="36" fill="#b8bb26" font-size="10">Q₁</text></g>
+  <g transform="translate(300,30)"><rect width="65" height="55" rx="5" fill="none" stroke="#d79921" stroke-width="2"/><text x="32" y="20" text-anchor="middle" fill="#ebdbb2" font-size="10" font-weight="bold">JK-FF₂</text><text x="4" y="36" fill="#83a598" font-size="9">J=K=Q₀Q₁</text><text x="4" y="48" fill="#83a598" font-size="9">CLR</text><text x="53" y="36" fill="#b8bb26" font-size="10">Q₂</text></g>
+  <!-- NAND gate: Q2, Q0 -->
+  <rect x="390" y="40" width="45" height="28" rx="11" fill="none" stroke="#fb4934" stroke-width="2"/>
+  <text x="412" y="59" text-anchor="middle" fill="#fb4934" font-size="10">NAND</text>
+  <line x1="85" y1="48" x2="110" y2="48" stroke="#b8bb26" stroke-width="1.5"/>
+  <line x1="110" y1="48" x2="110" y2="130" stroke="#b8bb26" stroke-width="1.5"/>
+  <line x1="110" y1="130" x2="380" y2="130" stroke="#b8bb26" stroke-width="1.5"/>
+  <line x1="380" y1="130" x2="380" y2="57" stroke="#b8bb26" stroke-width="1.5"/>
+  <line x1="380" y1="57" x2="390" y2="57" stroke="#b8bb26" stroke-width="1.5"/>
+  <line x1="365" y1="48" x2="380" y2="48" stroke="#b8bb26" stroke-width="1.5"/>
+  <line x1="380" y1="48" x2="390" y2="48" stroke="#d5c4a1" stroke-width="1.5"/>
+  <!-- CLR output from NAND to all FFs -->
+  <line x1="435" y1="54" x2="450" y2="54" stroke="#fb4934" stroke-width="2"/>
+  <line x1="450" y1="54" x2="450" y2="150" stroke="#fb4934" stroke-width="2"/>
+  <line x1="450" y1="150" x2="50" y2="150" stroke="#fb4934" stroke-width="2" stroke-dasharray="6,3"/>
+  <text x="55" y="165" fill="#fb4934" font-size="9">CLR resets all when Q₂·Q₀=1 (state=5)</text>
+  <!-- CLK -->
+  <line x1="5" y1="118" x2="360" y2="118" stroke="#d3869b" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="5" y="113" fill="#d3869b" font-size="9">CLK</text>
+</svg>
+</div>
+<div class="diagram-caption">Fig: MOD-5 Counter with NAND reset gate</div>
+
+<h2>Applications</h2>
+<ul>
+  <li>Divide-by-5 circuit (frequency divider)</li>
+  <li>Seconds counter in some timing systems</li>
+  <li>Combined with MOD-2 to make MOD-10 (BCD counter)</li>
+  <li>Digital timer and clock circuits</li>
+</ul>
+</div>
+</div>
+
+<!-- ============================== Q8 ============================== -->
+<div class="topic-card" id="q8" data-tags="mealy moore finite state machine FSM output example">
+<div class="topic-header" onclick="toggleTopic(this)">
+  <div class="topic-title">Mealy &amp; Moore Finite State Machines (FSM)</div>
+  <span class="topic-marks">7 Marks</span>
+  <span class="topic-chevron">▼</span>
+</div>
+<div class="topic-body">
+<div class="tags"><span class="tag">FSM</span><span class="tag">Mealy</span><span class="tag">Moore</span><span class="tag">state diagram</span><span class="tag">output</span></div>
+
+<h2>What is a Finite State Machine (FSM)?</h2>
+<p>An FSM is a sequential circuit with:</p>
+<ul>
+  <li>A fixed number of <strong>states</strong></li>
+  <li><strong>Inputs</strong> that cause state transitions</li>
+  <li><strong>Outputs</strong> produced based on states (and sometimes inputs)</li>
+</ul>
+<p>There are two types: <strong>Mealy</strong> and <strong>Moore</strong>.</p>
+
+<h2>1. Moore Machine</h2>
+<p>In a Moore machine, the <strong>output depends only on the current state</strong> (NOT on the input).</p>
+<ul>
+  <li>Output is written <strong>inside the state circle</strong></li>
+  <li>Output changes only when the state changes</li>
+  <li>More stable output, no glitches</li>
+</ul>
+<h3>Moore State Diagram — Sequence Detector for "101"</h3>
+<div class="diagram-wrap">
+<svg viewBox="0 0 460 170" width="100%" style="max-width:460px">
+  <!-- States -->
+  <circle cx="60" cy="85" r="30" fill="none" stroke="#d79921" stroke-width="2"/>
+  <text x="60" y="83" text-anchor="middle" fill="#ebdbb2" font-size="11" font-weight="bold">S0</text>
+  <text x="60" y="98" text-anchor="middle" fill="#b8bb26" font-size="10">Out=0</text>
+
+  <circle cx="180" cy="85" r="30" fill="none" stroke="#d79921" stroke-width="2"/>
+  <text x="180" y="83" text-anchor="middle" fill="#ebdbb2" font-size="11" font-weight="bold">S1</text>
+  <text x="180" y="98" text-anchor="middle" fill="#b8bb26" font-size="10">Out=0</text>
+
+  <circle cx="300" cy="85" r="30" fill="none" stroke="#d79921" stroke-width="2"/>
+  <text x="300" y="83" text-anchor="middle" fill="#ebdbb2" font-size="11" font-weight="bold">S2</text>
+  <text x="300" y="98" text-anchor="middle" fill="#b8bb26" font-size="10">Out=0</text>
+
+  <circle cx="400" cy="85" r="30" fill="none" stroke="#83a598" stroke-width="3"/>
+  <text x="400" y="83" text-anchor="middle" fill="#b8bb26" font-size="11" font-weight="bold">S3</text>
+  <text x="400" y="98" text-anchor="middle" fill="#b8bb26" font-size="10">Out=1</text>
+
+  <!-- Arrows -->
+  <line x1="90" y1="85" x2="150" y2="85" stroke="#d5c4a1" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="115" y="78" text-anchor="middle" fill="#d79921" font-size="10">1</text>
+
+  <line x1="210" y1="85" x2="270" y2="85" stroke="#d5c4a1" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="235" y="78" text-anchor="middle" fill="#d79921" font-size="10">0</text>
+
+  <line x1="330" y1="85" x2="370" y2="85" stroke="#d5c4a1" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="348" y="78" text-anchor="middle" fill="#d79921" font-size="10">1</text>
+
+  <!-- Self-loop S0 on 0 -->
+  <path d="M 45 58 Q 30 30 55 57" fill="none" stroke="#d5c4a1" stroke-width="1.5"/>
+  <text x="25" y="42" fill="#d79921" font-size="10">0</text>
+
+  <!-- S3 back to S1 on 1 -->
+  <path d="M 400 55 Q 290 5 180 55" fill="none" stroke="#d5c4a1" stroke-width="1.5"/>
+  <text x="290" y="12" fill="#d79921" font-size="10">1</text>
+
+  <!-- S3 back to S0 on 0 -->
+  <path d="M 395 115 Q 230 160 65 115" fill="none" stroke="#d5c4a1" stroke-width="1.5"/>
+  <text x="230" y="158" fill="#d79921" font-size="10">0</text>
+
+  <text x="10" y="160" fill="#bdae93" font-size="9">S0=start, S1=got 1, S2=got 10, S3=got 101 (output=1)</text>
+</svg>
+</div>
+<div class="diagram-caption">Fig: Moore Machine — "101" Sequence Detector</div>
+
+<h2>2. Mealy Machine</h2>
+<p>In a Mealy machine, the <strong>output depends on both the current state AND the input</strong>.</p>
+<ul>
+  <li>Output is written on the <strong>transition arrow</strong> (not inside state)</li>
+  <li>Output can change immediately when input changes (faster response)</li>
+  <li>Usually needs <strong>fewer states</strong> than Moore</li>
+</ul>
+<div class="diagram-wrap">
+<svg viewBox="0 0 400 140" width="100%" style="max-width:400px">
+  <circle cx="80" cy="70" r="30" fill="none" stroke="#d79921" stroke-width="2"/>
+  <text x="80" y="75" text-anchor="middle" fill="#ebdbb2" font-size="12" font-weight="bold">S0</text>
+  <circle cx="220" cy="70" r="30" fill="none" stroke="#d79921" stroke-width="2"/>
+  <text x="220" y="75" text-anchor="middle" fill="#ebdbb2" font-size="12" font-weight="bold">S1</text>
+  <circle cx="340" cy="70" r="30" fill="none" stroke="#83a598" stroke-width="3"/>
+  <text x="340" y="75" text-anchor="middle" fill="#b8bb26" font-size="12" font-weight="bold">S2</text>
+
+  <line x1="110" y1="70" x2="190" y2="70" stroke="#d5c4a1" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="148" y="64" text-anchor="middle" fill="#d79921" font-size="10">1/0</text>
+  <line x1="250" y1="70" x2="310" y2="70" stroke="#d5c4a1" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="278" y="64" text-anchor="middle" fill="#d79921" font-size="10">1/1</text>
+
+  <path d="M 68 43 Q 52 15 76 42" fill="none" stroke="#d5c4a1" stroke-width="1.5"/>
+  <text x="35" y="28" fill="#d79921" font-size="10">0/0</text>
+  <path d="M 208 43 Q 192 15 218 42" fill="none" stroke="#d5c4a1" stroke-width="1.5"/>
+  <text x="175" y="28" fill="#d79921" font-size="10">0/0</text>
+
+  <text x="5" y="125" fill="#bdae93" font-size="9">Arrow label = input/output. Output=1 when 11 is detected.</text>
+</svg>
+</div>
+<div class="diagram-caption">Fig: Mealy Machine — "11" Sequence Detector</div>
+
+<h2>Comparison</h2>
+<table>
+  <tr><th>Feature</th><th>Moore</th><th>Mealy</th></tr>
+  <tr><td>Output depends on</td><td>State only</td><td>State + Input</td></tr>
+  <tr><td>Output label</td><td>Inside state</td><td>On transition arrow</td></tr>
+  <tr><td>Number of states</td><td>More states</td><td>Fewer states</td></tr>
+  <tr><td>Output timing</td><td>Synchronized with clock</td><td>Can change with input</td></tr>
+  <tr><td>Glitches</td><td>Less likely</td><td>Possible</td></tr>
+</table>
+</div>
+</div>
+
+<!-- ============================== Q9 ============================== -->
+<div class="topic-card" id="q9" data-tags="state reduction minimization implication chart equivalent states">
+<div class="topic-header" onclick="toggleTopic(this)">
+  <div class="topic-title">State Reduction Techniques</div>
+  <span class="topic-marks">7 Marks</span>
+  <span class="topic-chevron">▼</span>
+</div>
+<div class="topic-body">
+<div class="tags"><span class="tag">state reduction</span><span class="tag">minimization</span><span class="tag">implication chart</span><span class="tag">equivalent states</span></div>
+
+<h2>Why Reduce States?</h2>
+<p>Fewer states → fewer flip-flops → simpler circuit → less cost, less power.</p>
+<p>Two states are <strong>equivalent</strong> if they produce the same output for every input, and their next states are also equivalent.</p>
+
+<h2>Method 1: Inspection (Row Matching)</h2>
+<p>Look at the state table. If two rows have identical outputs AND identical next states → those states are equivalent and can be merged.</p>
+<h3>Example State Table</h3>
+<table>
+  <tr><th>State</th><th>Next (X=0)</th><th>Next (X=1)</th><th>Output</th></tr>
+  <tr><td>A</td><td>B</td><td>C</td><td>0</td></tr>
+  <tr><td>B</td><td>A</td><td>D</td><td>0</td></tr>
+  <tr><td>C</td><td>B</td><td>C</td><td>1</td></tr>
+  <tr><td>D</td><td>A</td><td>D</td><td>0</td></tr>
+</table>
+<p>Compare rows: <strong>B and D</strong> have same output (0), same next states when X=0 (A and A), and same next states when X=1 (D and D). So <strong>B = D → merge them</strong>.</p>
+<p>Replace D with B in all entries:</p>
+<table>
+  <tr><th>State</th><th>Next (X=0)</th><th>Next (X=1)</th><th>Output</th></tr>
+  <tr><td>A</td><td>B</td><td>C</td><td>0</td></tr>
+  <tr><td>B</td><td>A</td><td>B</td><td>0</td></tr>
+  <tr><td>C</td><td>B</td><td>C</td><td>1</td></tr>
+</table>
+<p>Result: 4 states reduced to <strong>3 states</strong>.</p>
+
+<h2>Method 2: Implication Chart</h2>
+<p>This is a systematic method using a triangular chart (like a half-matrix).</p>
+<div class="step-block"><span class="step-num">1</span>Create a triangular grid with all state pairs.</div>
+<div class="step-block"><span class="step-num">2</span>Mark ✗ for pairs with different outputs (they can NEVER be equivalent).</div>
+<div class="step-block"><span class="step-num">3</span>For unmarked pairs, write the implied pairs that must also be equivalent.</div>
+<div class="step-block"><span class="step-num">4</span>If an implied pair is ✗, mark the current pair ✗ too.</div>
+<div class="step-block"><span class="step-num">5</span>Repeat until no new ✗ can be added. Remaining unmarked pairs are equivalent.</div>
+
+<h3>Example Implication Chart (for 4 states A, B, C, D)</h3>
+<div class="diagram-wrap">
+<svg viewBox="0 0 280 200" width="100%" style="max-width:280px">
+  <!-- Grid lines -->
+  <line x1="60" y1="20" x2="60" y2="170" stroke="#504945" stroke-width="1"/>
+  <line x1="110" y1="20" x2="110" y2="130" stroke="#504945" stroke-width="1"/>
+  <line x1="160" y1="20" x2="160" y2="80" stroke="#504945" stroke-width="1"/>
+  <line x1="60" y1="70" x2="210" y2="70" stroke="#504945" stroke-width="1"/>
+  <line x1="60" y1="120" x2="160" y2="120" stroke="#504945" stroke-width="1"/>
+  <line x1="60" y1="170" x2="110" y2="170" stroke="#504945" stroke-width="1"/>
+  <!-- Column headers -->
+  <text x="85" y="15" text-anchor="middle" fill="#d79921" font-size="13" font-weight="bold">A</text>
+  <text x="135" y="15" text-anchor="middle" fill="#d79921" font-size="13" font-weight="bold">B</text>
+  <text x="185" y="15" text-anchor="middle" fill="#d79921" font-size="13" font-weight="bold">C</text>
+  <!-- Row headers -->
+  <text x="45" y="50" text-anchor="middle" fill="#d79921" font-size="13" font-weight="bold">B</text>
+  <text x="45" y="100" text-anchor="middle" fill="#d79921" font-size="13" font-weight="bold">C</text>
+  <text x="45" y="148" text-anchor="middle" fill="#d79921" font-size="13" font-weight="bold">D</text>
+  <!-- Cell contents -->
+  <text x="85" y="50" text-anchor="middle" fill="#fb4934" font-size="16">✗</text>
+  <text x="85" y="100" text-anchor="middle" fill="#bdae93" font-size="10">AC,BD</text>
+  <text x="85" y="148" text-anchor="middle" fill="#b8bb26" font-size="14">≡</text>
+  <text x="135" y="100" text-anchor="middle" fill="#fb4934" font-size="16">✗</text>
+  <text x="135" y="148" text-anchor="middle" fill="#fb4934" font-size="16">✗</text>
+  <text x="185" y="50" text-anchor="middle" fill="#fb4934" font-size="16">✗</text>
+  <!-- Legend -->
+  <text x="10" y="185" fill="#fb4934" font-size="10">✗ = not equivalent</text>
+  <text x="10" y="198" fill="#b8bb26" font-size="10">≡ = equivalent (B≡D)</text>
+</svg>
+</div>
+<div class="diagram-caption">Fig: Partial Implication Chart for states A, B, C, D</div>
+
+<div class="callout tip"><div class="callout-label">Exam Tip</div>For 7 marks, show the original state table, apply one method clearly (inspection or implication chart), show the merged state table, and state the benefit.</div>
+</div>
+</div>
+
+<!-- ============================== Q10 ============================== -->
+<div class="topic-card" id="q10" data-tags="race-free state assignment critical race asynchronous secondary variable">
+<div class="topic-header" onclick="toggleTopic(this)">
+  <div class="topic-title">Race-Free State Assignment in Asynchronous Sequential Circuits</div>
+  <span class="topic-marks">7 Marks</span>
+  <span class="topic-chevron">▼</span>
+</div>
+<div class="topic-body">
+<div class="tags"><span class="tag">race condition</span><span class="tag">race-free</span><span class="tag">state assignment</span><span class="tag">asynchronous</span><span class="tag">critical race</span></div>
+
+<h2>What is a Race Condition?</h2>
+<p>In asynchronous circuits, there is <strong>no common clock</strong>. States change whenever input changes. A <strong>race condition</strong> occurs when two or more state variables (flip-flops) change at the same time, and the final stable state depends on <strong>which one changes first</strong>.</p>
+
+<h3>Types of Races</h3>
+<ul>
+  <li><strong>Non-critical race:</strong> Multiple variables change, but they all lead to the same final stable state. This is acceptable.</li>
+  <li><strong>Critical race:</strong> Multiple variables change, and depending on the order, the circuit ends up in <strong>different states</strong>. This causes incorrect behavior. Must be avoided.</li>
+</ul>
+
+<h2>Example of Critical Race</h2>
+<p>Suppose current state = <code>00</code> and we want to go to <code>11</code>. Both y₁ and y₂ must change from 0→1.</p>
+<ul>
+  <li>If y₁ changes first → passes through <code>10</code> → might settle at <code>10</code> (wrong)</li>
+  <li>If y₂ changes first → passes through <code>01</code> → might settle at <code>01</code> (wrong)</li>
+  <li>If both change together → reaches <code>11</code> (correct)</li>
+</ul>
+<p>So <code>00 → 11</code> is a critical race. We must avoid it.</p>
+
+<h2>Race-Free State Assignment</h2>
+<p>The goal is to assign binary codes to states such that transitions between states require changing <strong>only one bit at a time</strong> (adjacent codes). This is called <strong>Gray code assignment</strong> or <strong>adjacent state assignment</strong>.</p>
+
+<h3>Rules for Race-Free Assignment</h3>
+<div class="step-block"><span class="step-num">1</span>States that have a direct transition between them should have codes that differ by <strong>only 1 bit</strong>.</div>
+<div class="step-block"><span class="step-num">2</span>Use Gray code ordering when possible (0→1→3→2 for 2 bits, etc.).</div>
+<div class="step-block"><span class="step-num">3</span>Add extra intermediate states if necessary to avoid multi-bit transitions.</div>
+
+<h3>Example: 4-state assignment</h3>
+<table>
+  <tr><th>State</th><th>Bad (binary)</th><th>Good (Gray code)</th></tr>
+  <tr><td>A</td><td>00</td><td>00</td></tr>
+  <tr><td>B</td><td>01</td><td>01</td></tr>
+  <tr><td>C</td><td>10</td><td>11</td></tr>
+  <tr><td>D</td><td>11</td><td>10</td></tr>
+</table>
+<p>With Gray code, A→B (00→01 ✓), B→C (01→11 ✓), C→D (11→10 ✓), D→A (10→00 ✓). Each transition changes only 1 bit → <strong>no races!</strong></p>
+
+<div class="diagram-wrap">
+<svg viewBox="0 0 350 170" width="100%" style="max-width:350px">
+  <text x="175" y="18" text-anchor="middle" fill="#d79921" font-size="13" font-weight="bold">State Assignment Map</text>
+  <!-- K-map like grid -->
+  <rect x="60" y="30" width="80" height="60" rx="0" fill="none" stroke="#504945" stroke-width="1"/>
+  <rect x="140" y="30" width="80" height="60" rx="0" fill="none" stroke="#504945" stroke-width="1"/>
+  <rect x="60" y="90" width="80" height="60" rx="0" fill="none" stroke="#504945" stroke-width="1"/>
+  <rect x="140" y="90" width="80" height="60" rx="0" fill="none" stroke="#504945" stroke-width="1"/>
+  <text x="100" y="65" text-anchor="middle" fill="#b8bb26" font-size="14" font-weight="bold">A(00)</text>
+  <text x="180" y="65" text-anchor="middle" fill="#b8bb26" font-size="14" font-weight="bold">B(01)</text>
+  <text x="100" y="125" text-anchor="middle" fill="#b8bb26" font-size="14" font-weight="bold">D(10)</text>
+  <text x="180" y="125" text-anchor="middle" fill="#b8bb26" font-size="14" font-weight="bold">C(11)</text>
+  <!-- Arrows showing adjacency -->
+  <line x1="140" y1="60" x2="140" y2="60" stroke="#83a598" stroke-width="2"/>
+  <text x="175" y="160" text-anchor="middle" fill="#83a598" font-size="10">Each adjacent pair differs by 1 bit</text>
+  <!-- Borders highlight -->
+  <rect x="58" y="28" width="164" height="124" rx="4" fill="none" stroke="#83a598" stroke-width="2" stroke-dasharray="5,3"/>
+</svg>
+</div>
+<div class="diagram-caption">Fig: Gray-code adjacent state assignment</div>
+
+<h2>Importance</h2>
+<ul>
+  <li>Prevents circuit malfunction due to incorrect state transitions</li>
+  <li>Essential in <strong>asynchronous circuit design</strong> for reliability</li>
+  <li>Reduces glitches and hazards in combinational logic</li>
+</ul>
+</div>
+</div>
+
+<!-- ============================== Q11 ============================== -->
+<div class="topic-card" id="q11" data-tags="asynchronous sequential circuit design steps procedure fundamental mode">
+<div class="topic-header" onclick="toggleTopic(this)">
+  <div class="topic-title">Steps in Designing Asynchronous Sequential Circuits</div>
+  <span class="topic-marks">7 Marks</span>
+  <span class="topic-chevron">▼</span>
+</div>
+<div class="topic-body">
+<div class="tags"><span class="tag">asynchronous</span><span class="tag">design steps</span><span class="tag">flow table</span><span class="tag">state assignment</span><span class="tag">hazard</span></div>
+
+<h2>What is an Asynchronous Sequential Circuit?</h2>
+<p>Unlike synchronous circuits (which use a clock), <strong>asynchronous circuits change state whenever the input changes</strong>. They operate in <strong>fundamental mode</strong>: only one input changes at a time, and the circuit reaches a stable state before the next input change.</p>
+
+<h2>Design Steps</h2>
+<div class="step-block"><span class="step-num">1</span><strong>Problem Statement:</strong> Clearly define what the circuit must do. Identify all inputs (x) and outputs (z).</div>
+<div class="step-block"><span class="step-num">2</span><strong>Primitive Flow Table:</strong> Create a flow table showing all stable states and transitions. Each row is a state, each column is an input combination. Stable states are circled.</div>
+<div class="step-block"><span class="step-num">3</span><strong>State Reduction (Merging):</strong> Combine compatible rows in the primitive flow table to reduce the number of states (rows). Use merger diagram or inspection.</div>
+<div class="step-block"><span class="step-num">4</span><strong>State Assignment (Race-Free):</strong> Assign binary codes to states. Use adjacent (Gray-code) assignment to avoid critical races.</div>
+<div class="step-block"><span class="step-num">5</span><strong>Transition Table:</strong> Replace state names with their binary codes to get the transition (excitation) table.</div>
+<div class="step-block"><span class="step-num">6</span><strong>Derive Excitation Functions:</strong> Use K-map to find Boolean expressions for each secondary variable (Y₁, Y₂, etc.).</div>
+<div class="step-block"><span class="step-num">7</span><strong>Output Function:</strong> Derive Boolean expression for output z from the state table using K-map.</div>
+<div class="step-block"><span class="step-num">8</span><strong>Hazard Check:</strong> Check for static-1, static-0, and dynamic hazards. Add bridging terms if needed.</div>
+<div class="step-block"><span class="step-num">9</span><strong>Circuit Implementation:</strong> Draw the final circuit using gates and latches.</div>
+
+<h2>Flowchart of Design Process</h2>
+<div class="diagram-wrap">
+<svg viewBox="0 0 280 440" width="100%" style="max-width:280px">
+  <defs>
+    <marker id="arr2" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto"><polygon points="0 0, 7 3.5, 0 7" fill="#d5c4a1"/></marker>
+  </defs>
+  <!-- Boxes -->
+  <rect x="60" y="10" width="160" height="35" rx="6" fill="#3c3836" stroke="#d79921" stroke-width="1.5"/>
+  <text x="140" y="32" text-anchor="middle" fill="#ebdbb2" font-size="11">Problem Statement</text>
+  <line x1="140" y1="45" x2="140" y2="65" stroke="#d5c4a1" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+  <rect x="60" y="65" width="160" height="35" rx="6" fill="#3c3836" stroke="#d79921" stroke-width="1.5"/>
+  <text x="140" y="87" text-anchor="middle" fill="#ebdbb2" font-size="11">Primitive Flow Table</text>
+  <line x1="140" y1="100" x2="140" y2="120" stroke="#d5c4a1" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+  <rect x="60" y="120" width="160" height="35" rx="6" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+  <text x="140" y="142" text-anchor="middle" fill="#ebdbb2" font-size="11">State Reduction</text>
+  <line x1="140" y1="155" x2="140" y2="175" stroke="#d5c4a1" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+  <rect x="60" y="175" width="160" height="35" rx="6" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+  <text x="140" y="197" text-anchor="middle" fill="#ebdbb2" font-size="11">Race-Free State Assignment</text>
+  <line x1="140" y1="210" x2="140" y2="230" stroke="#d5c4a1" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+  <rect x="60" y="230" width="160" height="35" rx="6" fill="#3c3836" stroke="#d79921" stroke-width="1.5"/>
+  <text x="140" y="252" text-anchor="middle" fill="#ebdbb2" font-size="11">Transition Table</text>
+  <line x1="140" y1="265" x2="140" y2="285" stroke="#d5c4a1" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+  <rect x="60" y="285" width="160" height="35" rx="6" fill="#3c3836" stroke="#d79921" stroke-width="1.5"/>
+  <text x="140" y="307" text-anchor="middle" fill="#ebdbb2" font-size="11">K-map → Y, z functions</text>
+  <line x1="140" y1="320" x2="140" y2="340" stroke="#d5c4a1" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+  <rect x="60" y="340" width="160" height="35" rx="6" fill="#3c3836" stroke="#fb4934" stroke-width="1.5"/>
+  <text x="140" y="362" text-anchor="middle" fill="#ebdbb2" font-size="11">Hazard Elimination</text>
+  <line x1="140" y1="375" x2="140" y2="395" stroke="#d5c4a1" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+  <rect x="60" y="395" width="160" height="35" rx="6" fill="#504945" stroke="#b8bb26" stroke-width="2"/>
+  <text x="140" y="417" text-anchor="middle" fill="#b8bb26" font-size="11" font-weight="bold">Final Circuit</text>
+</svg>
+</div>
+<div class="diagram-caption">Fig: Design Steps for Asynchronous Sequential Circuits</div>
+
+<h2>Important Notes</h2>
+<ul>
+  <li>Use <strong>NOR or NAND latches</strong> as memory elements (not edge-triggered FFs)</li>
+  <li>Fundamental mode: input changes are assumed to be <strong>slow</strong> enough for circuit to stabilize</li>
+  <li>Critical races must be avoided using proper state assignment</li>
+  <li>Hazards must be checked in the final Boolean expression</li>
+</ul>
+</div>
+</div>
+
+<!-- ============================== Q12 ============================== -->
+<div class="topic-card" id="q12" data-tags="flow table primitive merged asynchronous stable unstable state">
+<div class="topic-header" onclick="toggleTopic(this)">
+  <div class="topic-title">Role of Flow Tables in Asynchronous Sequential Circuit Design</div>
+  <span class="topic-marks">7 Marks</span>
+  <span class="topic-chevron">▼</span>
+</div>
+<div class="topic-body">
+<div class="tags"><span class="tag">flow table</span><span class="tag">primitive flow table</span><span class="tag">merged flow table</span><span class="tag">stable state</span><span class="tag">asynchronous</span></div>
+
+<h2>What is a Flow Table?</h2>
+<p>A <strong>flow table</strong> is like a state table, but used specifically for <strong>asynchronous circuits</strong>. It shows:</p>
+<ul>
+  <li>The <strong>current state</strong> (rows)</li>
+  <li>The <strong>input combination</strong> (columns)</li>
+  <li>The <strong>next state</strong> in each cell (stable or unstable)</li>
+  <li>The <strong>output</strong> for each state</li>
+</ul>
+<p><strong>Stable states</strong> are circled (the circuit stays there). <strong>Unstable states</strong> are written plainly (the circuit moves to the next state immediately).</p>
+
+<h2>1. Primitive Flow Table</h2>
+<p>Each row has exactly <strong>one stable state</strong>. This is the starting point. It is obtained directly from the problem specification by listing all possible conditions.</p>
+
+<h3>Example: SR Latch-like behavior</h3>
+<p>Inputs: S (set) and R (reset). Output: Q</p>
+<table>
+  <tr><th>State</th><th>SR=00</th><th>SR=01</th><th>SR=10</th><th>SR=11</th><th>Output Q</th></tr>
+  <tr><td>①</td><td>① (stable)</td><td>2</td><td>—</td><td>—</td><td>0</td></tr>
+  <tr><td>②</td><td>1</td><td>② (stable)</td><td>—</td><td>—</td><td>0</td></tr>
+  <tr><td>③</td><td>—</td><td>—</td><td>③ (stable)</td><td>4</td><td>1</td></tr>
+  <tr><td>④</td><td>—</td><td>—</td><td>3</td><td>④ (stable)</td><td>1</td></tr>
+</table>
+<p>Circled numbers = stable states. Numbers without circles = transitions (move to that state instantly).</p>
+
+<h2>2. Merged Flow Table</h2>
+<p>After state reduction, we <strong>merge compatible rows</strong> to reduce the number of states. Two rows can be merged if they have no conflicting stable states and no conflicting outputs.</p>
+<div class="callout note"><div class="callout-label">Merger Diagram</div>Draw a graph where each state is a node. Connect two states with a line if they are compatible (can be merged). Find groups (cliques) that can all be merged together.</div>
+
+<h3>Merged Table (from above example)</h3>
+<p>States 1 and 3 can be in same row (one is stable for SR=00, other for SR=10). Similarly 2 and 4.</p>
+<table>
+  <tr><th>Row</th><th>SR=00</th><th>SR=01</th><th>SR=10</th><th>SR=11</th></tr>
+  <tr><td>a (= 1,3)</td><td>① a</td><td>b</td><td>③ a</td><td>—</td></tr>
+  <tr><td>b (= 2,4)</td><td>a</td><td>② b</td><td>—</td><td>④ b</td></tr>
+</table>
+<p>4 states reduced to <strong>2 states</strong>!</p>
+
+<h2>Why Flow Tables are Important</h2>
+<ul>
+  <li>Provide a structured, visual representation of all state transitions</li>
+  <li>Help identify all <strong>stable and unstable states</strong> clearly</li>
+  <li>Enable systematic <strong>state reduction</strong> (merging)</li>
+  <li>Help identify possible <strong>races and hazards</strong></li>
+  <li>Bridge between problem specification and circuit implementation</li>
+  <li>Provide basis for deriving Boolean excitation and output functions</li>
+</ul>
+
+<div class="callout tip"><div class="callout-label">Exam Tip</div>Always draw both the primitive flow table and merged flow table. Show at least one example of a stable and unstable state. Explain how merging reduces circuit complexity.</div>
+</div>
+</div>
+
+<!-- ============================== Q13 ============================== -->
+<div class="topic-card" id="q13" data-tags="sequential circuit design flip-flop state transition excitation table K-map">
+<div class="topic-header" onclick="toggleTopic(this)">
+  <div class="topic-title">Design Sequential Circuits for Specified State Transitions</div>
+  <span class="topic-marks">7 Marks</span>
+  <span class="topic-chevron">▼</span>
+</div>
+<div class="topic-body">
+<div class="tags"><span class="tag">sequential circuit</span><span class="tag">state transition</span><span class="tag">excitation table</span><span class="tag">JK flip-flop</span><span class="tag">K-map</span></div>
+
+<h2>General Design Procedure</h2>
+<p>Designing a sequential circuit means building a circuit that follows a specified sequence of states using flip-flops.</p>
+<div class="step-block"><span class="step-num">1</span>Write the state transition table (present state → next state)</div>
+<div class="step-block"><span class="step-num">2</span>Choose flip-flop type (JK is most common in AKTU exams)</div>
+<div class="step-block"><span class="step-num">3</span>Write excitation table using flip-flop's truth table</div>
+<div class="step-block"><span class="step-num">4</span>Apply K-map for each J and K input</div>
+<div class="step-block"><span class="step-num">5</span>Write simplified Boolean expressions</div>
+<div class="step-block"><span class="step-num">6</span>Draw the circuit</div>
+
+<h2>JK Flip-Flop Excitation Table (Reference)</h2>
+<table>
+  <tr><th>Q (now)</th><th>Q⁺ (next)</th><th>J</th><th>K</th></tr>
+  <tr><td>0</td><td>0</td><td>0</td><td>X</td></tr>
+  <tr><td>0</td><td>1</td><td>1</td><td>X</td></tr>
+  <tr><td>1</td><td>0</td><td>X</td><td>1</td></tr>
+  <tr><td>1</td><td>1</td><td>X</td><td>0</td></tr>
+</table>
+<p>(X = don't care)</p>
+
+<h2>Example: Design a 3-bit Gray Code Counter</h2>
+<p>Gray code sequence: 000 → 001 → 011 → 010 → 110 → 111 → 101 → 100 → 000</p>
+
+<h3>Step 1: State Transition Table</h3>
+<table>
+  <tr><th>Q₂ Q₁ Q₀</th><th>Q₂⁺ Q₁⁺ Q₀⁺</th></tr>
+  <tr><td>0 0 0</td><td>0 0 1</td></tr>
+  <tr><td>0 0 1</td><td>0 1 1</td></tr>
+  <tr><td>0 1 1</td><td>0 1 0</td></tr>
+  <tr><td>0 1 0</td><td>1 1 0</td></tr>
+  <tr><td>1 1 0</td><td>1 1 1</td></tr>
+  <tr><td>1 1 1</td><td>1 0 1</td></tr>
+  <tr><td>1 0 1</td><td>1 0 0</td></tr>
+  <tr><td>1 0 0</td><td>0 0 0</td></tr>
+</table>
+
+<h3>Step 2: Excitation Table (for FF₀ only — example)</h3>
+<table>
+  <tr><th>Q₂ Q₁ Q₀</th><th>Q₀⁺</th><th>J₀</th><th>K₀</th></tr>
+  <tr><td>0 0 0</td><td>1</td><td>1</td><td>X</td></tr>
+  <tr><td>0 0 1</td><td>1</td><td>X</td><td>0</td></tr>
+  <tr><td>0 1 1</td><td>0</td><td>X</td><td>1</td></tr>
+  <tr><td>0 1 0</td><td>0</td><td>0</td><td>X</td></tr>
+  <tr><td>1 1 0</td><td>1</td><td>1</td><td>X</td></tr>
+  <tr><td>1 1 1</td><td>1</td><td>X</td><td>0</td></tr>
+  <tr><td>1 0 1</td><td>0</td><td>X</td><td>1</td></tr>
+  <tr><td>1 0 0</td><td>0</td><td>0</td><td>X</td></tr>
+</table>
+
+<h3>Step 3: K-map for J₀</h3>
+<div class="diagram-wrap">
+<svg viewBox="0 0 320 170" width="100%" style="max-width:320px">
+  <!-- K-map 3-variable: Q2, Q1Q0 -->
+  <text x="160" y="18" text-anchor="middle" fill="#d79921" font-size="12" font-weight="bold">K-map for J₀</text>
+  <!-- Header -->
+  <text x="80" y="40" text-anchor="middle" fill="#83a598" font-size="11">Q₁Q₀</text>
+  <text x="30" y="60" text-anchor="right" fill="#83a598" font-size="11">Q₂</text>
+  <text x="85" y="60" text-anchor="middle" fill="#bdae93" font-size="10">00</text>
+  <text x="135" y="60" text-anchor="middle" fill="#bdae93" font-size="10">01</text>
+  <text x="185" y="60" text-anchor="middle" fill="#bdae93" font-size="10">11</text>
+  <text x="235" y="60" text-anchor="middle" fill="#bdae93" font-size="10">10</text>
+  <text x="45" y="98" text-anchor="middle" fill="#bdae93" font-size="11">0</text>
+  <text x="45" y="145" text-anchor="middle" fill="#bdae93" font-size="11">1</text>
+  <!-- Grid -->
+  <rect x="60" y="68" width="50" height="40" fill="none" stroke="#504945" stroke-width="1"/>
+  <rect x="110" y="68" width="50" height="40" fill="none" stroke="#504945" stroke-width="1"/>
+  <rect x="160" y="68" width="50" height="40" fill="none" stroke="#504945" stroke-width="1"/>
+  <rect x="210" y="68" width="50" height="40" fill="none" stroke="#504945" stroke-width="1"/>
+  <rect x="60" y="108" width="50" height="40" fill="none" stroke="#504945" stroke-width="1"/>
+  <rect x="110" y="108" width="50" height="40" fill="none" stroke="#504945" stroke-width="1"/>
+  <rect x="160" y="108" width="50" height="40" fill="none" stroke="#504945" stroke-width="1"/>
+  <rect x="210" y="108" width="50" height="40" fill="none" stroke="#504945" stroke-width="1"/>
+  <!-- Values: Q2=0: J₀ → 1,X,X,0 = 1,X,X,0; Q2=1: → 1,X,X,0 -->
+  <text x="85" y="93" text-anchor="middle" fill="#b8bb26" font-size="13">1</text>
+  <text x="135" y="93" text-anchor="middle" fill="#bdae93" font-size="13">X</text>
+  <text x="185" y="93" text-anchor="middle" fill="#bdae93" font-size="13">X</text>
+  <text x="235" y="93" text-anchor="middle" fill="#b8bb26" font-size="13">0</text>
+  <text x="85" y="133" text-anchor="middle" fill="#b8bb26" font-size="13">0</text>
+  <text x="135" y="133" text-anchor="middle" fill="#bdae93" font-size="13">X</text>
+  <text x="185" y="133" text-anchor="middle" fill="#bdae93" font-size="13">X</text>
+  <text x="235" y="133" text-anchor="middle" fill="#b8bb26" font-size="13">1</text>
+  <!-- Group highlight -->
+  <rect x="60" y="68" width="50" height="80" rx="4" fill="none" stroke="#d79921" stroke-width="2" stroke-dasharray="4,2"/>
+  <text x="5" y="160" fill="#bdae93" font-size="9">Group 1s with X → simplified expression</text>
+</svg>
+</div>
+<div class="diagram-caption">Fig: K-map for J₀ input of Gray code counter</div>
+
+<p>Using X as don't-care, we group to get: <strong>J₀ = Q₂'·Q₁' + Q₂·Q₁</strong> (simplified)</p>
+
+<h2>Circuit Block Diagram</h2>
+<div class="diagram-wrap">
+<svg viewBox="0 0 460 120" width="100%" style="max-width:460px">
+  <rect x="30" y="30" width="100" height="55" rx="6" fill="none" stroke="#d79921" stroke-width="2"/>
+  <text x="80" y="54" text-anchor="middle" fill="#ebdbb2" font-size="11" font-weight="bold">Combinational</text>
+  <text x="80" y="70" text-anchor="middle" fill="#ebdbb2" font-size="10">Logic (K-map)</text>
+  <text x="80" y="84" text-anchor="middle" fill="#bdae93" font-size="9">J,K inputs</text>
+
+  <rect x="230" y="30" width="110" height="55" rx="6" fill="none" stroke="#83a598" stroke-width="2"/>
+  <text x="285" y="54" text-anchor="middle" fill="#ebdbb2" font-size="11" font-weight="bold">JK Flip-Flops</text>
+  <text x="285" y="68" text-anchor="middle" fill="#bdae93" font-size="9">FF₀, FF₁, FF₂</text>
+
+  <line x1="130" y1="57" x2="230" y2="57" stroke="#d5c4a1" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="175" y="50" text-anchor="middle" fill="#d79921" font-size="9">J₀K₀,J₁K₁,J₂K₂</text>
+
+  <line x1="340" y1="57" x2="420" y2="57" stroke="#b8bb26" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="365" y="50" fill="#b8bb26" font-size="9">Q₀,Q₁,Q₂</text>
+
+  <line x1="380" y1="57" x2="380" y2="105" stroke="#d5c4a1" stroke-width="1.5"/>
+  <line x1="380" y1="105" x2="80" y2="105" stroke="#d5c4a1" stroke-width="1.5"/>
+  <line x1="80" y1="105" x2="80" y2="85" stroke="#d5c4a1" stroke-width="1.5"/>
+  <text x="200" y="115" text-anchor="middle" fill="#bdae93" font-size="9">Feedback: Q → Combinational Logic</text>
+
+  <!-- CLK -->
+  <line x1="285" y1="105" x2="285" y2="85" stroke="#d3869b" stroke-width="1.5"/>
+  <text x="260" y="112" fill="#d3869b" font-size="9">CLK</text>
+</svg>
+</div>
+<div class="diagram-caption">Fig: General Sequential Circuit Block (Combinational Logic + Flip-Flops + Feedback)</div>
+
+<div class="callout tip"><div class="callout-label">Exam Strategy</div>In 7-mark questions, always show: (1) State table, (2) Excitation table, (3) K-maps for each J and K, (4) Final Boolean equations, (5) Circuit diagram. That covers all marks.</div>
+</div>
+</div>
+
+</main>
+</div>
+
+<script>
+// ===== THEME SWITCHER =====
+function setTheme(theme, btn) {
+  document.documentElement.setAttribute('data-theme', theme);
+  document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  localStorage.setItem('de-theme', theme);
+}
+(function initTheme(){
+  const saved = localStorage.getItem('de-theme');
+  if(saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    document.querySelectorAll('.theme-btn').forEach(b => {
+      if(b.textContent.toLowerCase().includes(saved.replace('rose-pine-dawn','dawn').replace('rose-pine','rosé').replace('gruvbox','gruvbox'))) {
+        b.classList.add('active');
+      } else {
+        b.classList.remove('active');
+      }
+    });
+    const map = {'gruvbox':0,'rose-pine':1,'rose-pine-dawn':2};
+    const idx = map[saved];
+    if(idx !== undefined) {
+      const btns = document.querySelectorAll('.theme-btn');
+      btns.forEach(b=>b.classList.remove('active'));
+      if(btns[idx]) btns[idx].classList.add('active');
+    }
+  }
+})();
+
+// ===== COLLAPSIBLE TOPICS =====
+function toggleTopic(header) {
+  const body = header.nextElementSibling;
+  const chevron = header.querySelector('.topic-chevron');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chevron.textContent = isOpen ? '▼' : '▲';
+  // Update sidebar active
+  const card = header.closest('.topic-card');
+  document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+  if(card && !isOpen) {
+    const id = card.id;
+    const link = document.querySelector(`.sidebar-link[onclick="jumpTo('${id}')"]`);
+    if(link) link.classList.add('active');
+  }
+}
+
+// ===== JUMP TO TOPIC =====
+function jumpTo(id) {
+  const card = document.getElementById(id);
+  if(!card) return;
+  const header = card.querySelector('.topic-header');
+  const body = card.querySelector('.topic-body');
+  const chevron = header.querySelector('.topic-chevron');
+  if(!body.classList.contains('open')) {
+    body.classList.add('open');
+    chevron.textContent = '▲';
+  }
+  card.scrollIntoView({behavior:'auto', block:'start'});
+  document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+  const link = document.querySelector(`.sidebar-link[onclick="jumpTo('${id}')"]`);
+  if(link) link.classList.add('active');
+  // Close sidebar on mobile
+  if(window.innerWidth <= 800) toggleSidebar(false);
+}
+
+// ===== SIDEBAR TOGGLE (mobile) =====
+function toggleSidebar(force) {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const open = force !== undefined ? force : !sidebar.classList.contains('open');
+  sidebar.classList.toggle('open', open);
+  overlay.classList.toggle('open', open);
+}
+
+// ===== SEARCH =====
+function doSearch(val) {
+  val = val.trim().toLowerCase();
+  const cards = document.querySelectorAll('.topic-card');
+  let anyVisible = false;
+  cards.forEach(card => {
+    const title = card.querySelector('.topic-title').textContent.toLowerCase();
+    const tags = (card.dataset.tags || '').toLowerCase();
+    const text = card.textContent.toLowerCase();
+    const match = !val || title.includes(val) || tags.includes(val) || text.includes(val);
+    card.style.display = match ? '' : 'none';
+    if(match) anyVisible = true;
+  });
+  document.getElementById('no-result').style.display = anyVisible ? 'none' : 'block';
+}
+
+// Open first topic by default
+document.addEventListener('DOMContentLoaded', () => {
+  const first = document.querySelector('.topic-header');
+  if(first) toggleTopic(first);
+});
+</script>
+</body>
+</html>
