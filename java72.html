@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BCS403 – OOP with Java · Unit II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Recursive:wght@300..900&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg0:     #1d2021;
+    --bg1:     #282828;
+    --bg2:     #32302f;
+    --bg3:     #3c3836;
+    --bg4:     #504945;
+    --fg:      #ebdbb2;
+    --fg2:     #d5c4a1;
+    --fg3:     #bdae93;
+    --red:     #cc241d;
+    --red-b:   #fb4934;
+    --green:   #98971a;
+    --green-b: #b8bb26;
+    --yellow:  #d79921;
+    --yellow-b:#fabd2f;
+    --blue:    #458588;
+    --blue-b:  #83a598;
+    --purple:  #b16286;
+    --purple-b:#d3869b;
+    --aqua:    #689d6a;
+    --aqua-b:  #8ec07c;
+    --orange:  #d65d0e;
+    --orange-b:#fe8019;
+    --gray:    #928374;
+    --sidebar-w: 240px;
+    --header-h:  52px;
+    --radius: 8px;
+    --transition: 0.22s cubic-bezier(.4,0,.2,1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg0);
+    color: var(--fg);
+    font-family: 'Recursive', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ── TOP BAR ── */
+  #topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    height: var(--header-h);
+    background: var(--bg1);
+    border-bottom: 1px solid var(--bg3);
+    display: flex; align-items: center; gap: 10px;
+    padding: 0 16px;
+  }
+  #hamburger {
+    background: none; border: none; cursor: pointer; color: var(--fg);
+    display: flex; flex-direction: column; gap: 4px; padding: 4px;
+    flex-shrink: 0;
+  }
+  #hamburger span { display: block; width: 20px; height: 2px; background: currentColor; border-radius: 2px; transition: var(--transition); }
+  #hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  #hamburger.open span:nth-child(2) { opacity: 0; }
+  #hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  .topbar-brand {
+    display: flex; flex-direction: column; line-height: 1.1;
+    flex-shrink: 0;
+  }
+  .topbar-brand-top {
+    font-size: 9px; color: var(--gray); text-transform: uppercase; letter-spacing: .1em;
+  }
+  .topbar-brand-main {
+    font-size: 13px; font-weight: 700; color: var(--yellow-b); letter-spacing: .02em;
+  }
+  .topbar-sub {
+    font-size: 11px; color: var(--fg3); margin-left: 2px;
+  }
+  .topbar-spacer { flex: 1; }
+
+  /* search */
+  #search-wrap { position: relative; }
+  #search {
+    background: var(--bg2); border: 1px solid var(--bg4); border-radius: 6px;
+    color: var(--fg); font-family: 'Recursive', sans-serif; font-size: 13px;
+    padding: 5px 10px 5px 28px; width: 180px; outline: none;
+    transition: border-color var(--transition), width var(--transition);
+  }
+  #search:focus { border-color: var(--blue-b); width: 220px; }
+  #search::placeholder { color: var(--gray); }
+  .search-icon {
+    position: absolute; left: 8px; top: 50%; transform: translateY(-50%);
+    color: var(--gray); font-size: 12px; pointer-events: none;
+  }
+
+  .topbar-badge {
+    font-size: 10px; background: var(--blue); color: var(--bg0);
+    border-radius: 20px; padding: 2px 9px; font-weight: 700; flex-shrink: 0;
+  }
+
+  /* progress */
+  #progress-bar {
+    position: fixed; top: var(--header-h); left: 0; right: 0; z-index: 199;
+    height: 2px; background: linear-gradient(90deg, var(--yellow-b), var(--orange-b));
+    transform-origin: left; transform: scaleX(0);
+    transition: transform .1s linear;
+  }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    position: fixed; top: var(--header-h); left: 0; bottom: 0; z-index: 150;
+    width: var(--sidebar-w);
+    background: var(--bg1);
+    border-right: 1px solid var(--bg3);
+    overflow-y: auto;
+    transform: translateX(0);
+    transition: transform var(--transition);
+    padding: 12px 0 40px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--bg4) transparent;
+  }
+  #sidebar.hidden { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+  .sidebar-breadcrumb {
+    padding: 0 12px 8px; margin-bottom: 4px;
+    border-bottom: 1px solid var(--bg3);
+  }
+  .sidebar-breadcrumb-line1 { font-size: 9px; color: var(--gray); text-transform: uppercase; letter-spacing: .1em; }
+  .sidebar-breadcrumb-line2 { font-size: 11px; color: var(--yellow-b); font-weight: 700; margin-top: 1px; }
+  .sidebar-breadcrumb-line3 { font-size: 10px; color: var(--fg3); }
+
+  .sidebar-section-label {
+    padding: 10px 12px 4px;
+    font-size: 9px; color: var(--gray);
+    text-transform: uppercase; letter-spacing: .1em; font-weight: 700;
+  }
+
+  .sidebar-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 12px;
+    color: var(--fg3); text-decoration: none;
+    font-size: 12.5px;
+    border-left: 2px solid transparent;
+    transition: background var(--transition), border-color var(--transition), color var(--transition);
+    cursor: pointer;
+    line-height: 1.3;
+  }
+  .sidebar-item:hover { background: var(--bg2); color: var(--yellow-b); }
+  .sidebar-item.active {
+    background: var(--bg2); border-left-color: var(--yellow-b);
+    color: var(--yellow-b); font-weight: 700;
+  }
+  .q-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--bg3); color: var(--fg3);
+    font-size: 10px; font-weight: 700; flex-shrink: 0;
+  }
+  .sidebar-item.active .q-num {
+    background: var(--yellow-b); color: var(--bg0);
+  }
+
+  /* ── MAIN ── */
+  #main {
+    margin-left: var(--sidebar-w);
+    margin-top: var(--header-h);
+    padding: 28px 36px 80px;
+    transition: margin-left var(--transition);
+    max-width: 1000px;
+  }
+  #main.full { margin-left: 0; }
+
+  /* ── UNIT HEADER ── */
+  .unit-header {
+    margin-bottom: 20px;
+    padding: 18px 22px;
+    background: var(--bg1);
+    border: 1px solid var(--bg3);
+    border-radius: var(--radius);
+    position: relative;
+  }
+  .unit-tag { font-size: 10px; color: var(--gray); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 4px; }
+  .unit-title { font-size: 18px; font-weight: 800; color: var(--fg); line-height: 1.3; }
+  .unit-badge-row { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
+  .unit-count-badge {
+    font-size: 10px; background: var(--blue); color: var(--bg0);
+    border-radius: 20px; padding: 2px 9px; font-weight: 700;
+  }
+
+  /* ── QUESTION CARD ── */
+  .q-card {
+    margin-bottom: 12px;
+    border: 1px solid var(--bg3);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--bg1);
+    transition: border-color var(--transition);
+  }
+  .q-card:hover { border-color: var(--bg4); }
+  .q-card.open { border-color: var(--yellow); }
+
+  .q-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 13px 18px;
+    cursor: pointer;
+    user-select: none;
+    background: var(--bg1);
+    transition: background var(--transition);
+  }
+  .q-header:hover { background: var(--bg2); }
+
+  .q-num-badge {
+    min-width: 28px; height: 28px; border-radius: 6px;
+    background: var(--bg3); color: var(--yellow-b);
+    font-size: 12px; font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .q-title {
+    flex: 1; font-size: 16px; font-weight: 700; color: var(--fg);
+    line-height: 1.4;
+  }
+  .q-marks {
+    font-size: 10px; color: var(--bg0); background: var(--green-b);
+    border-radius: 20px; padding: 2px 9px; font-weight: 700; flex-shrink: 0;
+  }
+  .q-chevron {
+    color: var(--gray); font-size: 14px;
+    transition: transform var(--transition); flex-shrink: 0;
+  }
+  .q-card.open .q-chevron { transform: rotate(180deg); }
+
+  .q-body {
+    display: none;
+    padding: 0 22px 22px;
+    border-top: 1px solid var(--bg3);
+    animation: fadeIn .2s ease;
+  }
+  .q-card.open .q-body { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── ANSWER SECTIONS ── */
+  .section { margin-top: 18px; }
+
+  .section-label {
+    display: inline-flex; align-items: center;
+    font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--bg0); padding: 2px 10px; border-radius: 3px; margin-bottom: 10px;
+  }
+  .lbl-def     { background: var(--blue-b); }
+  .lbl-concept { background: var(--purple-b); }
+  .lbl-diagram { background: var(--aqua-b); }
+  .lbl-syntax  { background: var(--orange-b); }
+  .lbl-code    { background: var(--green-b); }
+  .lbl-output  { background: var(--yellow-b); }
+  .lbl-points  { background: var(--red-b); }
+  .lbl-table   { background: var(--blue-b); }
+  .lbl-conclusion { background: var(--gray); }
+
+  p { margin-bottom: 8px; font-size: 16px; color: var(--fg2); line-height: 1.65; }
+  strong, b { color: var(--yellow-b); font-weight: 700; }
+  em { color: var(--aqua-b); font-style: normal; font-weight: 600; }
+
+  ul, ol { padding-left: 20px; margin-bottom: 10px; }
+  li { font-size: 16px; color: var(--fg2); margin-bottom: 4px; line-height: 1.55; }
+
+  /* ── CODE BLOCK ── */
+  .code-wrap { position: relative; margin: 8px 0; }
+  pre {
+    background: #1a1a1a;
+    border: 1px solid var(--bg3);
+    border-radius: 6px;
+    padding: 16px 18px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.7;
+    tab-size: 4;
+  }
+  code { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; }
+
+  /* syntax highlight */
+  .kw  { color: #fb4934; font-weight: 700; }
+  .cls { color: #fabd2f; font-weight: 700; }
+  .fn  { color: #8ec07c; }
+  .str { color: #b8bb26; }
+  .cm  { color: #928374; font-style: italic; }
+  .num { color: #d3869b; }
+  .ann { color: #fe8019; }
+
+  .copy-btn {
+    position: absolute; top: 8px; right: 8px;
+    background: var(--bg3); border: none; border-radius: 4px; color: var(--fg3);
+    font-size: 10px; padding: 3px 8px; cursor: pointer; font-family: 'Recursive', sans-serif;
+    transition: background var(--transition), color var(--transition);
+  }
+  .copy-btn:hover { background: var(--blue); color: var(--bg0); }
+  .copy-btn.copied { background: var(--green); color: var(--bg0); }
+
+  /* output block */
+  .output-block {
+    background: #0f1a0f;
+    border: 1px solid var(--green);
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: var(--green-b);
+    margin: 6px 0;
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  /* key points */
+  .kp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; margin: 6px 0; }
+  .kp-item {
+    background: var(--bg2); border-radius: 6px; padding: 10px 12px;
+    border-left: 3px solid var(--yellow-b); font-size: 16px; color: var(--fg2);
+    line-height: 1.5;
+  }
+
+  /* table */
+  .tbl-wrap { overflow-x: auto; margin: 6px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 16px; }
+  th { background: var(--bg3); color: var(--yellow-b); padding: 8px 12px; text-align: left; font-size: 12px; letter-spacing: .04em; }
+  td { padding: 7px 12px; border-bottom: 1px solid var(--bg3); color: var(--fg2); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--bg2); }
+  tr:hover td { background: rgba(131,165,152,.07); }
+
+  /* diagram container */
+  .diagram-container {
+    background: var(--bg2); border: 1px solid var(--bg3); border-radius: 8px;
+    padding: 16px; display: flex; justify-content: center; align-items: center;
+    margin: 8px 0; overflow-x: auto;
+  }
+  .diagram-container svg { max-width: 100%; height: auto; }
+
+  /* inline code */
+  :not(pre) > code {
+    background: none; border-radius: 0; padding: 0;
+    color: var(--orange-b); font-size: 16px;
+  }
+
+  /* ── OVERLAY ── */
+  #overlay {
+    display: none; position: fixed; inset: 0; z-index: 100;
+    background: rgba(0,0,0,.5); backdrop-filter: blur(2px);
+  }
+  #overlay.show { display: block; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg0); }
+  ::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--gray); }
+
+  /* highlight search */
+  mark { background: var(--yellow); color: var(--bg0); border-radius: 2px; padding: 0 2px; }
+  .no-results { text-align: center; padding: 50px 20px; color: var(--gray); font-size: 14px; }
+
+  /* back to top */
+  #btt {
+    position: fixed; bottom: 24px; right: 24px; z-index: 300;
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--yellow-b); color: var(--bg0);
+    border: none; cursor: pointer; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity var(--transition), transform var(--transition);
+    box-shadow: 0 3px 14px rgba(0,0,0,.4);
+  }
+  #btt.show { opacity: 1; pointer-events: auto; }
+  #btt:hover { transform: translateY(-2px); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    #sidebar { transform: translateX(calc(-1 * var(--sidebar-w))); }
+    #sidebar.open { transform: translateX(0); }
+    #main { margin-left: 0 !important; padding: 20px 16px 60px; }
+    #search { width: 130px; }
+    #search:focus { width: 160px; }
+    .unit-header { padding: 14px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header id="topbar">
+  <button id="hamburger" aria-label="Toggle sidebar">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="topbar-brand">
+    <div class="topbar-brand-top">AKTU · BCS403</div>
+    <div class="topbar-brand-main">OOP with Java</div>
+  </div>
+  <div class="topbar-sub">7-Mark Exam Answers · Unit II</div>
+  <div class="topbar-spacer"></div>
+  <div id="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input id="search" type="text" placeholder="Search questions…" autocomplete="off">
+  </div>
+  <span class="topbar-badge">Unit II · 8 Questions</span>
+</header>
+
+<div id="progress-bar"></div>
+<div id="overlay"></div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-breadcrumb">
+    <div class="sidebar-breadcrumb-line1">AKTU · BCS403</div>
+    <div class="sidebar-breadcrumb-line2">OOP with Java</div>
+    <div class="sidebar-breadcrumb-line3">7-Mark Exam Answers · Unit II</div>
+  </div>
+  <div class="sidebar-section-label">Unit II – 8 Questions</div>
+  <a class="sidebar-item active" href="#q1" onclick="sideClick(this)"><span class="q-num">1</span>Exception Hierarchy</a>
+  <a class="sidebar-item" href="#q2" onclick="sideClick(this)"><span class="q-num">2</span>Exception Handling Program</a>
+  <a class="sidebar-item" href="#q3" onclick="sideClick(this)"><span class="q-num">3</span>Character vs Byte Streams</a>
+  <a class="sidebar-item" href="#q4" onclick="sideClick(this)"><span class="q-num">4</span>wait() vs notify()</a>
+  <a class="sidebar-item" href="#q5" onclick="sideClick(this)"><span class="q-num">5</span>Even/Odd Threads Program</a>
+  <a class="sidebar-item" href="#q6" onclick="sideClick(this)"><span class="q-num">6</span>Thread Lifecycle &amp; Creation</a>
+  <a class="sidebar-item" href="#q7" onclick="sideClick(this)"><span class="q-num">7</span>Thread vs Runnable</a>
+  <a class="sidebar-item" href="#q8" onclick="sideClick(this)"><span class="q-num">8</span>Synchronization &amp; Inter-thread</a>
+</nav>
+
+<!-- MAIN -->
+<main id="main">
+
+  <!-- UNIT HEADER -->
+  <div class="unit-header">
+    <div class="unit-tag">AKTU · BCS403 · OOP with Java</div>
+    <div class="unit-title">Unit II – Exception Handling, File Handling &amp; Multithreading</div>
+    <div class="unit-badge-row">
+      <span class="unit-count-badge">8 Questions · 7 Marks Each</span>
+    </div>
+  </div>
+
+  <!-- Q1 -->
+  <div class="q-card open" id="q1">
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num-badge">01</div>
+      <div class="q-title">Explain exception hierarchy in Java.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-chevron">▾</span>
+    </div>
+    <div class="q-body">
+
+      <div class="section">
+        <div class="section-label lbl-def">Definition</div>
+        <p>An <strong>exception</strong> is an abnormal event that disrupts the normal flow of program execution. Java provides a comprehensive <strong>exception hierarchy</strong> rooted at the <code>Throwable</code> class in the <code>java.lang</code> package.</p>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-concept">Concept</div>
+        <p>The entire hierarchy descends from <strong><code>java.lang.Object</code></strong>. The class <strong><code>Throwable</code></strong> has two direct subclasses:</p>
+        <ul>
+          <li><strong>Error</strong> – Serious problems that applications should <em>not try to catch</em> (e.g., <code>OutOfMemoryError</code>, <code>StackOverflowError</code>).</li>
+          <li><strong>Exception</strong> – Conditions that programs should <em>handle</em>. It is further divided into:
+            <ul>
+              <li><strong>Checked Exceptions</strong> – Must be declared or handled at compile time (e.g., <code>IOException</code>, <code>SQLException</code>).</li>
+              <li><strong>Unchecked Exceptions</strong> (RuntimeException) – Detected at runtime (e.g., <code>NullPointerException</code>, <code>ArrayIndexOutOfBoundsException</code>).</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-diagram">Diagram – Exception Hierarchy</div>
+        <div class="diagram-container">
+          <svg viewBox="0 0 820 520" xmlns="http://www.w3.org/2000/svg" width="820" height="520">
+            <defs>
+              <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#928374"/>
+              </marker>
+            </defs>
+            <rect x="310" y="10" width="200" height="44" rx="8" fill="#3c3836" stroke="#fabd2f" stroke-width="2"/>
+            <text x="410" y="37" text-anchor="middle" fill="#fabd2f" font-family="JetBrains Mono" font-size="14" font-weight="bold">java.lang.Object</text>
+            <line x1="410" y1="54" x2="410" y2="78" stroke="#928374" stroke-width="1.5" marker-end="url(#arr)"/>
+            <rect x="300" y="78" width="220" height="44" rx="8" fill="#3c3836" stroke="#83a598" stroke-width="2"/>
+            <text x="410" y="105" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="14" font-weight="bold">Throwable</text>
+            <line x1="300" y1="100" x2="180" y2="164" stroke="#928374" stroke-width="1.5" marker-end="url(#arr)"/>
+            <line x1="520" y1="100" x2="640" y2="164" stroke="#928374" stroke-width="1.5" marker-end="url(#arr)"/>
+            <rect x="80" y="164" width="200" height="44" rx="8" fill="#3c3836" stroke="#fb4934" stroke-width="2"/>
+            <text x="180" y="191" text-anchor="middle" fill="#fb4934" font-family="JetBrains Mono" font-size="14" font-weight="bold">Error</text>
+            <rect x="540" y="164" width="200" height="44" rx="8" fill="#3c3836" stroke="#b8bb26" stroke-width="2"/>
+            <text x="640" y="191" text-anchor="middle" fill="#b8bb26" font-family="JetBrains Mono" font-size="14" font-weight="bold">Exception</text>
+            <line x1="130" y1="208" x2="80" y2="268" stroke="#928374" stroke-width="1.2" marker-end="url(#arr)"/>
+            <line x1="180" y1="208" x2="180" y2="268" stroke="#928374" stroke-width="1.2" marker-end="url(#arr)"/>
+            <line x1="230" y1="208" x2="290" y2="268" stroke="#928374" stroke-width="1.2" marker-end="url(#arr)"/>
+            <rect x="10" y="268" width="154" height="36" rx="6" fill="#282828" stroke="#fb4934" stroke-width="1.5"/>
+            <text x="87" y="291" text-anchor="middle" fill="#fb4934" font-family="JetBrains Mono" font-size="12">OutOfMemoryError</text>
+            <rect x="104" y="268" width="152" height="36" rx="6" fill="#282828" stroke="#fb4934" stroke-width="1.5"/>
+            <text x="180" y="291" text-anchor="middle" fill="#fb4934" font-family="JetBrains Mono" font-size="12">StackOverflowError</text>
+            <rect x="220" y="268" width="130" height="36" rx="6" fill="#282828" stroke="#fb4934" stroke-width="1.5"/>
+            <text x="285" y="291" text-anchor="middle" fill="#fb4934" font-family="JetBrains Mono" font-size="12">VirtualMachineError</text>
+            <line x1="590" y1="208" x2="530" y2="268" stroke="#928374" stroke-width="1.2" marker-end="url(#arr)"/>
+            <line x1="690" y1="208" x2="720" y2="268" stroke="#928374" stroke-width="1.2" marker-end="url(#arr)"/>
+            <rect x="410" y="268" width="200" height="40" rx="8" fill="#3c3836" stroke="#fe8019" stroke-width="2"/>
+            <text x="510" y="293" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono" font-size="13" font-weight="bold">RuntimeException</text>
+            <text x="510" y="324" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="10">(Unchecked)</text>
+            <rect x="634" y="268" width="178" height="40" rx="8" fill="#3c3836" stroke="#b8bb26" stroke-width="2"/>
+            <text x="723" y="291" text-anchor="middle" fill="#b8bb26" font-family="JetBrains Mono" font-size="12" font-weight="bold">Checked Exceptions</text>
+            <text x="723" y="308" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="10">(IOException etc.)</text>
+            <line x1="460" y1="308" x2="420" y2="368" stroke="#928374" stroke-width="1.2" marker-end="url(#arr)"/>
+            <line x1="510" y1="308" x2="530" y2="368" stroke="#928374" stroke-width="1.2" marker-end="url(#arr)"/>
+            <line x1="560" y1="308" x2="640" y2="368" stroke="#928374" stroke-width="1.2" marker-end="url(#arr)"/>
+            <rect x="340" y="368" width="158" height="36" rx="6" fill="#282828" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="419" y="391" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono" font-size="12">NullPointerException</text>
+            <rect x="458" y="368" width="148" height="36" rx="6" fill="#282828" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="532" y="391" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono" font-size="12">ClassCastException</text>
+            <rect x="594" y="368" width="184" height="36" rx="6" fill="#282828" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="686" y="384" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono" font-size="11">ArrayIndexOutOf</text>
+            <text x="686" y="398" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono" font-size="11">BoundsException</text>
+            <line x1="700" y1="308" x2="670" y2="452" stroke="#928374" stroke-width="1.2" marker-end="url(#arr)"/>
+            <line x1="750" y1="308" x2="780" y2="452" stroke="#928374" stroke-width="1.2" marker-end="url(#arr)"/>
+            <rect x="594" y="452" width="140" height="36" rx="6" fill="#282828" stroke="#b8bb26" stroke-width="1.5"/>
+            <text x="664" y="475" text-anchor="middle" fill="#b8bb26" font-family="JetBrains Mono" font-size="12">IOException</text>
+            <rect x="720" y="452" width="96" height="36" rx="6" fill="#282828" stroke="#b8bb26" stroke-width="1.5"/>
+            <text x="768" y="475" text-anchor="middle" fill="#b8bb26" font-family="JetBrains Mono" font-size="12">SQLException</text>
+            <rect x="14" y="438" width="300" height="72" rx="8" fill="#282828" stroke="#3c3836" stroke-width="1.5"/>
+            <text x="28" y="458" fill="#fabd2f" font-family="JetBrains Mono" font-size="12" font-weight="bold">Legend</text>
+            <rect x="28" y="468" width="14" height="14" rx="3" fill="#3c3836" stroke="#fabd2f" stroke-width="1.5"/>
+            <text x="48" y="480" fill="#d5c4a1" font-family="JetBrains Mono" font-size="11">Root / Core class</text>
+            <rect x="28" y="488" width="14" height="14" rx="3" fill="#282828" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="48" y="500" fill="#d5c4a1" font-family="JetBrains Mono" font-size="11">Unchecked (Runtime)</text>
+            <rect x="170" y="488" width="14" height="14" rx="3" fill="#282828" stroke="#b8bb26" stroke-width="1.5"/>
+            <text x="190" y="500" fill="#d5c4a1" font-family="JetBrains Mono" font-size="11">Checked</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-points">Key Points</div>
+        <div class="kp-grid">
+          <div class="kp-item"><strong>Throwable</strong> is the root of all exceptions and errors.</div>
+          <div class="kp-item"><strong>Checked exceptions</strong> must be handled at compile time using <code>throws</code> or <code>try-catch</code>.</div>
+          <div class="kp-item"><strong>Unchecked exceptions</strong> (RuntimeException) are detected at runtime.</div>
+          <div class="kp-item"><strong>Errors</strong> indicate serious JVM-level failures; never catch them.</div>
+          <div class="kp-item">Custom exceptions extend <strong>Exception</strong> or <strong>RuntimeException</strong>.</div>
+          <div class="kp-item"><code>getMessage()</code>, <code>printStackTrace()</code> are key Throwable methods.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-conclusion">Conclusion</div>
+        <p>Java's exception hierarchy provides a <strong>structured, object-oriented</strong> mechanism to handle errors. Understanding the hierarchy helps developers write <em>robust, fault-tolerant programs</em> by catching the right type of exception at the right level.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="q2">
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num-badge">02</div>
+      <div class="q-title">Write a Java program demonstrating exception handling.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-chevron">▾</span>
+    </div>
+    <div class="q-body">
+
+      <div class="section">
+        <div class="section-label lbl-def">Definition</div>
+        <p><strong>Exception Handling</strong> is a mechanism to handle runtime errors gracefully using the keywords: <strong><code>try</code></strong>, <strong><code>catch</code></strong>, <strong><code>finally</code></strong>, <strong><code>throw</code></strong>, and <strong><code>throws</code></strong>.</p>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-concept">Concept</div>
+        <ul>
+          <li><strong>try</strong> – Block of code that may throw an exception.</li>
+          <li><strong>catch</strong> – Handles the exception; multiple catch blocks allowed.</li>
+          <li><strong>finally</strong> – Always executes regardless of exception (used for cleanup).</li>
+          <li><strong>throw</strong> – Explicitly throws an exception.</li>
+          <li><strong>throws</strong> – Declares exceptions a method may throw.</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-syntax">Syntax</div>
+        <div class="code-wrap">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code><span class="kw">try</span> {
+    <span class="cm">// risky code</span>
+} <span class="kw">catch</span> (ExceptionType e) {
+    <span class="cm">// handle exception</span>
+} <span class="kw">finally</span> {
+    <span class="cm">// always executes</span>
+}</code></pre>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-code">Java Code</div>
+        <div class="code-wrap">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code><span class="cm">// Custom Exception</span>
+<span class="kw">class</span> <span class="cls">InsufficientFundsException</span> <span class="kw">extends</span> <span class="cls">Exception</span> {
+    <span class="kw">double</span> amount;
+    <span class="cls">InsufficientFundsException</span>(<span class="kw">double</span> amount) {
+        <span class="kw">super</span>(<span class="str">"Insufficient funds! Short by: "</span> + amount);
+        <span class="kw">this</span>.amount = amount;
+    }
+}
+
+<span class="kw">class</span> <span class="cls">BankAccount</span> {
+    <span class="kw">private double</span> balance;
+
+    <span class="cls">BankAccount</span>(<span class="kw">double</span> balance) { <span class="kw">this</span>.balance = balance; }
+
+    <span class="cm">// 'throws' declares checked exception</span>
+    <span class="kw">void</span> <span class="fn">withdraw</span>(<span class="kw">double</span> amount) <span class="kw">throws</span> <span class="cls">InsufficientFundsException</span> {
+        <span class="kw">if</span> (amount > balance) {
+            <span class="kw">throw new</span> <span class="cls">InsufficientFundsException</span>(amount - balance);
+        }
+        balance -= amount;
+        <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Withdrawn: "</span> + amount + <span class="str">", Balance: "</span> + balance);
+    }
+}
+
+<span class="kw">public class</span> <span class="cls">ExceptionDemo</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) {
+        <span class="cls">BankAccount</span> acc = <span class="kw">new</span> <span class="cls">BankAccount</span>(<span class="num">5000.0</span>);
+
+        <span class="kw">try</span> {
+            acc.<span class="fn">withdraw</span>(<span class="num">2000</span>);    <span class="cm">// Success</span>
+            acc.<span class="fn">withdraw</span>(<span class="num">4000</span>);    <span class="cm">// Fails – InsufficientFunds</span>
+
+            <span class="cm">// Unchecked exception demo</span>
+            <span class="kw">int</span>[] arr = <span class="kw">new int</span>[<span class="num">3</span>];
+            arr[<span class="num">10</span>] = <span class="num">5</span>;            <span class="cm">// ArrayIndexOutOfBoundsException</span>
+
+        } <span class="kw">catch</span> (<span class="cls">InsufficientFundsException</span> e) {
+            <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"[CAUGHT] Custom Exception: "</span> + e.<span class="fn">getMessage</span>());
+        } <span class="kw">catch</span> (<span class="cls">ArrayIndexOutOfBoundsException</span> e) {
+            <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"[CAUGHT] Array Error: "</span> + e.<span class="fn">getMessage</span>());
+        } <span class="kw">catch</span> (<span class="cls">Exception</span> e) {
+            <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"[CAUGHT] General: "</span> + e.<span class="fn">getMessage</span>());
+        } <span class="kw">finally</span> {
+            <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"[FINALLY] Execution complete. Resources freed."</span>);
+        }
+    }
+}</code></pre>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-output">Output</div>
+        <div class="output-block">Withdrawn: 2000.0, Balance: 3000.0
+[CAUGHT] Custom Exception: Insufficient funds! Short by: 1000.0
+[FINALLY] Execution complete. Resources freed.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-points">Key Points</div>
+        <div class="kp-grid">
+          <div class="kp-item"><strong>Multiple catch</strong> blocks: most specific exception first.</div>
+          <div class="kp-item"><strong>finally</strong> always executes even if no exception occurs.</div>
+          <div class="kp-item"><code>throw</code> explicitly throws; <code>throws</code> declares in method signature.</div>
+          <div class="kp-item">Custom exceptions by extending <strong>Exception</strong> class.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="q3">
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num-badge">03</div>
+      <div class="q-title">Differentiate between Character Streams and Byte Streams.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-chevron">▾</span>
+    </div>
+    <div class="q-body">
+
+      <div class="section">
+        <div class="section-label lbl-def">Definition</div>
+        <p>In Java I/O, <strong>streams</strong> are sequences of data. Java provides two categories:</p>
+        <ul>
+          <li><strong>Byte Streams</strong> – Handle raw binary data in 8-bit bytes. Base classes: <code>InputStream</code> / <code>OutputStream</code>.</li>
+          <li><strong>Character Streams</strong> – Handle 16-bit Unicode characters for text. Base classes: <code>Reader</code> / <code>Writer</code>.</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-diagram">Diagram – Stream Class Hierarchy</div>
+        <div class="diagram-container">
+          <svg viewBox="0 0 780 380" xmlns="http://www.w3.org/2000/svg" width="780" height="380">
+            <text x="190" y="28" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono" font-size="15" font-weight="bold">BYTE STREAMS</text>
+            <rect x="80" y="40" width="220" height="40" rx="8" fill="#3c3836" stroke="#fe8019" stroke-width="2"/>
+            <text x="190" y="65" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono" font-size="13" font-weight="bold">InputStream (abstract)</text>
+            <rect x="80" y="120" width="220" height="40" rx="8" fill="#3c3836" stroke="#fe8019" stroke-width="2"/>
+            <text x="190" y="145" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono" font-size="13" font-weight="bold">OutputStream (abstract)</text>
+            <line x1="190" y1="80" x2="190" y2="120" stroke="#928374" stroke-width="1.5"/>
+            <line x1="100" y1="80" x2="60" y2="200" stroke="#928374" stroke-width="1.2"/>
+            <line x1="190" y1="80" x2="190" y2="200" stroke="#928374" stroke-width="1.2"/>
+            <line x1="280" y1="80" x2="310" y2="200" stroke="#928374" stroke-width="1.2"/>
+            <rect x="10" y="200" width="120" height="36" rx="6" fill="#282828" stroke="#fe8019" stroke-width="1.2"/>
+            <text x="70" y="222" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono" font-size="11">FileInputStream</text>
+            <rect x="140" y="200" width="120" height="36" rx="6" fill="#282828" stroke="#fe8019" stroke-width="1.2"/>
+            <text x="200" y="222" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono" font-size="11">BufferedInputStream</text>
+            <rect x="270" y="200" width="106" height="36" rx="6" fill="#282828" stroke="#fe8019" stroke-width="1.2"/>
+            <text x="323" y="222" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono" font-size="11">DataInputStream</text>
+            <text x="590" y="28" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="15" font-weight="bold">CHARACTER STREAMS</text>
+            <rect x="480" y="40" width="220" height="40" rx="8" fill="#3c3836" stroke="#83a598" stroke-width="2"/>
+            <text x="590" y="65" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="13" font-weight="bold">Reader (abstract)</text>
+            <rect x="480" y="120" width="220" height="40" rx="8" fill="#3c3836" stroke="#83a598" stroke-width="2"/>
+            <text x="590" y="145" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="13" font-weight="bold">Writer (abstract)</text>
+            <line x1="590" y1="80" x2="590" y2="120" stroke="#928374" stroke-width="1.5"/>
+            <line x1="500" y1="80" x2="460" y2="200" stroke="#928374" stroke-width="1.2"/>
+            <line x1="590" y1="80" x2="590" y2="200" stroke="#928374" stroke-width="1.2"/>
+            <line x1="680" y1="80" x2="710" y2="200" stroke="#928374" stroke-width="1.2"/>
+            <rect x="410" y="200" width="100" height="36" rx="6" fill="#282828" stroke="#83a598" stroke-width="1.2"/>
+            <text x="460" y="222" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="11">FileReader</text>
+            <rect x="530" y="200" width="126" height="36" rx="6" fill="#282828" stroke="#83a598" stroke-width="1.2"/>
+            <text x="593" y="222" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="11">BufferedReader</text>
+            <rect x="666" y="200" width="106" height="36" rx="6" fill="#282828" stroke="#83a598" stroke-width="1.2"/>
+            <text x="719" y="222" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="11">InputStreamReader</text>
+            <line x1="395" y1="20" x2="395" y2="360" stroke="#3c3836" stroke-width="2" stroke-dasharray="6,4"/>
+            <rect x="366" y="160" width="58" height="30" rx="15" fill="#3c3836" stroke="#fabd2f" stroke-width="1.5"/>
+            <text x="395" y="180" text-anchor="middle" fill="#fabd2f" font-family="JetBrains Mono" font-size="13" font-weight="bold">VS</text>
+            <rect x="60" y="300" width="260" height="56" rx="8" fill="#282828" stroke="#fe8019" stroke-width="1"/>
+            <text x="190" y="320" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono" font-size="12" font-weight="bold">8-bit data · Binary files</text>
+            <text x="190" y="338" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="11">Images, Audio, Video, .class files</text>
+            <text x="190" y="352" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="11">read()/write() in bytes</text>
+            <rect x="460" y="300" width="260" height="56" rx="8" fill="#282828" stroke="#83a598" stroke-width="1"/>
+            <text x="590" y="320" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="12" font-weight="bold">16-bit Unicode · Text files</text>
+            <text x="590" y="338" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="11">.txt, .java, .html, .csv files</text>
+            <text x="590" y="352" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="11">read()/write() in characters</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-table">Comparison Table</div>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>Feature</th><th>Byte Stream</th><th>Character Stream</th></tr>
+            <tr><td><strong>Data Unit</strong></td><td>8-bit bytes</td><td>16-bit Unicode characters</td></tr>
+            <tr><td><strong>Base Classes</strong></td><td><code>InputStream / OutputStream</code></td><td><code>Reader / Writer</code></td></tr>
+            <tr><td><strong>Use Case</strong></td><td>Binary files (images, audio)</td><td>Text files (.txt, .java)</td></tr>
+            <tr><td><strong>Key Classes</strong></td><td><code>FileInputStream, FileOutputStream</code></td><td><code>FileReader, FileWriter</code></td></tr>
+            <tr><td><strong>Buffered</strong></td><td><code>BufferedInputStream</code></td><td><code>BufferedReader</code></td></tr>
+            <tr><td><strong>Encoding</strong></td><td>No encoding support</td><td>Handles Unicode encoding</td></tr>
+            <tr><td><strong>Performance</strong></td><td>Slightly faster for binary</td><td>Better for text processing</td></tr>
+            <tr><td><strong>Method</strong></td><td><code>read()</code> returns int (0–255)</td><td><code>read()</code> returns char (0–65535)</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-code">Java Code</div>
+        <div class="code-wrap">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code><span class="kw">import</span> java.io.*;
+
+<span class="kw">public class</span> <span class="cls">StreamDemo</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) <span class="kw">throws</span> <span class="cls">IOException</span> {
+
+        <span class="cm">// ── BYTE STREAM ──</span>
+        <span class="cls">FileOutputStream</span> fos = <span class="kw">new</span> <span class="cls">FileOutputStream</span>(<span class="str">"byte_data.bin"</span>);
+        fos.<span class="fn">write</span>(<span class="num">65</span>);   <span class="cm">// writes byte 65 (ASCII 'A')</span>
+        fos.<span class="fn">close</span>();
+
+        <span class="cls">FileInputStream</span> fis = <span class="kw">new</span> <span class="cls">FileInputStream</span>(<span class="str">"byte_data.bin"</span>);
+        <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Byte Read: "</span> + fis.<span class="fn">read</span>()); <span class="cm">// prints 65</span>
+        fis.<span class="fn">close</span>();
+
+        <span class="cm">// ── CHARACTER STREAM ──</span>
+        <span class="cls">FileWriter</span> fw = <span class="kw">new</span> <span class="cls">FileWriter</span>(<span class="str">"char_data.txt"</span>);
+        fw.<span class="fn">write</span>(<span class="str">"Hello AKTU!"</span>);
+        fw.<span class="fn">close</span>();
+
+        <span class="cls">BufferedReader</span> br = <span class="kw">new</span> <span class="cls">BufferedReader</span>(
+                              <span class="kw">new</span> <span class="cls">FileReader</span>(<span class="str">"char_data.txt"</span>));
+        <span class="cls">String</span> line = br.<span class="fn">readLine</span>();
+        <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Char Read: "</span> + line);
+        br.<span class="fn">close</span>();
+    }
+}</code></pre>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-output">Output</div>
+        <div class="output-block">Byte Read: 65
+Char Read: Hello AKTU!</div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-conclusion">Conclusion</div>
+        <p>Use <strong>Byte Streams</strong> for binary data (images, audio) and <strong>Character Streams</strong> for text data. Character streams are <em>Unicode-aware</em> and preferred for internationalized text processing.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="q4">
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num-badge">04</div>
+      <div class="q-title">Differentiate between wait() and notify().</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-chevron">▾</span>
+    </div>
+    <div class="q-body">
+
+      <div class="section">
+        <div class="section-label lbl-def">Definition</div>
+        <p><strong><code>wait()</code></strong> and <strong><code>notify()</code></strong> are methods of the <code>Object</code> class used for <strong>inter-thread communication</strong>. They must be called from within a <strong>synchronized</strong> context.</p>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-concept">Concept</div>
+        <ul>
+          <li><strong>wait()</strong> – Causes the current thread to <em>release the lock</em> and wait until another thread calls <code>notify()</code> or <code>notifyAll()</code> on the same object.</li>
+          <li><strong>notify()</strong> – Wakes up <em>one</em> waiting thread.</li>
+          <li><strong>notifyAll()</strong> – Wakes up <em>all</em> waiting threads.</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-diagram">Diagram – wait() / notify() Interaction</div>
+        <div class="diagram-container">
+          <svg viewBox="0 0 740 320" xmlns="http://www.w3.org/2000/svg" width="740" height="320">
+            <rect x="30" y="40" width="160" height="44" rx="8" fill="#3c3836" stroke="#83a598" stroke-width="2"/>
+            <text x="110" y="67" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="13" font-weight="bold">Thread A</text>
+            <rect x="10" y="110" width="200" height="44" rx="8" fill="#282828" stroke="#83a598" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <text x="110" y="132" text-anchor="middle" fill="#8ec07c" font-family="JetBrains Mono" font-size="12">synchronized(obj)</text>
+            <text x="110" y="148" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="12">obj.wait() ← releases lock</text>
+            <line x1="110" y1="84" x2="110" y2="110" stroke="#928374" stroke-width="1.5" marker-end="url(#arr)"/>
+            <rect x="260" y="130" width="220" height="60" rx="12" fill="#282828" stroke="#fabd2f" stroke-width="2"/>
+            <text x="370" y="158" text-anchor="middle" fill="#fabd2f" font-family="JetBrains Mono" font-size="13" font-weight="bold">WAIT SET</text>
+            <text x="370" y="178" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="11">Thread A sleeps here...</text>
+            <line x1="210" y1="155" x2="258" y2="160" stroke="#fabd2f" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr)"/>
+            <rect x="550" y="40" width="160" height="44" rx="8" fill="#3c3836" stroke="#d3869b" stroke-width="2"/>
+            <text x="630" y="67" text-anchor="middle" fill="#d3869b" font-family="JetBrains Mono" font-size="13" font-weight="bold">Thread B</text>
+            <rect x="530" y="110" width="200" height="44" rx="8" fill="#282828" stroke="#d3869b" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <text x="630" y="132" text-anchor="middle" fill="#8ec07c" font-family="JetBrains Mono" font-size="12">synchronized(obj)</text>
+            <text x="630" y="148" text-anchor="middle" fill="#d3869b" font-family="JetBrains Mono" font-size="12">obj.notify() ← wakes A</text>
+            <line x1="630" y1="84" x2="630" y2="110" stroke="#928374" stroke-width="1.5" marker-end="url(#arr)"/>
+            <line x1="480" y1="155" x2="532" y2="155" stroke="#fabd2f" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr)"/>
+            <line x1="110" y1="154" x2="110" y2="220" stroke="#928374" stroke-width="1.5" marker-end="url(#arr)"/>
+            <rect x="30" y="220" width="160" height="44" rx="8" fill="#3c3836" stroke="#b8bb26" stroke-width="2"/>
+            <text x="110" y="242" text-anchor="middle" fill="#b8bb26" font-family="JetBrains Mono" font-size="12" font-weight="bold">Thread A</text>
+            <text x="110" y="258" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="10">Resumes execution</text>
+            <text x="370" y="22" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="11">Both threads synchronize on same object</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-table">Comparison Table</div>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>Feature</th><th>wait()</th><th>notify()</th></tr>
+            <tr><td><strong>Purpose</strong></td><td>Pauses current thread execution</td><td>Wakes up a waiting thread</td></tr>
+            <tr><td><strong>Lock</strong></td><td>Releases the lock immediately</td><td>Releases lock after exiting synchronized block</td></tr>
+            <tr><td><strong>Thread State</strong></td><td>RUNNING → WAITING</td><td>Moves target from WAITING → RUNNABLE</td></tr>
+            <tr><td><strong>Overloads</strong></td><td><code>wait()</code>, <code>wait(ms)</code></td><td><code>notify()</code>, <code>notifyAll()</code></td></tr>
+            <tr><td><strong>Wakes up</strong></td><td>N/A</td><td>One random waiting thread</td></tr>
+            <tr><td><strong>Exception</strong></td><td>Throws <code>InterruptedException</code></td><td>No exception</td></tr>
+            <tr><td><strong>Location</strong></td><td>Inside <code>synchronized</code> block (mandatory)</td><td>Inside <code>synchronized</code> block (mandatory)</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-code">Java Code</div>
+        <div class="code-wrap">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code><span class="kw">class</span> <span class="cls">SharedResource</span> {
+    <span class="kw">synchronized void</span> <span class="fn">waitMethod</span>() <span class="kw">throws</span> <span class="cls">InterruptedException</span> {
+        <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="cls">Thread</span>.<span class="fn">currentThread</span>().<span class="fn">getName</span>() + <span class="str">": Calling wait()"</span>);
+        <span class="kw">wait</span>();   <span class="cm">// releases lock and waits</span>
+        <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="cls">Thread</span>.<span class="fn">currentThread</span>().<span class="fn">getName</span>() + <span class="str">": Resumed after notify()"</span>);
+    }
+
+    <span class="kw">synchronized void</span> <span class="fn">notifyMethod</span>() {
+        <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="cls">Thread</span>.<span class="fn">currentThread</span>().<span class="fn">getName</span>() + <span class="str">": Calling notify()"</span>);
+        <span class="kw">notify</span>();  <span class="cm">// wakes one waiting thread</span>
+    }
+}
+
+<span class="kw">public class</span> <span class="cls">WaitNotifyDemo</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) {
+        <span class="cls">SharedResource</span> obj = <span class="kw">new</span> <span class="cls">SharedResource</span>();
+
+        <span class="cls">Thread</span> t1 = <span class="kw">new</span> <span class="cls">Thread</span>(() -> {
+            <span class="kw">try</span> { obj.<span class="fn">waitMethod</span>(); } 
+            <span class="kw">catch</span> (<span class="cls">InterruptedException</span> e) { e.<span class="fn">printStackTrace</span>(); }
+        }, <span class="str">"Thread-A"</span>);
+
+        <span class="cls">Thread</span> t2 = <span class="kw">new</span> <span class="cls">Thread</span>(() -> {
+            <span class="kw">try</span> { <span class="cls">Thread</span>.<span class="fn">sleep</span>(<span class="num">1000</span>); } 
+            <span class="kw">catch</span> (<span class="cls">InterruptedException</span> e) {}
+            obj.<span class="fn">notifyMethod</span>();
+        }, <span class="str">"Thread-B"</span>);
+
+        t1.<span class="fn">start</span>(); t2.<span class="fn">start</span>();
+    }
+}</code></pre>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-output">Output</div>
+        <div class="output-block">Thread-A: Calling wait()
+Thread-B: Calling notify()
+Thread-A: Resumed after notify()</div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-conclusion">Conclusion</div>
+        <p><code>wait()</code> and <code>notify()</code> enable <strong>inter-thread communication</strong> and are essential for implementing the <em>Producer-Consumer problem</em>. Always use them inside <strong>synchronized</strong> blocks to avoid <code>IllegalMonitorStateException</code>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="q5">
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num-badge">05</div>
+      <div class="q-title">Write a Java program that creates two threads — one to print even numbers and another to print odd numbers.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-chevron">▾</span>
+    </div>
+    <div class="q-body">
+
+      <div class="section">
+        <div class="section-label lbl-concept">Concept</div>
+        <p>Two threads share a common lock object and take turns printing <strong>odd</strong> and <strong>even</strong> numbers using <code>wait()</code> and <code>notify()</code>. This demonstrates <strong>inter-thread communication</strong> and <strong>synchronization</strong>.</p>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-diagram">Flow Diagram</div>
+        <div class="diagram-container">
+          <svg viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg" width="680" height="280">
+            <rect x="40" y="20" width="200" height="44" rx="8" fill="#3c3836" stroke="#d3869b" stroke-width="2"/>
+            <text x="140" y="47" text-anchor="middle" fill="#d3869b" font-family="JetBrains Mono" font-size="13" font-weight="bold">OddThread</text>
+            <rect x="440" y="20" width="200" height="44" rx="8" fill="#3c3836" stroke="#83a598" stroke-width="2"/>
+            <text x="540" y="47" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="13" font-weight="bold">EvenThread</text>
+            <rect x="260" y="100" width="160" height="44" rx="8" fill="#3c3836" stroke="#fabd2f" stroke-width="2"/>
+            <text x="340" y="122" text-anchor="middle" fill="#fabd2f" font-family="JetBrains Mono" font-size="12" font-weight="bold">Shared Lock</text>
+            <text x="340" y="138" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="11">isOdd flag</text>
+            <line x1="140" y1="64" x2="280" y2="100" stroke="#d3869b" stroke-width="1.5" marker-end="url(#arr)"/>
+            <line x1="540" y1="64" x2="400" y2="100" stroke="#83a598" stroke-width="1.5" marker-end="url(#arr)"/>
+            <rect x="20" y="160" width="250" height="100" rx="8" fill="#282828" stroke="#d3869b" stroke-width="1.2"/>
+            <text x="145" y="182" text-anchor="middle" fill="#d3869b" font-family="JetBrains Mono" font-size="12" font-weight="bold">OddThread Flow</text>
+            <text x="30" y="200" fill="#bdae93" font-family="JetBrains Mono" font-size="11">1. Lock on object</text>
+            <text x="30" y="216" fill="#bdae93" font-family="JetBrains Mono" font-size="11">2. If !isOdd → wait()</text>
+            <text x="30" y="232" fill="#bdae93" font-family="JetBrains Mono" font-size="11">3. Print odd number</text>
+            <text x="30" y="248" fill="#bdae93" font-family="JetBrains Mono" font-size="11">4. isOdd=false → notify()</text>
+            <rect x="410" y="160" width="250" height="100" rx="8" fill="#282828" stroke="#83a598" stroke-width="1.2"/>
+            <text x="535" y="182" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="12" font-weight="bold">EvenThread Flow</text>
+            <text x="420" y="200" fill="#bdae93" font-family="JetBrains Mono" font-size="11">1. Lock on object</text>
+            <text x="420" y="216" fill="#bdae93" font-family="JetBrains Mono" font-size="11">2. If isOdd → wait()</text>
+            <text x="420" y="232" fill="#bdae93" font-family="JetBrains Mono" font-size="11">3. Print even number</text>
+            <text x="420" y="248" fill="#bdae93" font-family="JetBrains Mono" font-size="11">4. isOdd=true → notify()</text>
+            <path d="M270,190 Q340,160 410,190" stroke="#fabd2f" stroke-width="1.5" fill="none" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+            <path d="M410,230 Q340,260 270,230" stroke="#fabd2f" stroke-width="1.5" fill="none" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+            <text x="340" y="152" text-anchor="middle" fill="#fabd2f" font-family="JetBrains Mono" font-size="10">notify →</text>
+            <text x="340" y="266" text-anchor="middle" fill="#fabd2f" font-family="JetBrains Mono" font-size="10">← notify</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-code">Java Code</div>
+        <div class="code-wrap">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code><span class="kw">class</span> <span class="cls">PrintNumbers</span> {
+    <span class="kw">private int</span> num = <span class="num">1</span>;
+    <span class="kw">private final int</span> MAX = <span class="num">10</span>;
+    <span class="kw">private boolean</span> isOdd = <span class="kw">true</span>;  <span class="cm">// start with odd</span>
+
+    <span class="cm">// Prints odd numbers: 1, 3, 5, 7, 9</span>
+    <span class="kw">public synchronized void</span> <span class="fn">printOdd</span>() {
+        <span class="kw">while</span> (num <= MAX) {
+            <span class="kw">while</span> (!isOdd) {          <span class="cm">// not my turn</span>
+                <span class="kw">try</span> { <span class="kw">wait</span>(); } <span class="kw">catch</span> (<span class="cls">InterruptedException</span> e) { <span class="kw">return</span>; }
+            }
+            <span class="kw">if</span> (num <= MAX) {
+                <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"ODD  Thread: "</span> + num);
+                num++;
+            }
+            isOdd = <span class="kw">false</span>;  <span class="cm">// pass turn to even</span>
+            <span class="kw">notify</span>();
+        }
+    }
+
+    <span class="cm">// Prints even numbers: 2, 4, 6, 8, 10</span>
+    <span class="kw">public synchronized void</span> <span class="fn">printEven</span>() {
+        <span class="kw">while</span> (num <= MAX) {
+            <span class="kw">while</span> (isOdd) {           <span class="cm">// not my turn</span>
+                <span class="kw">try</span> { <span class="kw">wait</span>(); } <span class="kw">catch</span> (<span class="cls">InterruptedException</span> e) { <span class="kw">return</span>; }
+            }
+            <span class="kw">if</span> (num <= MAX) {
+                <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"EVEN Thread: "</span> + num);
+                num++;
+            }
+            isOdd = <span class="kw">true</span>;   <span class="cm">// pass turn to odd</span>
+            <span class="kw">notify</span>();
+        }
+    }
+}
+
+<span class="kw">public class</span> <span class="cls">OddEvenThreads</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) {
+        <span class="cls">PrintNumbers</span> pn = <span class="kw">new</span> <span class="cls">PrintNumbers</span>();
+
+        <span class="cls">Thread</span> oddThread  = <span class="kw">new</span> <span class="cls">Thread</span>(pn::<span class="fn">printOdd</span>,  <span class="str">"ODD"</span>);
+        <span class="cls">Thread</span> evenThread = <span class="kw">new</span> <span class="cls">Thread</span>(pn::<span class="fn">printEven</span>, <span class="str">"EVEN"</span>);
+
+        oddThread.<span class="fn">start</span>();
+        evenThread.<span class="fn">start</span>();
+    }
+}</code></pre>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-output">Output</div>
+        <div class="output-block">ODD  Thread: 1
+EVEN Thread: 2
+ODD  Thread: 3
+EVEN Thread: 4
+ODD  Thread: 5
+EVEN Thread: 6
+ODD  Thread: 7
+EVEN Thread: 8
+ODD  Thread: 9
+EVEN Thread: 10</div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-points">Key Points</div>
+        <div class="kp-grid">
+          <div class="kp-item">Flag <strong>isOdd</strong> controls whose turn it is.</div>
+          <div class="kp-item"><code>wait()</code> inside <code>while</code> loop (not if) prevents spurious wakeups.</div>
+          <div class="kp-item"><strong>synchronized</strong> method ensures mutual exclusion.</div>
+          <div class="kp-item">Method references <code>pn::printOdd</code> used with Thread constructor.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="q6">
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num-badge">06</div>
+      <div class="q-title">Explain thread lifecycle and thread creation methods.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-chevron">▾</span>
+    </div>
+    <div class="q-body">
+
+      <div class="section">
+        <div class="section-label lbl-def">Definition</div>
+        <p>A <strong>thread</strong> is the smallest unit of execution. Java supports multithreading via the <code>java.lang.Thread</code> class. Every thread passes through a well-defined <strong>lifecycle</strong> (set of states) from creation to termination.</p>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-diagram">Thread Lifecycle State Diagram</div>
+        <div class="diagram-container">
+          <svg viewBox="0 0 820 360" xmlns="http://www.w3.org/2000/svg" width="820" height="360">
+            <defs>
+              <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#928374"/>
+              </marker>
+              <marker id="arr3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#fb4934"/>
+              </marker>
+            </defs>
+            <rect x="20" y="150" width="120" height="50" rx="10" fill="#3c3836" stroke="#83a598" stroke-width="2"/>
+            <text x="80" y="174" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="13" font-weight="bold">NEW</text>
+            <text x="80" y="190" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="10">new Thread()</text>
+            <rect x="210" y="150" width="130" height="50" rx="10" fill="#3c3836" stroke="#b8bb26" stroke-width="2"/>
+            <text x="275" y="174" text-anchor="middle" fill="#b8bb26" font-family="JetBrains Mono" font-size="13" font-weight="bold">RUNNABLE</text>
+            <text x="275" y="190" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="10">Ready / Running</text>
+            <rect x="216" y="218" width="118" height="30" rx="6" fill="#282828" stroke="#b8bb26" stroke-width="1.2" stroke-dasharray="4,3"/>
+            <text x="275" y="238" text-anchor="middle" fill="#b8bb26" font-family="JetBrains Mono" font-size="10">Scheduler picks → runs</text>
+            <rect x="430" y="60" width="130" height="50" rx="10" fill="#3c3836" stroke="#fe8019" stroke-width="2"/>
+            <text x="495" y="84" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono" font-size="13" font-weight="bold">BLOCKED</text>
+            <text x="495" y="100" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="10">Waiting for lock</text>
+            <rect x="430" y="150" width="130" height="50" rx="10" fill="#3c3836" stroke="#d3869b" stroke-width="2"/>
+            <text x="495" y="174" text-anchor="middle" fill="#d3869b" font-family="JetBrains Mono" font-size="13" font-weight="bold">WAITING</text>
+            <text x="495" y="190" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="10">wait() / join()</text>
+            <rect x="430" y="240" width="130" height="50" rx="10" fill="#3c3836" stroke="#fabd2f" stroke-width="2"/>
+            <text x="495" y="260" text-anchor="middle" fill="#fabd2f" font-family="JetBrains Mono" font-size="12" font-weight="bold">TIMED_WAITING</text>
+            <text x="495" y="278" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="10">sleep(ms)/wait(ms)</text>
+            <rect x="660" y="150" width="130" height="50" rx="10" fill="#3c3836" stroke="#fb4934" stroke-width="2"/>
+            <text x="725" y="174" text-anchor="middle" fill="#fb4934" font-family="JetBrains Mono" font-size="13" font-weight="bold">TERMINATED</text>
+            <text x="725" y="190" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="10">run() completes</text>
+            <line x1="140" y1="175" x2="208" y2="175" stroke="#928374" stroke-width="1.5" marker-end="url(#arr2)"/>
+            <text x="174" y="168" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="9">start()</text>
+            <line x1="275" y1="150" x2="430" y2="90" stroke="#fe8019" stroke-width="1.5" marker-end="url(#arr2)"/>
+            <text x="340" y="108" fill="#fe8019" font-family="JetBrains Mono" font-size="9">lock unavailable</text>
+            <line x1="430" y1="100" x2="340" y2="155" stroke="#928374" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arr2)"/>
+            <text x="366" y="122" fill="#928374" font-family="JetBrains Mono" font-size="9">lock acquired</text>
+            <line x1="340" y1="175" x2="428" y2="175" stroke="#d3869b" stroke-width="1.5" marker-end="url(#arr2)"/>
+            <text x="384" y="167" text-anchor="middle" fill="#d3869b" font-family="JetBrains Mono" font-size="9">wait()</text>
+            <line x1="430" y1="185" x2="342" y2="185" stroke="#928374" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arr2)"/>
+            <text x="384" y="198" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="9">notify()</text>
+            <line x1="320" y1="200" x2="430" y2="255" stroke="#fabd2f" stroke-width="1.5" marker-end="url(#arr2)"/>
+            <text x="356" y="242" fill="#fabd2f" font-family="JetBrains Mono" font-size="9">sleep(ms)</text>
+            <line x1="430" y1="265" x2="342" y2="200" stroke="#928374" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arr2)"/>
+            <text x="356" y="228" fill="#928374" font-family="JetBrains Mono" font-size="9">timeout</text>
+            <line x1="340" y1="175" x2="658" y2="175" stroke="#fb4934" stroke-width="1.5" marker-end="url(#arr3)"/>
+            <text x="500" y="168" text-anchor="middle" fill="#fb4934" font-family="JetBrains Mono" font-size="9">run() finishes</text>
+            <text x="410" y="330" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="11">Java Thread States (java.lang.Thread.State enum)</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-concept">Thread States</div>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>State</th><th>Description</th><th>Trigger</th></tr>
+            <tr><td><strong>NEW</strong></td><td>Thread created but not started</td><td><code>new Thread()</code></td></tr>
+            <tr><td><strong>RUNNABLE</strong></td><td>Ready to run or currently running</td><td><code>start()</code></td></tr>
+            <tr><td><strong>BLOCKED</strong></td><td>Waiting to acquire a monitor lock</td><td>Synchronized block contention</td></tr>
+            <tr><td><strong>WAITING</strong></td><td>Indefinitely waiting for notification</td><td><code>wait()</code>, <code>join()</code></td></tr>
+            <tr><td><strong>TIMED_WAITING</strong></td><td>Waiting for a specific time</td><td><code>sleep(ms)</code>, <code>wait(ms)</code></td></tr>
+            <tr><td><strong>TERMINATED</strong></td><td>Thread has finished execution</td><td>run() returns or exception</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-concept">Thread Creation Methods</div>
+        <p>Java provides <strong>two primary ways</strong> to create threads:</p>
+        <p><strong>Method 1: Extending Thread class</strong></p>
+        <div class="code-wrap">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code><span class="kw">class</span> <span class="cls">MyThread</span> <span class="kw">extends</span> <span class="cls">Thread</span> {
+    <span class="ann">@Override</span>
+    <span class="kw">public void</span> <span class="fn">run</span>() {
+        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i <= <span class="num">3</span>; i++)
+            <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="fn">getName</span>() + <span class="str">": "</span> + i);
+    }
+}
+
+<span class="kw">public class</span> <span class="cls">ThreadCreation</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) {
+        <span class="cm">// Method 1 – Extend Thread</span>
+        <span class="cls">MyThread</span> t1 = <span class="kw">new</span> <span class="cls">MyThread</span>();
+        t1.<span class="fn">setName</span>(<span class="str">"Thread-Extend"</span>);
+        t1.<span class="fn">start</span>();
+
+        <span class="cm">// Method 2 – Implement Runnable</span>
+        <span class="cls">Thread</span> t2 = <span class="kw">new</span> <span class="cls">Thread</span>(() -> {
+            <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i <= <span class="num">3</span>; i++)
+                <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Thread-Lambda: "</span> + i);
+        });
+        t2.<span class="fn">start</span>();
+    }
+}</code></pre>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-output">Output</div>
+        <div class="output-block">Thread-Extend: 1
+Thread-Lambda: 1
+Thread-Extend: 2
+Thread-Lambda: 2
+Thread-Extend: 3
+Thread-Lambda: 3
+(order may vary)</div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-conclusion">Conclusion</div>
+        <p>The thread lifecycle defines six states managed by the <strong>JVM thread scheduler</strong>. Threads are created by extending <code>Thread</code> or implementing <code>Runnable</code>. The <code>start()</code> method triggers the JVM to call <code>run()</code> in a new execution context.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="q7">
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num-badge">07</div>
+      <div class="q-title">Compare extending Thread class and implementing Runnable interface.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-chevron">▾</span>
+    </div>
+    <div class="q-body">
+
+      <div class="section">
+        <div class="section-label lbl-def">Definition</div>
+        <p>Java provides two approaches for thread creation:</p>
+        <ul>
+          <li><strong>Extending <code>Thread</code> class</strong> – Inherit from <code>java.lang.Thread</code> and override <code>run()</code>.</li>
+          <li><strong>Implementing <code>Runnable</code> interface</strong> – Implement the single-abstract-method <code>run()</code> from <code>java.lang.Runnable</code>.</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-diagram">Diagram</div>
+        <div class="diagram-container">
+          <svg viewBox="0 0 720 310" xmlns="http://www.w3.org/2000/svg" width="720" height="310">
+            <text x="185" y="24" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono" font-size="14" font-weight="bold">extends Thread</text>
+            <rect x="100" y="34" width="170" height="40" rx="8" fill="#3c3836" stroke="#fe8019" stroke-width="2"/>
+            <text x="185" y="59" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono" font-size="13" font-weight="bold">Thread (class)</text>
+            <line x1="185" y1="74" x2="185" y2="104" stroke="#928374" stroke-width="1.5" marker-end="url(#arr2)"/>
+            <text x="195" y="96" fill="#928374" font-family="JetBrains Mono" font-size="10">extends</text>
+            <rect x="100" y="104" width="170" height="40" rx="8" fill="#282828" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="185" y="129" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono" font-size="13">MyThread</text>
+            <text x="185" y="146" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="10">overrides run()</text>
+            <line x1="185" y1="150" x2="185" y2="180" stroke="#928374" stroke-width="1.5" marker-end="url(#arr2)"/>
+            <rect x="100" y="180" width="170" height="40" rx="8" fill="#282828" stroke="#928374" stroke-width="1.5"/>
+            <text x="185" y="205" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="12">myThread.start()</text>
+            <rect x="60" y="248" width="250" height="52" rx="8" fill="#282828" stroke="#fb4934" stroke-width="1.2"/>
+            <text x="185" y="268" text-anchor="middle" fill="#fb4934" font-family="JetBrains Mono" font-size="11" font-weight="bold">⚠ Cannot extend other class</text>
+            <text x="185" y="285" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="10">Java has single inheritance</text>
+            <text x="185" y="298" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="10">Tightly coupled to Thread</text>
+            <line x1="360" y1="20" x2="360" y2="310" stroke="#3c3836" stroke-width="2" stroke-dasharray="6,4"/>
+            <rect x="334" y="135" width="52" height="28" rx="14" fill="#3c3836" stroke="#fabd2f" stroke-width="1.5"/>
+            <text x="360" y="154" text-anchor="middle" fill="#fabd2f" font-family="JetBrains Mono" font-size="13" font-weight="bold">VS</text>
+            <text x="540" y="24" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="14" font-weight="bold">implements Runnable</text>
+            <rect x="455" y="34" width="170" height="40" rx="8" fill="#3c3836" stroke="#83a598" stroke-width="2"/>
+            <text x="540" y="59" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="13" font-weight="bold">Runnable (interface)</text>
+            <line x1="540" y1="74" x2="540" y2="104" stroke="#928374" stroke-width="1.5" marker-end="url(#arr2)"/>
+            <text x="550" y="96" fill="#928374" font-family="JetBrains Mono" font-size="10">implements</text>
+            <rect x="455" y="104" width="170" height="40" rx="8" fill="#282828" stroke="#83a598" stroke-width="1.5"/>
+            <text x="540" y="129" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="13">MyTask</text>
+            <text x="540" y="146" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="10">implements run()</text>
+            <line x1="540" y1="150" x2="540" y2="180" stroke="#928374" stroke-width="1.5" marker-end="url(#arr2)"/>
+            <rect x="440" y="180" width="200" height="40" rx="8" fill="#282828" stroke="#928374" stroke-width="1.5"/>
+            <text x="540" y="200" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="11">new Thread(myTask).start()</text>
+            <rect x="406" y="248" width="268" height="52" rx="8" fill="#282828" stroke="#b8bb26" stroke-width="1.2"/>
+            <text x="540" y="268" text-anchor="middle" fill="#b8bb26" font-family="JetBrains Mono" font-size="11" font-weight="bold">✔ Can extend another class</text>
+            <text x="540" y="285" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="10">Loosely coupled · Reusable</text>
+            <text x="540" y="298" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="10">Works with Executor/Lambda</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-table">Comparison Table</div>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>Feature</th><th>extends Thread</th><th>implements Runnable</th></tr>
+            <tr><td><strong>Inheritance</strong></td><td>Inherits Thread; can't extend other class</td><td>Free to extend any class ✅</td></tr>
+            <tr><td><strong>Coupling</strong></td><td>Tightly coupled to Thread</td><td>Loosely coupled, reusable</td></tr>
+            <tr><td><strong>Object creation</strong></td><td><code>new MyThread().start()</code></td><td><code>new Thread(new MyTask()).start()</code></td></tr>
+            <tr><td><strong>Overhead</strong></td><td>Each object is a thread</td><td>Task object separate from Thread</td></tr>
+            <tr><td><strong>OOP Design</strong></td><td>Violates single responsibility</td><td>Follows SRP principle ✅</td></tr>
+            <tr><td><strong>Lambda support</strong></td><td>Not supported</td><td>Functional interface → Lambda ✅</td></tr>
+            <tr><td><strong>Executor Framework</strong></td><td>Not compatible</td><td>Compatible with ExecutorService ✅</td></tr>
+            <tr><td><strong>Preferred</strong></td><td>Simple, quick demos</td><td>Production code (recommended) ✅</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-code">Java Code – Both Approaches</div>
+        <div class="code-wrap">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code><span class="cm">// Approach 1: Extending Thread</span>
+<span class="kw">class</span> <span class="cls">ThreadExtend</span> <span class="kw">extends</span> <span class="cls">Thread</span> {
+    <span class="ann">@Override</span>
+    <span class="kw">public void</span> <span class="fn">run</span>() {
+        <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"[Extend]  Thread: "</span> + <span class="fn">getName</span>());
+    }
+}
+
+<span class="cm">// Approach 2: Implementing Runnable</span>
+<span class="kw">class</span> <span class="cls">RunnableImpl</span> <span class="kw">implements</span> <span class="cls">Runnable</span> {
+    <span class="ann">@Override</span>
+    <span class="kw">public void</span> <span class="fn">run</span>() {
+        <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"[Runnable] Thread: "</span>
+            + <span class="cls">Thread</span>.<span class="fn">currentThread</span>().<span class="fn">getName</span>());
+    }
+}
+
+<span class="kw">public class</span> <span class="cls">ThreadComparison</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) {
+        <span class="cm">// Approach 1</span>
+        <span class="cls">ThreadExtend</span> t1 = <span class="kw">new</span> <span class="cls">ThreadExtend</span>();
+        t1.<span class="fn">setName</span>(<span class="str">"T1-Extend"</span>);
+        t1.<span class="fn">start</span>();
+
+        <span class="cm">// Approach 2</span>
+        <span class="cls">Thread</span> t2 = <span class="kw">new</span> <span class="cls">Thread</span>(<span class="kw">new</span> <span class="cls">RunnableImpl</span>(), <span class="str">"T2-Runnable"</span>);
+        t2.<span class="fn">start</span>();
+
+        <span class="cm">// Approach 3: Lambda (Runnable as FunctionalInterface)</span>
+        <span class="cls">Thread</span> t3 = <span class="kw">new</span> <span class="cls">Thread</span>(
+            () -> <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"[Lambda]   Thread: "</span>
+                + <span class="cls">Thread</span>.<span class="fn">currentThread</span>().<span class="fn">getName</span>()), <span class="str">"T3-Lambda"</span>);
+        t3.<span class="fn">start</span>();
+    }
+}</code></pre>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-output">Output</div>
+        <div class="output-block">[Extend]   Thread: T1-Extend
+[Runnable]  Thread: T2-Runnable
+[Lambda]    Thread: T3-Lambda</div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-conclusion">Conclusion</div>
+        <p><strong>Implementing Runnable</strong> is the preferred approach as it promotes <em>loose coupling</em>, supports <em>multiple inheritance of behavior</em>, and works seamlessly with Java's <strong>Executor Framework</strong> and <strong>lambda expressions</strong>. Use <code>extends Thread</code> only for simple, standalone thread tasks.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="q8">
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num-badge">08</div>
+      <div class="q-title">Explain synchronization and inter-thread communication.</div>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-chevron">▾</span>
+    </div>
+    <div class="q-body">
+
+      <div class="section">
+        <div class="section-label lbl-def">Definition</div>
+        <p><strong>Synchronization</strong> is a mechanism that ensures only <em>one thread at a time</em> can access a shared resource (critical section), preventing <strong>race conditions</strong> and data inconsistency.</p>
+        <p><strong>Inter-thread Communication</strong> is the process of threads <em>communicating and cooperating</em> by notifying each other about their state changes using <code>wait()</code>, <code>notify()</code>, and <code>notifyAll()</code>.</p>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-diagram">Synchronization – Monitor Lock Diagram</div>
+        <div class="diagram-container">
+          <svg viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg" width="760" height="320">
+            <text x="190" y="22" text-anchor="middle" fill="#fb4934" font-family="JetBrains Mono" font-size="13" font-weight="bold">WITHOUT Synchronization</text>
+            <rect x="130" y="130" width="120" height="50" rx="8" fill="#282828" stroke="#fb4934" stroke-width="2"/>
+            <text x="190" y="155" text-anchor="middle" fill="#fb4934" font-family="JetBrains Mono" font-size="12">Shared Data</text>
+            <text x="190" y="172" text-anchor="middle" fill="#fb4934" font-family="JetBrains Mono" font-size="11">RACE CONDITION!</text>
+            <rect x="20" y="50" width="80" height="34" rx="6" fill="#3c3836" stroke="#fb4934" stroke-width="1.5"/>
+            <text x="60" y="72" text-anchor="middle" fill="#fb4934" font-family="JetBrains Mono" font-size="11">Thread-1</text>
+            <rect x="110" y="50" width="80" height="34" rx="6" fill="#3c3836" stroke="#fb4934" stroke-width="1.5"/>
+            <text x="150" y="72" text-anchor="middle" fill="#fb4934" font-family="JetBrains Mono" font-size="11">Thread-2</text>
+            <rect x="200" y="50" width="80" height="34" rx="6" fill="#3c3836" stroke="#fb4934" stroke-width="1.5"/>
+            <text x="240" y="72" text-anchor="middle" fill="#fb4934" font-family="JetBrains Mono" font-size="11">Thread-3</text>
+            <line x1="60"  y1="84" x2="160" y2="130" stroke="#fb4934" stroke-width="1.5" marker-end="url(#arr3)"/>
+            <line x1="150" y1="84" x2="185" y2="130" stroke="#fb4934" stroke-width="1.5" marker-end="url(#arr3)"/>
+            <line x1="240" y1="84" x2="210" y2="130" stroke="#fb4934" stroke-width="1.5" marker-end="url(#arr3)"/>
+            <line x1="375" y1="10" x2="375" y2="310" stroke="#3c3836" stroke-width="2" stroke-dasharray="6,4"/>
+            <rect x="349" y="140" width="52" height="28" rx="14" fill="#3c3836" stroke="#fabd2f" stroke-width="1.5"/>
+            <text x="375" y="159" text-anchor="middle" fill="#fabd2f" font-family="JetBrains Mono" font-size="13" font-weight="bold">VS</text>
+            <text x="570" y="22" text-anchor="middle" fill="#b8bb26" font-family="JetBrains Mono" font-size="13" font-weight="bold">WITH Synchronization</text>
+            <rect x="510" y="120" width="120" height="60" rx="8" fill="#282828" stroke="#fabd2f" stroke-width="2"/>
+            <text x="570" y="143" text-anchor="middle" fill="#fabd2f" font-family="JetBrains Mono" font-size="12" font-weight="bold">MONITOR</text>
+            <text x="570" y="159" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="10">Intrinsic Lock</text>
+            <text x="570" y="173" text-anchor="middle" fill="#b8bb26" font-family="JetBrains Mono" font-size="10">Only 1 thread at a time</text>
+            <rect x="398" y="50" width="80" height="34" rx="6" fill="#3c3836" stroke="#b8bb26" stroke-width="1.5"/>
+            <text x="438" y="72" text-anchor="middle" fill="#b8bb26" font-family="JetBrains Mono" font-size="11">Thread-1</text>
+            <rect x="500" y="50" width="80" height="34" rx="6" fill="#3c3836" stroke="#928374" stroke-width="1.2"/>
+            <text x="540" y="72" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="11">Thread-2</text>
+            <rect x="600" y="50" width="80" height="34" rx="6" fill="#3c3836" stroke="#928374" stroke-width="1.2"/>
+            <text x="640" y="72" text-anchor="middle" fill="#928374" font-family="JetBrains Mono" font-size="11">Thread-3</text>
+            <line x1="438" y1="84" x2="538" y2="120" stroke="#b8bb26" stroke-width="2" marker-end="url(#arr2)"/>
+            <line x1="540" y1="84" x2="540" y2="116" stroke="#928374" stroke-width="1.2" stroke-dasharray="4,3"/>
+            <line x1="640" y1="84" x2="600" y2="116" stroke="#928374" stroke-width="1.2" stroke-dasharray="4,3"/>
+            <text x="590" y="100" fill="#928374" font-family="JetBrains Mono" font-size="10">BLOCKED</text>
+            <rect x="510" y="210" width="120" height="44" rx="8" fill="#282828" stroke="#b8bb26" stroke-width="1.5"/>
+            <text x="570" y="234" text-anchor="middle" fill="#b8bb26" font-family="JetBrains Mono" font-size="12">Shared Data</text>
+            <text x="570" y="248" text-anchor="middle" fill="#b8bb26" font-family="JetBrains Mono" font-size="10">✔ Consistent</text>
+            <line x1="570" y1="180" x2="570" y2="210" stroke="#928374" stroke-width="1.5" marker-end="url(#arr2)"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-concept">Types of Synchronization</div>
+        <ul>
+          <li><strong>Synchronized Method</strong> – Lock on the object (<code>this</code>).</li>
+          <li><strong>Synchronized Block</strong> – Lock on a specified object; finer granularity.</li>
+          <li><strong>Static Synchronized</strong> – Lock on the <code>Class</code> object (class-level lock).</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-code">Java Code – Synchronization + Inter-thread Communication (Producer-Consumer)</div>
+        <div class="code-wrap">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code><span class="kw">class</span> <span class="cls">Buffer</span> {
+    <span class="kw">private int</span> data;
+    <span class="kw">private boolean</span> hasData = <span class="kw">false</span>;
+
+    <span class="cm">// Producer: puts data into buffer</span>
+    <span class="kw">public synchronized void</span> <span class="fn">produce</span>(<span class="kw">int</span> val) <span class="kw">throws</span> <span class="cls">InterruptedException</span> {
+        <span class="kw">while</span> (hasData) {
+            <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Producer waiting... buffer full"</span>);
+            <span class="kw">wait</span>();           <span class="cm">// wait until consumer reads</span>
+        }
+        data = val;
+        hasData = <span class="kw">true</span>;
+        <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Produced: "</span> + data);
+        <span class="kw">notify</span>();           <span class="cm">// notify consumer</span>
+    }
+
+    <span class="cm">// Consumer: reads data from buffer</span>
+    <span class="kw">public synchronized void</span> <span class="fn">consume</span>() <span class="kw">throws</span> <span class="cls">InterruptedException</span> {
+        <span class="kw">while</span> (!hasData) {
+            <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Consumer waiting... buffer empty"</span>);
+            <span class="kw">wait</span>();           <span class="cm">// wait until producer puts data</span>
+        }
+        <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Consumed: "</span> + data);
+        hasData = <span class="kw">false</span>;
+        <span class="kw">notify</span>();           <span class="cm">// notify producer</span>
+    }
+}
+
+<span class="kw">public class</span> <span class="cls">SyncDemo</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) {
+        <span class="cls">Buffer</span> buf = <span class="kw">new</span> <span class="cls">Buffer</span>();
+
+        <span class="cls">Thread</span> producer = <span class="kw">new</span> <span class="cls">Thread</span>(() -> {
+            <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i <= <span class="num">3</span>; i++) {
+                <span class="kw">try</span> { buf.<span class="fn">produce</span>(i * <span class="num">10</span>); } 
+                <span class="kw">catch</span> (<span class="cls">InterruptedException</span> e) {}
+            }
+        }, <span class="str">"Producer"</span>);
+
+        <span class="cls">Thread</span> consumer = <span class="kw">new</span> <span class="cls">Thread</span>(() -> {
+            <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i <= <span class="num">3</span>; i++) {
+                <span class="kw">try</span> { buf.<span class="fn">consume</span>(); } 
+                <span class="kw">catch</span> (<span class="cls">InterruptedException</span> e) {}
+            }
+        }, <span class="str">"Consumer"</span>);
+
+        producer.<span class="fn">start</span>();
+        consumer.<span class="fn">start</span>();
+    }
+}</code></pre>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-output">Output</div>
+        <div class="output-block">Produced: 10
+Consumed: 10
+Produced: 20
+Consumed: 20
+Produced: 30
+Consumed: 30</div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-points">Key Points</div>
+        <div class="kp-grid">
+          <div class="kp-item"><strong>Race condition</strong>: multiple threads modify shared data simultaneously causing inconsistency.</div>
+          <div class="kp-item"><strong>synchronized</strong> keyword acquires the intrinsic (monitor) lock of the object.</div>
+          <div class="kp-item"><code>wait()</code> inside <code>while</code> (not <code>if</code>) prevents <strong>spurious wakeups</strong>.</div>
+          <div class="kp-item"><code>notifyAll()</code> wakes all threads; use when multiple threads wait on different conditions.</div>
+          <div class="kp-item"><strong>Deadlock</strong>: occurs when two threads wait on each other's lock indefinitely.</div>
+          <div class="kp-item">Always release locks in <strong>finally</strong> if using explicit <code>Lock</code> objects.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label lbl-conclusion">Conclusion</div>
+        <p><strong>Synchronization</strong> prevents data corruption in concurrent environments, while <strong>inter-thread communication</strong> (wait/notify) allows threads to cooperate efficiently. Together they are the foundation of <em>thread-safe Java applications</em> and design patterns like <strong>Producer-Consumer</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- Back to top -->
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+
+<script>
+  // ── Toggle card ──
+  function toggleCard(header) {
+    const card = header.closest('.q-card');
+    const wasOpen = card.classList.contains('open');
+    document.querySelectorAll('.q-card.open').forEach(c => c.classList.remove('open'));
+    if (!wasOpen) card.classList.add('open');
+  }
+
+  // ── Sidebar toggle ──
+  const hamburger = document.getElementById('hamburger');
+  const sidebar   = document.getElementById('sidebar');
+  const overlay   = document.getElementById('overlay');
+  const mainEl    = document.getElementById('main');
+
+  function isMobile() { return window.innerWidth <= 900; }
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    if (isMobile()) {
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('show');
+    } else {
+      sidebar.classList.toggle('hidden');
+      mainEl.classList.toggle('full');
+    }
+  });
+
+  overlay.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+    hamburger.classList.remove('open');
+  });
+
+  // ── Sidebar active link ──
+  function sideClick(el) {
+    document.querySelectorAll('.sidebar-item').forEach(a => a.classList.remove('active'));
+    el.classList.add('active');
+    if (isMobile()) {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('show');
+      hamburger.classList.remove('open');
+    }
+  }
+
+  // Highlight active on scroll
+  const cards = document.querySelectorAll('.q-card');
+  const sideLinks = document.querySelectorAll('.sidebar-item');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    cards.forEach(c => {
+      if (window.scrollY >= c.offsetTop - 100) cur = '#' + c.id;
+    });
+    sideLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === cur);
+    });
+    const h = document.documentElement;
+    const pct = window.scrollY / (h.scrollHeight - h.clientHeight);
+    document.getElementById('progress-bar').style.transform = `scaleX(${pct})`;
+    document.getElementById('btt').classList.toggle('show', window.scrollY > 300);
+  });
+
+  // ── Copy button ──
+  function copyCode(btn) {
+    const pre = btn.nextElementSibling;
+    const text = pre.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ Copied';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+    });
+  }
+
+  // ── Search ──
+  const searchInput = document.getElementById('search');
+  searchInput.addEventListener('input', () => {
+    const q = searchInput.value.toLowerCase().trim();
+    let anyVisible = false;
+    document.querySelectorAll('.q-card').forEach(card => {
+      const text = card.innerText.toLowerCase();
+      const match = !q || text.includes(q);
+      card.style.display = match ? '' : 'none';
+      if (match) anyVisible = true;
+    });
+    const nr = document.querySelector('.no-results');
+    if (nr) nr.remove();
+    if (!anyVisible && q) {
+      const d = document.createElement('div');
+      d.className = 'no-results';
+      d.textContent = `No questions matching "${q}"`;
+      mainEl.appendChild(d);
+    }
+  });
+
+  // Open first card on load
+  document.querySelector('.q-card').classList.add('open');
+</script>
+</body>
+</html>

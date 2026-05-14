@@ -1,0 +1,2343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1d2021">
+<meta name="description" content="AKTU BCS403 OOP with Java – Unit I 7 Mark Exam Notes">
+<title>BCS403 – OOP with Java | Unit I | AKTU Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Recursive:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   THEME VARIABLES  (java2.html design)
+═══════════════════════════════════════ */
+:root {
+  --bg0:      #1d2021;
+  --bg1:      #282828;
+  --bg2:      #32302f;
+  --bg3:      #3c3836;
+  --bg4:      #504945;
+  --fg:       #ebdbb2;
+  --fg2:      #d5c4a1;
+  --fg3:      #bdae93;
+  --accent:   #d79921;
+  --accent2:  #689d6a;
+  --accent3:  #458588;
+  --accent4:  #cc241d;
+  --accent5:  #b16286;
+  --accent6:  #d65d0e;
+  --card-bg:  #282828;
+  --card-border: #3c3836;
+  --sidebar-w: 270px;
+  --radius:   14px;
+  --shadow:   0 4px 24px rgba(0,0,0,.45);
+  /* legacy aliases kept for content spans */
+  --yellow: #d79921;
+  --yellow-bright: #fabd2f;
+  --orange-bright: #fe8019;
+  --green-bright: #b8bb26;
+  --aqua-bright: #8ec07c;
+  --blue-bright: #83a598;
+  --purple-bright: #d3869b;
+  --red-bright: #fb4934;
+  --bg0-hard: #1d2021;
+  --bg0-soft: #32302f;
+  --fg1: #ebdbb2;
+  --fg4: #a89984;
+}
+
+/* ═══════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Recursive',sans-serif;
+  background:var(--bg0);
+  color:var(--fg);
+  min-height:100vh;
+  overflow-x:hidden;
+  transition:background .3s,color .3s;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:4px}
+
+/* ═══════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════ */
+.layout{display:flex;padding-top:56px;min-height:100vh}
+
+/* SIDEBAR */
+.sidebar{
+  width:var(--sidebar-w);
+  background:var(--bg1);
+  border-right:1.5px solid var(--card-border);
+  position:fixed;top:56px;left:0;bottom:0;
+  display:flex;flex-direction:column;
+  z-index:100;
+  transition:transform .3s cubic-bezier(.4,0,.2,1);
+  overflow-y:auto;
+}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:4px}
+
+/* Sidebar section labels */
+.sidebar-unit{
+  font-family:'Recursive',sans-serif;
+  font-size:.63rem;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--fg3);
+  padding:18px 20px 6px;
+}
+
+/* Sidebar nav links */
+.sidebar-item{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 20px;
+  color:var(--fg2);
+  text-decoration:none;
+  font-size:.82rem;
+  font-weight:400;
+  transition:background .18s,color .18s;
+  border-left:3px solid transparent;
+}
+.sidebar-item:hover,.sidebar-item.active{
+  background:var(--bg2);
+  color:var(--accent);
+  border-left-color:var(--accent);
+}
+.sidebar-item.active{font-weight:600}
+.sidebar-item .num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.68rem;
+  color:var(--fg3);
+  min-width:18px;
+  background:var(--bg3);
+  padding:2px 5px;border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* TOPBAR */
+.topbar{
+  position:fixed;top:0;left:0;right:0;
+  height:56px;background:var(--bg1);
+  border-bottom:1.5px solid var(--card-border);
+  display:flex;align-items:center;padding:0 28px;
+  z-index:90;gap:14px;
+}
+.topbar-logo{
+  font-family:'Recursive',sans-serif;
+  font-weight:800;font-size:1rem;color:var(--accent);
+  letter-spacing:.02em;
+}
+.topbar-logo span{color:var(--accent6)}
+.topbar-search{
+  flex:1;max-width:400px;margin-left:auto;
+  position:relative;
+}
+.topbar-search input{
+  width:100%;
+  background:var(--bg2);border:1.5px solid var(--card-border);
+  color:var(--fg);padding:7px 14px 7px 36px;
+  border-radius:8px;font-family:'Recursive',sans-serif;
+  font-size:.82rem;outline:none;transition:border .2s;
+}
+.topbar-search input:focus{border-color:var(--accent)}
+.topbar-search .icon{
+  position:absolute;left:11px;top:50%;transform:translateY(-50%);
+  color:var(--fg3);font-size:14px;pointer-events:none;
+}
+.hamburger{
+  display:none;background:none;border:none;cursor:pointer;
+  color:var(--fg2);padding:4px;border-radius:8px;
+  flex-direction:column;gap:4px;
+}
+.hamburger span{
+  display:block;width:20px;height:2px;
+  background:var(--fg3);border-radius:2px;transition:.3s;
+}
+.hamburger:hover{background:var(--bg2)}
+
+/* PROGRESS BAR */
+.progress-bar{
+  position:fixed;top:56px;left:0;height:2px;
+  background:var(--accent);z-index:200;
+  width:0%;transition:width .1s;
+}
+
+/* OVERLAY */
+.overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:85;
+}
+.overlay.show{display:block}
+
+/* MAIN */
+.main{
+  margin-left:var(--sidebar-w);
+  padding:32px 32px 60px;
+  flex:1;min-width:0;
+  max-width:calc(100vw - var(--sidebar-w));
+}
+
+/* UNIT HEADER */
+.unit-header{
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:28px;margin-top:48px;
+  padding-bottom:14px;
+  border-bottom:2px solid var(--card-border);
+  scroll-margin-top:76px;
+}
+.unit-header:first-child{margin-top:0}
+.unit-badge{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;font-weight:600;
+  background:var(--accent);color:var(--bg0);
+  padding:4px 12px;border-radius:20px;
+  white-space:nowrap;
+}
+.unit-3 .unit-badge{background:var(--accent3)}
+.unit-4 .unit-badge{background:var(--accent2)}
+.unit-5 .unit-badge{background:var(--accent5)}
+.unit-title{
+  font-family:'Recursive',sans-serif;
+  font-size:1.15rem;font-weight:800;
+  color:var(--fg);line-height:1.25;
+}
+
+/* ═══════════════════════════════════════
+   Q&A CARD
+═══════════════════════════════════════ */
+.qcard{
+  background:var(--card-bg);
+  border:1.5px solid var(--card-border);
+  border-radius:var(--radius);
+  margin-bottom:14px;
+  overflow:hidden;
+  transition:border-color .2s,box-shadow .2s;
+}
+.qcard:hover{
+  border-color:var(--accent);
+  box-shadow:var(--shadow);
+}
+.qcard-header{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:16px 20px;
+  cursor:pointer;
+  user-select:none;
+  transition:background .15s;
+}
+.qcard-header:hover{background:var(--bg2)}
+.q-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;font-weight:600;
+  color:var(--accent);
+  background:var(--bg3);
+  padding:2px 8px;border-radius:6px;
+  white-space:nowrap;margin-top:2px;
+  min-width:34px;text-align:center;
+}
+.q-text{
+  font-family:'Recursive',sans-serif;
+  font-size:1rem;font-weight:500;color:var(--fg);
+  flex:1;line-height:1.45;
+}
+.q-marks{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.68rem;font-weight:600;
+  background:var(--accent);color:var(--bg0);
+  padding:2px 10px;border-radius:20px;
+  white-space:nowrap;margin-top:2px;
+}
+.q-toggle{
+  color:var(--fg3);font-size:18px;
+  transition:transform .28s cubic-bezier(.4,0,.2,1);
+  flex-shrink:0;margin-top:3px;line-height:1;
+}
+.qcard.open .q-toggle{transform:rotate(180deg)}
+.qcard-body{
+  display:none;
+  padding:18px 20px 20px;
+  border-top:1px solid var(--card-border);
+  font-size:1rem;line-height:1.75;
+  color:var(--fg2);
+}
+.qcard.open .qcard-body{display:block}
+
+/* QCARD-BODY TYPOGRAPHY */
+.qcard-body h3{
+  font-family:'Recursive',sans-serif;
+  font-size:.92rem;font-weight:700;color:var(--accent);
+  margin:18px 0 8px;
+  display:flex;align-items:center;gap:6px;
+}
+.qcard-body h3::before{content:'▸';color:var(--accent6);font-size:.75rem}
+.qcard-body h4{
+  font-size:.85rem;font-weight:600;color:var(--accent3);
+  margin:14px 0 6px;
+}
+.qcard-body p{font-size:1rem;color:var(--fg2);margin-bottom:.75em;line-height:1.75}
+.qcard-body p:last-child{margin-bottom:0}
+.qcard-body strong,.qcard-body b{color:var(--accent);font-weight:600}
+.qcard-body ul,.qcard-body ol{
+  padding-left:22px;margin-bottom:12px;
+}
+.qcard-body li{font-size:1rem;color:var(--fg2);margin-bottom:5px}
+.bold{font-weight:700;color:var(--fg)}
+
+/* KEYWORDS */
+.kw{color:var(--accent);font-weight:600;background:rgba(215,153,33,.1);padding:0 3px;border-radius:3px}
+.kw2{color:var(--accent6);font-weight:600}
+.kw3{color:var(--accent3);font-weight:600}
+.kw4{color:var(--accent2);font-weight:600}
+.kw5{color:var(--accent5);font-weight:600}
+
+/* ── CODE BLOCK ── */
+.code-wrap{position:relative;margin:12px 0;border-radius:10px;overflow:hidden;border:1px solid var(--card-border)}
+.code-label{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--bg3);padding:7px 14px;
+  font-size:.72rem;font-weight:600;color:var(--fg3);
+  font-family:'JetBrains Mono',monospace;
+  border-bottom:1px solid var(--card-border);
+}
+.code-label .dots{display:flex;gap:6px}
+.code-label .dot{width:10px;height:10px;border-radius:50%}
+.dot-r{background:#cc4125}.dot-y{background:#d4a017}.dot-g{background:#3e9a48}
+.copy-btn{
+  background:var(--bg4);border:none;color:var(--fg3);
+  padding:3px 10px;border-radius:5px;cursor:pointer;
+  font-size:.68rem;font-family:'Recursive',sans-serif;font-weight:600;
+  transition:background .15s;
+}
+.copy-btn:hover{background:var(--bg3);color:var(--fg)}
+.copy-btn.copied{color:var(--accent2)}
+
+pre{
+  background:var(--bg0);
+  border:none;
+  padding:14px 16px;
+  overflow-x:auto;font-family:'JetBrains Mono',monospace;
+  font-size:.78rem;line-height:1.65;color:var(--fg);
+  margin:0;
+}
+
+/* Syntax highlighting — mapped to java2 palette */
+.t-kw{color:#d3869b}
+.t-type{color:#fabd2f}
+.t-str{color:#b8bb26}
+.t-num{color:#d3869b}
+.t-cmt{color:#928374;font-style:italic}
+.t-fn{color:#83a598}
+.t-ann{color:#8ec07c}
+.t-cls{color:#fabd2f;font-weight:600}
+.t-op{color:#fe8019}
+.t-iface{color:#83a598;font-weight:600}
+
+/* ── OUTPUT BOX ── */
+.output-box{
+  background:var(--bg0);border:1px solid var(--card-border);
+  border-radius:10px;padding:14px 16px;margin:10px 0;
+  font-family:'JetBrains Mono',monospace;font-size:.78rem;
+  color:var(--accent2);line-height:1.65;
+}
+.output-box .out-label{
+  font-size:.63rem;color:var(--fg3);font-weight:700;
+  letter-spacing:.1em;margin-bottom:8px;
+  font-family:'Recursive',sans-serif;text-transform:uppercase;
+}
+
+/* ── TABLE ── */
+.tbl-wrap{overflow-x:auto;margin:12px 0;border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:1rem;border-radius:10px;overflow:hidden}
+thead tr{background:var(--bg3)}
+th{padding:9px 14px;color:var(--accent);font-family:'Recursive',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:.06em;text-align:left}
+td{padding:8px 14px;border-bottom:1px solid var(--card-border);color:var(--fg2);vertical-align:top;font-size:1rem}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg3)}
+
+/* ── KEY POINTS ── */
+.key-points{
+  background:var(--bg2);border-left:3px solid var(--accent);
+  border-radius:0 8px 8px 0;padding:12px 16px;margin:12px 0;
+}
+.key-points .kp-title{
+  font-size:.72rem;font-weight:700;color:var(--accent);
+  letter-spacing:.08em;margin-bottom:8px;
+  text-transform:uppercase;font-family:'Recursive',sans-serif;
+}
+.key-points li{font-size:1rem;color:var(--fg2);margin-bottom:4px}
+
+/* ── DIAGRAM WRAPPER ── */
+.diagram-wrap{
+  background:var(--bg0);border:1px solid var(--card-border);
+  border-radius:12px;padding:16px;margin:14px 0;
+  overflow-x:auto;display:flex;justify-content:center;
+}
+.diagram-wrap svg{max-width:100%;height:auto}
+
+
+/* ── CONCLUSION ── */
+.conclusion{
+  background:var(--bg2);border-left:3px solid var(--accent2);
+  border-radius:0 8px 8px 0;padding:12px 16px;margin:12px 0;
+  font-size:1rem;color:var(--fg2);
+}
+.conclusion strong{color:var(--accent2)}
+
+/* ── DEFINITION BOX ── */
+.def-box{
+  background:var(--bg2);border-left:3px solid var(--accent3);
+  border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;
+  font-size:1rem;color:var(--fg2);
+}
+
+/* SCROLL TO TOP */
+.scroll-top{
+  position:fixed;bottom:28px;right:24px;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--accent);color:var(--bg0);
+  border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity .25s;box-shadow:0 4px 16px rgba(0,0,0,.4);
+  z-index:50;font-size:1.2rem;
+}
+.scroll-top.visible{opacity:1;pointer-events:all}
+.scroll-top:hover{transform:scale(1.08)}
+
+/* ── HIGHLIGHT ── */
+.highlight{background:var(--accent);color:var(--bg0);border-radius:2px}
+
+/* ── INSTALL BANNER ── */
+#install-banner{
+  display:none;position:fixed;bottom:16px;right:16px;
+  background:var(--bg1);border:1.5px solid var(--accent);
+  border-radius:var(--radius);padding:14px 18px;z-index:200;
+  max-width:300px;box-shadow:var(--shadow);
+}
+#install-banner p{font-size:.82rem;color:var(--fg2);margin-bottom:10px}
+#install-banner .btns{display:flex;gap:8px}
+#install-banner button{
+  padding:5px 12px;border-radius:20px;font-size:.72rem;
+  font-family:'Recursive',sans-serif;font-weight:600;cursor:pointer;border:none;
+}
+#btn-install{background:var(--accent);color:var(--bg0)}
+#btn-dismiss{background:var(--bg3);color:var(--fg3)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:840px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .overlay.show{display:block}
+  .main{margin-left:0;max-width:100%;padding:20px 16px 60px}
+  .hamburger{display:flex}
+  .topbar-search{max-width:200px}
+}
+@media(max-width:520px){
+  .unit-title{font-size:1rem}
+  .q-text{font-size:.9rem}
+  .topbar-logo{font-size:.85rem}
+  th,td{padding:7px 10px;font-size:.82rem}
+}
+</style>
+<style>
+/* ══ Bridge — maps unit1/unit2 IDs & classes to the reference design ══ */
+body{padding-top:56px}
+#sidebar{width:var(--sidebar-w);background:var(--bg1);border-right:1.5px solid var(--card-border);position:fixed;top:56px;left:0;bottom:0;display:flex;flex-direction:column;z-index:100;transition:transform .3s cubic-bezier(.4,0,.2,1);overflow-y:auto}
+#sidebar::-webkit-scrollbar{width:4px}
+#sidebar::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:4px}
+.sidebar-header{padding:18px 20px 14px;border-bottom:1px solid var(--card-border);background:var(--bg1);position:sticky;top:0;z-index:1}
+.sidebar-brand{font-size:.63rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:3px;font-family:'Recursive',sans-serif}
+.sidebar-title{font-size:.9rem;font-weight:700;color:var(--fg)}
+.sidebar-sub{font-size:.72rem;color:var(--fg3);margin-top:2px}
+#search-box{margin:10px 16px 6px;padding:7px 14px;background:var(--bg2);border:1.5px solid var(--card-border);color:var(--fg);font-family:'Recursive',sans-serif;font-size:.82rem;border-radius:8px;outline:none;transition:border .2s;width:calc(100% - 32px)}
+#search-box:focus{border-color:var(--accent)}
+#search-box::placeholder{color:var(--fg3)}
+.unit-group{margin:6px 0}
+.unit-label{font-size:.63rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--fg3);padding:14px 20px 4px;font-family:'Recursive',sans-serif}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;color:var(--fg2);font-size:.82rem;font-weight:400;transition:background .18s,color .18s;border-left:3px solid transparent;cursor:pointer}
+.nav-item:hover,.nav-item.active{background:var(--bg2);color:var(--accent);border-left-color:var(--accent)}
+.nav-item.active{font-weight:600}
+.nav-num{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--fg3);min-width:18px;background:var(--bg3);padding:2px 5px;border-radius:4px;display:flex;align-items:center;justify-content:center}
+.nav-item.active .nav-num{background:var(--accent);color:var(--bg0)}
+.sidebar-section{font-size:.63rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--fg3);padding:18px 20px 6px;font-family:'Recursive',sans-serif}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:9px 20px;color:var(--fg2);text-decoration:none;font-size:.82rem;font-weight:400;transition:background .18s,color .18s;border-left:3px solid transparent}
+.sidebar-item:hover,.sidebar-item.active{background:var(--bg2);color:var(--accent);border-left-color:var(--accent)}
+.sidebar-item.active{font-weight:600}
+.sidebar-item .q-num{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--fg3);min-width:18px;background:var(--bg3);padding:2px 5px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;width:auto;height:auto;line-height:1.4}
+#topbar{position:fixed;top:0;left:0;right:0;height:56px;background:var(--bg1);border-bottom:1.5px solid var(--card-border);display:flex;align-items:center;padding:0 28px;z-index:90;gap:14px}
+.topbar-title{font-family:'Recursive',sans-serif;font-weight:800;font-size:1rem;color:var(--accent);letter-spacing:.02em;flex:1}
+.topbar-badge{background:var(--bg2);border:1px solid var(--card-border);border-radius:20px;padding:4px 14px;font-size:.75rem;color:var(--fg3);font-family:'Recursive',sans-serif}
+#hamburger{display:none;background:none;border:none;cursor:pointer;color:var(--fg2);padding:4px;border-radius:8px;flex-direction:column;gap:4px}
+#hamburger span{display:block;width:20px;height:2px;background:var(--fg3);border-radius:2px;transition:.3s}
+#hamburger:hover{background:var(--bg2)}
+#progress-bar{position:fixed;top:56px;left:0;height:2px;background:var(--accent);z-index:200;width:0%;transition:width .1s;transform:none!important}
+#main{margin-left:var(--sidebar-w);padding:32px 32px 60px;flex:1;min-width:0;max-width:calc(100vw - var(--sidebar-w));margin-top:0}
+#main.full{margin-left:0}
+#content{max-width:920px}
+.unit-section{margin-bottom:48px}
+.unit-heading{display:flex;align-items:center;gap:14px;margin-bottom:22px;margin-top:8px;padding-bottom:12px;border-bottom:2px solid var(--card-border);font-family:'Recursive',sans-serif;font-size:1.08rem;font-weight:800;color:var(--fg)}
+.unit-heading::after{content:none}
+.unit-header{margin-bottom:32px;padding:28px 32px;background:var(--bg1);border:1.5px solid var(--card-border);border-radius:var(--radius)}
+.unit-header::before{content:none!important}
+.unit-tag{font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--accent3);margin-bottom:8px;font-family:'Recursive',sans-serif}
+.unit-title{font-size:1.3rem;font-weight:900;color:var(--accent);line-height:1.3;margin-bottom:8px;font-family:'Recursive',sans-serif}
+.unit-subtitle{color:var(--fg3);font-size:.85rem}
+.unit-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font-size:.72rem;padding:4px 12px;border-radius:20px;background:var(--bg3);color:var(--accent2);font-weight:600;font-family:'Recursive',sans-serif}
+.q-card{background:var(--card-bg)!important;border:1.5px solid var(--card-border)!important;border-radius:var(--radius)!important;margin-bottom:14px!important;overflow:hidden;transition:border-color .2s,box-shadow .2s!important;animation:none!important;transform:none!important}
+.q-card:hover{border-color:var(--accent)!important;box-shadow:var(--shadow)!important}
+.q-card.open{border-color:var(--accent)!important}
+.q-header{display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;user-select:none;transition:background .15s;background:transparent!important}
+.q-header:hover{background:var(--bg2)!important}
+.q-num{font-family:'JetBrains Mono',monospace!important;font-size:.72rem!important;font-weight:600!important;color:var(--accent)!important;background:var(--bg3)!important;padding:2px 8px!important;border-radius:6px!important;white-space:nowrap;min-width:34px!important;text-align:center;width:auto!important;height:auto!important;line-height:1.6!important;flex-shrink:0}
+.q-num-badge{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;color:var(--accent);background:var(--bg3);padding:2px 8px;border-radius:6px;white-space:nowrap;min-width:34px;text-align:center}
+.q-title{font-family:'Recursive',sans-serif!important;font-size:.95rem!important;font-weight:500!important;color:var(--fg)!important;flex:1;line-height:1.4}
+.q-meta{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.badge{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:600;padding:2px 10px;border-radius:20px;white-space:nowrap;letter-spacing:0}
+.badge-marks{background:var(--accent);color:var(--bg0);border:none}
+.badge-unit{background:var(--accent3);color:#fff;border:none}
+.q-marks{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:600;background:var(--accent);color:var(--bg0);padding:2px 10px;border-radius:20px;white-space:nowrap;flex-shrink:0}
+.q-chevron{color:var(--fg4);width:20px;height:20px;transition:transform .28s cubic-bezier(.4,0,.2,1);flex-shrink:0;display:block}
+.q-card.open .q-chevron{transform:rotate(180deg);color:var(--accent)}
+.q-body{max-height:0!important;overflow:hidden!important;transition:max-height .35s cubic-bezier(.4,0,.2,1)!important;display:block!important;padding:0!important}
+.q-card.open .q-body{max-height:3000px!important}
+.q-content{padding:18px 20px 20px;border-top:1px solid var(--card-border);font-size:1rem;line-height:1.75;color:var(--fg2)}
+.section{margin:16px 0}
+.section-label{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:5px;display:inline-block;margin-bottom:10px;font-family:'Recursive',sans-serif}
+.sl-def{background:rgba(104,157,106,.18);color:var(--accent2)!important;border:1px solid rgba(104,157,106,.35)}
+.sl-concept{background:rgba(69,133,136,.18);color:var(--accent3)!important;border:1px solid rgba(69,133,136,.35)}
+.sl-syntax{background:rgba(177,98,134,.18);color:var(--accent5)!important;border:1px solid rgba(177,98,134,.35)}
+.sl-code{background:rgba(214,93,14,.18);color:var(--accent6)!important;border:1px solid rgba(214,93,14,.35)}
+.sl-output{background:rgba(215,153,33,.18);color:var(--accent)!important;border:1px solid rgba(215,153,33,.35)}
+.sl-key{background:rgba(204,36,29,.18);color:var(--accent4)!important;border:1px solid rgba(204,36,29,.35)}
+.sl-diagram{background:rgba(104,157,106,.14);color:var(--accent2)!important;border:1px solid rgba(104,157,106,.28)}
+.sl-table{background:rgba(69,133,136,.14);color:var(--accent3)!important;border:1px solid rgba(69,133,136,.28)}
+.sl-note{background:rgba(215,153,33,.12);color:var(--accent)!important;border:1px solid rgba(215,153,33,.24)}
+.lbl-def{background:var(--accent3);color:var(--bg0)!important}
+.lbl-concept{background:var(--accent5);color:var(--bg0)!important}
+.lbl-diagram{background:var(--accent2);color:var(--bg0)!important}
+.lbl-syntax{background:var(--accent6);color:var(--bg0)!important}
+.lbl-code{background:var(--accent2);color:var(--bg0)!important}
+.lbl-output{background:var(--accent);color:var(--bg0)!important}
+.lbl-points{background:var(--accent4);color:#fff!important}
+.lbl-table{background:var(--accent3);color:var(--bg0)!important}
+.lbl-conclusion{background:var(--bg4);color:var(--fg2)!important}
+.answer-text{font-size:1rem;color:var(--fg2);line-height:1.8}
+.answer-text p{margin-bottom:.75em}
+.answer-text strong,.answer-text b{color:var(--accent);font-weight:600}
+.answer-text em{color:var(--accent2);font-style:normal;font-weight:600}
+p{font-size:1rem;color:var(--fg2)}
+strong,b{color:var(--accent);font-weight:600}
+.copy-btn{background:var(--bg4)!important;border:none!important;color:var(--fg3)!important;padding:3px 10px!important;border-radius:5px!important;cursor:pointer!important;font-size:.68rem!important;font-family:'Recursive',sans-serif!important;font-weight:600!important;transition:background .15s!important}
+.copy-btn:hover{background:var(--bg3)!important;color:var(--fg)!important}
+.copy-btn.copied{color:var(--accent2)!important;background:var(--bg4)!important}
+pre{background:var(--bg0)!important;border:none!important;padding:14px 16px!important;overflow-x:auto!important;font-family:'JetBrains Mono',monospace!important;font-size:.78rem!important;line-height:1.65!important;color:var(--fg)!important;margin:0!important}
+.code-wrap{position:relative;margin:12px 0;border-radius:10px;overflow:hidden;border:1px solid var(--card-border)}
+.key-list{list-style:none;padding-left:0;margin-bottom:12px}
+.key-list li{padding:6px 0 6px 22px;position:relative;font-size:1rem;color:var(--fg2);border-bottom:1px solid var(--bg2)}
+.key-list li:last-child{border-bottom:none}
+.key-list li::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:.75rem;top:9px}
+.kp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin:8px 0}
+.kp-item{background:var(--bg2);border-radius:8px;padding:12px 14px;border-left:3px solid var(--accent);font-size:1rem;color:var(--fg2)}
+.callout{border-left:3px solid var(--accent);background:rgba(215,153,33,.07);border-radius:0 8px 8px 0;padding:12px 16px;font-size:1rem;color:var(--fg2);margin:12px 0}
+.callout.blue{border-color:var(--accent3);background:rgba(69,133,136,.07)}
+.callout.green{border-color:var(--accent2);background:rgba(104,157,106,.07)}
+.callout.red{border-color:var(--accent4);background:rgba(204,36,29,.07)}
+.output-box,.output-block{background:var(--bg0);border:1px solid var(--card-border);border-radius:10px;padding:14px 16px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--accent2);line-height:1.65;white-space:pre;overflow-x:auto}
+.out-label{font-size:.63rem;color:var(--fg3);font-weight:700;letter-spacing:.1em;margin-bottom:8px;font-family:'Recursive',sans-serif;text-transform:uppercase;display:block}
+.diagram-wrap,.diagram-container{background:var(--bg0);border:1px solid var(--card-border);border-radius:12px;padding:16px;margin:14px 0;overflow-x:auto;display:flex;justify-content:center}
+.diagram-wrap svg,.diagram-container svg{max-width:100%;height:auto}
+.tbl-wrap{overflow-x:auto;margin:12px 0;border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:1rem;border-radius:10px;overflow:hidden}
+thead tr,thead{background:var(--bg3)!important}
+th{padding:9px 14px;color:var(--accent);font-family:'Recursive',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:.06em;text-align:left}
+td{padding:8px 14px;border-bottom:1px solid var(--card-border);color:var(--fg2);vertical-align:top;font-size:1rem;background:transparent!important}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg3)!important}
+:not(pre)>code{background:var(--bg3);border-radius:4px;padding:1px 6px;color:var(--accent6);font-size:.82rem;font-family:'JetBrains Mono',monospace}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:85}
+#overlay.show{display:block}
+footer{margin-top:40px;padding:20px 0;border-top:1px solid var(--bg2);color:var(--fg3);font-size:.82rem;display:flex;justify-content:space-between;align-items:center}
+#btt{position:fixed;bottom:28px;right:24px;width:40px;height:40px;border-radius:50%;background:var(--accent);color:var(--bg0);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:0 4px 16px rgba(0,0,0,.4);z-index:50;font-size:1.2rem}
+#btt.show{opacity:1;pointer-events:all}
+#btt:hover{transform:scale(1.08)}
+.hidden{display:none!important}
+mark{background:var(--accent);color:var(--bg0);border-radius:2px;padding:0 2px}
+.no-results{text-align:center;padding:60px 20px;color:var(--fg3);font-size:1rem}
+#search-wrap{position:relative}
+#search{background:var(--bg2);border:1.5px solid var(--card-border);color:var(--fg);font-family:'Recursive',sans-serif;font-size:.82rem;padding:7px 14px 7px 32px;width:200px;outline:none;transition:border-color .2s,width .2s;border-radius:8px}
+#search:focus{border-color:var(--accent);width:250px}
+#search::placeholder{color:var(--fg3)}
+.search-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--fg3);font-size:13px;pointer-events:none}
+@media(max-width:840px){#sidebar{transform:translateX(-100%)}#sidebar.open{transform:translateX(0)}#sidebar.hidden{transform:translateX(-100%)}#main{margin-left:0!important;max-width:100%;padding:20px 16px 60px}#hamburger{display:flex}}
+@media(max-width:520px){.q-title{font-size:.9rem!important}.topbar-title{font-size:.85rem!important}th,td{padding:7px 10px;font-size:.82rem}}
+</style>
+</head>
+<body data-theme="gruvbox">
+<div id="progress-bar"></div>
+<div id="overlay"></div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-brand">AKTU · BCS403</div>
+    <div class="sidebar-title">OOP with Java</div>
+    <div class="sidebar-sub">7-Mark Exam Answers · Unit I</div>
+  </div>
+  <input id="search-box" type="text" placeholder="🔍  Search questions…" autocomplete="off">
+  <div class="unit-group">
+    <div class="unit-label">Unit I – Java Fundamentals</div>
+    <div class="nav-item active" onclick="scrollTo('q1')" data-q="q1">
+      <span class="nav-num">1</span>Data Types &amp; Control Structures
+    </div>
+    <div class="nav-item" onclick="scrollTo('q2')" data-q="q2">
+      <span class="nav-num">2</span>JVM &amp; JRE
+    </div>
+    <div class="nav-item" onclick="scrollTo('q3')" data-q="q3">
+      <span class="nav-num">3</span>Abstraction &amp; Encapsulation
+    </div>
+    <div class="nav-item" onclick="scrollTo('q4')" data-q="q4">
+      <span class="nav-num">4</span>Constructors in Java
+    </div>
+    <div class="nav-item" onclick="scrollTo('q5')" data-q="q5">
+      <span class="nav-num">5</span>Parameter Passing
+    </div>
+    <div class="nav-item" onclick="scrollTo('q6')" data-q="q6">
+      <span class="nav-num">6</span>Method Overloading &amp; Overriding
+    </div>
+    <div class="nav-item" onclick="scrollTo('q7')" data-q="q7">
+      <span class="nav-num">7</span>Inheritance Types
+    </div>
+    <div class="nav-item" onclick="scrollTo('q8')" data-q="q8">
+      <span class="nav-num">8</span>Access Modifiers
+    </div>
+    <div class="nav-item" onclick="scrollTo('q9')" data-q="q9">
+      <span class="nav-num">9</span>Compile-time &amp; Runtime Polymorphism
+    </div>
+    <div class="nav-item" onclick="scrollTo('q10')" data-q="q10">
+      <span class="nav-num">10</span>Abstract Class &amp; Interface
+    </div>
+    <div class="nav-item" onclick="scrollTo('q11')" data-q="q11">
+      <span class="nav-num">11</span>Multiple Inheritance &amp; Interfaces
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+  <div id="topbar">
+    <button id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <span class="topbar-title">BCS403 · OOP with Java</span>
+    <span class="topbar-badge">Unit I · 11 Questions</span>
+  </div>
+
+  <div id="content">
+
+    <!-- UNIT I HEADING -->
+    <div class="unit-section">
+      <div class="unit-heading">Unit I — Introduction, Java Basics &amp; OOP Concepts</div>
+
+      <!-- ══════════════════════════════════════════════════════════
+           Q1: Data Types & Control Structures
+      ══════════════════════════════════════════════════════════ -->
+      <div class="q-card" id="q1">
+        <div class="q-header" onclick="toggleCard(this)">
+          <div class="q-num">01</div>
+          <div class="q-title">Discuss different data types and control structures in Java with examples.</div>
+          <div class="q-meta">
+            <span class="badge badge-marks">7 Marks</span>
+            
+            <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div class="q-body">
+          <div class="q-content">
+
+            <div class="section">
+              <span class="section-label sl-def">Definition</span>
+              <div class="answer-text">
+                <p><strong>Data types</strong> define the type and size of data a variable can hold. Java is a <strong>statically typed</strong> language — every variable must be declared with a type before use.</p>
+                <p><strong>Control structures</strong> govern the <strong>flow of execution</strong> in a program: sequential, conditional, and iterative.</p>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-diagram">Diagram – Data Type Hierarchy</span>
+              <div class="diagram-wrap">
+                <svg viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg" width="720" height="320">
+                  <defs>
+                    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L8,3 z" fill="#7daea3"/>
+                    </marker>
+                  </defs>
+                  <!-- Root -->
+                  <rect x="290" y="10" width="180" height="44" rx="8" fill="#3c3836" stroke="#d8a657" stroke-width="1.5"/>
+                  <text x="380" y="37" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" fill="#d8a657" font-weight="700">Data Types</text>
+
+                  <!-- Primitive -->
+                  <rect x="60" y="90" width="160" height="44" rx="8" fill="#3c3836" stroke="#7daea3" stroke-width="1.5"/>
+                  <text x="140" y="117" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#7daea3" font-weight="600">Primitive (8)</text>
+
+                  <!-- Non-Primitive -->
+                  <rect x="530" y="90" width="180" height="44" rx="8" fill="#3c3836" stroke="#a9b665" stroke-width="1.5"/>
+                  <text x="620" y="117" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#a9b665" font-weight="600">Non-Primitive</text>
+
+                  <!-- Lines from root -->
+                  <line x1="380" y1="54" x2="140" y2="90" stroke="#7daea3" stroke-width="1.5" marker-end="url(#arr)"/>
+                  <line x1="380" y1="54" x2="620" y2="90" stroke="#a9b665" stroke-width="1.5" marker-end="url(#arr)"/>
+
+                  <!-- Primitive children -->
+                  <rect x="10"  y="180" width="76" height="38" rx="6" fill="#32302f" stroke="#ea6962" stroke-width="1"/>
+                  <text x="48"  y="204" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#ea6962">byte</text>
+                  <rect x="96"  y="180" width="76" height="38" rx="6" fill="#32302f" stroke="#ea6962" stroke-width="1"/>
+                  <text x="134" y="204" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#ea6962">short</text>
+                  <rect x="10"  y="228" width="76" height="38" rx="6" fill="#32302f" stroke="#e78a4e" stroke-width="1"/>
+                  <text x="48"  y="252" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#e78a4e">int</text>
+                  <rect x="96"  y="228" width="76" height="38" rx="6" fill="#32302f" stroke="#e78a4e" stroke-width="1"/>
+                  <text x="134" y="252" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#e78a4e">long</text>
+                  <rect x="10"  y="276" width="76" height="38" rx="6" fill="#32302f" stroke="#d3869b" stroke-width="1"/>
+                  <text x="48"  y="300" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#d3869b">float</text>
+                  <rect x="96"  y="276" width="76" height="38" rx="6" fill="#32302f" stroke="#d3869b" stroke-width="1"/>
+                  <text x="134" y="300" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#d3869b">double</text>
+                  <rect x="182" y="180" width="76" height="38" rx="6" fill="#32302f" stroke="#89b482" stroke-width="1"/>
+                  <text x="220" y="204" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#89b482">char</text>
+                  <rect x="182" y="228" width="76" height="38" rx="6" fill="#32302f" stroke="#a9b665" stroke-width="1"/>
+                  <text x="220" y="252" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#a9b665">boolean</text>
+
+                  <!-- Lines from Primitive -->
+                  <line x1="140" y1="134" x2="100" y2="180" stroke="#7daea3" stroke-width="1" stroke-dasharray="4,2"/>
+                  <line x1="140" y1="134" x2="140" y2="180" stroke="#7daea3" stroke-width="1" stroke-dasharray="4,2"/>
+                  <line x1="140" y1="134" x2="48"  y2="228" stroke="#7daea3" stroke-width="1" stroke-dasharray="4,2"/>
+                  <line x1="140" y1="134" x2="48"  y2="276" stroke="#7daea3" stroke-width="1" stroke-dasharray="4,2"/>
+                  <line x1="140" y1="134" x2="134" y2="228" stroke="#7daea3" stroke-width="1" stroke-dasharray="4,2"/>
+                  <line x1="140" y1="134" x2="134" y2="276" stroke="#7daea3" stroke-width="1" stroke-dasharray="4,2"/>
+                  <line x1="140" y1="134" x2="220" y2="180" stroke="#7daea3" stroke-width="1" stroke-dasharray="4,2"/>
+                  <line x1="140" y1="134" x2="220" y2="228" stroke="#7daea3" stroke-width="1" stroke-dasharray="4,2"/>
+
+                  <!-- Non-Primitive children -->
+                  <rect x="500" y="180" width="90" height="38" rx="6" fill="#32302f" stroke="#a9b665" stroke-width="1"/>
+                  <text x="545" y="204" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#a9b665">String</text>
+                  <rect x="602" y="180" width="90" height="38" rx="6" fill="#32302f" stroke="#a9b665" stroke-width="1"/>
+                  <text x="647" y="204" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#a9b665">Array</text>
+                  <rect x="500" y="228" width="90" height="38" rx="6" fill="#32302f" stroke="#89b482" stroke-width="1"/>
+                  <text x="545" y="252" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#89b482">Class</text>
+                  <rect x="602" y="228" width="90" height="38" rx="6" fill="#32302f" stroke="#89b482" stroke-width="1"/>
+                  <text x="647" y="252" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#89b482">Interface</text>
+                  <line x1="620" y1="134" x2="545" y2="180" stroke="#a9b665" stroke-width="1" stroke-dasharray="4,2"/>
+                  <line x1="620" y1="134" x2="647" y2="180" stroke="#a9b665" stroke-width="1" stroke-dasharray="4,2"/>
+                  <line x1="620" y1="134" x2="545" y2="228" stroke="#a9b665" stroke-width="1" stroke-dasharray="4,2"/>
+                  <line x1="620" y1="134" x2="647" y2="228" stroke="#a9b665" stroke-width="1" stroke-dasharray="4,2"/>
+                </svg>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-table">Data Type Size Table</span>
+              <div class="tbl-wrap">
+                <table>
+                  <thead><tr><th>Type</th><th>Size</th><th>Range</th><th>Default</th><th>Example</th></tr></thead>
+                  <tbody>
+                    <tr><td><em>byte</em></td><td>1 byte</td><td>-128 to 127</td><td>0</td><td><code style="font-family:var(--mono);color:var(--purple)">byte b = 100;</code></td></tr>
+                    <tr><td><em>short</em></td><td>2 bytes</td><td>-32768 to 32767</td><td>0</td><td><code style="font-family:var(--mono);color:var(--purple)">short s = 500;</code></td></tr>
+                    <tr><td><em>int</em></td><td>4 bytes</td><td>-2³¹ to 2³¹-1</td><td>0</td><td><code style="font-family:var(--mono);color:var(--purple)">int i = 1000;</code></td></tr>
+                    <tr><td><em>long</em></td><td>8 bytes</td><td>-2⁶³ to 2⁶³-1</td><td>0L</td><td><code style="font-family:var(--mono);color:var(--purple)">long l = 9L;</code></td></tr>
+                    <tr><td><em>float</em></td><td>4 bytes</td><td>~7 decimal digits</td><td>0.0f</td><td><code style="font-family:var(--mono);color:var(--purple)">float f = 3.14f;</code></td></tr>
+                    <tr><td><em>double</em></td><td>8 bytes</td><td>~15 decimal digits</td><td>0.0d</td><td><code style="font-family:var(--mono);color:var(--purple)">double d = 3.14;</code></td></tr>
+                    <tr><td><em>char</em></td><td>2 bytes</td><td>'\u0000' to '\uffff'</td><td>'\u0000'</td><td><code style="font-family:var(--mono);color:var(--purple)">char c = 'A';</code></td></tr>
+                    <tr><td><em>boolean</em></td><td>1 bit</td><td>true / false</td><td>false</td><td><code style="font-family:var(--mono);color:var(--purple)">boolean flag = true;</code></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-concept">Control Structures</span>
+              <div class="answer-text">
+                <p>Java provides three categories of control structures:</p>
+              </div>
+              <div class="diagram-wrap" style="margin-top:10px">
+                <svg viewBox="0 0 700 100" width="680" height="90" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="10" y="20" width="200" height="60" rx="8" fill="#32302f" stroke="#d8a657" stroke-width="1.5"/>
+                  <text x="110" y="46" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#d8a657" font-weight="700">Selection</text>
+                  <text x="110" y="64" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a89984">if / if-else / switch</text>
+
+                  <rect x="250" y="20" width="200" height="60" rx="8" fill="#32302f" stroke="#7daea3" stroke-width="1.5"/>
+                  <text x="350" y="46" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#7daea3" font-weight="700">Iteration</text>
+                  <text x="350" y="64" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a89984">for / while / do-while</text>
+
+                  <rect x="490" y="20" width="200" height="60" rx="8" fill="#32302f" stroke="#a9b665" stroke-width="1.5"/>
+                  <text x="590" y="46" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#a9b665" font-weight="700">Jump</text>
+                  <text x="590" y="64" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a89984">break / continue / return</text>
+                </svg>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-code">Java Code Example</span>
+              <div class="code-wrap">
+                <pre><span class="kw-comment">// Data Types & Control Structures Demo</span>
+<span class="kw-java">public class</span> <span class="kw-class">DataTypesDemo</span> {
+    <span class="kw-java">public static void</span> <span class="kw-method">main</span>(<span class="kw-type">String</span>[] args) {
+
+        <span class="kw-comment">// ── Primitive Data Types ──</span>
+        <span class="kw-type">int</span>     rollNo  = <span class="kw-num">101</span>;
+        <span class="kw-type">double</span>  cgpa    = <span class="kw-num">8.75</span>;
+        <span class="kw-type">char</span>    grade   = <span class="kw-string">'A'</span>;
+        <span class="kw-type">boolean</span> passed  = <span class="kw-java">true</span>;
+        <span class="kw-type">long</span>    regNo   = <span class="kw-num">2300520100123L</span>;
+
+        System.out.println(<span class="kw-string">"Roll: "</span> + rollNo + <span class="kw-string">" CGPA: "</span> + cgpa);
+
+        <span class="kw-comment">// ── if-else (Selection) ──</span>
+        <span class="kw-java">if</span> (cgpa >= <span class="kw-num">9.0</span>) {
+            System.out.println(<span class="kw-string">"Distinction"</span>);
+        } <span class="kw-java">else if</span> (cgpa >= <span class="kw-num">7.5</span>) {
+            System.out.println(<span class="kw-string">"First Class"</span>);
+        } <span class="kw-java">else</span> {
+            System.out.println(<span class="kw-string">"Pass"</span>);
+        }
+
+        <span class="kw-comment">// ── switch (Selection) ──</span>
+        <span class="kw-java">switch</span> (grade) {
+            <span class="kw-java">case</span> <span class="kw-string">'A'</span>: System.out.println(<span class="kw-string">"Excellent"</span>); <span class="kw-java">break</span>;
+            <span class="kw-java">case</span> <span class="kw-string">'B'</span>: System.out.println(<span class="kw-string">"Good"</span>);      <span class="kw-java">break</span>;
+            <span class="kw-java">default</span>: System.out.println(<span class="kw-string">"Average"</span>);
+        }
+
+        <span class="kw-comment">// ── for loop (Iteration) ──</span>
+        System.out.print(<span class="kw-string">"Squares: "</span>);
+        <span class="kw-java">for</span> (<span class="kw-type">int</span> i = <span class="kw-num">1</span>; i <= <span class="kw-num">5</span>; i++) {
+            System.out.print(i * i + <span class="kw-string">" "</span>);
+        }
+        System.out.println();
+
+        <span class="kw-comment">// ── while loop ──</span>
+        <span class="kw-type">int</span> n = <span class="kw-num">5</span>, fact = <span class="kw-num">1</span>;
+        <span class="kw-java">while</span> (n > <span class="kw-num">0</span>) { fact *= n--; }
+        System.out.println(<span class="kw-string">"5! = "</span> + fact);
+
+        <span class="kw-comment">// ── do-while loop ──</span>
+        <span class="kw-type">int</span> x = <span class="kw-num">0</span>;
+        <span class="kw-java">do</span> {
+            System.out.print(x + <span class="kw-string">" "</span>);
+            x++;
+        } <span class="kw-java">while</span> (x < <span class="kw-num">3</span>);
+        System.out.println();
+    }
+}</pre>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-output">Output</span>
+              <div class="output-box">
+Roll: 101 CGPA: 8.75
+First Class
+Excellent
+Squares: 1 4 9 16 25
+5! = 120
+0 1 2
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-key">Key Points</span>
+              <ul class="key-list">
+                <li>Java has <strong>8 primitive</strong> data types and several <strong>non-primitive</strong> (reference) types.</li>
+                <li><strong>int</strong> is the most used numeric type; <strong>double</strong> for decimals.</li>
+                <li><strong>if-else</strong> and <strong>switch</strong> control conditional branching.</li>
+                <li><strong>for</strong> is used when iteration count is known; <strong>while</strong> when condition-based.</li>
+                <li><strong>do-while</strong> guarantees at least one execution.</li>
+                <li><strong>break</strong> exits a loop; <strong>continue</strong> skips current iteration.</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════════
+           Q2: JVM & JRE
+      ══════════════════════════════════════════════════════════ -->
+      <div class="q-card" id="q2">
+        <div class="q-header" onclick="toggleCard(this)">
+          <div class="q-num">02</div>
+          <div class="q-title">Explain the concept of Java Virtual Machine (JVM) and Java Runtime Environment (JRE).</div>
+          <div class="q-meta">
+            <span class="badge badge-marks">7 Marks</span>
+            
+            <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div class="q-body">
+          <div class="q-content">
+            <div class="section">
+              <span class="section-label sl-def">Definition</span>
+              <div class="answer-text">
+                <p><strong>JVM (Java Virtual Machine)</strong> is an abstract computing machine that enables Java programs to run on any platform. It interprets <strong>bytecode</strong> (.class files) into machine-specific instructions.</p>
+                <p><strong>JRE (Java Runtime Environment)</strong> = <strong>JVM + Core Libraries</strong>. It provides the minimum environment necessary to <em>run</em> Java applications.</p>
+                <p><strong>JDK (Java Development Kit)</strong> = <strong>JRE + Development Tools</strong> (javac, javadoc, jar). Required for <em>development</em>.</p>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-diagram">Diagram – Java Execution Architecture</span>
+              <div class="diagram-wrap">
+                <svg viewBox="0 0 740 420" width="720" height="410" xmlns="http://www.w3.org/2000/svg">
+                  <!-- JDK box -->
+                  <rect x="20" y="10" width="700" height="390" rx="12" fill="none" stroke="#d8a657" stroke-width="1.5" stroke-dasharray="8,4"/>
+                  <text x="36" y="34" font-family="JetBrains Mono,monospace" font-size="12" fill="#d8a657" font-weight="700">JDK (Java Development Kit)</text>
+
+                  <!-- JRE box -->
+                  <rect x="40" y="50" width="660" height="320" rx="10" fill="none" stroke="#7daea3" stroke-width="1.5" stroke-dasharray="6,3"/>
+                  <text x="56" y="72" font-family="JetBrains Mono,monospace" font-size="12" fill="#7daea3" font-weight="700">JRE (Java Runtime Environment)</text>
+
+                  <!-- JVM box -->
+                  <rect x="60" y="90" width="450" height="260" rx="8" fill="#282828" stroke="#a9b665" stroke-width="1.5"/>
+                  <text x="76" y="112" font-family="JetBrains Mono,monospace" font-size="12" fill="#a9b665" font-weight="700">JVM (Java Virtual Machine)</text>
+
+                  <!-- JVM internals -->
+                  <rect x="76"  y="124" width="130" height="48" rx="6" fill="#3c3836" stroke="#ea6962" stroke-width="1"/>
+                  <text x="141" y="147" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#ea6962" font-weight="600">Class Loader</text>
+                  <text x="141" y="163" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">Loads .class files</text>
+
+                  <rect x="220" y="124" width="130" height="48" rx="6" fill="#3c3836" stroke="#e78a4e" stroke-width="1"/>
+                  <text x="285" y="147" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#e78a4e" font-weight="600">Bytecode Verifier</text>
+                  <text x="285" y="163" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">Security checks</text>
+
+                  <rect x="364" y="124" width="130" height="48" rx="6" fill="#3c3836" stroke="#d8a657" stroke-width="1"/>
+                  <text x="429" y="147" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#d8a657" font-weight="600">Execution Engine</text>
+                  <text x="429" y="163" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">Interpreter + JIT</text>
+
+                  <!-- Memory areas -->
+                  <text x="141" y="202" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#7daea3" font-weight="700">Memory Areas</text>
+
+                  <rect x="76"  y="212" width="80" height="36" rx="5" fill="#32302f" stroke="#7daea3" stroke-width="1"/>
+                  <text x="116" y="234" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#7daea3">Heap</text>
+
+                  <rect x="166" y="212" width="80" height="36" rx="5" fill="#32302f" stroke="#d3869b" stroke-width="1"/>
+                  <text x="206" y="234" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#d3869b">Stack</text>
+
+                  <rect x="256" y="212" width="80" height="36" rx="5" fill="#32302f" stroke="#89b482" stroke-width="1"/>
+                  <text x="296" y="234" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#89b482">Method Area</text>
+
+                  <rect x="346" y="212" width="80" height="36" rx="5" fill="#32302f" stroke="#a9b665" stroke-width="1"/>
+                  <text x="386" y="234" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a9b665">PC Register</text>
+
+                  <!-- GC -->
+                  <rect x="76" y="264" width="414" height="36" rx="5" fill="#32302f" stroke="#d8a657" stroke-width="1"/>
+                  <text x="283" y="286" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#d8a657">Garbage Collector (Automatic Memory Management)</text>
+
+                  <!-- Libraries box -->
+                  <rect x="526" y="90" width="158" height="260" rx="8" fill="#282828" stroke="#d3869b" stroke-width="1.5"/>
+                  <text x="605" y="112" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#d3869b" font-weight="700">Core Libraries</text>
+                  <text x="605" y="136" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">java.lang</text>
+                  <text x="605" y="154" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">java.util</text>
+                  <text x="605" y="172" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">java.io</text>
+                  <text x="605" y="190" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">java.net</text>
+                  <text x="605" y="208" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">java.awt</text>
+                  <text x="605" y="226" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">javax.swing</text>
+
+                  <!-- Flow arrows -->
+                  <text x="370" y="374" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#a89984">Source (.java) → javac → Bytecode (.class) → JVM → Machine Code</text>
+                  <line x1="76" y1="360" x2="680" y2="360" stroke="#3c3836" stroke-width="1"/>
+                </svg>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-concept">JVM Internal Working</span>
+              <div class="answer-text">
+                <p><strong>1. Class Loader Subsystem:</strong> Loads, links and initializes .class files. Has three loaders: Bootstrap, Extension, Application.</p>
+                <p><strong>2. Memory Areas:</strong></p>
+              </div>
+              <div class="tbl-wrap" style="margin-top:8px">
+                <table>
+                  <thead><tr><th>Area</th><th>Purpose</th><th>Shared?</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>Heap</strong></td><td>Stores objects and instance variables</td><td>Yes (all threads)</td></tr>
+                    <tr><td><strong>Stack</strong></td><td>Method calls, local variables, frames</td><td>No (per thread)</td></tr>
+                    <tr><td><strong>Method Area</strong></td><td>Class metadata, static variables, bytecode</td><td>Yes</td></tr>
+                    <tr><td><strong>PC Register</strong></td><td>Address of current JVM instruction</td><td>No (per thread)</td></tr>
+                    <tr><td><strong>Native Stack</strong></td><td>Native method execution (C/C++)</td><td>No (per thread)</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="answer-text" style="margin-top:10px">
+                <p><strong>3. Execution Engine:</strong> Contains <strong>Interpreter</strong> (executes bytecode line by line) and <strong>JIT Compiler</strong> (compiles hot code to native machine code for speed).</p>
+                <p><strong>4. Garbage Collector:</strong> Automatically reclaims heap memory for objects no longer referenced.</p>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-key">Key Points</span>
+              <ul class="key-list">
+                <li><strong>WORA</strong> – Write Once, Run Anywhere; JVM abstracts the underlying OS.</li>
+                <li><strong>JDK ⊃ JRE ⊃ JVM</strong> (superset relationship).</li>
+                <li><strong>JIT Compiler</strong> makes Java nearly as fast as compiled languages.</li>
+                <li>JVM is <strong>platform-dependent</strong>; bytecode is <strong>platform-independent</strong>.</li>
+                <li><strong>Garbage Collection</strong> prevents memory leaks automatically.</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════════
+           Q3: Abstraction & Encapsulation
+      ══════════════════════════════════════════════════════════ -->
+      <div class="q-card" id="q3">
+        <div class="q-header" onclick="toggleCard(this)">
+          <div class="q-num">03</div>
+          <div class="q-title">Explain abstraction and encapsulation with examples.</div>
+          <div class="q-meta">
+            <span class="badge badge-marks">7 Marks</span>
+            
+            <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div class="q-body">
+          <div class="q-content">
+
+            <div class="section">
+              <span class="section-label sl-def">Definitions</span>
+              <div class="answer-text">
+                <p><strong>Abstraction:</strong> Hiding the <em>implementation details</em> and showing only the <em>essential features</em> to the user. Achieved via <strong>abstract classes</strong> and <strong>interfaces</strong>.</p>
+                <p><strong>Encapsulation:</strong> Binding <em>data (variables)</em> and <em>methods</em> that operate on the data into a single unit (class), and restricting direct access using <strong>access modifiers</strong>. Also called <em>data hiding</em>.</p>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-diagram">Diagram</span>
+              <div class="diagram-wrap">
+                <svg viewBox="0 0 720 260" width="700" height="250" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Abstraction side -->
+                  <text x="170" y="24" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" fill="#d8a657" font-weight="700">ABSTRACTION</text>
+                  <text x="170" y="44" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a89984">What it does (Interface)</text>
+
+                  <!-- Car abstraction -->
+                  <rect x="60" y="60" width="220" height="60" rx="8" fill="#282828" stroke="#d8a657" stroke-width="1.5"/>
+                  <text x="170" y="84" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#d8a657">User sees:</text>
+                  <text x="170" y="103" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a9b665">start()  stop()  accelerate()</text>
+
+                  <rect x="60" y="140" width="220" height="60" rx="8" fill="#282828" stroke="#ea6962" stroke-width="1.5"/>
+                  <text x="170" y="164" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#ea6962">Hidden from user:</text>
+                  <text x="170" y="183" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a89984">Engine combustion logic...</text>
+
+                  <line x1="170" y1="120" x2="170" y2="140" stroke="#a89984" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+                  <text x="170" y="218" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a89984">Abstract Class / Interface</text>
+
+                  <!-- Divider -->
+                  <line x1="360" y1="10" x2="360" y2="250" stroke="#3c3836" stroke-width="1.5"/>
+
+                  <!-- Encapsulation side -->
+                  <text x="540" y="24" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" fill="#7daea3" font-weight="700">ENCAPSULATION</text>
+                  <text x="540" y="44" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a89984">Data hiding via getters/setters</text>
+
+                  <rect x="400" y="60" width="280" height="160" rx="10" fill="#282828" stroke="#7daea3" stroke-width="1.5"/>
+                  <text x="540" y="84" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#7daea3" font-weight="700">class BankAccount</text>
+
+                  <!-- private fields -->
+                  <rect x="416" y="96" width="248" height="34" rx="5" fill="#32302f" stroke="#ea6962" stroke-width="1"/>
+                  <text x="540" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#ea6962">🔒 private double balance</text>
+
+                  <!-- public methods -->
+                  <rect x="416" y="138" width="110" height="28" rx="5" fill="#32302f" stroke="#a9b665" stroke-width="1"/>
+                  <text x="471" y="156" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a9b665">🔓 getBalance()</text>
+
+                  <rect x="534" y="138" width="110" height="28" rx="5" fill="#32302f" stroke="#a9b665" stroke-width="1"/>
+                  <text x="589" y="156" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a9b665">🔓 deposit()</text>
+
+                  <rect x="416" y="174" width="228" height="28" rx="5" fill="#32302f" stroke="#a9b665" stroke-width="1"/>
+                  <text x="530" y="192" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a9b665">🔓 withdraw(amount)</text>
+                </svg>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-code">Encapsulation Example</span>
+              <div class="code-wrap">
+                <pre><span class="kw-comment">// Encapsulation: Data hiding with getters and setters</span>
+<span class="kw-java">class</span> <span class="kw-class">BankAccount</span> {
+    <span class="kw-java">private</span> <span class="kw-type">double</span> balance;   <span class="kw-comment">// private field – hidden from outside</span>
+    <span class="kw-java">private</span> <span class="kw-type">String</span> owner;
+
+    <span class="kw-java">public</span> <span class="kw-method">BankAccount</span>(<span class="kw-type">String</span> owner, <span class="kw-type">double</span> initialBalance) {
+        <span class="kw-java">this</span>.owner = owner;
+        <span class="kw-java">this</span>.balance = initialBalance;
+    }
+
+    <span class="kw-comment">// Getter</span>
+    <span class="kw-java">public</span> <span class="kw-type">double</span> <span class="kw-method">getBalance</span>() { <span class="kw-java">return</span> balance; }
+
+    <span class="kw-comment">// Setter with validation</span>
+    <span class="kw-java">public void</span> <span class="kw-method">deposit</span>(<span class="kw-type">double</span> amount) {
+        <span class="kw-java">if</span> (amount > <span class="kw-num">0</span>) balance += amount;
+    }
+
+    <span class="kw-java">public void</span> <span class="kw-method">withdraw</span>(<span class="kw-type">double</span> amount) {
+        <span class="kw-java">if</span> (amount <= balance) balance -= amount;
+        <span class="kw-java">else</span> System.out.println(<span class="kw-string">"Insufficient funds!"</span>);
+    }
+}
+
+<span class="kw-comment">// Abstraction: Abstract class hides implementation</span>
+<span class="kw-java">abstract class</span> <span class="kw-class">Shape</span> {
+    <span class="kw-java">abstract double</span> <span class="kw-method">area</span>();   <span class="kw-comment">// abstract method – no body</span>
+    <span class="kw-java">void</span> <span class="kw-method">display</span>() {
+        System.out.println(<span class="kw-string">"Area = "</span> + <span class="kw-method">area</span>());
+    }
+}
+
+<span class="kw-java">class</span> <span class="kw-class">Circle</span> <span class="kw-java">extends</span> <span class="kw-class">Shape</span> {
+    <span class="kw-type">double</span> r;
+    <span class="kw-class">Circle</span>(<span class="kw-type">double</span> r) { <span class="kw-java">this</span>.r = r; }
+    <span class="kw-ann">@Override</span>
+    <span class="kw-type">double</span> <span class="kw-method">area</span>() { <span class="kw-java">return</span> Math.PI * r * r; }
+}
+
+<span class="kw-java">public class</span> <span class="kw-class">Main</span> {
+    <span class="kw-java">public static void</span> <span class="kw-method">main</span>(<span class="kw-type">String</span>[] args) {
+        <span class="kw-comment">// Encapsulation demo</span>
+        <span class="kw-class">BankAccount</span> acc = <span class="kw-java">new</span> <span class="kw-class">BankAccount</span>(<span class="kw-string">"Alice"</span>, <span class="kw-num">1000.0</span>);
+        acc.<span class="kw-method">deposit</span>(<span class="kw-num">500</span>);
+        acc.<span class="kw-method">withdraw</span>(<span class="kw-num">200</span>);
+        System.out.println(<span class="kw-string">"Balance: "</span> + acc.<span class="kw-method">getBalance</span>());
+
+        <span class="kw-comment">// Abstraction demo</span>
+        <span class="kw-class">Shape</span> s = <span class="kw-java">new</span> <span class="kw-class">Circle</span>(<span class="kw-num">5</span>);
+        s.<span class="kw-method">display</span>();
+    }
+}</pre>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-output">Output</span>
+              <div class="output-box">Balance: 1300.0
+Area = 78.53981633974483</div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-key">Key Points</span>
+              <ul class="key-list">
+                <li><strong>Abstraction</strong> → <em>What</em> to do (hide complexity, show only interface)</li>
+                <li><strong>Encapsulation</strong> → <em>How</em> to protect data (bind + restrict access)</li>
+                <li>Encapsulation uses <strong>private</strong> fields + <strong>public</strong> getters/setters.</li>
+                <li>Abstraction uses <strong>abstract class</strong> or <strong>interface</strong>.</li>
+                <li>Both are pillars of <strong>OOP</strong> and promote <strong>modularity</strong> and <strong>security</strong>.</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════════
+           Q4: Constructors
+      ══════════════════════════════════════════════════════════ -->
+      <div class="q-card" id="q4">
+        <div class="q-header" onclick="toggleCard(this)">
+          <div class="q-num">04</div>
+          <div class="q-title">Explain constructors in Java with suitable examples.</div>
+          <div class="q-meta">
+            <span class="badge badge-marks">7 Marks</span>
+            
+            <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div class="q-body">
+          <div class="q-content">
+
+            <div class="section">
+              <span class="section-label sl-def">Definition</span>
+              <div class="answer-text">
+                <p>A <strong>constructor</strong> is a special method that is <em>automatically called</em> when an object is created using the <strong>new</strong> keyword. It is used to <strong>initialize</strong> the object's state (instance variables).</p>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-concept">Properties of Constructors</span>
+              <ul class="key-list">
+                <li>Name must be <strong>same as the class name</strong>.</li>
+                <li><strong>No return type</strong> (not even void).</li>
+                <li>Automatically invoked on object creation with <strong>new</strong>.</li>
+                <li>Can be <strong>overloaded</strong> (multiple constructors with different parameters).</li>
+                <li>If no constructor is defined, Java provides a <strong>default constructor</strong>.</li>
+              </ul>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-diagram">Types of Constructors</span>
+              <div class="diagram-wrap">
+                <svg viewBox="0 0 700 200" width="680" height="190" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Root -->
+                  <rect x="260" y="10" width="180" height="44" rx="8" fill="#3c3836" stroke="#d8a657" stroke-width="1.5"/>
+                  <text x="350" y="37" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#d8a657" font-weight="700">Constructors</text>
+
+                  <!-- Three types -->
+                  <rect x="30"  y="100" width="180" height="64" rx="8" fill="#32302f" stroke="#ea6962" stroke-width="1.5"/>
+                  <text x="120" y="124" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#ea6962" font-weight="600">Default</text>
+                  <text x="120" y="142" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">No parameters</text>
+                  <text x="120" y="157" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">Provided by Java</text>
+
+                  <rect x="260" y="100" width="180" height="64" rx="8" fill="#32302f" stroke="#7daea3" stroke-width="1.5"/>
+                  <text x="350" y="124" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#7daea3" font-weight="600">Parameterized</text>
+                  <text x="350" y="142" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">Has parameters</text>
+                  <text x="350" y="157" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">User-defined</text>
+
+                  <rect x="490" y="100" width="180" height="64" rx="8" fill="#32302f" stroke="#a9b665" stroke-width="1.5"/>
+                  <text x="580" y="124" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#a9b665" font-weight="600">Copy</text>
+                  <text x="580" y="142" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">Takes object as param</text>
+                  <text x="580" y="157" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">Copies values</text>
+
+                  <!-- Lines -->
+                  <line x1="350" y1="54" x2="120" y2="100" stroke="#a89984" stroke-width="1.5" marker-end="url(#arr)"/>
+                  <line x1="350" y1="54" x2="350" y2="100" stroke="#a89984" stroke-width="1.5" marker-end="url(#arr)"/>
+                  <line x1="350" y1="54" x2="580" y2="100" stroke="#a89984" stroke-width="1.5" marker-end="url(#arr)"/>
+                </svg>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-code">Java Code</span>
+              <div class="code-wrap">
+                <pre><span class="kw-java">class</span> <span class="kw-class">Student</span> {
+    <span class="kw-type">String</span> name;
+    <span class="kw-type">int</span> age;
+    <span class="kw-type">double</span> cgpa;
+
+    <span class="kw-comment">// 1. Default Constructor</span>
+    <span class="kw-class">Student</span>() {
+        name = <span class="kw-string">"Unknown"</span>;
+        age  = <span class="kw-num">0</span>;
+        cgpa = <span class="kw-num">0.0</span>;
+        System.out.println(<span class="kw-string">"Default Constructor called"</span>);
+    }
+
+    <span class="kw-comment">// 2. Parameterized Constructor</span>
+    <span class="kw-class">Student</span>(<span class="kw-type">String</span> n, <span class="kw-type">int</span> a, <span class="kw-type">double</span> c) {
+        <span class="kw-java">this</span>.name = n;
+        <span class="kw-java">this</span>.age  = a;
+        <span class="kw-java">this</span>.cgpa = c;
+        System.out.println(<span class="kw-string">"Parameterized Constructor called"</span>);
+    }
+
+    <span class="kw-comment">// 3. Copy Constructor</span>
+    <span class="kw-class">Student</span>(<span class="kw-class">Student</span> s) {
+        <span class="kw-java">this</span>.name = s.name;
+        <span class="kw-java">this</span>.age  = s.age;
+        <span class="kw-java">this</span>.cgpa = s.cgpa;
+        System.out.println(<span class="kw-string">"Copy Constructor called"</span>);
+    }
+
+    <span class="kw-java">void</span> <span class="kw-method">display</span>() {
+        System.out.println(<span class="kw-string">"Name:"</span> + name + <span class="kw-string">" Age:"</span> + age + <span class="kw-string">" CGPA:"</span> + cgpa);
+    }
+}
+
+<span class="kw-java">public class</span> <span class="kw-class">ConstructorDemo</span> {
+    <span class="kw-java">public static void</span> <span class="kw-method">main</span>(<span class="kw-type">String</span>[] args) {
+        <span class="kw-class">Student</span> s1 = <span class="kw-java">new</span> <span class="kw-class">Student</span>();                  <span class="kw-comment">// Default</span>
+        s1.<span class="kw-method">display</span>();
+
+        <span class="kw-class">Student</span> s2 = <span class="kw-java">new</span> <span class="kw-class">Student</span>(<span class="kw-string">"Alice"</span>, <span class="kw-num">20</span>, <span class="kw-num">8.9</span>);  <span class="kw-comment">// Parameterized</span>
+        s2.<span class="kw-method">display</span>();
+
+        <span class="kw-class">Student</span> s3 = <span class="kw-java">new</span> <span class="kw-class">Student</span>(s2);               <span class="kw-comment">// Copy</span>
+        s3.<span class="kw-method">display</span>();
+    }
+}</pre>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-output">Output</span>
+              <div class="output-box">Default Constructor called
+Name:Unknown Age:0 CGPA:0.0
+Parameterized Constructor called
+Name:Alice Age:20 CGPA:8.9
+Copy Constructor called
+Name:Alice Age:20 CGPA:8.9</div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-key">Key Points</span>
+              <ul class="key-list">
+                <li><strong>Constructor chaining</strong> is done using <strong>this()</strong> (same class) or <strong>super()</strong> (parent class).</li>
+                <li>If a parameterized constructor is defined, default constructor is <strong>NOT auto-provided</strong>.</li>
+                <li>Constructors <strong>cannot be static, abstract, or final</strong>.</li>
+                <li><strong>this</strong> keyword refers to the current object inside a constructor.</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════════
+           Q5: Parameter Passing
+      ══════════════════════════════════════════════════════════ -->
+      <div class="q-card" id="q5">
+        <div class="q-header" onclick="toggleCard(this)">
+          <div class="q-num">05</div>
+          <div class="q-title">Explain parameter passing in Java with examples.</div>
+          <div class="q-meta">
+            <span class="badge badge-marks">7 Marks</span>
+            
+            <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div class="q-body">
+          <div class="q-content">
+
+            <div class="section">
+              <span class="section-label sl-def">Definition</span>
+              <div class="answer-text">
+                <p>Java uses <strong>Pass by Value</strong> exclusively. However, the behavior differs for primitive and reference types:</p>
+                <p>• For <strong>primitives</strong>: a copy of the actual value is passed → changes inside method do <em>not affect</em> the original.</p>
+                <p>• For <strong>objects (references)</strong>: a copy of the <em>reference</em> (address) is passed → changes to the object's state <em>are reflected</em> outside, but reassigning the reference itself is <em>not</em>.</p>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-diagram">Diagram – Pass by Value vs Reference Type</span>
+              <div class="diagram-wrap">
+                <svg viewBox="0 0 720 280" width="700" height="270" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Left: Primitive -->
+                  <text x="170" y="24" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#d8a657" font-weight="700">Primitive (int)</text>
+                  <!-- Stack boxes -->
+                  <rect x="40"  y="40" width="120" height="40" rx="6" fill="#32302f" stroke="#7daea3" stroke-width="1.5"/>
+                  <text x="100" y="65" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#7daea3">x = 10</text>
+                  <text x="100" y="92" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">main stack</text>
+
+                  <text x="200" y="62" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="20" fill="#a89984">→</text>
+
+                  <rect x="220" y="40" width="120" height="40" rx="6" fill="#32302f" stroke="#ea6962" stroke-width="1.5"/>
+                  <text x="280" y="65" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#ea6962">n = 10 (copy)</text>
+                  <text x="280" y="92" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">method stack</text>
+
+                  <text x="170" y="130" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a89984">n = 99 inside method</text>
+                  <rect x="220" y="140" width="120" height="40" rx="6" fill="#32302f" stroke="#ea6962" stroke-width="1"/>
+                  <text x="280" y="165" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#ea6962">n = 99 (changed)</text>
+                  <rect x="40"  y="140" width="120" height="40" rx="6" fill="#32302f" stroke="#a9b665" stroke-width="1.5"/>
+                  <text x="100" y="165" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#a9b665">x = 10 (same!)</text>
+
+                  <text x="170" y="210" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a9b665" font-weight="700">Original unchanged ✓</text>
+
+                  <!-- Divider -->
+                  <line x1="370" y1="10" x2="370" y2="270" stroke="#3c3836" stroke-width="1.5"/>
+
+                  <!-- Right: Object -->
+                  <text x="545" y="24" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#d8a657" font-weight="700">Object (Reference)</text>
+
+                  <rect x="400" y="40" width="140" height="40" rx="6" fill="#32302f" stroke="#7daea3" stroke-width="1.5"/>
+                  <text x="470" y="58" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#7daea3">arr ref → 0x100</text>
+                  <text x="470" y="73" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">main stack</text>
+
+                  <rect x="570" y="40" width="140" height="40" rx="6" fill="#282828" stroke="#d8a657" stroke-width="1.5"/>
+                  <text x="640" y="58" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#d8a657">Heap: {1,2,3}</text>
+                  <text x="640" y="73" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">address 0x100</text>
+
+                  <line x1="540" y1="60" x2="570" y2="60" stroke="#d8a657" stroke-width="1.5" marker-end="url(#arr)"/>
+
+                  <text x="470" y="120" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a89984">method gets copy of ref</text>
+                  <text x="470" y="138" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a89984">→ both point to same heap</text>
+
+                  <rect x="570" y="150" width="140" height="40" rx="6" fill="#282828" stroke="#ea6962" stroke-width="1.5"/>
+                  <text x="640" y="174" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#ea6962">Heap: {99,2,3}</text>
+
+                  <text x="545" y="215" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#ea6962" font-weight="700">Object state changed !</text>
+                </svg>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-code">Java Code</span>
+              <div class="code-wrap">
+                <pre><span class="kw-java">public class</span> <span class="kw-class">ParameterDemo</span> {
+
+    <span class="kw-comment">// Pass by Value – primitive</span>
+    <span class="kw-java">static void</span> <span class="kw-method">changeValue</span>(<span class="kw-type">int</span> n) {
+        n = <span class="kw-num">99</span>;  <span class="kw-comment">// only local copy changes</span>
+        System.out.println(<span class="kw-string">"Inside method: n = "</span> + n);
+    }
+
+    <span class="kw-comment">// Pass by Reference (object reference by value)</span>
+    <span class="kw-java">static void</span> <span class="kw-method">changeArray</span>(<span class="kw-type">int</span>[] arr) {
+        arr[<span class="kw-num">0</span>] = <span class="kw-num">99</span>;  <span class="kw-comment">// modifies actual heap object</span>
+        System.out.println(<span class="kw-string">"Inside method: arr[0] = "</span> + arr[<span class="kw-num">0</span>]);
+    }
+
+    <span class="kw-comment">// Reassigning reference – no effect outside</span>
+    <span class="kw-java">static void</span> <span class="kw-method">reassign</span>(<span class="kw-type">int</span>[] arr) {
+        arr = <span class="kw-java">new int</span>[]{<span class="kw-num">1</span>,<span class="kw-num">2</span>,<span class="kw-num">3</span>};  <span class="kw-comment">// only local ref changes</span>
+        System.out.println(<span class="kw-string">"Reassigned inside method"</span>);
+    }
+
+    <span class="kw-java">public static void</span> <span class="kw-method">main</span>(<span class="kw-type">String</span>[] args) {
+        <span class="kw-comment">// Primitive test</span>
+        <span class="kw-type">int</span> x = <span class="kw-num">10</span>;
+        <span class="kw-method">changeValue</span>(x);
+        System.out.println(<span class="kw-string">"After method: x = "</span> + x); <span class="kw-comment">// still 10</span>
+
+        <span class="kw-comment">// Object test</span>
+        <span class="kw-type">int</span>[] myArr = {<span class="kw-num">1</span>, <span class="kw-num">2</span>, <span class="kw-num">3</span>};
+        <span class="kw-method">changeArray</span>(myArr);
+        System.out.println(<span class="kw-string">"After method: arr[0] = "</span> + myArr[<span class="kw-num">0</span>]); <span class="kw-comment">// 99!</span>
+
+        <span class="kw-comment">// Reassign test</span>
+        <span class="kw-type">int</span>[] b = {<span class="kw-num">10</span>, <span class="kw-num">20</span>};
+        <span class="kw-method">reassign</span>(b);
+        System.out.println(<span class="kw-string">"After reassign: b[0] = "</span> + b[<span class="kw-num">0</span>]); <span class="kw-comment">// still 10</span>
+    }
+}</pre>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-output">Output</span>
+              <div class="output-box">Inside method: n = 99
+After method: x = 10
+Inside method: arr[0] = 99
+After method: arr[0] = 99
+Reassigned inside method
+After reassign: b[0] = 10</div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-key">Key Points</span>
+              <ul class="key-list">
+                <li>Java always uses <strong>Pass by Value</strong> — there is no pass by reference in Java.</li>
+                <li>For primitives, value is <strong>copied</strong> — original is <strong>unaffected</strong>.</li>
+                <li>For objects, the <strong>reference (address)</strong> is copied — object state <strong>can be modified</strong>.</li>
+                <li>Reassigning the reference inside a method does <strong>not affect</strong> the original reference.</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════════
+           Q6: Method Overloading & Overriding
+      ══════════════════════════════════════════════════════════ -->
+      <div class="q-card" id="q6">
+        <div class="q-header" onclick="toggleCard(this)">
+          <div class="q-num">06</div>
+          <div class="q-title">Explain method overloading and method overriding with examples.</div>
+          <div class="q-meta">
+            <span class="badge badge-marks">7 Marks</span>
+            
+            <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div class="q-body">
+          <div class="q-content">
+
+            <div class="section">
+              <span class="section-label sl-def">Definitions</span>
+              <div class="answer-text">
+                <p><strong>Method Overloading (Compile-time Polymorphism):</strong> Multiple methods in the <em>same class</em> with the <strong>same name</strong> but different <strong>parameter lists</strong> (type, number, or order). Resolved at <strong>compile time</strong>.</p>
+                <p><strong>Method Overriding (Runtime Polymorphism):</strong> A method in a <strong>subclass</strong> has the <strong>same name, return type, and parameters</strong> as a method in the parent class. Resolved at <strong>runtime</strong>.</p>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-table">Comparison Table</span>
+              <div class="tbl-wrap">
+                <table>
+                  <thead><tr><th>Feature</th><th>Overloading</th><th>Overriding</th></tr></thead>
+                  <tbody>
+                    <tr><td>Class</td><td>Same class</td><td>Parent–Child classes</td></tr>
+                    <tr><td>Parameters</td><td>Must differ</td><td>Must be same</td></tr>
+                    <tr><td>Return type</td><td>Can differ</td><td>Must be same (covariant allowed)</td></tr>
+                    <tr><td>Binding</td><td>Compile-time (static)</td><td>Runtime (dynamic)</td></tr>
+                    <tr><td>Polymorphism</td><td>Compile-time</td><td>Runtime</td></tr>
+                    <tr><td>@Override</td><td>Not used</td><td>Should be used</td></tr>
+                    <tr><td>static methods</td><td>Can be overloaded</td><td>Cannot be overridden</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-code">Java Code</span>
+              <div class="code-wrap">
+                <pre><span class="kw-comment">// ── METHOD OVERLOADING ──</span>
+<span class="kw-java">class</span> <span class="kw-class">Calculator</span> {
+
+    <span class="kw-java">int</span> <span class="kw-method">add</span>(<span class="kw-type">int</span> a, <span class="kw-type">int</span> b) {               <span class="kw-comment">// 2 ints</span>
+        <span class="kw-java">return</span> a + b;
+    }
+
+    <span class="kw-java">double</span> <span class="kw-method">add</span>(<span class="kw-type">double</span> a, <span class="kw-type">double</span> b) {   <span class="kw-comment">// 2 doubles</span>
+        <span class="kw-java">return</span> a + b;
+    }
+
+    <span class="kw-java">int</span> <span class="kw-method">add</span>(<span class="kw-type">int</span> a, <span class="kw-type">int</span> b, <span class="kw-type">int</span> c) {     <span class="kw-comment">// 3 ints</span>
+        <span class="kw-java">return</span> a + b + c;
+    }
+}
+
+<span class="kw-comment">// ── METHOD OVERRIDING ──</span>
+<span class="kw-java">class</span> <span class="kw-class">Animal</span> {
+    <span class="kw-java">void</span> <span class="kw-method">sound</span>() {
+        System.out.println(<span class="kw-string">"Animal makes a sound"</span>);
+    }
+}
+
+<span class="kw-java">class</span> <span class="kw-class">Dog</span> <span class="kw-java">extends</span> <span class="kw-class">Animal</span> {
+    <span class="kw-ann">@Override</span>
+    <span class="kw-java">void</span> <span class="kw-method">sound</span>() {                      <span class="kw-comment">// overrides parent method</span>
+        System.out.println(<span class="kw-string">"Dog barks: Woof!"</span>);
+    }
+}
+
+<span class="kw-java">class</span> <span class="kw-class">Cat</span> <span class="kw-java">extends</span> <span class="kw-class">Animal</span> {
+    <span class="kw-ann">@Override</span>
+    <span class="kw-java">void</span> <span class="kw-method">sound</span>() {
+        System.out.println(<span class="kw-string">"Cat meows: Meow!"</span>);
+    }
+}
+
+<span class="kw-java">public class</span> <span class="kw-class">PolymorphismDemo</span> {
+    <span class="kw-java">public static void</span> <span class="kw-method">main</span>(<span class="kw-type">String</span>[] args) {
+        <span class="kw-comment">// Overloading</span>
+        <span class="kw-class">Calculator</span> c = <span class="kw-java">new</span> <span class="kw-class">Calculator</span>();
+        System.out.println(c.<span class="kw-method">add</span>(<span class="kw-num">3</span>, <span class="kw-num">4</span>));         <span class="kw-comment">// int version</span>
+        System.out.println(c.<span class="kw-method">add</span>(<span class="kw-num">3.5</span>, <span class="kw-num">1.5</span>));     <span class="kw-comment">// double version</span>
+        System.out.println(c.<span class="kw-method">add</span>(<span class="kw-num">1</span>, <span class="kw-num">2</span>, <span class="kw-num">3</span>));      <span class="kw-comment">// 3-param version</span>
+
+        <span class="kw-comment">// Overriding – runtime polymorphism</span>
+        <span class="kw-class">Animal</span> a1 = <span class="kw-java">new</span> <span class="kw-class">Dog</span>();  <span class="kw-comment">// upcasting</span>
+        <span class="kw-class">Animal</span> a2 = <span class="kw-java">new</span> <span class="kw-class">Cat</span>();
+        a1.<span class="kw-method">sound</span>();  <span class="kw-comment">// Dog's sound called at runtime</span>
+        a2.<span class="kw-method">sound</span>();  <span class="kw-comment">// Cat's sound called at runtime</span>
+    }
+}</pre>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-output">Output</span>
+              <div class="output-box">7
+5.0
+6
+Dog barks: Woof!
+Cat meows: Meow!</div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-key">Key Points</span>
+              <ul class="key-list">
+                <li>Overloading is <strong>static binding</strong>; overriding is <strong>dynamic binding</strong>.</li>
+                <li><strong>@Override</strong> annotation prevents accidental errors in overriding.</li>
+                <li>Overriding enables <strong>runtime polymorphism</strong> (core OOP feature).</li>
+                <li>A method declared <strong>final</strong> or <strong>static</strong> cannot be overridden.</li>
+                <li>Overriding method cannot have a <strong>more restrictive access modifier</strong> than the parent.</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════════
+           Q7: Inheritance Types
+      ══════════════════════════════════════════════════════════ -->
+      <div class="q-card" id="q7">
+        <div class="q-header" onclick="toggleCard(this)">
+          <div class="q-num">07</div>
+          <div class="q-title">Explain inheritance types in Java.</div>
+          <div class="q-meta">
+            <span class="badge badge-marks">7 Marks</span>
+            
+            <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div class="q-body">
+          <div class="q-content">
+            <div class="section">
+              <span class="section-label sl-def">Definition</span>
+              <div class="answer-text">
+                <p><strong>Inheritance</strong> is an OOP mechanism where a <strong>subclass (child)</strong> acquires the properties and behaviors of a <strong>superclass (parent)</strong>. It promotes <strong>code reusability</strong> and establishes an <em>IS-A</em> relationship. Achieved using the <strong>extends</strong> keyword.</p>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-diagram">Types of Inheritance</span>
+              <div class="diagram-wrap">
+                <svg viewBox="0 0 740 360" width="720" height="350" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <marker id="inh" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+                      <polygon points="0,0 10,5 0,10" fill="#d8a657"/>
+                    </marker>
+                  </defs>
+
+                  <!-- 1. Single -->
+                  <text x="80" y="18" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#d8a657" font-weight="700">1. Single</text>
+                  <rect x="30"  y="28" width="100" height="34" rx="6" fill="#32302f" stroke="#7daea3" stroke-width="1.5"/>
+                  <text x="80"  y="49" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#7daea3">Animal</text>
+                  <line x1="80" y1="62" x2="80" y2="90" stroke="#d8a657" stroke-width="1.5" marker-end="url(#inh)"/>
+                  <rect x="30"  y="90" width="100" height="34" rx="6" fill="#32302f" stroke="#a9b665" stroke-width="1.5"/>
+                  <text x="80"  y="111" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#a9b665">Dog</text>
+
+                  <!-- 2. Multilevel -->
+                  <text x="230" y="18" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#d8a657" font-weight="700">2. Multilevel</text>
+                  <rect x="180" y="28" width="100" height="34" rx="6" fill="#32302f" stroke="#7daea3" stroke-width="1.5"/>
+                  <text x="230" y="49" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#7daea3">Animal</text>
+                  <line x1="230" y1="62" x2="230" y2="90" stroke="#d8a657" stroke-width="1.5" marker-end="url(#inh)"/>
+                  <rect x="180" y="90" width="100" height="34" rx="6" fill="#32302f" stroke="#e78a4e" stroke-width="1.5"/>
+                  <text x="230" y="111" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#e78a4e">Dog</text>
+                  <line x1="230" y1="124" x2="230" y2="152" stroke="#d8a657" stroke-width="1.5" marker-end="url(#inh)"/>
+                  <rect x="180" y="152" width="100" height="34" rx="6" fill="#32302f" stroke="#a9b665" stroke-width="1.5"/>
+                  <text x="230" y="173" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#a9b665">Puppy</text>
+
+                  <!-- 3. Hierarchical -->
+                  <text x="430" y="18" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#d8a657" font-weight="700">3. Hierarchical</text>
+                  <rect x="380" y="28" width="100" height="34" rx="6" fill="#32302f" stroke="#7daea3" stroke-width="1.5"/>
+                  <text x="430" y="49" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#7daea3">Animal</text>
+                  <line x1="400" y1="62" x2="370" y2="90" stroke="#d8a657" stroke-width="1.5" marker-end="url(#inh)"/>
+                  <line x1="460" y1="62" x2="490" y2="90" stroke="#d8a657" stroke-width="1.5" marker-end="url(#inh)"/>
+                  <rect x="330" y="90" width="80" height="34" rx="6" fill="#32302f" stroke="#a9b665" stroke-width="1.5"/>
+                  <text x="370" y="111" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#a9b665">Dog</text>
+                  <rect x="460" y="90" width="80" height="34" rx="6" fill="#32302f" stroke="#a9b665" stroke-width="1.5"/>
+                  <text x="500" y="111" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#a9b665">Cat</text>
+
+                  <!-- 4. Multiple (via Interface) -->
+                  <text x="650" y="18" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#d8a657" font-weight="700">4. Multiple*</text>
+                  <rect x="596" y="28" width="100" height="34" rx="6" fill="#32302f" stroke="#d3869b" stroke-width="1.5" stroke-dasharray="5,2"/>
+                  <text x="646" y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#d3869b">«interface»</text>
+                  <text x="646" y="55" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#d3869b">Flyable</text>
+                  <rect x="596" y="90" width="100" height="34" rx="6" fill="#32302f" stroke="#d3869b" stroke-width="1.5" stroke-dasharray="5,2"/>
+                  <text x="646" y="104" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#d3869b">«interface»</text>
+                  <text x="646" y="117" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#d3869b">Swimmable</text>
+                  <line x1="646" y1="62" x2="646" y2="90" stroke="#d3869b" stroke-width="1" stroke-dasharray="4,2" marker-end="url(#inh)"/>
+                  <line x1="596" y1="152" x2="646" y2="124" stroke="#d3869b" stroke-width="1.5" marker-end="url(#inh)"/>
+                  <line x1="696" y1="152" x2="646" y2="124" stroke="#d3869b" stroke-width="1.5" marker-end="url(#inh)"/>
+                  <rect x="596" y="152" width="100" height="34" rx="6" fill="#32302f" stroke="#a9b665" stroke-width="1.5"/>
+                  <text x="646" y="173" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#a9b665">Duck</text>
+                  <text x="646" y="200" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">*via interfaces</text>
+
+                  <!-- Hybrid note -->
+                  <rect x="30" y="230" width="680" height="50" rx="8" fill="#282828" stroke="#d8a657" stroke-width="1" stroke-dasharray="6,3"/>
+                  <text x="370" y="252" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#d8a657" font-weight="700">5. Hybrid Inheritance</text>
+                  <text x="370" y="272" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a89984">Combination of two or more types. Not supported via classes (Diamond Problem). Achieved via interfaces.</text>
+                </svg>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-code">Java Code – Multilevel & Hierarchical</span>
+              <div class="code-wrap">
+                <pre><span class="kw-comment">// Multilevel Inheritance</span>
+<span class="kw-java">class</span> <span class="kw-class">Animal</span> {
+    <span class="kw-java">void</span> <span class="kw-method">eat</span>()   { System.out.println(<span class="kw-string">"Animal eats"</span>); }
+}
+
+<span class="kw-java">class</span> <span class="kw-class">Dog</span> <span class="kw-java">extends</span> <span class="kw-class">Animal</span> {
+    <span class="kw-java">void</span> <span class="kw-method">bark</span>()  { System.out.println(<span class="kw-string">"Dog barks"</span>); }
+}
+
+<span class="kw-java">class</span> <span class="kw-class">Puppy</span> <span class="kw-java">extends</span> <span class="kw-class">Dog</span> {
+    <span class="kw-java">void</span> <span class="kw-method">weep</span>()  { System.out.println(<span class="kw-string">"Puppy weeps"</span>); }
+}
+
+<span class="kw-comment">// Hierarchical Inheritance</span>
+<span class="kw-java">class</span> <span class="kw-class">Cat</span> <span class="kw-java">extends</span> <span class="kw-class">Animal</span> {
+    <span class="kw-java">void</span> <span class="kw-method">meow</span>()  { System.out.println(<span class="kw-string">"Cat meows"</span>); }
+}
+
+<span class="kw-java">public class</span> <span class="kw-class">InheritanceDemo</span> {
+    <span class="kw-java">public static void</span> <span class="kw-method">main</span>(<span class="kw-type">String</span>[] args) {
+        <span class="kw-class">Puppy</span> p = <span class="kw-java">new</span> <span class="kw-class">Puppy</span>();
+        p.<span class="kw-method">eat</span>();  p.<span class="kw-method">bark</span>();  p.<span class="kw-method">weep</span>();  <span class="kw-comment">// multilevel</span>
+
+        <span class="kw-class">Cat</span> c = <span class="kw-java">new</span> <span class="kw-class">Cat</span>();
+        c.<span class="kw-method">eat</span>();  c.<span class="kw-method">meow</span>();              <span class="kw-comment">// hierarchical</span>
+    }
+}</pre>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-output">Output</span>
+              <div class="output-box">Animal eats
+Dog barks
+Puppy weeps
+Animal eats
+Cat meows</div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-key">Key Points</span>
+              <ul class="key-list">
+                <li>Java uses <strong>extends</strong> for class inheritance, <strong>implements</strong> for interfaces.</li>
+                <li><strong>Multiple inheritance</strong> through classes is <em>not supported</em> in Java to avoid the <strong>Diamond Problem</strong>.</li>
+                <li>All classes implicitly extend <strong>java.lang.Object</strong>.</li>
+                <li><strong>super</strong> keyword accesses parent class members and constructors.</li>
+                <li>Inheritance promotes <strong>code reuse</strong> and supports <strong>polymorphism</strong>.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════════
+           Q8: Access Modifiers
+      ══════════════════════════════════════════════════════════ -->
+      <div class="q-card" id="q8">
+        <div class="q-header" onclick="toggleCard(this)">
+          <div class="q-num">08</div>
+          <div class="q-title">Explain access modifiers in Java.</div>
+          <div class="q-meta">
+            <span class="badge badge-marks">7 Marks</span>
+            
+            <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div class="q-body">
+          <div class="q-content">
+            <div class="section">
+              <span class="section-label sl-def">Definition</span>
+              <div class="answer-text">
+                <p><strong>Access modifiers</strong> (or access specifiers) define the <em>scope and visibility</em> of classes, methods, variables, and constructors in Java. They are a key mechanism of <strong>encapsulation</strong>.</p>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-diagram">Access Levels Visualization</span>
+              <div class="diagram-wrap">
+                <svg viewBox="0 0 720 300" width="700" height="290" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Concentric circles representing scope -->
+                  <circle cx="360" cy="150" r="130" fill="none" stroke="#3c3836" stroke-width="1"/>
+                  <circle cx="360" cy="150" r="100" fill="none" stroke="#3c3836" stroke-width="1"/>
+                  <circle cx="360" cy="150" r="68"  fill="none" stroke="#3c3836" stroke-width="1"/>
+                  <circle cx="360" cy="150" r="36"  fill="none" stroke="#3c3836" stroke-width="1"/>
+
+                  <!-- Fill circles -->
+                  <circle cx="360" cy="150" r="130" fill="rgba(169,182,101,0.06)"/>
+                  <circle cx="360" cy="150" r="100" fill="rgba(125,174,163,0.06)"/>
+                  <circle cx="360" cy="150" r="68"  fill="rgba(216,166,87,0.08)"/>
+                  <circle cx="360" cy="150" r="36"  fill="rgba(234,105,98,0.12)"/>
+
+                  <!-- Labels -->
+                  <text x="360" y="155" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#ea6962" font-weight="700">private</text>
+                  <text x="360" y="126" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#d8a657">default</text>
+                  <text x="360" y="105" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#7daea3">protected</text>
+                  <text x="360" y="84" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a9b665">public</text>
+
+                  <!-- Scope labels on right -->
+                  <text x="510" y="58"  font-family="JetBrains Mono,monospace" font-size="11" fill="#a9b665">Everywhere (all packages)</text>
+                  <text x="510" y="84"  font-family="JetBrains Mono,monospace" font-size="11" fill="#7daea3">Same pkg + subclasses</text>
+                  <text x="510" y="112" font-family="JetBrains Mono,monospace" font-size="11" fill="#d8a657">Same package only</text>
+                  <text x="510" y="140" font-family="JetBrains Mono,monospace" font-size="11" fill="#ea6962">Same class only</text>
+
+                  <!-- Lines to scope labels -->
+                  <line x1="490" y1="150" x2="504" y2="140" stroke="#ea6962" stroke-width="1" stroke-dasharray="3,2"/>
+                  <line x1="490" y1="115" x2="504" y2="112" stroke="#d8a657" stroke-width="1" stroke-dasharray="3,2"/>
+                  <line x1="460" y1="82"  x2="504" y2="84"  stroke="#7daea3" stroke-width="1" stroke-dasharray="3,2"/>
+                  <line x1="490" y1="42"  x2="504" y2="58"  stroke="#a9b665" stroke-width="1" stroke-dasharray="3,2"/>
+                </svg>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-table">Access Modifier Table</span>
+              <div class="tbl-wrap">
+                <table>
+                  <thead><tr><th>Modifier</th><th>Same Class</th><th>Same Package</th><th>Subclass (diff pkg)</th><th>Other Packages</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong style="color:var(--red)">private</strong></td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+                    <tr><td><strong style="color:var(--yellow)">default</strong> (no keyword)</td><td>✅</td><td>✅</td><td>❌</td><td>❌</td></tr>
+                    <tr><td><strong style="color:var(--blue)">protected</strong></td><td>✅</td><td>✅</td><td>✅</td><td>❌</td></tr>
+                    <tr><td><strong style="color:var(--green)">public</strong></td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-code">Java Code</span>
+              <div class="code-wrap">
+                <pre><span class="kw-java">package</span> school;
+
+<span class="kw-java">public class</span> <span class="kw-class">Teacher</span> {
+    <span class="kw-java">private</span>   <span class="kw-type">String</span> salary  = <span class="kw-string">"50000"</span>;  <span class="kw-comment">// only within Teacher</span>
+              <span class="kw-type">String</span> empId   = <span class="kw-string">"T101"</span>;    <span class="kw-comment">// default: school package</span>
+    <span class="kw-java">protected</span> <span class="kw-type">String</span> dept    = <span class="kw-string">"CS"</span>;      <span class="kw-comment">// school pkg + subclasses</span>
+    <span class="kw-java">public</span>    <span class="kw-type">String</span> name    = <span class="kw-string">"Alice"</span>;   <span class="kw-comment">// everywhere</span>
+
+    <span class="kw-java">private void</span>   <span class="kw-method">showSalary</span>() { System.out.println(salary); }
+    <span class="kw-java">public void</span>    <span class="kw-method">showInfo</span>()   { System.out.println(name + <span class="kw-string">" - "</span> + dept); }
+}
+
+<span class="kw-java">class</span> <span class="kw-class">SubTeacher</span> <span class="kw-java">extends</span> <span class="kw-class">Teacher</span> {
+    <span class="kw-java">void</span> <span class="kw-method">display</span>() {
+        <span class="kw-comment">// salary    → ERROR (private)</span>
+        System.out.println(dept);    <span class="kw-comment">// OK (protected)</span>
+        System.out.println(name);    <span class="kw-comment">// OK (public)</span>
+    }
+}
+
+<span class="kw-java">public class</span> <span class="kw-class">Main</span> {
+    <span class="kw-java">public static void</span> <span class="kw-method">main</span>(<span class="kw-type">String</span>[] args) {
+        <span class="kw-class">Teacher</span> t = <span class="kw-java">new</span> <span class="kw-class">Teacher</span>();
+        t.<span class="kw-method">showInfo</span>();   <span class="kw-comment">// public – accessible</span>
+        <span class="kw-comment">// t.showSalary() → ERROR (private)</span>
+    }
+}</pre>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-key">Key Points</span>
+              <ul class="key-list">
+                <li><strong>private</strong> provides the highest encapsulation (most restrictive).</li>
+                <li><strong>public</strong> is least restrictive — accessible from anywhere.</li>
+                <li><strong>protected</strong> allows subclasses in different packages to access members.</li>
+                <li><strong>default</strong> (package-private) is the visibility when no modifier is specified.</li>
+                <li>Top-level classes can only be <strong>public</strong> or <strong>default</strong>.</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════════
+           Q9: Polymorphism
+      ══════════════════════════════════════════════════════════ -->
+      <div class="q-card" id="q9">
+        <div class="q-header" onclick="toggleCard(this)">
+          <div class="q-num">09</div>
+          <div class="q-title">Explain compile-time and runtime polymorphism in Java.</div>
+          <div class="q-meta">
+            <span class="badge badge-marks">7 Marks</span>
+            
+            <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div class="q-body">
+          <div class="q-content">
+
+            <div class="section">
+              <span class="section-label sl-def">Definition</span>
+              <div class="answer-text">
+                <p><strong>Polymorphism</strong> means "one name, many forms." It allows a single interface to represent different underlying forms (data types or classes).</p>
+                <p>Java supports two types: <strong>Compile-time</strong> (Static) and <strong>Runtime</strong> (Dynamic) polymorphism.</p>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-diagram">Polymorphism Overview</span>
+              <div class="diagram-wrap">
+                <svg viewBox="0 0 720 240" width="700" height="230" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Root -->
+                  <rect x="260" y="10" width="200" height="44" rx="8" fill="#3c3836" stroke="#d8a657" stroke-width="1.5"/>
+                  <text x="360" y="37" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" fill="#d8a657" font-weight="700">Polymorphism</text>
+
+                  <!-- Left branch -->
+                  <rect x="40" y="90" width="260" height="100" rx="8" fill="#282828" stroke="#7daea3" stroke-width="1.5"/>
+                  <text x="170" y="114" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#7daea3" font-weight="700">Compile-time (Static)</text>
+                  <text x="170" y="134" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a89984">Achieved by:</text>
+                  <text x="170" y="150" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a9b665">Method Overloading</text>
+                  <text x="170" y="167" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a89984">Resolved at compile time</text>
+                  <text x="170" y="183" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">(Early / Static Binding)</text>
+
+                  <!-- Right branch -->
+                  <rect x="420" y="90" width="260" height="100" rx="8" fill="#282828" stroke="#ea6962" stroke-width="1.5"/>
+                  <text x="550" y="114" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#ea6962" font-weight="700">Runtime (Dynamic)</text>
+                  <text x="550" y="134" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a89984">Achieved by:</text>
+                  <text x="550" y="150" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a9b665">Method Overriding</text>
+                  <text x="550" y="167" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a89984">Resolved at runtime</text>
+                  <text x="550" y="183" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">(Late / Dynamic Binding)</text>
+
+                  <line x1="320" y1="54" x2="170" y2="90" stroke="#7daea3" stroke-width="1.5" marker-end="url(#arr)"/>
+                  <line x1="400" y1="54" x2="550" y2="90" stroke="#ea6962" stroke-width="1.5" marker-end="url(#arr)"/>
+                </svg>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-code">Java Code – Both Types</span>
+              <div class="code-wrap">
+                <pre><span class="kw-comment">// ── 1. COMPILE-TIME POLYMORPHISM (Method Overloading) ──</span>
+<span class="kw-java">class</span> <span class="kw-class">Printer</span> {
+    <span class="kw-java">void</span> <span class="kw-method">print</span>(<span class="kw-type">int</span> x) {
+        System.out.println(<span class="kw-string">"Integer: "</span> + x);
+    }
+    <span class="kw-java">void</span> <span class="kw-method">print</span>(<span class="kw-type">String</span> s) {
+        System.out.println(<span class="kw-string">"String: "</span> + s);
+    }
+    <span class="kw-java">void</span> <span class="kw-method">print</span>(<span class="kw-type">double</span> d, <span class="kw-type">int</span> n) {
+        System.out.println(<span class="kw-string">"Double+Int: "</span> + d + <span class="kw-string">", "</span> + n);
+    }
+}
+
+<span class="kw-comment">// ── 2. RUNTIME POLYMORPHISM (Method Overriding + Upcasting) ──</span>
+<span class="kw-java">class</span> <span class="kw-class">Shape</span> {
+    <span class="kw-java">void</span> <span class="kw-method">draw</span>() { System.out.println(<span class="kw-string">"Drawing Shape"</span>); }
+}
+
+<span class="kw-java">class</span> <span class="kw-class">Circle</span> <span class="kw-java">extends</span> <span class="kw-class">Shape</span> {
+    <span class="kw-ann">@Override</span>
+    <span class="kw-java">void</span> <span class="kw-method">draw</span>() { System.out.println(<span class="kw-string">"Drawing Circle ○"</span>); }
+}
+
+<span class="kw-java">class</span> <span class="kw-class">Rectangle</span> <span class="kw-java">extends</span> <span class="kw-class">Shape</span> {
+    <span class="kw-ann">@Override</span>
+    <span class="kw-java">void</span> <span class="kw-method">draw</span>() { System.out.println(<span class="kw-string">"Drawing Rectangle □"</span>); }
+}
+
+<span class="kw-java">public class</span> <span class="kw-class">PolyDemo</span> {
+    <span class="kw-java">public static void</span> <span class="kw-method">main</span>(<span class="kw-type">String</span>[] args) {
+        <span class="kw-comment">// Compile-time</span>
+        <span class="kw-class">Printer</span> p = <span class="kw-java">new</span> <span class="kw-class">Printer</span>();
+        p.<span class="kw-method">print</span>(<span class="kw-num">42</span>);
+        p.<span class="kw-method">print</span>(<span class="kw-string">"AKTU"</span>);
+        p.<span class="kw-method">print</span>(<span class="kw-num">3.14</span>, <span class="kw-num">2</span>);
+
+        <span class="kw-comment">// Runtime – same reference, different behavior</span>
+        <span class="kw-class">Shape</span>[] shapes = {<span class="kw-java">new</span> <span class="kw-class">Circle</span>(), <span class="kw-java">new</span> <span class="kw-class">Rectangle</span>(), <span class="kw-java">new</span> <span class="kw-class">Shape</span>()};
+        <span class="kw-java">for</span> (<span class="kw-class">Shape</span> s : shapes) {
+            s.<span class="kw-method">draw</span>();  <span class="kw-comment">// resolved at runtime based on actual object type</span>
+        }
+    }
+}</pre>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-output">Output</span>
+              <div class="output-box">Integer: 42
+String: AKTU
+Double+Int: 3.14, 2
+Drawing Circle ○
+Drawing Rectangle □
+Drawing Shape</div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-key">Key Points</span>
+              <ul class="key-list">
+                <li>Compile-time polymorphism → <strong>Method Overloading</strong> → resolved by compiler.</li>
+                <li>Runtime polymorphism → <strong>Method Overriding</strong> + <strong>Upcasting</strong> → resolved by JVM.</li>
+                <li><strong>Dynamic Method Dispatch</strong>: when parent reference holds child object, overridden method of child is called.</li>
+                <li>Runtime polymorphism does <strong>NOT</strong> apply to data members (fields), only methods.</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════════
+           Q10: Abstract Class & Interface
+      ══════════════════════════════════════════════════════════ -->
+      <div class="q-card" id="q10">
+        <div class="q-header" onclick="toggleCard(this)">
+          <div class="q-num">10</div>
+          <div class="q-title">Explain abstract class and interface with examples.</div>
+          <div class="q-meta">
+            <span class="badge badge-marks">7 Marks</span>
+            
+            <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div class="q-body">
+          <div class="q-content">
+            <div class="section">
+              <span class="section-label sl-def">Definitions</span>
+              <div class="answer-text">
+                <p><strong>Abstract Class:</strong> A class declared with keyword <strong>abstract</strong> that cannot be instantiated. It may contain both <em>abstract</em> (no body) and <em>concrete</em> (with body) methods. Used for partial abstraction.</p>
+                <p><strong>Interface:</strong> A pure abstract type declared with keyword <strong>interface</strong>. All methods are implicitly <em>public abstract</em> (before Java 8) and all variables are <em>public static final</em>. Used for 100% abstraction and multiple inheritance.</p>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-table">Comparison Table</span>
+              <div class="tbl-wrap">
+                <table>
+                  <thead><tr><th>Feature</th><th>Abstract Class</th><th>Interface</th></tr></thead>
+                  <tbody>
+                    <tr><td>Keyword</td><td>abstract class</td><td>interface</td></tr>
+                    <tr><td>Methods</td><td>Abstract + Concrete</td><td>Abstract (default/static in Java 8+)</td></tr>
+                    <tr><td>Variables</td><td>Any type</td><td>public static final only</td></tr>
+                    <tr><td>Constructors</td><td>Allowed</td><td>Not allowed</td></tr>
+                    <tr><td>Inheritance</td><td>Single (extends)</td><td>Multiple (implements)</td></tr>
+                    <tr><td>Abstraction</td><td>Partial (0-100%)</td><td>Complete (100%)</td></tr>
+                    <tr><td>Speed</td><td>Fast</td><td>Slightly slower</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-code">Java Code</span>
+              <div class="code-wrap">
+                <pre><span class="kw-comment">// ── ABSTRACT CLASS ──</span>
+<span class="kw-java">abstract class</span> <span class="kw-class">Vehicle</span> {
+    <span class="kw-type">String</span> brand;
+
+    <span class="kw-class">Vehicle</span>(<span class="kw-type">String</span> b) { brand = b; }
+
+    <span class="kw-java">abstract void</span> <span class="kw-method">fuelType</span>();       <span class="kw-comment">// must override</span>
+
+    <span class="kw-java">void</span> <span class="kw-method">start</span>() {                   <span class="kw-comment">// concrete method</span>
+        System.out.println(brand + <span class="kw-string">" starting..."</span>);
+    }
+}
+
+<span class="kw-java">class</span> <span class="kw-class">Car</span> <span class="kw-java">extends</span> <span class="kw-class">Vehicle</span> {
+    <span class="kw-class">Car</span>(<span class="kw-type">String</span> b) { <span class="kw-java">super</span>(b); }
+    <span class="kw-ann">@Override</span>
+    <span class="kw-java">void</span> <span class="kw-method">fuelType</span>() { System.out.println(brand + <span class="kw-string">": Petrol"</span>); }
+}
+
+<span class="kw-java">class</span> <span class="kw-class">ElectricCar</span> <span class="kw-java">extends</span> <span class="kw-class">Vehicle</span> {
+    <span class="kw-class">ElectricCar</span>(<span class="kw-type">String</span> b) { <span class="kw-java">super</span>(b); }
+    <span class="kw-ann">@Override</span>
+    <span class="kw-java">void</span> <span class="kw-method">fuelType</span>() { System.out.println(brand + <span class="kw-string">": Electric ⚡"</span>); }
+}
+
+<span class="kw-comment">// ── INTERFACE ──</span>
+<span class="kw-java">interface</span> <span class="kw-class">Printable</span> {
+    <span class="kw-java">void</span> <span class="kw-method">print</span>();                   <span class="kw-comment">// public abstract by default</span>
+}
+
+<span class="kw-java">interface</span> <span class="kw-class">Showable</span> {
+    <span class="kw-java">void</span> <span class="kw-method">show</span>();
+}
+
+<span class="kw-java">class</span> <span class="kw-class">Document</span> <span class="kw-java">implements</span> <span class="kw-class">Printable</span>, <span class="kw-class">Showable</span> {
+    <span class="kw-java">public void</span> <span class="kw-method">print</span>() { System.out.println(<span class="kw-string">"Printing document..."</span>); }
+    <span class="kw-java">public void</span> <span class="kw-method">show</span>()  { System.out.println(<span class="kw-string">"Showing document..."</span>); }
+}
+
+<span class="kw-java">public class</span> <span class="kw-class">AbstractDemo</span> {
+    <span class="kw-java">public static void</span> <span class="kw-method">main</span>(<span class="kw-type">String</span>[] args) {
+        <span class="kw-class">Vehicle</span> v1 = <span class="kw-java">new</span> <span class="kw-class">Car</span>(<span class="kw-string">"Toyota"</span>);
+        v1.<span class="kw-method">start</span>(); v1.<span class="kw-method">fuelType</span>();
+
+        <span class="kw-class">Vehicle</span> v2 = <span class="kw-java">new</span> <span class="kw-class">ElectricCar</span>(<span class="kw-string">"Tesla"</span>);
+        v2.<span class="kw-method">start</span>(); v2.<span class="kw-method">fuelType</span>();
+
+        <span class="kw-class">Document</span> doc = <span class="kw-java">new</span> <span class="kw-class">Document</span>();
+        doc.<span class="kw-method">print</span>(); doc.<span class="kw-method">show</span>();
+    }
+}</pre>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-output">Output</span>
+              <div class="output-box">Toyota starting...
+Toyota: Petrol
+Tesla starting...
+Tesla: Electric ⚡
+Printing document...
+Showing document...</div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-key">Key Points</span>
+              <ul class="key-list">
+                <li>Abstract class cannot be instantiated with <strong>new</strong>.</li>
+                <li>Abstract class can have a <strong>constructor</strong> (called via super()).</li>
+                <li>Interface variables are <strong>public static final</strong> (constants).</li>
+                <li>Java 8+ allows <strong>default</strong> and <strong>static</strong> methods in interfaces.</li>
+                <li>A class can implement <strong>multiple interfaces</strong> but extend only <strong>one abstract class</strong>.</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════════
+           Q11: Multiple Inheritance & Interfaces
+      ══════════════════════════════════════════════════════════ -->
+      <div class="q-card" id="q11">
+        <div class="q-header" onclick="toggleCard(this)">
+          <div class="q-num">11</div>
+          <div class="q-title">Explain multiple inheritance issue and its solution using interfaces.</div>
+          <div class="q-meta">
+            <span class="badge badge-marks">7 Marks</span>
+            
+            <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div class="q-body">
+          <div class="q-content">
+
+            <div class="section">
+              <span class="section-label sl-def">The Diamond Problem</span>
+              <div class="answer-text">
+                <p>Java does <strong>NOT support multiple inheritance through classes</strong> to avoid the <strong>Diamond Problem</strong>. This occurs when a class inherits from two classes that have the same method, causing ambiguity about which method to call.</p>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-diagram">Diamond Problem Diagram</span>
+              <div class="diagram-wrap">
+                <svg viewBox="0 0 720 360" width="700" height="350" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Left: Problem -->
+                  <text x="170" y="22" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#ea6962" font-weight="700">❌ Problem (Classes)</text>
+
+                  <rect x="110" y="36" width="120" height="40" rx="7" fill="#32302f" stroke="#7daea3" stroke-width="1.5"/>
+                  <text x="170" y="61" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#7daea3">A { show() }</text>
+
+                  <line x1="140" y1="76" x2="100" y2="110" stroke="#ea6962" stroke-width="2" marker-end="url(#arr)"/>
+                  <line x1="200" y1="76" x2="240" y2="110" stroke="#ea6962" stroke-width="2" marker-end="url(#arr)"/>
+
+                  <rect x="40"  y="110" width="120" height="40" rx="7" fill="#32302f" stroke="#ea6962" stroke-width="1.5"/>
+                  <text x="100" y="135" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#ea6962">B extends A</text>
+                  <rect x="180" y="110" width="120" height="40" rx="7" fill="#32302f" stroke="#ea6962" stroke-width="1.5"/>
+                  <text x="240" y="135" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#ea6962">C extends A</text>
+
+                  <line x1="100" y1="150" x2="170" y2="184" stroke="#ea6962" stroke-width="2" stroke-dasharray="6,2" marker-end="url(#arr)"/>
+                  <line x1="240" y1="150" x2="170" y2="184" stroke="#ea6962" stroke-width="2" stroke-dasharray="6,2" marker-end="url(#arr)"/>
+
+                  <rect x="110" y="184" width="120" height="48" rx="7" fill="#32302f" stroke="#ea6962" stroke-width="2"/>
+                  <text x="170" y="204" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#ea6962">D extends B,C</text>
+                  <text x="170" y="222" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">AMBIGUITY!</text>
+
+                  <rect x="30" y="260" width="280" height="60" rx="8" fill="#282828" stroke="#ea6962" stroke-width="1" stroke-dasharray="5,2"/>
+                  <text x="170" y="283" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#ea6962">d.show() → B's show() or C's?</text>
+                  <text x="170" y="303" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a89984">Java DISALLOWS this → compile error</text>
+
+                  <!-- Divider -->
+                  <line x1="360" y1="10" x2="360" y2="350" stroke="#3c3836" stroke-width="1.5"/>
+
+                  <!-- Right: Solution -->
+                  <text x="540" y="22" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#a9b665" font-weight="700">✅ Solution (Interfaces)</text>
+
+                  <rect x="480" y="36" width="130" height="40" rx="7" fill="#32302f" stroke="#d3869b" stroke-width="1.5" stroke-dasharray="5,2"/>
+                  <text x="545" y="52" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#d3869b">«interface» Flyable</text>
+                  <text x="545" y="67" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#d3869b">fly()</text>
+
+                  <rect x="620" y="36" width="90" height="40" rx="7" fill="#32302f" stroke="#d3869b" stroke-width="1.5" stroke-dasharray="5,2"/>
+                  <text x="665" y="52" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#d3869b">«i/f»</text>
+                  <text x="665" y="67" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#d3869b">Swimmable</text>
+
+                  <line x1="545" y1="76" x2="545" y2="130" stroke="#a9b665" stroke-width="2" marker-end="url(#arr)"/>
+                  <line x1="665" y1="76" x2="585" y2="130" stroke="#a9b665" stroke-width="2" marker-end="url(#arr)"/>
+
+                  <rect x="480" y="130" width="150" height="60" rx="7" fill="#32302f" stroke="#a9b665" stroke-width="2"/>
+                  <text x="555" y="153" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#a9b665" font-weight="700">Duck</text>
+                  <text x="555" y="170" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">implements both</text>
+                  <text x="555" y="184" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a89984">NO ambiguity!</text>
+
+                  <rect x="400" y="230" width="320" height="80" rx="8" fill="#282828" stroke="#a9b665" stroke-width="1" stroke-dasharray="5,2"/>
+                  <text x="560" y="255" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#a9b665" font-weight="700">Why no ambiguity?</text>
+                  <text x="560" y="273" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a89984">Interfaces have no implementation</text>
+                  <text x="560" y="291" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#a89984">Duck provides the ONE implementation</text>
+                </svg>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-code">Java Code – Solution via Interface</span>
+              <div class="code-wrap">
+                <pre><span class="kw-comment">// Interfaces – no implementation → no ambiguity</span>
+<span class="kw-java">interface</span> <span class="kw-class">Flyable</span> {
+    <span class="kw-java">void</span> <span class="kw-method">fly</span>();
+}
+
+<span class="kw-java">interface</span> <span class="kw-class">Swimmable</span> {
+    <span class="kw-java">void</span> <span class="kw-method">swim</span>();
+}
+
+<span class="kw-java">interface</span> <span class="kw-class">Runnable</span> {
+    <span class="kw-java">void</span> <span class="kw-method">run</span>();
+}
+
+<span class="kw-comment">// Duck implements MULTIPLE interfaces → multiple inheritance!</span>
+<span class="kw-java">class</span> <span class="kw-class">Duck</span> <span class="kw-java">implements</span> <span class="kw-class">Flyable</span>, <span class="kw-class">Swimmable</span>, <span class="kw-class">Runnable</span> {
+    <span class="kw-java">public void</span> <span class="kw-method">fly</span>()  { System.out.println(<span class="kw-string">"Duck is flying 🦆"</span>); }
+    <span class="kw-java">public void</span> <span class="kw-method">swim</span>() { System.out.println(<span class="kw-string">"Duck is swimming 🌊"</span>); }
+    <span class="kw-java">public void</span> <span class="kw-method">run</span>()  { System.out.println(<span class="kw-string">"Duck is running 🏃"</span>); }
+}
+
+<span class="kw-comment">// Default method conflict resolution (Java 8+)</span>
+<span class="kw-java">interface</span> <span class="kw-class">A</span> {
+    <span class="kw-java">default void</span> <span class="kw-method">greet</span>() { System.out.println(<span class="kw-string">"Hello from A"</span>); }
+}
+
+<span class="kw-java">interface</span> <span class="kw-class">B</span> {
+    <span class="kw-java">default void</span> <span class="kw-method">greet</span>() { System.out.println(<span class="kw-string">"Hello from B"</span>); }
+}
+
+<span class="kw-java">class</span> <span class="kw-class">C</span> <span class="kw-java">implements</span> <span class="kw-class">A</span>, <span class="kw-class">B</span> {
+    <span class="kw-ann">@Override</span>
+    <span class="kw-java">public void</span> <span class="kw-method">greet</span>() {        <span class="kw-comment">// must override to resolve conflict</span>
+        A.<span class="kw-java">super</span>.<span class="kw-method">greet</span>();           <span class="kw-comment">// explicitly choose A's version</span>
+        System.out.println(<span class="kw-string">"Hello from C (resolved)"</span>);
+    }
+}
+
+<span class="kw-java">public class</span> <span class="kw-class">MultiInheritDemo</span> {
+    <span class="kw-java">public static void</span> <span class="kw-method">main</span>(<span class="kw-type">String</span>[] args) {
+        <span class="kw-class">Duck</span> d = <span class="kw-java">new</span> <span class="kw-class">Duck</span>();
+        d.<span class="kw-method">fly</span>(); d.<span class="kw-method">swim</span>(); d.<span class="kw-method">run</span>();
+
+        <span class="kw-class">C</span> c = <span class="kw-java">new</span> <span class="kw-class">C</span>();
+        c.<span class="kw-method">greet</span>();
+    }
+}</pre>
+              </div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-output">Output</span>
+              <div class="output-box">Duck is flying 🦆
+Duck is swimming 🌊
+Duck is running 🏃
+Hello from A
+Hello from C (resolved)</div>
+            </div>
+
+            <div class="section">
+              <span class="section-label sl-key">Key Points</span>
+              <ul class="key-list">
+                <li>Java avoids the Diamond Problem by <strong>not allowing multiple class inheritance</strong>.</li>
+                <li><strong>Interfaces</strong> solve this: since they have no state or implementation (before Java 8), there's no ambiguity.</li>
+                <li>Java 8 introduced <strong>default methods</strong> in interfaces — if two interfaces have the same default method, the implementing class <strong>must override</strong> it.</li>
+                <li>A class can implement <strong>any number of interfaces</strong>.</li>
+                <li>Use <strong>InterfaceName.super.method()</strong> syntax to explicitly choose an interface's default method.</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end unit-section -->
+
+  </div><!-- end content -->
+
+  <footer>
+    <span>BCS403 – OOP with Java · AKTU B.Tech</span>
+    <span>Unit I · 11 Questions · 7 Marks Each</span>
+  </footer>
+</div><!-- end main -->
+<script>
+// ── Progress Bar ──
+window.addEventListener('scroll',()=>{
+  const el=document.getElementById('progress-bar');
+  if(!el)return;
+  const h=document.documentElement;
+  const pct=window.scrollY/(h.scrollHeight-h.clientHeight)||0;
+  el.style.width=(pct*100)+'%';
+  const btt=document.getElementById('btt');
+  if(btt)btt.classList.toggle('show',window.scrollY>300);
+});
+
+// ── Hamburger ──
+const hamburger=document.getElementById('hamburger');
+const sidebar=document.getElementById('sidebar');
+const overlay=document.getElementById('overlay');
+const mainEl=document.getElementById('main');
+if(hamburger){
+  hamburger.addEventListener('click',()=>{
+    sidebar.classList.toggle('open');
+    if(overlay)overlay.classList.toggle('show');
+  });
+}
+if(overlay){
+  overlay.addEventListener('click',()=>{
+    if(sidebar)sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+  });
+}
+
+// ── Toggle card (unit1 style) ──
+function toggleCard(header){
+  const card=header.closest('.q-card');
+  const isOpen=card.classList.contains('open');
+  document.querySelectorAll('.q-card.open').forEach(c=>c.classList.remove('open'));
+  if(!isOpen)card.classList.add('open');
+}
+
+// ── unit2 toggle card ──
+document.querySelectorAll('.q-header').forEach(h=>{
+  if(!h.getAttribute('onclick')){
+    h.addEventListener('click',function(){toggleCard(this);});
+  }
+});
+
+// ── Scroll to (unit1 nav) ──
+function scrollTo(id){
+  const el=document.getElementById(id);
+  if(!el)return;
+  const top=el.getBoundingClientRect().top+window.scrollY-72;
+  window.scrollTo({top,behavior:'smooth'});
+  el.classList.add('open');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.q===id));
+  if(window.innerWidth<=840){sidebar.classList.remove('open');if(overlay)overlay.classList.remove('show');}
+}
+
+// ── Sidebar link click (unit2 style) ──
+function sideClick(el){
+  document.querySelectorAll('.sidebar-item').forEach(a=>a.classList.remove('active'));
+  el.classList.add('active');
+  if(window.innerWidth<=840){if(sidebar)sidebar.classList.remove('open');if(overlay)overlay.classList.remove('show');}
+}
+
+// ── Active nav on scroll ──
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const id=entry.target.id;
+      document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.q===id));
+      document.querySelectorAll('.sidebar-item').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));
+    }
+  });
+},{rootMargin:'-60px 0px -70% 0px'});
+document.querySelectorAll('.q-card').forEach(c=>{if(c.id)observer.observe(c);});
+
+// ── Copy button ──
+function copyCode(btn){
+  const pre=btn.nextElementSibling;
+  navigator.clipboard.writeText(pre.innerText).then(()=>{
+    btn.textContent='Copied!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied');},2000);
+  });
+}
+
+// ── Search (unit1: #search-box, unit2: #search) ──
+function handleSearch(q){
+  q=q.toLowerCase().trim();
+  document.querySelectorAll('.q-card').forEach(card=>{
+    const title=(card.querySelector('.q-title')||card).textContent.toLowerCase();
+    card.style.display=(!q||title.includes(q))?'':'none';
+  });
+  document.querySelectorAll('.nav-item[data-q]').forEach(item=>{
+    const card=document.getElementById(item.dataset.q);
+    item.classList.toggle('hidden',card&&card.style.display==='none');
+  });
+}
+const sb=document.getElementById('search-box');if(sb)sb.addEventListener('input',e=>handleSearch(e.target.value));
+const si=document.getElementById('search');if(si)si.addEventListener('input',e=>handleSearch(e.target.value));
+
+// ── Back to top ──
+const bttBtn=document.getElementById('btt');
+if(bttBtn)bttBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+// ── Open first card on load ──
+const first=document.querySelector('.q-card');if(first)first.classList.add('open');
+</script>
+</body>
+</html>
