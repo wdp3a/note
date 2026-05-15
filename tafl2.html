@@ -1,0 +1,2519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Theory of Automata & Formal Languages — AKTU Revision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Recursive:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg0-hard: #1d2021;
+  --bg0: #282828;
+  --bg1: #3c3836;
+  --bg2: #504945;
+  --bg3: #665c54;
+  --bg4: #7c6f64;
+  --fg0: #fbf1c7;
+  --fg1: #ebdbb2;
+  --fg2: #d5c4a1;
+  --fg3: #bdae93;
+  --fg4: #a89984;
+  --red: #cc241d;
+  --red-bright: #fb4934;
+  --green: #98971a;
+  --green-bright: #b8bb26;
+  --yellow: #d79921;
+  --yellow-bright: #fabd2f;
+  --blue: #458588;
+  --blue-bright: #83a598;
+  --purple: #b16286;
+  --purple-bright: #d3869b;
+  --aqua: #689d6a;
+  --aqua-bright: #8ec07c;
+  --orange: #d65d0e;
+  --orange-bright: #fe8019;
+  --sidebar-w: 300px;
+  --topbar-h: 60px;
+  --radius: 10px;
+  --transition: 0.22s cubic-bezier(0.4,0,0.2,1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg0-hard);
+  color: var(--fg1);
+  font-family: 'Recursive', sans-serif;
+  font-size: 15px;
+  line-height: 1.75;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg0); }
+::-webkit-scrollbar-thumb { background: var(--bg3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--bg4); }
+
+/* ===== TOPBAR ===== */
+#topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--topbar-h);
+  background: var(--bg0);
+  border-bottom: 1px solid var(--bg2);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  padding: 0 20px 0 calc(var(--sidebar-w) + 20px);
+  gap: 16px;
+}
+
+#topbar .subject-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--fg4);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+#topbar .title-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#topbar h1 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--yellow-bright);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#progress-bar-wrap {
+  flex: 1;
+  background: var(--bg2);
+  height: 4px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--green-bright);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+#progress-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--fg4);
+  white-space: nowrap;
+}
+
+#menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--fg1);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  transition: background var(--transition);
+}
+#menu-toggle:hover { background: var(--bg2); }
+#menu-toggle svg { display: block; }
+
+/* ===== SIDEBAR ===== */
+#sidebar {
+  position: fixed;
+  top: var(--topbar-h); left: 0; bottom: 0;
+  width: var(--sidebar-w);
+  background: var(--bg0);
+  border-right: 1px solid var(--bg2);
+  z-index: 200;
+  overflow-y: auto;
+  transition: transform var(--transition);
+}
+
+.sidebar-brand {
+  padding: 18px 16px 12px;
+  border-bottom: 1px solid var(--bg2);
+}
+
+.sidebar-brand .brand-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--orange-bright);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.sidebar-brand .brand-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--fg0);
+  line-height: 1.3;
+}
+
+.sidebar-nav { padding: 8px 0; }
+
+.nav-unit {
+  padding: 0;
+}
+
+.nav-unit-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  color: var(--fg3);
+  font-size: 13px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: color var(--transition);
+  user-select: none;
+}
+
+.nav-unit-header:hover { color: var(--yellow-bright); }
+
+.nav-unit-header .unit-num {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.nav-unit-header .chevron {
+  margin-left: auto;
+  transition: transform var(--transition);
+  flex-shrink: 0;
+}
+
+.nav-unit-header.open .chevron { transform: rotate(90deg); }
+
+.nav-unit-items {
+  display: none;
+  padding: 0 0 4px;
+}
+.nav-unit-items.open { display: block; }
+
+.nav-item {
+  display: block;
+  padding: 6px 16px 6px 44px;
+  color: var(--fg4);
+  text-decoration: none;
+  font-size: 16px;
+  line-height: 1.4;
+  transition: all var(--transition);
+  border-left: 2px solid transparent;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  color: var(--fg1);
+  background: var(--bg1);
+}
+
+.nav-item.active {
+  color: var(--yellow-bright);
+  border-left-color: var(--yellow-bright);
+  background: rgba(250,189,47,0.06);
+}
+
+/* unit colors */
+.u1 .nav-unit-header .unit-num { background: rgba(251,73,52,0.2); color: var(--red-bright); }
+.u2 .nav-unit-header .unit-num { background: rgba(250,189,47,0.2); color: var(--yellow-bright); }
+.u3 .nav-unit-header .unit-num { background: rgba(142,192,124,0.2); color: var(--aqua-bright); }
+.u4 .nav-unit-header .unit-num { background: rgba(131,165,152,0.2); color: var(--blue-bright); }
+.u5 .nav-unit-header .unit-num { background: rgba(211,134,155,0.2); color: var(--purple-bright); }
+
+/* ===== MAIN CONTENT ===== */
+#main {
+  margin-left: var(--sidebar-w);
+  margin-top: var(--topbar-h);
+  padding: 32px 40px 80px;
+  max-width: 900px;
+}
+
+/* ===== UNIT SECTIONS ===== */
+.unit-section {
+  margin-bottom: 56px;
+}
+
+.unit-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--bg2);
+}
+
+.unit-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.u1 .unit-badge { background: rgba(251,73,52,0.15); color: var(--red-bright); border: 1px solid rgba(251,73,52,0.3); }
+.u2 .unit-badge { background: rgba(250,189,47,0.15); color: var(--yellow-bright); border: 1px solid rgba(250,189,47,0.3); }
+.u3 .unit-badge { background: rgba(142,192,124,0.15); color: var(--aqua-bright); border: 1px solid rgba(142,192,124,0.3); }
+.u4 .unit-badge { background: rgba(131,165,152,0.15); color: var(--blue-bright); border: 1px solid rgba(131,165,152,0.3); }
+.u5 .unit-badge { background: rgba(211,134,155,0.15); color: var(--purple-bright); border: 1px solid rgba(211,134,155,0.3); }
+
+.unit-title {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--fg0);
+  line-height: 1.3;
+}
+
+/* ===== Q&A CARDS ===== */
+.qa-card {
+  background: var(--bg0);
+  border: 1px solid var(--bg2);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.qa-card:hover {
+  border-color: var(--bg3);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.qa-card.open {
+  border-color: var(--bg3);
+  box-shadow: 0 6px 28px rgba(0,0,0,0.35);
+}
+
+.qa-question {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 18px;
+  cursor: pointer;
+  user-select: none;
+  transition: background var(--transition);
+}
+
+.qa-question:hover { background: var(--bg1); }
+.qa-card.open .qa-question { background: var(--bg1); }
+
+.q-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: var(--bg2);
+  color: var(--fg3);
+  flex-shrink: 0;
+  margin-top: 2px;
+  letter-spacing: 0.05em;
+}
+
+.q-text {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--fg1);
+  line-height: 1.5;
+}
+
+.q-arrow {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--fg4);
+  transition: transform var(--transition), color var(--transition);
+}
+
+.qa-card.open .q-arrow {
+  transform: rotate(180deg);
+  color: var(--yellow-bright);
+}
+
+.qa-marks {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(250,189,47,0.1);
+  color: var(--yellow-bright);
+  border: 1px solid rgba(250,189,47,0.2);
+  flex-shrink: 0;
+  margin-top: 3px;
+  letter-spacing: 0.04em;
+}
+
+.qa-answer {
+  display: none;
+  padding: 0 18px 18px;
+  border-top: 1px solid var(--bg2);
+  animation: slideDown 0.2s ease;
+}
+
+.qa-card.open .qa-answer { display: block; }
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== ANSWER CONTENT ELEMENTS ===== */
+.answer-body { margin-top: 14px; }
+
+.answer-body p { color: var(--fg2); margin-bottom: 10px; font-size: 15px; }
+.answer-body p:last-child { margin-bottom: 0; }
+
+/* Definition box */
+.def-box {
+  background: rgba(131,165,152,0.08);
+  border: 1px solid rgba(131,165,152,0.25);
+  border-left: 3px solid var(--blue-bright);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin: 12px 0;
+}
+
+.def-box .def-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue-bright);
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.def-box p { color: var(--fg2); margin: 0; font-size: 15px; }
+
+/* Note/tip box */
+.note-box {
+  background: rgba(250,189,47,0.06);
+  border: 1px solid rgba(250,189,47,0.2);
+  border-left: 3px solid var(--yellow-bright);
+  border-radius: 6px;
+  padding: 10px 16px;
+  margin: 10px 0;
+}
+
+.note-box .note-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--yellow-bright);
+  font-weight: 700;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.note-box p { color: var(--fg2); margin: 0; font-size: 15px; }
+
+/* Example box */
+.eg-box {
+  background: rgba(142,192,124,0.06);
+  border: 1px solid rgba(142,192,124,0.2);
+  border-left: 3px solid var(--aqua-bright);
+  border-radius: 6px;
+  padding: 10px 16px;
+  margin: 10px 0;
+}
+
+.eg-box .eg-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--aqua-bright);
+  font-weight: 700;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.eg-box p, .eg-box ul { color: var(--fg2); margin: 0; font-size: 15px; }
+
+/* Code block */
+.code-block {
+  background: var(--bg0-hard);
+  border: 1px solid var(--bg2);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin: 10px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--green-bright);
+  overflow-x: auto;
+  white-space: pre;
+  line-height: 1.6;
+}
+
+/* Bullet and Step lists */
+.bullet-list, .step-list {
+  margin: 10px 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.bullet-list li {
+  display: flex;
+  gap: 10px;
+  color: var(--fg2);
+  font-size: 15px;
+  margin-bottom: 6px;
+  align-items: flex-start;
+}
+
+.bullet-list li::before {
+  content: '▸';
+  color: var(--orange-bright);
+  font-size: 12px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.step-list { counter-reset: step-counter; }
+.step-list li {
+  display: flex;
+  gap: 12px;
+  color: var(--fg2);
+  font-size: 15px;
+  margin-bottom: 8px;
+  align-items: flex-start;
+  counter-increment: step-counter;
+}
+
+.step-list li::before {
+  content: counter(step-counter);
+  background: var(--bg2);
+  color: var(--yellow-bright);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Comparison table */
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 13px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.cmp-table th {
+  background: var(--bg2);
+  color: var(--fg0);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 9px 12px;
+  text-align: left;
+}
+
+.cmp-table td {
+  padding: 8px 12px;
+  color: var(--fg2);
+  border-bottom: 1px solid var(--bg2);
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+.cmp-table tr:last-child td { border-bottom: none; }
+.cmp-table tr:nth-child(even) td { background: rgba(60,56,54,0.4); }
+.cmp-table .highlight { color: var(--yellow-bright); font-weight: 600; }
+.cmp-table .pos { color: var(--green-bright); }
+.cmp-table .neg { color: var(--red-bright); }
+
+/* Inline code / keyword */
+.kw {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  background: var(--bg2);
+  color: var(--orange-bright);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+/* Math/formula */
+.math {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--purple-bright);
+  background: var(--bg1);
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+/* Sub-heading */
+.sub-h {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--yellow-bright);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 16px 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sub-h::before {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 14px;
+  background: var(--yellow-bright);
+  border-radius: 2px;
+}
+
+/* SVG diagram container */
+.diagram-wrap {
+  background: var(--bg0-hard);
+  border: 1px solid var(--bg2);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 14px 0;
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+}
+
+/* Section divider */
+.divider {
+  height: 1px;
+  background: var(--bg2);
+  margin: 16px 0;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  #topbar { padding-left: 12px; }
+  #menu-toggle { display: flex; }
+  #sidebar {
+    top: 0;
+    transform: translateX(-100%);
+    z-index: 300;
+  }
+  #sidebar.open { transform: translateX(0); }
+  #main { margin-left: 0; padding: 24px 16px 60px; }
+  .unit-title { font-size: 16px; }
+  #overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 250;
+  }
+  #overlay.show { display: block; }
+}
+
+/* ===== HERO ===== */
+.hero {
+  background: var(--bg0);
+  border: 1px solid var(--bg2);
+  border-radius: 12px;
+  padding: 28px 28px;
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  display: none;
+}
+
+.hero-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--orange-bright);
+  font-weight: 700;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.hero h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--fg0);
+  line-height: 1.3;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  color: var(--fg4);
+  font-size: 13px;
+  max-width: 480px;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 20px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-stat .num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--yellow-bright);
+}
+
+.hero-stat .lbl {
+  font-size: 11px;
+  color: var(--fg4);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+</style>
+</head>
+<body>
+
+<div id="overlay"></div>
+
+<!-- TOP BAR -->
+<header id="topbar">
+  <button id="menu-toggle" aria-label="Toggle sidebar">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+  <div class="title-area">
+    <h1>TOC — 2 Marks Revision</h1>
+    <div id="progress-bar-wrap">
+      <div id="progress-bar"></div>
+    </div>
+  </div>
+  <span id="progress-label">0 / 0 read</span>
+</header>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-brand">
+    <span class="brand-tag">AKTU · CS / IT · Sem V</span>
+    <span class="brand-title">Theory of Automata &amp;<br>Formal Languages</span>
+  </div>
+  <div class="sidebar-nav">
+    <!-- Unit 1 -->
+    <div class="nav-unit u1">
+      <div class="nav-unit-header" onclick="toggleNav(this)">
+        <span class="unit-num">1</span>
+        Basic Concepts &amp; Automata
+        <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+      <div class="nav-unit-items">
+        <a class="nav-item" onclick="scrollToQ('u1q1')">Q1. Alphabet, String &amp; Language</a>
+        <a class="nav-item" onclick="scrollToQ('u1q2')">Q2. DFA Definition</a>
+        <a class="nav-item" onclick="scrollToQ('u1q3')">Q3. Mathematical DFA + NFA vs DFA</a>
+        <a class="nav-item" onclick="scrollToQ('u1q4')">Q4. ε-Closure</a>
+        <a class="nav-item" onclick="scrollToQ('u1q5')">Q5. FA — ends with 101</a>
+      </div>
+    </div>
+    <!-- Unit 2 -->
+    <div class="nav-unit u2">
+      <div class="nav-unit-header" onclick="toggleNav(this)">
+        <span class="unit-num">2</span>
+        Regular Expressions
+        <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+      <div class="nav-unit-items">
+        <a class="nav-item" onclick="scrollToQ('u2q1')">Q1. RE — exactly 2 a's</a>
+        <a class="nav-item" onclick="scrollToQ('u2q2')">Q2. Compute L1 L2* ∪ L3*</a>
+        <a class="nav-item" onclick="scrollToQ('u2q3')">Q3. RE — #a divisible by 3</a>
+        <a class="nav-item" onclick="scrollToQ('u2q4')">Q4. Kleene's Theorem</a>
+        <a class="nav-item" onclick="scrollToQ('u2q5')">Q5. Arden's Theorem</a>
+        <a class="nav-item" onclick="scrollToQ('u2q6')">Q6. RE — two 0's &amp; two 1's</a>
+      </div>
+    </div>
+    <!-- Unit 3 -->
+    <div class="nav-unit u3">
+      <div class="nav-unit-header" onclick="toggleNav(this)">
+        <span class="unit-num">3</span>
+        Grammars &amp; CFG
+        <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+      <div class="nav-unit-items">
+        <a class="nav-item" onclick="scrollToQ('u3q1')">Q1. What is Grammar?</a>
+        <a class="nav-item" onclick="scrollToQ('u3q2')">Q2. Context Free Grammar</a>
+        <a class="nav-item" onclick="scrollToQ('u3q3')">Q3. Chomsky Hierarchy</a>
+        <a class="nav-item" onclick="scrollToQ('u3q4')">Q4. CFL closed under union?</a>
+        <a class="nav-item" onclick="scrollToQ('u3q5')">Q5. Remove useless productions</a>
+        <a class="nav-item" onclick="scrollToQ('u3q6')">Q6. CFG for a²ⁿbⁿ n≥3</a>
+        <a class="nav-item" onclick="scrollToQ('u3q7')">Q7. CFG for (0+1)*</a>
+        <a class="nav-item" onclick="scrollToQ('u3q8')">Q8. CFG for (a+b)*</a>
+        <a class="nav-item" onclick="scrollToQ('u3q9')">Q9. Right &amp; Left Linear Grammar</a>
+        <a class="nav-item" onclick="scrollToQ('u3q10')">Q10. Language of given CFG</a>
+        <a class="nav-item" onclick="scrollToQ('u3q11')">Q11. Leftmost derivation</a>
+      </div>
+    </div>
+    <!-- Unit 4 -->
+    <div class="nav-unit u4">
+      <div class="nav-unit-header" onclick="toggleNav(this)">
+        <span class="unit-num">4</span>
+        Pushdown Automata
+        <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+      <div class="nav-unit-items">
+        <a class="nav-item" onclick="scrollToQ('u4q1')">Q1. Pushdown Automata</a>
+        <a class="nav-item" onclick="scrollToQ('u4q2')">Q2. Two Stack PDA</a>
+        <a class="nav-item" onclick="scrollToQ('u4q3')">Q3. Pumping Lemma for CFL</a>
+        <a class="nav-item" onclick="scrollToQ('u4q4')">Q4. Graphical PDA</a>
+      </div>
+    </div>
+    <!-- Unit 5 -->
+    <div class="nav-unit u5">
+      <div class="nav-unit-header" onclick="toggleNav(this)">
+        <span class="unit-num">5</span>
+        Turing Machines
+        <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+      <div class="nav-unit-items">
+        <a class="nav-item" onclick="scrollToQ('u5q1')">Q1. Universal Turing Machine</a>
+        <a class="nav-item" onclick="scrollToQ('u5q2')">Q2. Basic TM Model</a>
+        <a class="nav-item" onclick="scrollToQ('u5q3')">Q3. Halting Problem (intro)</a>
+        <a class="nav-item" onclick="scrollToQ('u5q4')">Q4. Halting Problem of TM</a>
+        <a class="nav-item" onclick="scrollToQ('u5q5')">Q5. Linear Bounded Automata</a>
+        <a class="nav-item" onclick="scrollToQ('u5q6')">Q6. Multi-Tape TM</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main id="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="hero-tag">AKTU 2-Marks Master Notes</span>
+    <h2>Theory of Automata &amp; Formal Languages</h2>
+    <p>All 26 questions from Unit 1–5. Click any question to expand. Covers DFA, NFA, RE, CFG, PDA, and Turing Machines.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="num">5</span><span class="lbl">Units</span></div>
+      <div class="hero-stat"><span class="num">26</span><span class="lbl">Questions</span></div>
+      <div class="hero-stat"><span class="num">2M</span><span class="lbl">Each</span></div>
+      <div class="hero-stat"><span class="num" id="hero-read">0</span><span class="lbl">Read</span></div>
+    </div>
+  </div>
+
+  <!-- ========================== UNIT 1 ========================== -->
+  <section class="unit-section u1" id="unit1">
+    <div class="unit-header">
+      <span class="unit-badge">Unit 1</span>
+      <h2 class="unit-title">Basic Concepts and Automata Theory</h2>
+    </div>
+
+    <!-- Q1 -->
+    <div class="qa-card" id="u1q1">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q1</span>
+        <span class="q-text">Define alphabet, string and language.</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <div class="def-box">
+            <span class="def-label">Alphabet (Σ)</span>
+            <p>A <strong>finite, non-empty set</strong> of symbols. These are the basic building blocks of any language.</p>
+          </div>
+          <div class="eg-box">
+            <span class="eg-label">Examples</span>
+            <p>Σ = {0, 1} &nbsp;(binary) &nbsp;|&nbsp; Σ = {a, b, c} &nbsp;|&nbsp; Σ = {A…Z}</p>
+          </div>
+
+          <div class="def-box">
+            <span class="def-label">String (Word)</span>
+            <p>A <strong>finite sequence</strong> of symbols taken from an alphabet Σ. The string with zero symbols is called the <em>empty string</em> <span class="math">ε</span>.</p>
+          </div>
+          <div class="eg-box">
+            <span class="eg-label">Examples (Σ = {a,b})</span>
+            <p>ε, a, b, ab, ba, aab, abb, … all are valid strings.</p>
+          </div>
+
+          <div class="def-box">
+            <span class="def-label">Language (L)</span>
+            <p>A <strong>set of strings</strong> over an alphabet Σ. It can be finite or infinite. The set of all possible strings over Σ is written <span class="math">Σ*</span>.</p>
+          </div>
+          <div class="eg-box">
+            <span class="eg-label">Examples</span>
+            <p>L = {strings with equal 0's and 1's} &nbsp;|&nbsp; L = {aⁿbⁿ | n ≥ 1}</p>
+          </div>
+
+          <div class="note-box">
+            <span class="note-label">Quick Recall</span>
+            <p>Alphabet → individual symbols &nbsp;·&nbsp; String → sequence of symbols &nbsp;·&nbsp; Language → set of strings</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="qa-card" id="u1q2">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q2</span>
+        <span class="q-text">Give the definition of Deterministic Finite Automaton (DFA).</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <p><strong>Background:</strong> An <em>automaton</em> (plural: automata) is an abstract machine that reads an input string and either <strong>accepts</strong> or <strong>rejects</strong> it based on a set of rules.</p>
+
+          <div class="def-box">
+            <span class="def-label">DFA — Deterministic Finite Automaton</span>
+            <p>A DFA is the simplest type of automaton. It reads a string <strong>one symbol at a time</strong>, and from any state, on any input symbol, it moves to <strong>exactly one</strong> next state (no choices → deterministic). At the end, if it is in an accepting state, the string is accepted.</p>
+          </div>
+
+          <p class="sub-h">Key Properties</p>
+          <ul class="bullet-list">
+            <li>Finite number of states.</li>
+            <li>Reads input left to right, one symbol at a time.</li>
+            <li>Exactly one transition per (state, symbol) pair.</li>
+            <li>No ε (empty string) transitions.</li>
+            <li>Accepts if the last state reached is a final/accepting state.</li>
+          </ul>
+
+          <div class="diagram-wrap">
+            <svg viewBox="0 0 340 100" width="340" height="100" xmlns="http://www.w3.org/2000/svg" style="font-family:'JetBrains Mono',monospace;">
+              <!-- start arrow -->
+              <line x1="10" y1="50" x2="38" y2="50" stroke="#fe8019" stroke-width="1.5" marker-end="url(#arrowO)"/>
+              <!-- q0 -->
+              <circle cx="60" cy="50" r="22" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+              <text x="60" y="54" text-anchor="middle" fill="#ebdbb2" font-size="11">q₀</text>
+              <!-- arrow q0->q1 on 1 -->
+              <line x1="82" y1="50" x2="148" y2="50" stroke="#a89984" stroke-width="1.5" marker-end="url(#arrow)"/>
+              <text x="115" y="45" text-anchor="middle" fill="#b8bb26" font-size="11">1</text>
+              <!-- q1 -->
+              <circle cx="170" cy="50" r="22" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+              <text x="170" y="54" text-anchor="middle" fill="#ebdbb2" font-size="11">q₁</text>
+              <!-- arrow q1->q2 on 0 -->
+              <line x1="192" y1="50" x2="258" y2="50" stroke="#a89984" stroke-width="1.5" marker-end="url(#arrow)"/>
+              <text x="225" y="45" text-anchor="middle" fill="#b8bb26" font-size="11">1</text>
+              <!-- q2 (accepting) -->
+              <circle cx="280" cy="50" r="22" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+              <circle cx="280" cy="50" r="17" fill="none" stroke="#83a598" stroke-width="1.5"/>
+              <text x="280" y="54" text-anchor="middle" fill="#ebdbb2" font-size="11">q₂</text>
+              <!-- self-loop q2 on 0 -->
+              <path d="M 292 30 Q 310 10 298 30" fill="none" stroke="#a89984" stroke-width="1.5" marker-end="url(#arrow)"/>
+              <text x="318" y="18" text-anchor="middle" fill="#b8bb26" font-size="11">1</text>
+              <!-- labels -->
+              <text x="60" y="88" text-anchor="middle" fill="#928374" font-size="9">start</text>
+              <text x="280" y="88" text-anchor="middle" fill="#8ec07c" font-size="9">accept</text>
+              <defs>
+                <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L8,3 z" fill="#a89984"/>
+                </marker>
+                <marker id="arrowO" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L8,3 z" fill="#fe8019"/>
+                </marker>
+              </defs>
+            </svg>
+          </div>
+          <p style="text-align:center;font-size:12px;color:var(--fg4);">Simple DFA — accepts strings ending with "11"</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="qa-card" id="u1q3">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q3</span>
+        <span class="q-text">Give the mathematical definition of DFA. Differentiate between NFA and DFA.</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <div class="def-box">
+            <span class="def-label">Mathematical Definition of DFA</span>
+            <p>A DFA is a 5-tuple: <span class="math">M = (Q, Σ, δ, q₀, F)</span></p>
+          </div>
+          <ul class="bullet-list">
+            <li><span class="kw">Q</span> — Finite, non-empty set of states.</li>
+            <li><span class="kw">Σ</span> — Finite input alphabet.</li>
+            <li><span class="kw">δ: Q × Σ → Q</span> — Transition function. Maps (state, symbol) → exactly one next state.</li>
+            <li><span class="kw">q₀ ∈ Q</span> — Initial/start state.</li>
+            <li><span class="kw">F ⊆ Q</span> — Set of final/accepting states.</li>
+          </ul>
+
+          <div class="divider"></div>
+
+          <p class="sub-h">DFA vs NFA — Comparison</p>
+          <table class="cmp-table">
+            <thead>
+              <tr><th>Feature</th><th>DFA</th><th>NFA</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Full form</td><td>Deterministic FA</td><td>Non-deterministic FA</td></tr>
+              <tr><td>Transitions</td><td class="pos">Exactly 1 per (state, symbol)</td><td class="neg">0, 1, or many</td></tr>
+              <tr><td>ε-transitions</td><td class="neg">Not allowed</td><td class="pos">Allowed</td></tr>
+              <tr><td>Transition fn δ</td><td class="math">Q × Σ → Q</td><td class="math">Q × (Σ ∪ {ε}) → 2^Q</td></tr>
+              <tr><td>Number of states</td><td>Can be more (after subset construction)</td><td>Usually fewer, more compact</td></tr>
+              <tr><td>Simulation</td><td>Easy, deterministic</td><td>Needs backtracking / subset construction</td></tr>
+              <tr><td>Expressive power</td><td colspan="2" style="text-align:center; color:var(--yellow-bright);">Equal — both accept exactly Regular Languages</td></tr>
+            </tbody>
+          </table>
+
+          <div class="note-box">
+            <span class="note-label">Key Fact</span>
+            <p>Every NFA can be converted to an equivalent DFA using the <strong>Subset Construction</strong> algorithm. They accept the same class of languages.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="qa-card" id="u1q4">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q4</span>
+        <span class="q-text">What do you mean by ε-Closure in FA?</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <p><strong>Background:</strong> In an NFA, some transitions happen on the <em>empty string</em> ε — meaning the machine can change state without consuming any input. These are called <strong>ε-transitions</strong>.</p>
+
+          <div class="def-box">
+            <span class="def-label">ε-Closure of a State</span>
+            <p>The ε-Closure of a state <span class="math">q</span> is the <strong>set of all states reachable from q using only ε-transitions</strong> (zero or more), including q itself.</p>
+          </div>
+
+          <p>Formally: <span class="math">ε-closure(q) = {q} ∪ {p | q →ε→ p}</span> (transitively)</p>
+
+          <p class="sub-h">How to compute it</p>
+          <ol class="step-list">
+            <li>Start with the state itself in the set.</li>
+            <li>Follow every ε-transition from each state in the set.</li>
+            <li>Add those newly reached states to the set.</li>
+            <li>Repeat until no new states are added.</li>
+          </ol>
+
+          <div class="eg-box">
+            <span class="eg-label">Example</span>
+            <p>If q0 →ε→ q1 →ε→ q2, and q0 →ε→ q3, then:<br>
+            ε-closure(q0) = {q0, q1, q2, q3}</p>
+          </div>
+
+          <div class="note-box">
+            <span class="note-label">Why it matters</span>
+            <p>ε-Closure is used in converting NFA-ε to DFA (subset construction). Each DFA state corresponds to an ε-closure of a set of NFA states.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="qa-card" id="u1q5">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q5</span>
+        <span class="q-text">Design a FA to accept the string that always ends with 101.</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <p>We need a DFA over <span class="kw">Σ = {0,1}</span> that accepts all strings ending with <span class="kw">101</span>.</p>
+
+          <p class="sub-h">State Design (track last 3 symbols)</p>
+          <ul class="bullet-list">
+            <li><strong>q0</strong> — Start / nothing useful seen yet.</li>
+            <li><strong>q1</strong> — Seen "1" as last char.</li>
+            <li><strong>q2</strong> — Seen "10" as last two chars.</li>
+            <li><strong>q3</strong> — Seen "101" — ACCEPT state.</li>
+          </ul>
+
+          <div class="diagram-wrap">
+            <svg viewBox="0 0 420 130" width="420" height="130" xmlns="http://www.w3.org/2000/svg" style="font-family:'JetBrains Mono',monospace;">
+              <defs>
+                <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L8,3 z" fill="#a89984"/>
+                </marker>
+                <marker id="arrO" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L8,3 z" fill="#fe8019"/>
+                </marker>
+                <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L8,3 z" fill="#8ec07c"/>
+                </marker>
+              </defs>
+              <!-- start arrow -->
+              <line x1="5" y1="65" x2="32" y2="65" stroke="#fe8019" stroke-width="1.5" marker-end="url(#arrO)"/>
+              <!-- q0 -->
+              <circle cx="55" cy="65" r="22" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+              <text x="55" y="69" text-anchor="middle" fill="#ebdbb2" font-size="11">q₀</text>
+              <!-- q0→q1 on 1 -->
+              <line x1="77" y1="65" x2="143" y2="65" stroke="#a89984" stroke-width="1.5" marker-end="url(#arr)"/>
+              <text x="110" y="59" text-anchor="middle" fill="#b8bb26" font-size="11">1</text>
+              <!-- q0 self on 0 -->
+              <path d="M 38 48 Q 20 20 48 45" fill="none" stroke="#a89984" stroke-width="1.5" marker-end="url(#arr)"/>
+              <text x="12" y="28" text-anchor="middle" fill="#b8bb26" font-size="11">0</text>
+              <!-- q1 -->
+              <circle cx="165" cy="65" r="22" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+              <text x="165" y="69" text-anchor="middle" fill="#ebdbb2" font-size="11">q₁</text>
+              <!-- q1→q2 on 0 -->
+              <line x1="187" y1="65" x2="253" y2="65" stroke="#a89984" stroke-width="1.5" marker-end="url(#arr)"/>
+              <text x="220" y="59" text-anchor="middle" fill="#b8bb26" font-size="11">0</text>
+              <!-- q1 self on 1 -->
+              <path d="M 153 44 Q 165 18 177 44" fill="none" stroke="#a89984" stroke-width="1.5" marker-end="url(#arr)"/>
+              <text x="165" y="18" text-anchor="middle" fill="#b8bb26" font-size="11">1</text>
+              <!-- q2 -->
+              <circle cx="275" cy="65" r="22" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+              <text x="275" y="69" text-anchor="middle" fill="#ebdbb2" font-size="11">q₂</text>
+              <!-- q2→q3 on 1 -->
+              <line x1="297" y1="65" x2="363" y2="65" stroke="#a89984" stroke-width="1.5" marker-end="url(#arr)"/>
+              <text x="330" y="59" text-anchor="middle" fill="#b8bb26" font-size="11">1</text>
+              <!-- q2→q0 on 0 -->
+              <path d="M 270 87 Q 165 120 60 87" fill="none" stroke="#a89984" stroke-width="1.5" marker-end="url(#arr)"/>
+              <text x="165" y="118" text-anchor="middle" fill="#b8bb26" font-size="11">0</text>
+              <!-- q3 (accept) -->
+              <circle cx="385" cy="65" r="22" fill="#3c3836" stroke="#8ec07c" stroke-width="2"/>
+              <circle cx="385" cy="65" r="17" fill="none" stroke="#8ec07c" stroke-width="1.5"/>
+              <text x="385" y="69" text-anchor="middle" fill="#ebdbb2" font-size="11">q₃</text>
+              <!-- q3→q1 on 1 -->
+              <path d="M 390 43 Q 390 10 175 43" fill="none" stroke="#a89984" stroke-width="1.5" marker-end="url(#arr)"/>
+              <text x="310" y="14" text-anchor="middle" fill="#b8bb26" font-size="11">1</text>
+              <!-- q3→q2 on 0 -->
+              <path d="M 375 84 Q 345 105 292 84" fill="none" stroke="#a89984" stroke-width="1.5" marker-end="url(#arr)"/>
+              <text x="347" y="108" text-anchor="middle" fill="#b8bb26" font-size="11">0</text>
+              <!-- labels -->
+              <text x="55" y="100" text-anchor="middle" fill="#928374" font-size="9">start</text>
+              <text x="385" y="100" text-anchor="middle" fill="#8ec07c" font-size="9">accept</text>
+            </svg>
+          </div>
+
+          <p class="sub-h">Transition Table</p>
+          <table class="cmp-table">
+            <thead><tr><th>State</th><th>On 0</th><th>On 1</th></tr></thead>
+            <tbody>
+              <tr><td>→q0 (start)</td><td>q0</td><td>q1</td></tr>
+              <tr><td>q1</td><td>q2</td><td>q1</td></tr>
+              <tr><td>q2</td><td>q0</td><td>q3</td></tr>
+              <tr><td class="pos">*q3 (accept)</td><td>q2</td><td>q1</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================== UNIT 2 ========================== -->
+  <section class="unit-section u2" id="unit2">
+    <div class="unit-header">
+      <span class="unit-badge">Unit 2</span>
+      <h2 class="unit-title">Regular Expressions and Languages</h2>
+    </div>
+
+    <!-- Q1 -->
+    <div class="qa-card" id="u2q1">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q1</span>
+        <span class="q-text">Design a regular expression that accepts all strings for Σ = {a,b} containing exactly 2 a's.</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <p>We need strings over {a,b} with <strong>exactly two a's</strong>. The b's can appear anywhere (before, between, or after the a's).</p>
+
+          <p class="sub-h">Logic</p>
+          <ul class="bullet-list">
+            <li>Any number of b's before first 'a': <span class="math">b*</span></li>
+            <li>First 'a': <span class="math">a</span></li>
+            <li>Any number of b's between the two a's: <span class="math">b*</span></li>
+            <li>Second 'a': <span class="math">a</span></li>
+            <li>Any number of b's after second 'a': <span class="math">b*</span></li>
+          </ul>
+
+          <div class="def-box">
+            <span class="def-label">Answer</span>
+            <p><span class="math">RE = b* a b* a b*</span></p>
+          </div>
+
+          <div class="eg-box">
+            <span class="eg-label">Examples</span>
+            <p>aa, bab, aba, bbabba, aabb, baab — all accepted.<br>
+            a, aaa, b, bbb — rejected.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="qa-card" id="u2q2">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q2</span>
+        <span class="q-text">L1 = {ε}, L2 = {a}, L3 = Ø. Compute L1 L2* ∪ L3*.</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <p>Compute step by step:</p>
+
+          <ol class="step-list">
+            <li><strong>L2*</strong> = {a}* = {ε, a, aa, aaa, …} = set of all strings of a's (a*).</li>
+            <li><strong>L1 · L2*</strong> = {ε} · {ε, a, aa, …} = {ε, a, aa, aaa, …} = a* (concatenating ε with anything = that thing).</li>
+            <li><strong>L3*</strong> = Ø* = {ε} (Kleene star of empty set is always {ε}).</li>
+            <li><strong>L1 L2* ∪ L3*</strong> = a* ∪ {ε} = a* (since {ε} ⊆ a* already).</li>
+          </ol>
+
+          <div class="def-box">
+            <span class="def-label">Final Answer</span>
+            <p><span class="math">L1 L2* ∪ L3* = a* = {ε, a, aa, aaa, …}</span></p>
+          </div>
+
+          <div class="note-box">
+            <span class="note-label">Key Rule</span>
+            <p>Ø* = {ε} always. And {ε} · L = L for any language L.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="qa-card" id="u2q3">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q3</span>
+        <span class="q-text">Write RE for strings where number of a's is divisible by 3, over Σ = {a,b}.</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <p>Number of a's divisible by 3 means: 0, 3, 6, 9, … a's. b's can appear anywhere.</p>
+
+          <p class="sub-h">Logic</p>
+          <ul class="bullet-list">
+            <li>Every group of a's must appear in multiples of 3.</li>
+            <li>b's can appear anywhere before, between, or after a's.</li>
+            <li>We group: <span class="math">b*</span> then <span class="math">a b* a b* a</span> (three a's with optional b's between), and repeat this group 0 or more times.</li>
+          </ul>
+
+          <div class="def-box">
+            <span class="def-label">Answer</span>
+            <p><span class="math">RE = b* (a b* a b* a b*)* </span></p>
+          </div>
+
+          <div class="eg-box">
+            <span class="eg-label">Verification</span>
+            <p>0 a's: "bbb" ✓ (divisible by 3).<br>3 a's: "aaa", "abba" — matched by (ababa* pattern) ✓.<br>6 a's: apply the group twice ✓.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="qa-card" id="u2q4">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q4</span>
+        <span class="q-text">Explain in brief about Kleene's Theorem.</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <div class="def-box">
+            <span class="def-label">Kleene's Theorem</span>
+            <p>A language is <strong>regular</strong> if and only if it can be described by a <strong>Regular Expression (RE)</strong>, and it is accepted by a <strong>Finite Automaton (FA)</strong>.</p>
+          </div>
+
+          <p>In other words, all three representations are equivalent:</p>
+
+          <div class="diagram-wrap">
+            <svg viewBox="0 0 320 80" width="320" height="80" xmlns="http://www.w3.org/2000/svg" style="font-family:'Recursive',sans-serif;font-size:12px;">
+              <rect x="10" y="20" width="80" height="36" rx="6" fill="#3c3836" stroke="#fabd2f" stroke-width="1.5"/>
+              <text x="50" y="42" text-anchor="middle" fill="#fabd2f" font-size="11" font-weight="bold">DFA / NFA</text>
+              <line x1="90" y1="38" x2="118" y2="38" stroke="#a89984" stroke-width="1.5" marker-end="url(#arr2)"/>
+              <text x="104" y="30" text-anchor="middle" fill="#8ec07c" font-size="10">≡</text>
+              <rect x="118" y="20" width="84" height="36" rx="6" fill="#3c3836" stroke="#b8bb26" stroke-width="1.5"/>
+              <text x="160" y="42" text-anchor="middle" fill="#b8bb26" font-size="11" font-weight="bold">Reg. Language</text>
+              <line x1="202" y1="38" x2="228" y2="38" stroke="#a89984" stroke-width="1.5" marker-end="url(#arr2)"/>
+              <text x="215" y="30" text-anchor="middle" fill="#8ec07c" font-size="10">≡</text>
+              <rect x="228" y="20" width="82" height="36" rx="6" fill="#3c3836" stroke="#8ec07c" stroke-width="1.5"/>
+              <text x="269" y="42" text-anchor="middle" fill="#8ec07c" font-size="11" font-weight="bold">Reg. Expr.</text>
+              <defs>
+                <marker id="arr2" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L7,3 z" fill="#a89984"/>
+                </marker>
+              </defs>
+            </svg>
+          </div>
+
+          <p class="sub-h">Two parts of the theorem</p>
+          <ul class="bullet-list">
+            <li><strong>Part 1:</strong> Every language defined by a RE can be accepted by some FA.</li>
+            <li><strong>Part 2:</strong> Every language accepted by an FA can be described by a RE.</li>
+          </ul>
+
+          <div class="note-box">
+            <span class="note-label">Significance</span>
+            <p>This theorem established the foundation of formal language theory — connecting machines (FA) with algebraic descriptions (RE).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="qa-card" id="u2q5">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q5</span>
+        <span class="q-text">State Arden's Theorem.</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <div class="def-box">
+            <span class="def-label">Arden's Theorem (Statement)</span>
+            <p>If <span class="math">P</span> and <span class="math">Q</span> are regular expressions over Σ, and <span class="math">P</span> does not contain <span class="math">ε</span>, then the equation:</p>
+          </div>
+
+          <div class="code-block">R = Q + RP</div>
+
+          <p>has a <strong>unique solution</strong>:</p>
+          <div class="code-block">R = QP*</div>
+
+          <p class="sub-h">Where:</p>
+          <ul class="bullet-list">
+            <li><span class="kw">R</span> = the unknown language/expression we want to find.</li>
+            <li><span class="kw">Q</span> = strings that don't start with R (base strings).</li>
+            <li><span class="kw">P</span> = the "loop" part (must not contain ε).</li>
+          </ul>
+
+          <p class="sub-h">Use Case</p>
+          <ul class="bullet-list">
+            <li>Used to find the <strong>Regular Expression from an FA</strong> (state equations method).</li>
+            <li>Each state gives a linear equation; solve using Arden's theorem.</li>
+          </ul>
+
+          <div class="eg-box">
+            <span class="eg-label">Example</span>
+            <p>If R = b + Ra, then Q = b, P = a → Solution: R = b·a* = ba*</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="qa-card" id="u2q6">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q6</span>
+        <span class="q-text">RE for binary strings having two consecutive 0's AND two consecutive 1's over Σ = {0,1}.</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <p>String must contain <strong>00</strong> (two consecutive 0's) <strong>AND</strong> <strong>11</strong> (two consecutive 1's) somewhere.</p>
+
+          <p>There are two cases based on which comes first:</p>
+
+          <div class="def-box">
+            <span class="def-label">Case 1: "00" comes before "11"</span>
+            <p><span class="math">(0+1)* 00 (0+1)* 11 (0+1)*</span></p>
+          </div>
+
+          <div class="def-box">
+            <span class="def-label">Case 2: "11" comes before "00"</span>
+            <p><span class="math">(0+1)* 11 (0+1)* 00 (0+1)*</span></p>
+          </div>
+
+          <div class="def-box">
+            <span class="def-label">Final RE (union of both cases)</span>
+            <p><span class="math">RE = (0+1)* 00 (0+1)* 11 (0+1)* + (0+1)* 11 (0+1)* 00 (0+1)*</span></p>
+          </div>
+
+          <div class="eg-box">
+            <span class="eg-label">Accepted strings</span>
+            <p>0011, 1100, 001100, 110010011, 001111 ✓</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================== UNIT 3 ========================== -->
+  <section class="unit-section u3" id="unit3">
+    <div class="unit-header">
+      <span class="unit-badge">Unit 3</span>
+      <h2 class="unit-title">Regular and Non-Regular Grammars</h2>
+    </div>
+
+    <!-- Q1 -->
+    <div class="qa-card" id="u3q1">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q1</span>
+        <span class="q-text">What do you understand by grammar?</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <div class="def-box">
+            <span class="def-label">Grammar</span>
+            <p>A grammar is a <strong>set of rules (productions)</strong> that define how strings of a language can be generated/derived. It is a formal system for describing languages.</p>
+          </div>
+
+          <p>Formally, a grammar is a 4-tuple: <span class="math">G = (V, T, P, S)</span></p>
+
+          <ul class="bullet-list">
+            <li><span class="kw">V</span> — Set of <strong>Variables</strong> (Non-terminals), e.g., {S, A, B}.</li>
+            <li><span class="kw">T</span> — Set of <strong>Terminals</strong> (actual symbols of the language), e.g., {a, b}.</li>
+            <li><span class="kw">P</span> — Set of <strong>Production rules</strong> of the form α → β.</li>
+            <li><span class="kw">S ∈ V</span> — The <strong>Start symbol</strong>.</li>
+          </ul>
+
+          <div class="eg-box">
+            <span class="eg-label">Example</span>
+            <p>G = ({S}, {a,b}, {S → aSb | ε}, S) generates L = {aⁿbⁿ | n ≥ 0}.</p>
+          </div>
+
+          <div class="note-box">
+            <span class="note-label">Analogy</span>
+            <p>Think of grammar as the recipe, terminals as ingredients, and the generated strings as the dishes you can cook with those rules.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="qa-card" id="u3q2">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q2</span>
+        <span class="q-text">Define Context Free Grammar (CFG).</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <div class="def-box">
+            <span class="def-label">Context Free Grammar (CFG)</span>
+            <p>A CFG is a grammar where <strong>every production rule</strong> has the form:<br>
+            <span class="math">A → α</span><br>
+            where <strong>A is a single non-terminal</strong> (variable), and <strong>α</strong> is any string of terminals and/or non-terminals (including ε).</p>
+          </div>
+
+          <p>The left-hand side is always a <em>single</em> non-terminal — it does not depend on surrounding context. Hence the name: <strong>context-free</strong>.</p>
+
+          <p class="sub-h">Formal Definition</p>
+          <p>CFG = 4-tuple <span class="math">(V, Σ, R, S)</span> where productions R ⊆ V × (V ∪ Σ)*</p>
+
+          <div class="eg-box">
+            <span class="eg-label">Example — CFG for {aⁿbⁿ | n ≥ 1}</span>
+            <div class="code-block">S → aSb | ab</div>
+          </div>
+
+          <table class="cmp-table" style="margin-top:10px;">
+            <thead><tr><th>Type</th><th>Production Form</th></tr></thead>
+            <tbody>
+              <tr><td>Regular Grammar</td><td>A → aB or A → a</td></tr>
+              <tr><td class="highlight">Context Free Grammar</td><td class="highlight">A → α (any string)</td></tr>
+              <tr><td>Context Sensitive</td><td>αAβ → αγβ (context around A)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="qa-card" id="u3q3">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q3</span>
+        <span class="q-text">Define Chomsky Hierarchy.</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <p>Noam Chomsky classified all formal languages/grammars into a <strong>hierarchy of 4 types</strong> based on the form of production rules.</p>
+
+          <table class="cmp-table">
+            <thead><tr><th>Type</th><th>Grammar</th><th>Language</th><th>Machine</th><th>Production Rule</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="highlight">Type 0</td>
+                <td>Unrestricted</td>
+                <td>Recursively Enumerable</td>
+                <td>Turing Machine</td>
+                <td>α → β (any form)</td>
+              </tr>
+              <tr>
+                <td style="color:var(--purple-bright);">Type 1</td>
+                <td>Context-Sensitive</td>
+                <td>Context-Sensitive Language</td>
+                <td>Linear Bounded Automata</td>
+                <td>αAβ → αγβ, |γ|≥1</td>
+              </tr>
+              <tr>
+                <td style="color:var(--blue-bright);">Type 2</td>
+                <td>Context-Free</td>
+                <td>Context-Free Language</td>
+                <td>Pushdown Automata</td>
+                <td>A → α</td>
+              </tr>
+              <tr>
+                <td style="color:var(--green-bright);">Type 3</td>
+                <td>Regular</td>
+                <td>Regular Language</td>
+                <td>Finite Automaton</td>
+                <td>A → aB or A → a</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="note-box">
+            <span class="note-label">Key Insight</span>
+            <p>Type 3 ⊂ Type 2 ⊂ Type 1 ⊂ Type 0. Each type is a proper subset of the type above it. Type 0 is the most powerful and Type 3 the most restricted.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="qa-card" id="u3q4">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q4</span>
+        <span class="q-text">Is context free language closed under union? If yes, give an example.</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <div class="def-box">
+            <span class="def-label">Answer</span>
+            <p><strong>Yes</strong>, Context-Free Languages (CFLs) are <strong>closed under Union</strong>.</p>
+          </div>
+
+          <p class="sub-h">Proof (constructive)</p>
+          <p>If L1 and L2 are CFLs with grammars G1 (start symbol S1) and G2 (start symbol S2), then create a new grammar G with:</p>
+          <div class="code-block">New start symbol S with rule: S → S1 | S2</div>
+          <p>G generates L1 ∪ L2, and G is still a CFG. Hence CFL closed under union.</p>
+
+          <div class="eg-box">
+            <span class="eg-label">Example</span>
+            <p><strong>L1</strong> = {aⁿbⁿ | n≥0} — CFL with grammar: S₁ → aS₁b | ε<br>
+            <strong>L2</strong> = {aᵐbⁿ | m≠n, m,n≥0} — CFL with grammar: S₂ → ... (can be constructed)<br><br>
+            Build a new grammar G with fresh start symbol:<br>
+            <span class="math">S → S₁ | S₂</span> (plus all rules of G₁ and G₂)<br>
+            G generates L1 ∪ L2 and is still a CFG. ✓</p>
+          </div>
+
+          <table class="cmp-table" style="margin-top:12px;">
+            <thead><tr><th>Operation</th><th>CFL Closed?</th></tr></thead>
+            <tbody>
+              <tr><td>Union</td><td class="pos">YES ✓</td></tr>
+              <tr><td>Concatenation</td><td class="pos">YES ✓</td></tr>
+              <tr><td>Kleene Star</td><td class="pos">YES ✓</td></tr>
+              <tr><td>Intersection</td><td class="neg">NO ✗</td></tr>
+              <tr><td>Complement</td><td class="neg">NO ✗</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="qa-card" id="u3q5">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q5</span>
+        <span class="q-text">Remove useless productions: S→AB|ab, A→aA|B|a, B→D|E</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <p>A <strong>useless production</strong> is one that either:</p>
+          <ul class="bullet-list">
+            <li><strong>Non-generating:</strong> Cannot derive any terminal string.</li>
+            <li><strong>Non-reachable:</strong> Cannot be reached from the start symbol S.</li>
+          </ul>
+
+          <p class="sub-h">Step 1 — Find Generating Symbols</p>
+          <p>A symbol can generate a terminal string if it can eventually produce only terminals.</p>
+          <ul class="bullet-list">
+            <li>Terminals: a, b → always generating.</li>
+            <li>S → ab (all terminals) → S is generating.</li>
+            <li>A → a (terminal) → A is generating.</li>
+            <li>B → D | E. Neither D nor E appear in any production RHS. So D, E are <strong>NOT defined</strong> → B cannot generate anything terminal → <strong>B is non-generating</strong>.</li>
+          </ul>
+
+          <div class="note-box">
+            <span class="note-label">Step 1 Result</span>
+            <p>Non-generating: B, D, E. Remove all productions containing them.</p>
+          </div>
+
+          <p class="sub-h">After removing non-generating:</p>
+          <div class="code-block">S → ab       (S→AB removed since B is useless)
+A → aA | a   (A→B removed since B is useless)</div>
+
+          <p class="sub-h">Step 2 — Find Reachable Symbols from S</p>
+          <ul class="bullet-list">
+            <li>S → ab: reachable symbols are a, b. No new non-terminals.</li>
+            <li>A is not reachable from S anymore! (S→AB was removed.)</li>
+          </ul>
+
+          <div class="def-box">
+            <span class="def-label">Final Grammar (after removing useless)</span>
+            <div class="code-block">S → ab</div>
+            <p>All other productions (involving A, B, D, E) are useless.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="qa-card" id="u3q6">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q6</span>
+        <span class="q-text">Construct the CFG for L = {a²ⁿbⁿ | n ≥ 3}.</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <p>The language <span class="math">a²ⁿbⁿ</span> means: for every <strong>n ≥ 3</strong>, the string has <strong>2n a's followed by n b's</strong>. Minimum (n=3): <span class="kw">aaaaaabbb</span>.</p>
+
+          <p class="sub-h">Key idea</p>
+          <ul class="bullet-list">
+            <li>Each recursive step of <span class="math">S → aaSb</span> wraps 2 more a's on the left and 1 more b on the right — preserving the 2:1 ratio.</li>
+            <li>The base case <span class="math">aaaaaabbb</span> anchors at n=3.</li>
+          </ul>
+
+          <div class="def-box">
+            <span class="def-label">CFG</span>
+            <div class="code-block">S → aaSb | aaaaaabbb</div>
+            <p>Rule <span class="math">S → aaSb</span> adds 2 a's and 1 b each time. Base <span class="math">aaaaaabbb</span> is the smallest valid string (n=3). Together they generate all n ≥ 3.</p>
+          </div>
+
+          <div class="eg-box">
+            <span class="eg-label">Derivations</span>
+            <div class="code-block">n=3 (base):  S ⇒ aaaaaabbb                       ✓  (6a, 3b)
+n=4:         S ⇒ aaSb ⇒ aa·aaaaaabbb·b = aaaaaaaabbbb  ✓  (8a, 4b)
+n=5:         S ⇒ aaSb ⇒ aa·aaSb·b ⇒ aaaa·aaaaaabbb·bb = aaaaaaaaaabbbb  ✓  (10a, 5b)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="qa-card" id="u3q7">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q7</span>
+        <span class="q-text">Write the CFG for regular expression (0+1)*.</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <p>The RE <span class="math">(0+1)*</span> means: <strong>any binary string</strong> (including empty string ε).</p>
+
+          <p>Language: L = {ε, 0, 1, 00, 01, 10, 11, 000, …} = all strings over {0,1}.</p>
+
+          <div class="def-box">
+            <span class="def-label">CFG</span>
+            <div class="code-block">S → 0S | 1S | ε</div>
+          </div>
+
+          <p class="sub-h">Explanation</p>
+          <ul class="bullet-list">
+            <li><span class="kw">S → 0S</span> : append a 0 and continue.</li>
+            <li><span class="kw">S → 1S</span> : append a 1 and continue.</li>
+            <li><span class="kw">S → ε</span> : stop (accepting empty / end of string).</li>
+          </ul>
+
+          <div class="eg-box">
+            <span class="eg-label">Derivation of "010"</span>
+            <div class="code-block">S → 0S → 01S → 010S → 010ε = 010 ✓</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="qa-card" id="u3q8">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q8</span>
+        <span class="q-text">Derive the CFG for (a+b)*.</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <p><span class="math">(a+b)*</span> means any string over {a,b} including ε. Same pattern as Q7 but over {a,b}.</p>
+
+          <div class="def-box">
+            <span class="def-label">CFG</span>
+            <div class="code-block">S → aS | bS | ε</div>
+          </div>
+
+          <ul class="bullet-list">
+            <li><span class="kw">S → aS</span>: prepend 'a' and recurse.</li>
+            <li><span class="kw">S → bS</span>: prepend 'b' and recurse.</li>
+            <li><span class="kw">S → ε</span>: terminate.</li>
+          </ul>
+
+          <div class="eg-box">
+            <span class="eg-label">Derivation of "aba"</span>
+            <div class="code-block">S → aS → abS → abaS → abaε = aba ✓</div>
+          </div>
+
+          <div class="note-box">
+            <span class="note-label">Note</span>
+            <p>This grammar is also a <strong>Regular Grammar</strong> (right-linear), making it the simplest kind of CFG.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="qa-card" id="u3q9">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q9</span>
+        <span class="q-text">What are Right Linear and Left Linear grammars?</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <p>These are two types of <strong>Regular (Type 3) Grammars</strong>.</p>
+
+          <div class="def-box">
+            <span class="def-label">Right Linear Grammar</span>
+            <p>All productions are of the form:<br>
+            <span class="math">A → wB</span> or <span class="math">A → w</span><br>
+            where w is a string of terminals and B is a non-terminal on the <strong>right</strong>.</p>
+          </div>
+
+          <div class="def-box">
+            <span class="def-label">Left Linear Grammar</span>
+            <p>All productions are of the form:<br>
+            <span class="math">A → Bw</span> or <span class="math">A → w</span><br>
+            where B is a non-terminal on the <strong>left</strong> and w is a string of terminals.</p>
+          </div>
+
+          <table class="cmp-table">
+            <thead><tr><th>Feature</th><th>Right Linear</th><th>Left Linear</th></tr></thead>
+            <tbody>
+              <tr><td>Non-terminal position</td><td>Rightmost</td><td>Leftmost</td></tr>
+              <tr><td>Form</td><td>A → aB or A → a</td><td>A → Ba or A → a</td></tr>
+              <tr><td>Example</td><td>S → aS | a</td><td>S → Sa | a</td></tr>
+              <tr><td>Language class</td><td colspan="2" style="text-align:center; color:var(--yellow-bright);">Both generate Regular Languages</td></tr>
+            </tbody>
+          </table>
+
+          <div class="eg-box">
+            <span class="eg-label">Example (both for language a+)</span>
+            <p>Right linear: <span class="math">S → aS | a</span><br>Left linear: <span class="math">S → Sa | a</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="qa-card" id="u3q10">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q10</span>
+        <span class="q-text">Compute the language of G = ({S},{a,b},P,S), P: S→SS|ab|ba|ε</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <p>Productions: <span class="kw">S → SS | ab | ba | ε</span></p>
+
+          <p class="sub-h">What strings can be generated?</p>
+          <ul class="bullet-list">
+            <li><span class="kw">S → ε</span>: empty string ε.</li>
+            <li><span class="kw">S → ab</span>: string "ab".</li>
+            <li><span class="kw">S → ba</span>: string "ba".</li>
+            <li><span class="kw">S → SS → ab·ab = abab</span>: concatenation of any two such strings.</li>
+            <li><span class="kw">S → SS → ab·ba = abba</span></li>
+            <li><span class="kw">S → SSS → ab·ba·ab = abbab</span> and so on…</li>
+          </ul>
+
+          <div class="def-box">
+            <span class="def-label">Language Generated</span>
+            <p>L(G) = Set of all strings that are <strong>concatenations of zero or more</strong> "ab" or "ba" blocks. In other words: all strings over {a,b} where <strong>equal number of a's and b's</strong>, and every prefix has this "balanced block" property.</p>
+          </div>
+
+          <div class="eg-box">
+            <span class="eg-label">Sample strings in L(G)</span>
+            <p>ε, ab, ba, abab, abba, baab, baba, ababab, …</p>
+          </div>
+
+          <div class="note-box">
+            <span class="note-label">Pattern</span>
+            <p>L(G) = {w ∈ {a,b}* | w can be split into blocks of "ab" or "ba"}. All strings have even length with equal a's and b's.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="qa-card" id="u3q11">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q11</span>
+        <span class="q-text">Leftmost derivation for "00110101" in grammar: S→0B|1A; A→0|0S|1AA; B→1|1S|0BB</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <p>In <strong>leftmost derivation</strong>, we always expand the <strong>leftmost non-terminal first</strong>.</p>
+
+          <p class="sub-h">String: 0 0 1 1 0 1 0 1</p>
+
+          <div class="code-block">S
+⇒ 0B              [S → 0B]         — reads '0'
+⇒ 00BB            [B → 0BB]        — reads '0'
+⇒ 001SB           [B → 1S]         — reads '1'
+⇒ 0011AB          [S → 1A]         — reads '1'
+⇒ 00110B          [A → 0]          — reads '0'
+⇒ 001101S         [B → 1S]         — reads '1'
+⇒ 0011010B        [S → 0B]         — reads '0'
+⇒ 00110101        [B → 1]          — reads '1'
+= 00110101 ✓</div>
+
+          <div class="def-box">
+            <span class="def-label">Leftmost Derivation</span>
+            <p>S ⇒ 0B ⇒ 00BB ⇒ 001SB ⇒ 0011AB ⇒ 00110B ⇒ 001101S ⇒ 0011010B ⇒ 00110101</p>
+          </div>
+
+          <div class="note-box">
+            <span class="note-label">Remember</span>
+            <p>Leftmost derivation always replaces the <em>leftmost</em> non-terminal at every step. The sequence of rules used is the leftmost derivation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================== UNIT 4 ========================== -->
+  <section class="unit-section u4" id="unit4">
+    <div class="unit-header">
+      <span class="unit-badge">Unit 4</span>
+      <h2 class="unit-title">Pushdown Automata &amp; CFL</h2>
+    </div>
+
+    <!-- Q1 -->
+    <div class="qa-card" id="u4q1">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q1</span>
+        <span class="q-text">Discuss briefly about Pushdown Automata (PDA).</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <p><strong>Background — What is a Stack?</strong><br>
+          A stack is a data structure that works on the <strong>LIFO</strong> (Last In First Out) principle. You can only push (add) or pop (remove) from the top.</p>
+
+          <div class="def-box">
+            <span class="def-label">Pushdown Automaton (PDA)</span>
+            <p>A PDA is an <strong>NFA with an added stack</strong> (unlimited memory). It can push and pop symbols from the stack while reading input. PDA accepts exactly the <strong>Context-Free Languages (CFL)</strong>.</p>
+          </div>
+
+          <p>Formally: PDA = 7-tuple <span class="math">(Q, Σ, Γ, δ, q₀, Z₀, F)</span></p>
+
+          <ul class="bullet-list">
+            <li><span class="kw">Q</span> — Finite set of states.</li>
+            <li><span class="kw">Σ</span> — Input alphabet.</li>
+            <li><span class="kw">Γ</span> — Stack alphabet.</li>
+            <li><span class="kw">δ</span> — Transition function: <span class="math">Q × (Σ∪{ε}) × Γ → 2^(Q×Γ*)</span></li>
+            <li><span class="kw">q₀</span> — Initial state.</li>
+            <li><span class="kw">Z₀</span> — Initial stack symbol (bottom of stack).</li>
+            <li><span class="kw">F</span> — Set of final states.</li>
+          </ul>
+
+          <p class="sub-h">Two Acceptance Modes</p>
+          <ul class="bullet-list">
+            <li><strong>Accept by final state:</strong> End in a final state after reading all input.</li>
+            <li><strong>Accept by empty stack:</strong> Stack becomes empty after reading all input.</li>
+          </ul>
+
+          <div class="eg-box">
+            <span class="eg-label">Classic Example</span>
+            <p>PDA for {aⁿbⁿ | n≥0}: Push 'a' for each 'a' seen, pop for each 'b'. If stack empty at end → accept.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="qa-card" id="u4q2">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q2</span>
+        <span class="q-text">What do you mean by Two Stack Pushdown Automata?</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <div class="def-box">
+            <span class="def-label">Two Stack PDA</span>
+            <p>A Two Stack PDA is a PDA extended with <strong>two stacks</strong> instead of one. The machine reads input and can push/pop from <em>either</em> stack independently at each step.</p>
+          </div>
+
+          <p class="sub-h">Why is it important?</p>
+          <ul class="bullet-list">
+            <li>A single-stack PDA accepts Context-Free Languages.</li>
+            <li>A Two-Stack PDA is <strong>equivalent in power to a Turing Machine</strong>.</li>
+            <li>It can accept Recursively Enumerable languages (Type 0).</li>
+          </ul>
+
+          <div class="diagram-wrap">
+            <svg viewBox="0 0 360 120" width="360" height="120" xmlns="http://www.w3.org/2000/svg" style="font-family:'JetBrains Mono',monospace;font-size:11px;">
+              <!-- Input tape -->
+              <rect x="10" y="10" width="340" height="28" rx="4" fill="#3c3836" stroke="#665c54" stroke-width="1"/>
+              <text x="180" y="28" text-anchor="middle" fill="#bdae93" font-size="10">INPUT TAPE: a b a b b a …</text>
+              <!-- Control unit -->
+              <rect x="130" y="55" width="100" height="36" rx="6" fill="#504945" stroke="#fabd2f" stroke-width="1.5"/>
+              <text x="180" y="77" text-anchor="middle" fill="#fabd2f" font-size="11" font-weight="bold">Control</text>
+              <!-- Arrow up -->
+              <line x1="180" y1="55" x2="180" y2="38" stroke="#a89984" stroke-width="1.5" marker-end="url(#arrd)"/>
+              <!-- Stack 1 -->
+              <rect x="30" y="55" width="70" height="55" rx="4" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+              <text x="65" y="78" text-anchor="middle" fill="#83a598" font-size="10" font-weight="bold">Stack 1</text>
+              <text x="65" y="94" text-anchor="middle" fill="#665c54" font-size="9">[ a, b, a ]</text>
+              <!-- Stack 2 -->
+              <rect x="260" y="55" width="70" height="55" rx="4" fill="#3c3836" stroke="#d3869b" stroke-width="1.5"/>
+              <text x="295" y="78" text-anchor="middle" fill="#d3869b" font-size="10" font-weight="bold">Stack 2</text>
+              <text x="295" y="94" text-anchor="middle" fill="#665c54" font-size="9">[ b, b ]</text>
+              <!-- Arrows -->
+              <line x1="130" y1="72" x2="100" y2="72" stroke="#a89984" stroke-width="1.5" marker-end="url(#arrd)"/>
+              <line x1="230" y1="72" x2="260" y2="72" stroke="#a89984" stroke-width="1.5" marker-end="url(#arrd)"/>
+              <defs>
+                <marker id="arrd" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L7,3 z" fill="#a89984"/>
+                </marker>
+              </defs>
+            </svg>
+          </div>
+
+          <div class="note-box">
+            <span class="note-label">Key Point</span>
+            <p>Two stacks simulate a Turing Machine tape (one stack = left part, other = right part of TM tape). This gives it full computational power.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="qa-card" id="u4q3">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q3</span>
+        <span class="q-text">Explain pumping lemma for context free language.</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <div class="def-box">
+            <span class="def-label">Pumping Lemma for CFL</span>
+            <p>For every CFL L, there exists a constant <span class="math">p</span> (pumping length) such that for every string <span class="math">s ∈ L</span> with <span class="math">|s| ≥ p</span>, s can be split into 5 parts:</p>
+          </div>
+
+          <div class="code-block">s = u v x y z</div>
+
+          <p>satisfying these three conditions:</p>
+          <ol class="step-list">
+            <li><span class="math">|vy| ≥ 1</span> (v and y are not both empty).</li>
+            <li><span class="math">|vxy| ≤ p</span> (the middle part is not too long).</li>
+            <li>For all <span class="math">i ≥ 0</span>: <span class="math">u vⁱ x yⁱ z ∈ L</span> (we can "pump" v and y).</li>
+          </ol>
+
+          <p class="sub-h">Use Case</p>
+          <ul class="bullet-list">
+            <li>Used to <strong>prove a language is NOT context-free</strong>.</li>
+            <li>If a language violates the pumping lemma, it cannot be CFL.</li>
+          </ul>
+
+          <div class="eg-box">
+            <span class="eg-label">Classic Non-CFL Example</span>
+            <p>L = {aⁿbⁿcⁿ | n≥0} — pumping lemma shows no valid split works for all i. So L is NOT a CFL.</p>
+          </div>
+
+          <div class="note-box">
+            <span class="note-label">Difference from Regular PL</span>
+            <p>Regular pumping lemma splits string into 3 parts (xyz). CFL pumping lemma splits into 5 parts (uvxyz) to account for the stack.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="qa-card" id="u4q4">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q4</span>
+        <span class="q-text">Draw the graphical representation for PDA.</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <p>A PDA is drawn like an NFA but with an attached stack and stack operations on transitions.</p>
+
+          <div class="diagram-wrap">
+            <svg viewBox="0 0 420 160" width="420" height="160" xmlns="http://www.w3.org/2000/svg" style="font-family:'JetBrains Mono',monospace;">
+              <defs>
+                <marker id="arrP" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L8,3 z" fill="#a89984"/>
+                </marker>
+                <marker id="arrPO" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L8,3 z" fill="#fe8019"/>
+                </marker>
+              </defs>
+              <!-- Input tape -->
+              <rect x="10" y="10" width="200" height="22" rx="3" fill="#3c3836" stroke="#665c54"/>
+              <text x="15" y="25" fill="#928374" font-size="9">INPUT: a a b b</text>
+              <!-- start arrow -->
+              <line x1="5" y1="90" x2="38" y2="90" stroke="#fe8019" stroke-width="1.5" marker-end="url(#arrPO)"/>
+              <!-- q0 -->
+              <circle cx="62" cy="90" r="24" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+              <text x="62" y="94" text-anchor="middle" fill="#ebdbb2" font-size="11">q₀</text>
+              <!-- transition arrow q0 → q1 -->
+              <line x1="86" y1="90" x2="178" y2="90" stroke="#a89984" stroke-width="1.5" marker-end="url(#arrP)"/>
+              <!-- transition label: a, Z₀/AZ₀ -->
+              <text x="132" y="80" text-anchor="middle" fill="#b8bb26" font-size="10">a, Z₀/AZ₀</text>
+              <!-- q1 -->
+              <circle cx="202" cy="90" r="24" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+              <text x="202" y="94" text-anchor="middle" fill="#ebdbb2" font-size="11">q₁</text>
+              <!-- self loop q1 on a -->
+              <path d="M 188 67 Q 202 42 216 67" fill="none" stroke="#a89984" stroke-width="1.5" marker-end="url(#arrP)"/>
+              <text x="202" y="42" text-anchor="middle" fill="#b8bb26" font-size="10">a, A/AA</text>
+              <!-- q1 → q2 on b -->
+              <line x1="226" y1="90" x2="318" y2="90" stroke="#a89984" stroke-width="1.5" marker-end="url(#arrP)"/>
+              <text x="272" y="80" text-anchor="middle" fill="#b8bb26" font-size="10">b, A/ε</text>
+              <!-- q2 -->
+              <circle cx="342" cy="90" r="24" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+              <circle cx="342" cy="90" r="19" fill="none" stroke="#8ec07c" stroke-width="1.5"/>
+              <text x="342" y="94" text-anchor="middle" fill="#ebdbb2" font-size="11">q₂</text>
+              <!-- self loop q2 -->
+              <path d="M 328 67 Q 342 42 356 67" fill="none" stroke="#a89984" stroke-width="1.5" marker-end="url(#arrP)"/>
+              <text x="342" y="42" text-anchor="middle" fill="#b8bb26" font-size="10">b, A/ε</text>
+              <!-- Stack diagram -->
+              <rect x="370" y="60" width="40" height="60" rx="3" fill="#282828" stroke="#504945"/>
+              <text x="390" y="55" text-anchor="middle" fill="#928374" font-size="9">Stack</text>
+              <rect x="372" y="62" width="36" height="14" rx="2" fill="#458588" opacity="0.5"/>
+              <text x="390" y="73" text-anchor="middle" fill="#83a598" font-size="9">A</text>
+              <rect x="372" y="77" width="36" height="14" rx="2" fill="#458588" opacity="0.3"/>
+              <text x="390" y="88" text-anchor="middle" fill="#83a598" font-size="9">A</text>
+              <rect x="372" y="92" width="36" height="14" rx="2" fill="#458588" opacity="0.2"/>
+              <text x="390" y="103" text-anchor="middle" fill="#665c54" font-size="9">Z₀</text>
+              <!-- Labels -->
+              <text x="62" y="128" text-anchor="middle" fill="#928374" font-size="9">start</text>
+              <text x="342" y="128" text-anchor="middle" fill="#8ec07c" font-size="9">accept</text>
+              <text x="132" y="106" text-anchor="middle" fill="#504945" font-size="8">push 'a' onto stack</text>
+              <text x="272" y="106" text-anchor="middle" fill="#504945" font-size="8">pop 'a' for each 'b'</text>
+            </svg>
+          </div>
+
+          <p class="sub-h">Transition Notation Explained</p>
+          <div class="code-block">Format: input_symbol, stack_top / stack_push
+Example: a, Z₀/AZ₀
+Means: Read 'a', pop Z₀, push AZ₀ (push A on top of Z₀)</div>
+
+          <div class="note-box">
+            <span class="note-label">Accept Condition</span>
+            <p>Reach q₂ after consuming full input with stack containing only Z₀ (or empty stack for empty-stack acceptance).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================== UNIT 5 ========================== -->
+  <section class="unit-section u5" id="unit5">
+    <div class="unit-header">
+      <span class="unit-badge">Unit 5</span>
+      <h2 class="unit-title">Turing Machines and Recursive Function Theory</h2>
+    </div>
+
+    <!-- Q1 -->
+    <div class="qa-card" id="u5q1">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q1</span>
+        <span class="q-text">Explain Universal Turing Machine.</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <p><strong>Background — Basic TM:</strong> A Turing Machine reads/writes on an infinite tape, moves left or right, and accepts or rejects input. It is the most powerful computational model.</p>
+
+          <div class="def-box">
+            <span class="def-label">Universal Turing Machine (UTM)</span>
+            <p>A UTM is a special Turing Machine that can <strong>simulate any other Turing Machine</strong>. It takes as input:<br>
+            <span class="math">&lt;M, w&gt;</span> = the encoding of TM M + input string w,<br>
+            and simulates what M does on w.</p>
+          </div>
+
+          <p class="sub-h">How it works</p>
+          <ol class="step-list">
+            <li>The description (encoding) of TM M is written on the tape.</li>
+            <li>UTM reads M's description to understand its transitions.</li>
+            <li>UTM simulates M step by step on input w.</li>
+            <li>If M accepts w → UTM accepts. If M rejects → UTM rejects.</li>
+          </ol>
+
+          <div class="diagram-wrap">
+            <svg viewBox="0 0 380 90" width="380" height="90" xmlns="http://www.w3.org/2000/svg" style="font-family:'JetBrains Mono',monospace;font-size:11px;">
+              <rect x="10" y="20" width="120" height="50" rx="6" fill="#3c3836" stroke="#fe8019" stroke-width="1.5"/>
+              <text x="70" y="44" text-anchor="middle" fill="#fabd2f" font-size="11" font-weight="bold">TM M</text>
+              <text x="70" y="60" text-anchor="middle" fill="#928374" font-size="9">encoded as ⟨M⟩</text>
+              <line x1="130" y1="45" x2="158" y2="45" stroke="#a89984" stroke-width="1.5" marker-end="url(#arrU)"/>
+              <text x="144" y="40" text-anchor="middle" fill="#928374" font-size="9">⟨M,w⟩</text>
+              <rect x="158" y="15" width="120" height="60" rx="6" fill="#504945" stroke="#d3869b" stroke-width="2"/>
+              <text x="218" y="43" text-anchor="middle" fill="#d3869b" font-size="12" font-weight="bold">UTM</text>
+              <text x="218" y="60" text-anchor="middle" fill="#928374" font-size="9">simulates M on w</text>
+              <line x1="278" y1="45" x2="306" y2="45" stroke="#a89984" stroke-width="1.5" marker-end="url(#arrU)"/>
+              <rect x="306" y="28" width="64" height="34" rx="6" fill="#3c3836" stroke="#8ec07c" stroke-width="1.5"/>
+              <text x="338" y="44" text-anchor="middle" fill="#8ec07c" font-size="10" font-weight="bold">Accept/</text>
+              <text x="338" y="56" text-anchor="middle" fill="#8ec07c" font-size="10" font-weight="bold">Reject</text>
+              <defs>
+                <marker id="arrU" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L7,3 z" fill="#a89984"/>
+                </marker>
+              </defs>
+            </svg>
+          </div>
+
+          <div class="note-box">
+            <span class="note-label">Significance</span>
+            <p>UTM is the theoretical basis for modern general-purpose computers. Any algorithm on any TM can be run on the UTM — making it "universal."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="qa-card" id="u5q2">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q2</span>
+        <span class="q-text">What do you mean by basic Turing Machine Model?</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <div class="def-box">
+            <span class="def-label">Basic Turing Machine (TM)</span>
+            <p>A Turing Machine is an abstract computing device that consists of an <strong>infinite tape</strong> and a <strong>read/write head</strong> controlled by a finite set of states. It is the most powerful model of computation.</p>
+          </div>
+
+          <p>Formally: TM = 7-tuple <span class="math">(Q, Σ, Γ, δ, q₀, B, F)</span></p>
+
+          <ul class="bullet-list">
+            <li><span class="kw">Q</span> — Finite set of states.</li>
+            <li><span class="kw">Σ</span> — Input alphabet (⊆ Γ, doesn't include blank B).</li>
+            <li><span class="kw">Γ</span> — Tape alphabet (includes blank symbol B).</li>
+            <li><span class="kw">δ: Q × Γ → Q × Γ × {L, R}</span> — Transition function.</li>
+            <li><span class="kw">q₀</span> — Start state.</li>
+            <li><span class="kw">B</span> — Blank symbol.</li>
+            <li><span class="kw">F</span> — Set of final/halting states.</li>
+          </ul>
+
+          <div class="diagram-wrap">
+            <svg viewBox="0 0 380 110" width="380" height="110" xmlns="http://www.w3.org/2000/svg" style="font-family:'JetBrains Mono',monospace;font-size:11px;">
+              <!-- Tape cells -->
+              <text x="10" y="22" fill="#928374" font-size="9">TAPE (infinite in both directions):</text>
+              <rect x="10" y="30" width="36" height="28" fill="#3c3836" stroke="#504945"/>
+              <text x="28" y="49" text-anchor="middle" fill="#665c54" font-size="10">B</text>
+              <rect x="46" y="30" width="36" height="28" fill="#3c3836" stroke="#504945"/>
+              <text x="64" y="49" text-anchor="middle" fill="#ebdbb2" font-size="10">a</text>
+              <rect x="82" y="30" width="36" height="28" fill="#458588" stroke="#83a598" stroke-width="2"/>
+              <text x="100" y="49" text-anchor="middle" fill="#ebdbb2" font-size="11" font-weight="bold">b</text>
+              <rect x="118" y="30" width="36" height="28" fill="#3c3836" stroke="#504945"/>
+              <text x="136" y="49" text-anchor="middle" fill="#ebdbb2" font-size="10">a</text>
+              <rect x="154" y="30" width="36" height="28" fill="#3c3836" stroke="#504945"/>
+              <text x="172" y="49" text-anchor="middle" fill="#ebdbb2" font-size="10">b</text>
+              <rect x="190" y="30" width="36" height="28" fill="#3c3836" stroke="#504945"/>
+              <text x="208" y="49" text-anchor="middle" fill="#665c54" font-size="10">B</text>
+              <text x="235" y="49" fill="#504945" font-size="12">···</text>
+              <!-- Read head -->
+              <polygon points="100,62 92,78 108,78" fill="#fabd2f" opacity="0.8"/>
+              <text x="100" y="96" text-anchor="middle" fill="#fabd2f" font-size="9">R/W Head</text>
+              <!-- Control box -->
+              <rect x="280" y="30" width="90" height="55" rx="6" fill="#504945" stroke="#fabd2f" stroke-width="1.5"/>
+              <text x="325" y="55" text-anchor="middle" fill="#fabd2f" font-size="11" font-weight="bold">Control</text>
+              <text x="325" y="70" text-anchor="middle" fill="#a89984" font-size="9">State: q₁</text>
+              <!-- Arrow from head to control -->
+              <line x1="108" y1="78" x2="275" y2="57" stroke="#a89984" stroke-width="1" stroke-dasharray="4,3"/>
+            </svg>
+          </div>
+
+          <p class="sub-h">At each step the TM:</p>
+          <ol class="step-list">
+            <li>Reads the symbol under the read/write head.</li>
+            <li>Writes a new symbol (or same) to the current cell.</li>
+            <li>Moves the head Left or Right by one cell.</li>
+            <li>Transitions to a new state.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="qa-card" id="u5q3">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q3</span>
+        <span class="q-text">What do you understand by the Halting Problem?</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <div class="def-box">
+            <span class="def-label">The Halting Problem</span>
+            <p>The Halting Problem asks: <strong>"Given a Turing Machine M and input w, will M eventually halt (stop) on w?"</strong><br>
+            Alan Turing (1936) proved that <strong>no algorithm can solve this in general</strong> — it is <em>undecidable</em>.</p>
+          </div>
+
+          <p class="sub-h">What undecidable means</p>
+          <ul class="bullet-list">
+            <li>There is <strong>no TM</strong> that can always correctly answer "yes, M halts" or "no, M loops" for every possible (M, w).</li>
+            <li>Some instances may be answerable, but not all — there's no general algorithm.</li>
+          </ul>
+
+          <p class="sub-h">Three possibilities for any TM M on input w</p>
+          <ol class="step-list">
+            <li>M reaches an accept state → Halts and accepts.</li>
+            <li>M reaches a reject state → Halts and rejects.</li>
+            <li>M runs forever (infinite loop) → Does not halt.</li>
+          </ol>
+
+          <div class="note-box">
+            <span class="note-label">Key Distinction</span>
+            <p><strong>Decidable</strong> = TM always halts with yes/no.<br>
+            <strong>Semi-decidable</strong> = TM halts and says "yes" if true, but may loop if false.<br>
+            The Halting Problem is <strong>semi-decidable but not decidable</strong>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="qa-card" id="u5q4">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q4</span>
+        <span class="q-text">Explain Halting Problem of Turing Machine.</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <p>This is a deeper look at the Halting Problem using <strong>proof by contradiction</strong>.</p>
+
+          <p class="sub-h">Formal Statement</p>
+          <div class="def-box">
+            <span class="def-label">Halting Problem (HP)</span>
+            <p>HP = {&lt;M, w&gt; | TM M halts on input w}<br>
+            Is there a decider (TM that always halts) for HP?<br>
+            <strong>Answer: NO.</strong></p>
+          </div>
+
+          <p class="sub-h">Proof Sketch (by contradiction)</p>
+          <ol class="step-list">
+            <li>Assume a TM <span class="kw">H</span> exists that decides the halting problem.<br>H(&lt;M,w&gt;) = accept if M halts on w; reject if M loops on w.</li>
+            <li>Construct a new TM <span class="kw">D</span>:<br>D(&lt;M&gt;) = if H(&lt;M,&lt;M&gt;&gt;) accepts → loop forever; if H rejects → accept.</li>
+            <li>Ask: what does D do on input &lt;D&gt; itself?<br>If D halts → by construction D must loop. Contradiction!<br>If D loops → by construction D must halt. Contradiction!</li>
+            <li>This contradiction means our assumption was wrong → <strong>H cannot exist</strong>.</li>
+          </ol>
+
+          <div class="note-box">
+            <span class="note-label">Consequence</span>
+            <p>The Halting Problem is the first example of an <strong>undecidable problem</strong>. Many other undecidable problems can be proven so by reduction to HP.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="qa-card" id="u5q5">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q5</span>
+        <span class="q-text">Explain Linear Bounded Automata (LBA).</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <div class="def-box">
+            <span class="def-label">Linear Bounded Automata (LBA)</span>
+            <p>An LBA is a <strong>restricted Turing Machine</strong> where the read/write head can only move within the portion of the tape occupied by the <strong>input string</strong>. It cannot use more tape space than the input length (linearly bounded).</p>
+          </div>
+
+          <ul class="bullet-list">
+            <li>The tape length is bounded by a <strong>linear function</strong> of the input: at most <span class="math">k × |w|</span> for some constant k.</li>
+            <li>LBA accepts exactly the <strong>Context-Sensitive Languages (Type 1)</strong>.</li>
+            <li>It is more powerful than PDA but weaker than a full TM.</li>
+          </ul>
+
+          <div class="diagram-wrap">
+            <svg viewBox="0 0 360 80" width="360" height="80" xmlns="http://www.w3.org/2000/svg" style="font-family:'JetBrains Mono',monospace;font-size:10px;">
+              <!-- boundary left -->
+              <rect x="10" y="25" width="4" height="30" fill="#fb4934" rx="2"/>
+              <text x="14" y="20" fill="#fb4934" font-size="9">⊢</text>
+              <!-- tape cells (only input region) -->
+              <rect x="14" y="25" width="30" height="30" fill="#3c3836" stroke="#504945"/>
+              <text x="29" y="45" text-anchor="middle" fill="#ebdbb2">a</text>
+              <rect x="44" y="25" width="30" height="30" fill="#3c3836" stroke="#504945"/>
+              <text x="59" y="45" text-anchor="middle" fill="#ebdbb2">a</text>
+              <rect x="74" y="25" width="30" height="30" fill="#458588" stroke="#83a598" stroke-width="1.5"/>
+              <text x="89" y="45" text-anchor="middle" fill="#ebdbb2" font-weight="bold">b</text>
+              <rect x="104" y="25" width="30" height="30" fill="#3c3836" stroke="#504945"/>
+              <text x="119" y="45" text-anchor="middle" fill="#ebdbb2">b</text>
+              <rect x="134" y="25" width="30" height="30" fill="#3c3836" stroke="#504945"/>
+              <text x="149" y="45" text-anchor="middle" fill="#ebdbb2">c</text>
+              <!-- boundary right -->
+              <rect x="164" y="25" width="4" height="30" fill="#fb4934" rx="2"/>
+              <text x="152" y="20" fill="#fb4934" font-size="9">⊣</text>
+              <!-- labels -->
+              <text x="89" y="68" text-anchor="middle" fill="#fabd2f" font-size="9">↑ Head (bounded here)</text>
+              <text x="14" y="75" fill="#928374" font-size="8">left marker</text>
+              <text x="148" y="75" fill="#928374" font-size="8">right marker</text>
+              <!-- crosses on outside -->
+              <text x="200" y="45" fill="#665c54" font-size="18">✗</text>
+              <text x="220" y="35" fill="#665c54" font-size="9">cannot go</text>
+              <text x="220" y="46" fill="#665c54" font-size="9">beyond input</text>
+            </svg>
+          </div>
+
+          <table class="cmp-table">
+            <thead><tr><th>Machine</th><th>Language Class</th><th>Tape</th></tr></thead>
+            <tbody>
+              <tr><td>FA</td><td>Regular (Type 3)</td><td>None</td></tr>
+              <tr><td>PDA</td><td>Context-Free (Type 2)</td><td>Stack (unlimited)</td></tr>
+              <tr><td class="highlight">LBA</td><td class="highlight">Context-Sensitive (Type 1)</td><td class="highlight">Bounded tape</td></tr>
+              <tr><td>TM</td><td>Recursively Enum. (Type 0)</td><td>Unlimited tape</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="qa-card" id="u5q6">
+      <div class="qa-question" onclick="toggleCard(this)">
+        <span class="q-num">Q6</span>
+        <span class="q-text">Explain Multi-Tape Turing Machine.</span>
+        <span class="qa-marks">2M</span>
+        <svg class="q-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="qa-answer">
+        <div class="answer-body">
+          <div class="def-box">
+            <span class="def-label">Multi-Tape Turing Machine</span>
+            <p>A Multi-Tape TM has <strong>k tapes</strong> (k ≥ 1), each with its own independent read/write head. At each step, the machine reads all k heads simultaneously, writes to all tapes, and moves each head independently.</p>
+          </div>
+
+          <div class="diagram-wrap">
+            <svg viewBox="0 0 380 130" width="380" height="130" xmlns="http://www.w3.org/2000/svg" style="font-family:'JetBrains Mono',monospace;font-size:10px;">
+              <defs>
+                <marker id="arrM" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L7,3 z" fill="#a89984"/>
+                </marker>
+              </defs>
+              <!-- Control -->
+              <rect x="145" y="50" width="90" height="40" rx="6" fill="#504945" stroke="#fabd2f" stroke-width="1.5"/>
+              <text x="190" y="72" text-anchor="middle" fill="#fabd2f" font-size="11" font-weight="bold">Control</text>
+              <!-- Tape 1 -->
+              <rect x="10" y="10" width="120" height="22" rx="3" fill="#3c3836" stroke="#83a598"/>
+              <text x="70" y="25" text-anchor="middle" fill="#83a598" font-size="9">Tape 1: a b b a …</text>
+              <line x1="70" y1="32" x2="145" y2="60" stroke="#a89984" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#arrM)"/>
+              <!-- Tape 2 -->
+              <rect x="10" y="55" width="120" height="22" rx="3" fill="#3c3836" stroke="#b8bb26"/>
+              <text x="70" y="70" text-anchor="middle" fill="#b8bb26" font-size="9">Tape 2: 1 0 1 0 …</text>
+              <line x1="130" y1="66" x2="145" y2="66" stroke="#a89984" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#arrM)"/>
+              <!-- Tape 3 -->
+              <rect x="10" y="100" width="120" height="22" rx="3" fill="#3c3836" stroke="#d3869b"/>
+              <text x="70" y="115" text-anchor="middle" fill="#d3869b" font-size="9">Tape 3: B B B B …</text>
+              <line x1="70" y1="100" x2="145" y2="80" stroke="#a89984" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#arrM)"/>
+              <!-- Output -->
+              <line x1="235" y1="70" x2="265" y2="70" stroke="#a89984" stroke-width="1.5" marker-end="url(#arrM)"/>
+              <rect x="265" y="56" width="100" height="28" rx="4" fill="#3c3836" stroke="#8ec07c"/>
+              <text x="315" y="74" text-anchor="middle" fill="#8ec07c" font-size="10">Accept/Reject</text>
+            </svg>
+          </div>
+
+          <p class="sub-h">Key Properties</p>
+          <ul class="bullet-list">
+            <li>Tape 1 is usually the <strong>input tape</strong> (read-only sometimes).</li>
+            <li>Other tapes are used as <strong>scratch space</strong> or output.</li>
+            <li>More convenient to design algorithms on than single-tape TM.</li>
+          </ul>
+
+          <div class="note-box">
+            <span class="note-label">Critical Theorem</span>
+            <p>Every <strong>k-tape TM</strong> can be simulated by a <strong>single-tape TM</strong>. They are computationally equivalent — Multi-tape TMs do NOT add computational power, only convenience.</p>
+          </div>
+
+          <table class="cmp-table">
+            <thead><tr><th>Feature</th><th>Single-Tape TM</th><th>Multi-Tape TM</th></tr></thead>
+            <tbody>
+              <tr><td>Tapes</td><td>1</td><td>k ≥ 2</td></tr>
+              <tr><td>Heads</td><td>1</td><td>k (one per tape)</td></tr>
+              <tr><td>Power</td><td colspan="2" style="text-align:center;color:var(--yellow-bright);">Equivalent — same languages accepted</td></tr>
+              <tr><td>Speed</td><td>Slower (simulation)</td><td class="pos">Faster (easier to design)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<script>
+// ===== SIDEBAR NAV TOGGLE =====
+function toggleNav(header) {
+  const items = header.nextElementSibling;
+  const isOpen = items.classList.contains('open');
+  items.classList.toggle('open', !isOpen);
+  header.classList.toggle('open', !isOpen);
+}
+
+// Open all by default
+document.querySelectorAll('.nav-unit-header').forEach(h => {
+  h.classList.add('open');
+  h.nextElementSibling.classList.add('open');
+});
+
+// ===== CARD ACCORDION =====
+let openCount = 0;
+const totalCards = document.querySelectorAll('.qa-card').length;
+
+function toggleCard(questionEl) {
+  const card = questionEl.parentElement;
+  const wasOpen = card.classList.contains('open');
+  card.classList.toggle('open', !wasOpen);
+  if (!wasOpen) {
+    openCount++;
+    card.dataset.read = 'true';
+  }
+  updateProgress();
+}
+
+function updateProgress() {
+  const readCards = document.querySelectorAll('.qa-card[data-read="true"]').length;
+  const pct = Math.round((readCards / totalCards) * 100);
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = readCards + ' / ' + totalCards + ' read';
+  document.getElementById('hero-read').textContent = readCards;
+}
+
+// ===== SCROLL TO QUESTION =====
+function scrollToQ(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const offset = 76;
+  const top = el.getBoundingClientRect().top + window.scrollY - offset;
+  window.scrollTo({ top, behavior: 'smooth' });
+
+  // auto-open
+  const card = el;
+  if (!card.classList.contains('open')) {
+    card.classList.add('open');
+    card.dataset.read = 'true';
+    updateProgress();
+  }
+
+  // Close sidebar on mobile
+  if (window.innerWidth <= 768) {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+  }
+
+  // Highlight briefly
+  card.style.borderColor = 'var(--yellow-bright)';
+  setTimeout(() => { card.style.borderColor = ''; }, 1200);
+}
+
+// ===== MOBILE MENU =====
+const menuBtn = document.getElementById('menu-toggle');
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+
+menuBtn.addEventListener('click', () => {
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('show');
+});
+
+overlay.addEventListener('click', () => {
+  sidebar.classList.remove('open');
+  overlay.classList.remove('show');
+});
+
+// ===== ACTIVE NAV ON SCROLL =====
+const allNavItems = document.querySelectorAll('.nav-item');
+const allCards = document.querySelectorAll('.qa-card');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      allNavItems.forEach(item => {
+        item.classList.toggle('active', item.getAttribute('onclick')?.includes(id));
+      });
+    }
+  });
+}, { threshold: 0.3, rootMargin: '-60px 0px -60% 0px' });
+
+allCards.forEach(card => observer.observe(card));
+
+// ===== PROGRESS ON SCROLL (open cards when visible) =====
+// Initialize
+updateProgress();
+</script>
+</body>
+</html>
