@@ -1,0 +1,2538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>TAFL — Unit 3 | AKTU Revision Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Recursive:slnt,wght,CRSV,MONO@-15..0,300..800,0..1,0..1&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    /* Gruvbox Dark Hard */
+    --bg0-hard: #1d2021;
+    --bg0:      #282828;
+    --bg0-soft: #32302f;
+    --bg1:      #3c3836;
+    --bg2:      #504945;
+    --bg3:      #665c54;
+    --bg4:      #7c6f64;
+    --fg0:      #fbf1c7;
+    --fg1:      #ebdbb2;
+    --fg2:      #d5c4a1;
+    --fg3:      #bdae93;
+    --fg4:      #a89984;
+    --red:      #cc241d;
+    --red-b:    #fb4934;
+    --green:    #98971a;
+    --green-b:  #b8bb26;
+    --yellow:   #d79921;
+    --yellow-b: #fabd2f;
+    --blue:     #458588;
+    --blue-b:   #83a598;
+    --purple:   #b16286;
+    --purple-b: #d3869b;
+    --aqua:     #689d6a;
+    --aqua-b:   #8ec07c;
+    --orange:   #d65d0e;
+    --orange-b: #fe8019;
+    --gray:     #928374;
+
+    --sidebar-w: 280px;
+    --topbar-h:  64px;
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Recursive', 'JetBrains Mono', monospace;
+    background: var(--bg0-hard);
+    color: var(--fg1);
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--yellow); color: var(--bg0-hard); }
+
+  /* ═══════════════════ SCROLLBAR ═══════════════════ */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg0-hard); }
+  ::-webkit-scrollbar-thumb { background: var(--bg3); border-radius: 99px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--bg4); }
+
+  /* ═══════════════════ TOP NAV ═══════════════════ */
+  #topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--topbar-h);
+    background: rgba(29,32,33,0.85);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border-bottom: 1px solid var(--bg1);
+    display: flex; align-items: center;
+    padding: 0 24px 0 calc(var(--sidebar-w) + 24px);
+    gap: 16px;
+  }
+
+  #hamburger {
+    display: none;
+    background: none; border: none; cursor: pointer;
+    color: var(--fg1); padding: 8px; border-radius: var(--radius-sm);
+    transition: var(--transition);
+    margin-right: 8px;
+  }
+  #hamburger:hover { background: var(--bg1); }
+
+  .topbar-title {
+    font-size: 13px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--yellow-b);
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+  }
+  .topbar-sub {
+    font-size: 12px; color: var(--fg4); font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+  }
+
+  .topbar-spacer { flex: 1; }
+
+  /* Progress bar */
+  .progress-wrap {
+    display: flex; align-items: center; gap: 10px;
+    min-width: 180px;
+  }
+  .progress-label { font-size: 11px; color: var(--fg4); font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
+  .progress-track {
+    flex: 1; height: 5px; background: var(--bg2);
+    border-radius: 99px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; width: 0%; background: linear-gradient(90deg, var(--green-b), var(--aqua-b));
+    border-radius: 99px; transition: width 0.5s ease;
+  }
+  .progress-pct { font-size: 11px; color: var(--green-b); font-family: 'JetBrains Mono', monospace; min-width: 32px; }
+
+  /* Badge */
+  .unit-badge {
+    background: var(--yellow); color: var(--bg0-hard);
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    padding: 3px 10px; border-radius: 99px; text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace; white-space: nowrap;
+  }
+
+  /* ═══════════════════ SIDEBAR ═══════════════════ */
+  #sidebar {
+    position: fixed; top: var(--topbar-h); left: 0; bottom: 0;
+    width: var(--sidebar-w); z-index: 90;
+    background: var(--bg0);
+    border-right: 1px solid var(--bg1);
+    overflow-y: auto; overflow-x: hidden;
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    display: flex; flex-direction: column;
+  }
+
+  .sidebar-header {
+    padding: 20px 18px 12px;
+    border-bottom: 1px solid var(--bg1);
+  }
+  .sidebar-course-tag {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--orange-b);
+    font-family: 'JetBrains Mono', monospace; margin-bottom: 6px;
+  }
+  .sidebar-course-name {
+    font-size: 13px; font-weight: 700; color: var(--fg0); line-height: 1.4;
+  }
+
+  .sidebar-section-label {
+    padding: 16px 18px 6px;
+    font-size: 9px; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--bg4);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .sidebar-unit-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 18px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+    color: var(--yellow-b); text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .sidebar-nav { flex: 1; padding-bottom: 24px; }
+
+  .nav-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 9px 18px;
+    cursor: pointer;
+    transition: var(--transition);
+    border-left: 2px solid transparent;
+    text-decoration: none;
+  }
+  .nav-item:hover { background: var(--bg1); }
+  .nav-item.active {
+    background: var(--bg1);
+    border-left-color: var(--yellow-b);
+  }
+  .nav-item.active .nav-num { color: var(--yellow-b); }
+  .nav-item.active .nav-text { color: var(--fg0); }
+  .nav-num {
+    font-size: 10px; font-weight: 700; color: var(--bg4);
+    font-family: 'JetBrains Mono', monospace;
+    min-width: 22px; margin-top: 2px;
+  }
+  .nav-text {
+    font-size: 12px; color: var(--fg3); line-height: 1.4;
+    font-family: 'Recursive', monospace;
+  }
+  .nav-done {
+    margin-left: auto; font-size: 10px; color: var(--green-b); margin-top: 3px;
+  }
+
+  .sidebar-footer {
+    padding: 16px 18px;
+    border-top: 1px solid var(--bg1);
+    font-size: 11px; color: var(--bg4);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ═══════════════════ MAIN CONTENT ═══════════════════ */
+  #main {
+    margin-left: var(--sidebar-w);
+    padding-top: calc(var(--topbar-h) + 40px);
+    padding-bottom: 80px;
+    min-height: 100vh;
+  }
+
+  .content-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ═══════════════════ UNIT HERO ═══════════════════ */
+  .unit-hero {
+    margin-bottom: 40px;
+    padding: 36px 40px;
+    background: linear-gradient(135deg, var(--bg0-soft) 0%, var(--bg0) 100%);
+    border: 1px solid var(--bg2);
+    border-radius: var(--radius-lg);
+    position: relative; overflow: hidden;
+  }
+  .unit-hero::before {
+    content: ''; position: absolute; top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(215,153,33,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .unit-hero-tag {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--orange-b);
+    font-family: 'JetBrains Mono', monospace; margin-bottom: 10px;
+  }
+  .unit-hero h1 {
+    font-size: 26px; font-weight: 800; color: var(--fg0);
+    letter-spacing: -0.02em; margin-bottom: 8px; line-height: 1.2;
+  }
+  .unit-hero p {
+    font-size: 14px; color: var(--fg3); max-width: 560px; line-height: 1.6;
+  }
+  .unit-hero-chips {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px;
+  }
+  .chip {
+    font-size: 11px; font-family: 'JetBrains Mono', monospace;
+    padding: 4px 12px; border-radius: 99px;
+    background: var(--bg1); border: 1px solid var(--bg2); color: var(--fg3);
+  }
+
+  /* ═══════════════════ Q CARD ═══════════════════ */
+  .q-card {
+    background: var(--bg0);
+    border: 1px solid var(--bg1);
+    border-radius: var(--radius-lg);
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .q-card:hover { border-color: var(--bg3); }
+  .q-card.open { border-color: var(--yellow); box-shadow: 0 0 0 1px rgba(215,153,33,0.15), 0 8px 32px rgba(0,0,0,0.4); }
+
+  .q-header {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 20px 24px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.18s;
+  }
+  .q-header:hover { background: var(--bg0-soft); }
+
+  .q-num {
+    background: var(--bg1);
+    color: var(--yellow-b);
+    font-size: 11px; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 4px 10px; border-radius: var(--radius-sm);
+    white-space: nowrap; margin-top: 2px;
+    border: 1px solid var(--bg2);
+    min-width: 48px; text-align: center;
+  }
+
+  .q-title-wrap { flex: 1; }
+  .q-marks-tag {
+    display: inline-block;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+    background: rgba(152,151,26,0.15); color: var(--green-b);
+    border: 1px solid rgba(152,151,26,0.3);
+    padding: 2px 8px; border-radius: 99px;
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 6px;
+  }
+  .q-title {
+    font-size: 14px; font-weight: 600; color: var(--fg0);
+    line-height: 1.5;
+  }
+
+  .q-toggle {
+    color: var(--bg4); transition: var(--transition); margin-top: 4px;
+    flex-shrink: 0;
+  }
+  .q-card.open .q-toggle { transform: rotate(180deg); color: var(--yellow-b); }
+
+  .q-body {
+    display: none;
+    padding: 0 24px 28px;
+    border-top: 1px solid var(--bg1);
+  }
+  .q-card.open .q-body { display: block; }
+
+  .q-body-inner { padding-top: 24px; }
+
+  /* ═══════════════════ ANSWER COMPONENTS ═══════════════════ */
+
+  /* Section heading inside answer */
+  .ans-h2 {
+    font-size: 15px; font-weight: 700; color: var(--yellow-b);
+    margin: 24px 0 10px; letter-spacing: 0.02em;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .ans-h2::before {
+    content: ''; display: inline-block;
+    width: 3px; height: 16px;
+    background: var(--yellow-b); border-radius: 2px; flex-shrink: 0;
+  }
+
+  .ans-h3 {
+    font-size: 13px; font-weight: 700; color: var(--orange-b);
+    margin: 18px 0 8px;
+  }
+
+  .ans-p { font-size: 14px; color: var(--fg2); line-height: 1.8; margin-bottom: 12px; }
+
+  /* Definition box */
+  .def-box {
+    background: linear-gradient(135deg, rgba(104,157,106,0.08), rgba(142,192,124,0.05));
+    border: 1px solid rgba(104,157,106,0.35);
+    border-left: 3px solid var(--aqua-b);
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+  .def-box-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+    color: var(--aqua-b); text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace; margin-bottom: 8px;
+  }
+  .def-box p { font-size: 14px; color: var(--fg1); margin: 0; line-height: 1.7; }
+
+  /* Note box */
+  .note-box {
+    background: rgba(215,153,33,0.07);
+    border: 1px solid rgba(215,153,33,0.25);
+    border-left: 3px solid var(--yellow-b);
+    border-radius: var(--radius-md);
+    padding: 14px 18px; margin: 14px 0;
+  }
+  .note-box-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+    color: var(--yellow-b); text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace; margin-bottom: 6px;
+  }
+  .note-box p { font-size: 13px; color: var(--fg2); margin: 0; }
+
+  /* Important box */
+  .imp-box {
+    background: rgba(204,36,29,0.07);
+    border: 1px solid rgba(251,73,52,0.25);
+    border-left: 3px solid var(--red-b);
+    border-radius: var(--radius-md);
+    padding: 14px 18px; margin: 14px 0;
+  }
+  .imp-box-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+    color: var(--red-b); text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace; margin-bottom: 6px;
+  }
+  .imp-box p { font-size: 13px; color: var(--fg2); margin: 0; }
+
+  /* Code block */
+  .code-block {
+    background: var(--bg0-hard);
+    border: 1px solid var(--bg2);
+    border-radius: var(--radius-md);
+    padding: 16px 20px; margin: 14px 0;
+    overflow-x: auto;
+    position: relative;
+  }
+  .code-block-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+    color: var(--blue-b); text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace; margin-bottom: 10px;
+  }
+  .code-block pre {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: var(--fg1);
+    line-height: 1.7; white-space: pre;
+  }
+  .code-block pre .kw  { color: var(--red-b); }
+  .code-block pre .sym { color: var(--yellow-b); }
+  .code-block pre .val { color: var(--green-b); }
+  .code-block pre .cmt { color: var(--bg4); font-style: italic; }
+  .code-block pre .nt  { color: var(--blue-b); }
+  .code-block pre .t   { color: var(--orange-b); }
+  .code-block pre .arr { color: var(--aqua-b); }
+
+  /* Step list */
+  .step-list { list-style: none; margin: 12px 0; }
+  .step-list li {
+    display: flex; gap: 14px; margin-bottom: 10px;
+    font-size: 14px; color: var(--fg2);
+    align-items: flex-start;
+  }
+  .step-num {
+    background: var(--bg1); border: 1px solid var(--bg3);
+    color: var(--yellow-b); font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; min-width: 26px; height: 26px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .step-content { flex: 1; padding-top: 3px; line-height: 1.6; }
+
+  /* Bullet list */
+  .bullet-list { list-style: none; margin: 10px 0; }
+  .bullet-list li {
+    display: flex; gap: 10px; margin-bottom: 8px;
+    font-size: 14px; color: var(--fg2); align-items: flex-start;
+  }
+  .bullet-list li::before {
+    content: '▸'; color: var(--aqua-b); font-size: 12px;
+    margin-top: 3px; flex-shrink: 0;
+  }
+
+  /* Comparison table */
+  .cmp-table-wrap { overflow-x: auto; margin: 16px 0; border-radius: var(--radius-md); border: 1px solid var(--bg2); }
+  .cmp-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 13px; font-family: 'JetBrains Mono', monospace;
+  }
+  .cmp-table th {
+    background: var(--bg1); color: var(--yellow-b);
+    padding: 10px 16px; text-align: left;
+    font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    border-bottom: 1px solid var(--bg2);
+    white-space: nowrap;
+  }
+  .cmp-table td {
+    padding: 10px 16px; color: var(--fg2);
+    border-bottom: 1px solid var(--bg1);
+    vertical-align: top; line-height: 1.6;
+  }
+  .cmp-table tr:last-child td { border-bottom: none; }
+  .cmp-table tr:nth-child(even) td { background: rgba(60,56,54,0.3); }
+  .cmp-table td.highlight { color: var(--green-b); font-weight: 600; }
+  .cmp-table td.warn { color: var(--red-b); }
+  .cmp-table th:first-child, .cmp-table td:first-child { padding-left: 18px; }
+
+  /* Math inline */
+  .math { font-family: 'JetBrains Mono', monospace; color: var(--orange-b); }
+  .math-block {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--orange-b); font-size: 14px;
+    background: var(--bg0-hard); border: 1px solid var(--bg2);
+    border-radius: var(--radius-sm); padding: 10px 16px; margin: 12px 0;
+    text-align: center; overflow-x: auto;
+  }
+
+  /* Derivation */
+  .derivation-block {
+    background: var(--bg0-hard); border: 1px solid var(--bg2);
+    border-radius: var(--radius-md); padding: 16px 20px; margin: 14px 0;
+  }
+  .derivation-block .drv-label {
+    font-size: 10px; font-weight: 700; color: var(--purple-b);
+    letter-spacing: 0.12em; text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace; margin-bottom: 10px;
+  }
+  .derivation-block pre {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: var(--fg1); line-height: 1.9;
+    white-space: pre-wrap;
+  }
+  .derivation-block .step-arrow { color: var(--aqua-b); }
+  .derivation-block .rule-hint { color: var(--bg4); font-size: 12px; }
+
+  /* SVG diagram wrapper */
+  .diagram-wrap {
+    background: var(--bg0-hard); border: 1px solid var(--bg2);
+    border-radius: var(--radius-md); padding: 24px;
+    margin: 18px 0; overflow-x: auto;
+    display: flex; justify-content: center;
+  }
+  .diagram-wrap svg text { font-family: 'JetBrains Mono', monospace !important; }
+
+  /* Conclusion box */
+  .concl-box {
+    background: rgba(69,133,136,0.1);
+    border: 1px solid rgba(131,165,152,0.3);
+    border-left: 3px solid var(--blue-b);
+    border-radius: var(--radius-md);
+    padding: 14px 18px; margin-top: 20px;
+  }
+  .concl-box-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+    color: var(--blue-b); text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace; margin-bottom: 6px;
+  }
+  .concl-box p { font-size: 13px; color: var(--fg2); margin: 0; line-height: 1.6; }
+
+  /* Tag row */
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+  .tag {
+    font-size: 11px; padding: 3px 10px; border-radius: 99px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .tag-blue   { background: rgba(69,133,136,0.15); color: var(--blue-b);   border: 1px solid rgba(69,133,136,0.3); }
+  .tag-green  { background: rgba(152,151,26,0.15);  color: var(--green-b);  border: 1px solid rgba(152,151,26,0.3); }
+  .tag-purple { background: rgba(177,98,134,0.15);  color: var(--purple-b); border: 1px solid rgba(177,98,134,0.3); }
+  .tag-orange { background: rgba(214,93,14,0.15);   color: var(--orange-b); border: 1px solid rgba(214,93,14,0.3); }
+
+  /* Divider */
+  .ans-divider { border: none; border-top: 1px solid var(--bg2); margin: 20px 0; }
+
+  /* Chomsky hierarchy levels */
+  .hier-level {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px 16px; border-radius: var(--radius-md);
+    margin-bottom: 10px; border: 1px solid var(--bg2);
+    transition: var(--transition);
+  }
+  .hier-level:hover { border-color: var(--bg3); background: var(--bg0-soft); }
+  .hier-badge {
+    font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace;
+    padding: 4px 10px; border-radius: var(--radius-sm); min-width: 52px; text-align: center;
+  }
+  .hier-content { flex: 1; }
+  .hier-title { font-size: 13px; font-weight: 700; color: var(--fg0); margin-bottom: 2px; }
+  .hier-detail { font-size: 12px; color: var(--fg4); font-family: 'JetBrains Mono', monospace; }
+
+  /* ═══════════════════ RESPONSIVE ═══════════════════ */
+  #overlay {
+    display: none; position: fixed; inset: 0; z-index: 85;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+  }
+
+  @media (max-width: 900px) {
+    #topbar { padding-left: 16px; }
+    #hamburger { display: flex; }
+    #sidebar { transform: translateX(calc(-1 * var(--sidebar-w))); }
+    #sidebar.open { transform: translateX(0); }
+    #overlay.show { display: block; }
+    #main { margin-left: 0; }
+    .content-wrap { padding: 0 16px; }
+    .unit-hero { padding: 24px 20px; }
+    .unit-hero h1 { font-size: 20px; }
+    .q-header { padding: 16px 18px; }
+    .q-body { padding: 0 18px 22px; }
+    .progress-wrap { display: none; }
+    .topbar-sub { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    .cmp-table { font-size: 12px; }
+    .cmp-table th, .cmp-table td { padding: 8px 10px; }
+  }
+
+  /* Animations */
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .q-card { animation: fadeSlideIn 0.35s ease both; }
+  .q-card:nth-child(1)  { animation-delay: 0.03s; }
+  .q-card:nth-child(2)  { animation-delay: 0.07s; }
+  .q-card:nth-child(3)  { animation-delay: 0.11s; }
+  .q-card:nth-child(4)  { animation-delay: 0.15s; }
+  .q-card:nth-child(5)  { animation-delay: 0.19s; }
+  .q-card:nth-child(6)  { animation-delay: 0.23s; }
+  .q-card:nth-child(7)  { animation-delay: 0.27s; }
+  .q-card:nth-child(8)  { animation-delay: 0.31s; }
+  .q-card:nth-child(9)  { animation-delay: 0.35s; }
+  .q-card:nth-child(10) { animation-delay: 0.39s; }
+  .q-card:nth-child(11) { animation-delay: 0.43s; }
+  .q-card:nth-child(12) { animation-delay: 0.47s; }
+  .q-card:nth-child(13) { animation-delay: 0.51s; }
+  .q-card:nth-child(14) { animation-delay: 0.55s; }
+
+  /* Inline highlight */
+  .hl { color: var(--yellow-b); font-weight: 600; }
+  .hl-g { color: var(--green-b); font-weight: 600; }
+  .hl-r { color: var(--red-b); font-weight: 600; }
+  .hl-b { color: var(--blue-b); font-weight: 600; }
+  .hl-p { color: var(--purple-b); font-weight: 600; }
+  .hl-o { color: var(--orange-b); font-weight: 600; }
+
+  .mono { font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ OVERLAY ═══════════════════════════════ -->
+<div id="overlay"></div>
+
+<!-- ═══════════════════════════════ TOPBAR ═══════════════════════════════ -->
+<header id="topbar">
+  <button id="hamburger" onclick="toggleSidebar()" aria-label="Menu">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+  <div>
+    <div class="topbar-title">TAFL — TOC</div>
+    <div class="topbar-sub">KCS-502 · AKTU B.Tech CSE</div>
+  </div>
+  <div class="unit-badge">Unit 3</div>
+  <div class="topbar-spacer"></div>
+  <div class="progress-wrap">
+    <span class="progress-label">Progress</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <span class="progress-pct" id="progressPct">0%</span>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════ SIDEBAR ═══════════════════════════════ -->
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-course-tag">AKTU · KCS-502</div>
+    <div class="sidebar-course-name">Theory of Automata &amp; Formal Languages</div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="sidebar-section-label">Unit 3 — Questions</div>
+    <div class="sidebar-unit-header">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+        <circle cx="6" cy="6" r="5.5" stroke="currentColor"/><path d="M6 3v3l2 2" stroke="currentColor" stroke-linecap="round"/>
+      </svg>
+      Regular &amp; Non-Regular Grammars
+    </div>
+    <a class="nav-item" href="#q1" onclick="closeSidebarMobile()">
+      <span class="nav-num">Q1</span>
+      <span class="nav-text">CNF Reduction — S→bA|aB</span>
+    </a>
+    <a class="nav-item" href="#q2" onclick="closeSidebarMobile()">
+      <span class="nav-num">Q2</span>
+      <span class="nav-text">Inherent Ambiguity of CFL</span>
+    </a>
+    <a class="nav-item" href="#q3" onclick="closeSidebarMobile()">
+      <span class="nav-num">Q3</span>
+      <span class="nav-text">CFG for aⁱbʲcᵏ (i=j or j=k)</span>
+    </a>
+    <a class="nav-item" href="#q4" onclick="closeSidebarMobile()">
+      <span class="nav-num">Q4</span>
+      <span class="nav-text">Parse Tree — Definition &amp; Construction</span>
+    </a>
+    <a class="nav-item" href="#q5" onclick="closeSidebarMobile()">
+      <span class="nav-num">Q5</span>
+      <span class="nav-text">CFG → GNF: S→AA|a, A→SS|b</span>
+    </a>
+    <a class="nav-item" href="#q6" onclick="closeSidebarMobile()">
+      <span class="nav-num">Q6</span>
+      <span class="nav-text">CFG for 0ᵐ1ⁿ (m≠n) &amp; aˡbᵐcⁿ (l+m=n)</span>
+    </a>
+    <a class="nav-item" href="#q7" onclick="closeSidebarMobile()">
+      <span class="nav-num">Q7</span>
+      <span class="nav-text">Prove aⁿbⁿcⁿ is not CFL</span>
+    </a>
+    <a class="nav-item" href="#q8" onclick="closeSidebarMobile()">
+      <span class="nav-num">Q8</span>
+      <span class="nav-text">Chomsky Hierarchy — Complete Description</span>
+    </a>
+    <a class="nav-item" href="#q9" onclick="closeSidebarMobile()">
+      <span class="nav-num">Q9</span>
+      <span class="nav-text">Leftmost &amp; Rightmost Derivation Trees</span>
+    </a>
+    <a class="nav-item" href="#q10" onclick="closeSidebarMobile()">
+      <span class="nav-num">Q10</span>
+      <span class="nav-text">Ambiguity Check: R→R+R|RR|R*</span>
+    </a>
+    <a class="nav-item" href="#q11" onclick="closeSidebarMobile()">
+      <span class="nav-num">Q11</span>
+      <span class="nav-text">Convert Grammar to CNF</span>
+    </a>
+    <a class="nav-item" href="#q12" onclick="closeSidebarMobile()">
+      <span class="nav-num">Q12</span>
+      <span class="nav-text">Ambiguous → Unambiguous Grammar</span>
+    </a>
+    <a class="nav-item" href="#q13" onclick="closeSidebarMobile()">
+      <span class="nav-num">Q13</span>
+      <span class="nav-text">Right Linear → Left Linear Grammar</span>
+    </a>
+    <a class="nav-item" href="#q14" onclick="closeSidebarMobile()">
+      <span class="nav-num">Q14</span>
+      <span class="nav-text">CFG for Formal Languages</span>
+    </a>
+  </div>
+  <div class="sidebar-footer">
+    <div style="margin-bottom:4px">14 Questions · 7 Marks Each</div>
+    <div style="color:var(--green-b)">Unit 3 Complete ✓</div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════ MAIN ═══════════════════════════════ -->
+<main id="main">
+<div class="content-wrap">
+
+  <!-- Hero -->
+  <div class="unit-hero">
+    <div class="unit-hero-tag">Unit 3 — AKTU Exam Revision Notes</div>
+    <h1>Regular &amp; Non-Regular Grammars</h1>
+    <p>7-mark exam answers for Unit 3 — CNF, GNF, CFG construction, parse trees, ambiguity, Chomsky hierarchy, and the Pumping Lemma. Each answer includes the core idea, step-by-step derivations, diagrams, and a one-line conclusion you can actually remember.</p>
+    <div class="unit-hero-chips">
+      <span class="chip">Context-Free Grammars</span>
+      <span class="chip">CNF / GNF</span>
+      <span class="chip">Parse Trees</span>
+      <span class="chip">Ambiguity</span>
+      <span class="chip">Pumping Lemma</span>
+      <span class="chip">Chomsky Hierarchy</span>
+    </div>
+  </div>
+
+  <!-- ═══ Q1 ═══ -->
+  <div class="q-card" id="q1">
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num">Q1</div>
+      <div class="q-title-wrap">
+        <div class="q-marks-tag">7 Marks</div>
+        <div class="q-title">Reduce the following grammar to Chomsky Normal Form (CNF):<br>
+          S → bA | aB &nbsp;|&nbsp; A → bAA | aS | a &nbsp;|&nbsp; B → aBB | bS | b</div>
+      </div>
+      <div class="q-toggle">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="q-body-inner">
+
+        <div class="ans-h2">Background: What is Chomsky Normal Form?</div>
+        <div class="def-box">
+          <div class="def-box-label">Definition — Chomsky Normal Form (CNF)</div>
+          <p>A CFG is in <strong>CNF</strong> when every rule is exactly one of two shapes:<br>
+          &nbsp;&nbsp;<span class="math">A → BC</span> &nbsp;— exactly two non-terminals on the right<br>
+          &nbsp;&nbsp;<span class="math">A → a</span> &nbsp;— exactly one terminal on the right<br>
+          <strong>Memory trick:</strong> "Either split into two, or end with one terminal." The start symbol alone can produce ε if ε is in the language.</p>
+        </div>
+        <p class="ans-p">CNF matters because the <strong>CYK parsing algorithm</strong> requires it. The good news: any CFG can always be converted to an equivalent CNF without changing the language.</p>
+
+        <div class="ans-h2">5-Step Recipe to Convert any CFG to CNF</div>
+        <ol class="step-list">
+          <li><span class="step-num">1</span><span class="step-content"><strong>Kill ε-rules</strong> — remove all A → ε (except for the start symbol if needed).</span></li>
+          <li><span class="step-num">2</span><span class="step-content"><strong>Kill unit rules</strong> — remove A → B where B is a lone non-terminal (chain rules).</span></li>
+          <li><span class="step-num">3</span><span class="step-content"><strong>Kill useless symbols</strong> — remove any non-terminal that can never reach a terminal string.</span></li>
+          <li><span class="step-num">4</span><span class="step-content"><strong>Isolate terminals</strong> — in any rule with length ≥ 2, replace each bare terminal 'a' with a new non-terminal T_a → a.</span></li>
+          <li><span class="step-num">5</span><span class="step-content"><strong>Break long rules</strong> — if a rule has 3+ symbols on the right, split it using a new helper non-terminal until every rule has exactly 2.</span></li>
+        </ol>
+
+        <div class="ans-h2">Given Grammar</div>
+        <div class="code-block">
+          <div class="code-block-label">Original Grammar</div>
+          <pre><span class="nt">S</span> <span class="arr">→</span> <span class="t">b</span><span class="nt">A</span> | <span class="t">a</span><span class="nt">B</span>
+<span class="nt">A</span> <span class="arr">→</span> <span class="t">b</span><span class="nt">AA</span> | <span class="t">a</span><span class="nt">S</span> | <span class="t">a</span>
+<span class="nt">B</span> <span class="arr">→</span> <span class="t">a</span><span class="nt">BB</span> | <span class="t">b</span><span class="nt">S</span> | <span class="t">b</span></pre>
+        </div>
+
+        <div class="note-box">
+          <div class="note-box-label">Shortcut Observation</div>
+          <p>This grammar has <strong>no ε-rules</strong> and <strong>no unit rules</strong>, so Steps 1, 2, and 3 are done instantly. We jump straight to Steps 4 and 5.</p>
+        </div>
+
+        <div class="ans-h2">Step 4 — Give Every Terminal Its Own Non-Terminal</div>
+        <p class="ans-p">Anywhere a terminal 'a' or 'b' appears in a rule of length ≥ 2, replace it with a proxy non-terminal:</p>
+        <ul class="bullet-list">
+          <li><span class="math">T<sub>a</sub> → a</span> — proxy for terminal <span class="hl">a</span></li>
+          <li><span class="math">T<sub>b</sub> → b</span> — proxy for terminal <span class="hl">b</span></li>
+        </ul>
+        <p class="ans-p">Rewrite every rule of length ≥ 2 using these proxies (single-terminal rules like A → a stay as-is):</p>
+
+        <div class="code-block">
+          <div class="code-block-label">After Terminal Replacement</div>
+          <pre><span class="nt">S</span>   <span class="arr">→</span> <span class="nt">T_b</span> <span class="nt">A</span>   |  <span class="nt">T_a</span> <span class="nt">B</span>
+<span class="nt">A</span>   <span class="arr">→</span> <span class="nt">T_b</span> <span class="nt">AA</span>  |  <span class="nt">T_a</span> <span class="nt">S</span>  |  <span class="t">a</span>
+<span class="nt">B</span>   <span class="arr">→</span> <span class="nt">T_a</span> <span class="nt">BB</span>  |  <span class="nt">T_b</span> <span class="nt">S</span>  |  <span class="t">b</span>
+<span class="nt">T_a</span> <span class="arr">→</span> <span class="t">a</span>
+<span class="nt">T_b</span> <span class="arr">→</span> <span class="t">b</span></pre>
+        </div>
+
+        <div class="ans-h2">Step 5 — Break Any Rule with 3+ Symbols</div>
+        <p class="ans-p"><span class="math">A → T_b AA</span> and <span class="math">B → T_a BB</span> each have 3 symbols on the right. Introduce one helper to absorb the last two:</p>
+        <ul class="bullet-list">
+          <li><span class="math">A → T_b AA</span> → introduce <span class="math">N_1 → AA</span>, rewrite as <span class="math">A → T_b N_1</span></li>
+          <li><span class="math">B → T_a BB</span> → introduce <span class="math">N_2 → BB</span>, rewrite as <span class="math">B → T_a N_2</span></li>
+        </ul>
+
+        <div class="ans-h2">Final CNF Grammar</div>
+        <div class="code-block">
+          <div class="code-block-label">✓ Chomsky Normal Form</div>
+          <pre><span class="nt">S</span>   <span class="arr">→</span> <span class="nt">T_b</span> <span class="nt">A</span>   |  <span class="nt">T_a</span> <span class="nt">B</span>        <span class="cmt">← A → BC form</span>
+<span class="nt">A</span>   <span class="arr">→</span> <span class="nt">T_b</span> <span class="nt">N_1</span> |  <span class="nt">T_a</span> <span class="nt">S</span>  | <span class="t">a</span>    <span class="cmt">← A → BC or A → a</span>
+<span class="nt">B</span>   <span class="arr">→</span> <span class="nt">T_a</span> <span class="nt">N_2</span> |  <span class="nt">T_b</span> <span class="nt">S</span>  | <span class="t">b</span>    <span class="cmt">← A → BC or A → a</span>
+<span class="nt">N_1</span> <span class="arr">→</span> <span class="nt">A</span> <span class="nt">A</span>                       <span class="cmt">← A → BC form</span>
+<span class="nt">N_2</span> <span class="arr">→</span> <span class="nt">B</span> <span class="nt">B</span>                       <span class="cmt">← A → BC form</span>
+<span class="nt">T_a</span> <span class="arr">→</span> <span class="t">a</span>                          <span class="cmt">← A → a form</span>
+<span class="nt">T_b</span> <span class="arr">→</span> <span class="t">b</span>                          <span class="cmt">← A → a form</span></pre>
+        </div>
+
+        <div class="cmp-table-wrap">
+          <table class="cmp-table">
+            <thead><tr><th>Original Rule</th><th>CNF Rule(s)</th><th>Form</th></tr></thead>
+            <tbody>
+              <tr><td>S → bA</td><td>S → T_b A</td><td class="highlight">A → BC ✓</td></tr>
+              <tr><td>S → aB</td><td>S → T_a B</td><td class="highlight">A → BC ✓</td></tr>
+              <tr><td>A → bAA</td><td>A → T_b N_1, N_1 → AA</td><td class="highlight">A → BC ✓</td></tr>
+              <tr><td>A → aS</td><td>A → T_a S</td><td class="highlight">A → BC ✓</td></tr>
+              <tr><td>A → a</td><td>A → a</td><td class="highlight">A → a ✓</td></tr>
+              <tr><td>B → aBB</td><td>B → T_a N_2, N_2 → BB</td><td class="highlight">A → BC ✓</td></tr>
+              <tr><td>B → bS</td><td>B → T_b S</td><td class="highlight">A → BC ✓</td></tr>
+              <tr><td>B → b</td><td>B → b</td><td class="highlight">A → a ✓</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="concl-box">
+          <div class="concl-box-label">Conclusion</div>
+          <p>The grammar converts to CNF in 7 productions. We added 2 terminal proxies (T_a, T_b) and 2 helper non-terminals (N_1, N_2) to break length-3 rules. Every rule is now either <strong>A → BC</strong> or <strong>A → a</strong>. The language generated is unchanged.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Q2 ═══ -->
+  <div class="q-card" id="q2">
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num">Q2</div>
+      <div class="q-title-wrap">
+        <div class="q-marks-tag">7 Marks</div>
+        <div class="q-title">Discuss inherent ambiguity of Context-Free Language (CFL) with a suitable example.</div>
+      </div>
+      <div class="q-toggle">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="q-body-inner">
+
+        <div class="ans-h2">Background: Ambiguity in CFG</div>
+        <div class="def-box">
+          <div class="def-box-label">Definition — Ambiguous Grammar</div>
+          <p>A CFG is <strong>ambiguous</strong> if at least one string in its language has <strong>two or more different parse trees</strong> (or equivalently, two different leftmost derivations). Think of it as: the grammar gives the same sentence two different "meanings."</p>
+        </div>
+
+        <div class="ans-h2">Inherent Ambiguity — Definition</div>
+        <div class="def-box">
+          <div class="def-box-label">Definition — Inherently Ambiguous CFL</div>
+          <p>A CFL is <strong>inherently ambiguous</strong> if <em>every possible</em> grammar for it is ambiguous — you cannot escape the ambiguity no matter how you rewrite the grammar. The ambiguity is baked into the <strong>language itself</strong>, not just one particular grammar.</p>
+        </div>
+
+        <div class="ans-h2">Key Points to Remember</div>
+        <ul class="bullet-list">
+          <li>Inherent ambiguity is a property of the <strong>language</strong>, not of any single grammar.</li>
+          <li>Finding even one unambiguous grammar for L proves L is <strong>not</strong> inherently ambiguous.</li>
+          <li>Checking whether a CFL is inherently ambiguous is <strong>undecidable</strong> (no algorithm exists).</li>
+          <li>All regular languages are <strong>unambiguous</strong> — finite automata always yield clean grammars.</li>
+        </ul>
+
+        <div class="ans-h2">Classic Example of Inherently Ambiguous CFL</div>
+        <div class="imp-box">
+          <div class="imp-box-label">Standard AKTU Example</div>
+          <p><strong>L = { aⁱ bʲ cᵏ | i = j or j = k, i,j,k ≥ 1 }</strong><br>
+          This is the union of L₁ = {aⁿbⁿcᵏ} (equal a's and b's) and L₂ = {aⁱbⁿcⁿ} (equal b's and c's). Any string where i = j = k belongs to <em>both</em> sub-languages — so it always has two parse trees, no matter how you write the grammar.</p>
+        </div>
+
+        <div class="ans-h2">Why "abc" Proves Ambiguity</div>
+        <p class="ans-p">The string <span class="hl">a b c</span> (i=j=k=1) belongs to <strong>both L₁</strong> (i=j=1 ✓) and <strong>L₂</strong> (j=k=1 ✓). Any grammar must be able to generate it via two separate rule-paths — giving two distinct parse trees. You cannot avoid this.</p>
+
+        <div class="ans-h3">CFG for L (inherently ambiguous)</div>
+        <div class="code-block">
+          <div class="code-block-label">Inherently Ambiguous Grammar</div>
+          <pre><span class="nt">S</span>  <span class="arr">→</span> <span class="nt">S_1</span> <span class="nt">C</span> | <span class="nt">A</span> <span class="nt">S_2</span>       <span class="cmt">← L1 part | L2 part</span>
+
+<span class="cmt">-- L1: aⁿbⁿcᵏ (i=j, any k≥1)</span>
+<span class="nt">S_1</span> <span class="arr">→</span> <span class="t">a</span> <span class="nt">S_1</span> <span class="t">b</span> | <span class="t">a</span><span class="t">b</span>
+<span class="nt">C</span>   <span class="arr">→</span> <span class="t">c</span> <span class="nt">C</span>   | <span class="t">c</span>
+
+<span class="cmt">-- L2: aⁱbⁿcⁿ (j=k, any i≥1)</span>
+<span class="nt">A</span>   <span class="arr">→</span> <span class="t">a</span> <span class="nt">A</span>   | <span class="t">a</span>
+<span class="nt">S_2</span> <span class="arr">→</span> <span class="t">b</span> <span class="nt">S_2</span> <span class="t">c</span> | <span class="t">b</span><span class="t">c</span></pre>
+        </div>
+
+        <div class="ans-h3">Demonstrating Ambiguity for String "abc"</div>
+        <div class="derivation-block">
+          <div class="drv-label">Parse Tree 1 — Using L₁ sub-grammar (i = j)</div>
+          <pre>        S
+       / \
+     S1    C
+    / \    |
+   a  ab   c
+      |
+      ab <span class="rule-hint">[i=j=1, k=1]</span></pre>
+        </div>
+        <div class="derivation-block">
+          <div class="drv-label">Parse Tree 2 — Using L₂ sub-grammar (j = k)</div>
+          <pre>        S
+       / \
+      A   S2
+      |   / \
+      a  bc   
+         | <span class="rule-hint">[i=1, j=k=1]</span></pre>
+        </div>
+
+        <div class="ans-h2">SVG Diagram — Two Parse Trees for "abc"</div>
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 560 230" width="540" xmlns="http://www.w3.org/2000/svg" style="font-family:'JetBrains Mono',monospace">
+            <!-- Tree 1 -->
+            <text x="130" y="20" text-anchor="middle" fill="#fabd2f" font-size="12" font-weight="700">Parse Tree 1 (L₁ path)</text>
+            <!-- S node -->
+            <circle cx="130" cy="50" r="16" fill="#3c3836" stroke="#fabd2f" stroke-width="1.5"/>
+            <text x="130" y="55" text-anchor="middle" fill="#fabd2f" font-size="12" font-weight="700">S</text>
+            <!-- S1 -->
+            <line x1="118" y1="64" x2="78" y2="99" stroke="#665c54" stroke-width="1.5"/>
+            <circle cx="70" cy="108" r="16" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+            <text x="70" y="113" text-anchor="middle" fill="#83a598" font-size="11">S₁</text>
+            <!-- C -->
+            <line x1="142" y1="64" x2="182" y2="99" stroke="#665c54" stroke-width="1.5"/>
+            <circle cx="190" cy="108" r="16" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+            <text x="190" y="113" text-anchor="middle" fill="#83a598" font-size="11">C</text>
+            <!-- S1 → a, b -->
+            <line x1="58" y1="122" x2="40" y2="157" stroke="#665c54" stroke-width="1.5"/>
+            <circle cx="36" cy="165" r="14" fill="#282828" stroke="#8ec07c" stroke-width="1.5"/>
+            <text x="36" y="170" text-anchor="middle" fill="#8ec07c" font-size="12">a</text>
+            <line x1="82" y1="122" x2="100" y2="157" stroke="#665c54" stroke-width="1.5"/>
+            <circle cx="104" cy="165" r="14" fill="#282828" stroke="#8ec07c" stroke-width="1.5"/>
+            <text x="104" y="170" text-anchor="middle" fill="#8ec07c" font-size="12">b</text>
+            <!-- C → c -->
+            <line x1="190" y1="122" x2="190" y2="157" stroke="#665c54" stroke-width="1.5"/>
+            <circle cx="190" cy="165" r="14" fill="#282828" stroke="#8ec07c" stroke-width="1.5"/>
+            <text x="190" y="170" text-anchor="middle" fill="#8ec07c" font-size="12">c</text>
+            <!-- label -->
+            <text x="130" y="210" text-anchor="middle" fill="#a89984" font-size="10">S→S₁C, S₁→ab, C→c</text>
+
+            <!-- Separator -->
+            <line x1="265" y1="30" x2="265" y2="200" stroke="#504945" stroke-width="1" stroke-dasharray="4,4"/>
+
+            <!-- Tree 2 -->
+            <text x="420" y="20" text-anchor="middle" fill="#fabd2f" font-size="12" font-weight="700">Parse Tree 2 (L₂ path)</text>
+            <circle cx="420" cy="50" r="16" fill="#3c3836" stroke="#fabd2f" stroke-width="1.5"/>
+            <text x="420" y="55" text-anchor="middle" fill="#fabd2f" font-size="12" font-weight="700">S</text>
+            <!-- A -->
+            <line x1="408" y1="64" x2="368" y2="99" stroke="#665c54" stroke-width="1.5"/>
+            <circle cx="360" cy="108" r="16" fill="#3c3836" stroke="#d3869b" stroke-width="1.5"/>
+            <text x="360" y="113" text-anchor="middle" fill="#d3869b" font-size="11">A</text>
+            <!-- S2 -->
+            <line x1="432" y1="64" x2="472" y2="99" stroke="#665c54" stroke-width="1.5"/>
+            <circle cx="480" cy="108" r="16" fill="#3c3836" stroke="#d3869b" stroke-width="1.5"/>
+            <text x="480" y="113" text-anchor="middle" fill="#d3869b" font-size="11">S₂</text>
+            <!-- A → a -->
+            <line x1="360" y1="122" x2="360" y2="157" stroke="#665c54" stroke-width="1.5"/>
+            <circle cx="360" cy="165" r="14" fill="#282828" stroke="#8ec07c" stroke-width="1.5"/>
+            <text x="360" y="170" text-anchor="middle" fill="#8ec07c" font-size="12">a</text>
+            <!-- S2 → b c -->
+            <line x1="468" y1="122" x2="448" y2="157" stroke="#665c54" stroke-width="1.5"/>
+            <circle cx="444" cy="165" r="14" fill="#282828" stroke="#8ec07c" stroke-width="1.5"/>
+            <text x="444" y="170" text-anchor="middle" fill="#8ec07c" font-size="12">b</text>
+            <line x1="492" y1="122" x2="512" y2="157" stroke="#665c54" stroke-width="1.5"/>
+            <circle cx="516" cy="165" r="14" fill="#282828" stroke="#8ec07c" stroke-width="1.5"/>
+            <text x="516" y="170" text-anchor="middle" fill="#8ec07c" font-size="12">c</text>
+            <!-- label -->
+            <text x="420" y="210" text-anchor="middle" fill="#a89984" font-size="10">S→AS₂, A→a, S₂→bc</text>
+          </svg>
+        </div>
+
+        <div class="ans-h2">Comparison: Ambiguous vs Inherently Ambiguous</div>
+        <div class="cmp-table-wrap">
+          <table class="cmp-table">
+            <thead><tr><th>Property</th><th>Ambiguous Grammar</th><th>Inherently Ambiguous CFL</th></tr></thead>
+            <tbody>
+              <tr><td>Who is ambiguous?</td><td>A specific grammar</td><td class="warn">The language itself</td></tr>
+              <tr><td>Can we fix it?</td><td class="highlight">Yes, by writing new grammar</td><td class="warn">No, all grammars are ambiguous</td></tr>
+              <tr><td>Example</td><td>G: E→E+E | E*E | id</td><td>L = aⁱbʲcᵏ where i=j or j=k</td></tr>
+              <tr><td>Decidability</td><td>Undecidable in general</td><td class="warn">Undecidable</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="concl-box">
+          <div class="concl-box-label">Conclusion</div>
+          <p>A CFL is inherently ambiguous if no unambiguous CFG can generate it. The canonical example is <strong>L = {aⁱbʲcᵏ | i=j or j=k}</strong>. Strings where i=j=k have two distinct parse trees in <em>any</em> grammar for L, proving the language itself is inherently ambiguous. This is a fundamental limitation of context-free languages.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Q3 ═══ -->
+  <div class="q-card" id="q3">
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num">Q3</div>
+      <div class="q-title-wrap">
+        <div class="q-marks-tag">7 Marks</div>
+        <div class="q-title">Construct CFG for the language L = { aⁱ bʲ cᵏ | i = j or j = k, where i, j, k ≥ 1 }</div>
+      </div>
+      <div class="q-toggle">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="q-body-inner">
+
+        <div class="ans-h2">Analysis of the Language</div>
+        <p class="ans-p">L = { aⁱbʲcᵏ | i=j or j=k } is a <strong>union of two simpler languages</strong>:</p>
+        <ul class="bullet-list">
+          <li><span class="hl">L₁</span> = { aⁿbⁿcᵏ | n,k ≥ 1 } — a's and b's are equal; c's can be anything</li>
+          <li><span class="hl">L₂</span> = { aⁱbⁿcⁿ | i,n ≥ 1 } — a's can be anything; b's and c's are equal</li>
+        </ul>
+        <p class="ans-p">Since CFLs are <strong>closed under union</strong>, we build each sub-grammar separately, then combine them under one start symbol S → S₁ | S₂.</p>
+
+        <div class="ans-h2">Step-by-Step CFG Construction</div>
+
+        <div class="ans-h3">Grammar for L₁ = { aⁿbⁿcᵏ }</div>
+        <ul class="bullet-list">
+          <li>E_1 uses the classic mirror trick: add one 'a' on the left and one 'b' on the right simultaneously → generates aⁿbⁿ</li>
+          <li>C appends one or more c's after: C → cC | c</li>
+        </ul>
+        <div class="code-block">
+          <div class="code-block-label">Sub-grammar G₁ for L₁</div>
+          <pre><span class="nt">S_1</span> <span class="arr">→</span> <span class="nt">E_1</span> <span class="nt">C</span>
+<span class="nt">E_1</span> <span class="arr">→</span> <span class="t">a</span> <span class="nt">E_1</span> <span class="t">b</span>  | <span class="t">ab</span>      <span class="cmt">← generates aⁿbⁿ</span>
+<span class="nt">C</span>   <span class="arr">→</span> <span class="t">c</span> <span class="nt">C</span>   | <span class="t">c</span>        <span class="cmt">← generates cᵏ, k≥1</span></pre>
+        </div>
+
+        <div class="ans-h3">Grammar for L₂ = { aⁱbⁿcⁿ }</div>
+        <div class="code-block">
+          <div class="code-block-label">Sub-grammar G₂ for L₂</div>
+          <pre><span class="nt">S_2</span> <span class="arr">→</span> <span class="nt">A</span> <span class="nt">E_2</span>
+<span class="nt">A</span>   <span class="arr">→</span> <span class="t">a</span> <span class="nt">A</span>   | <span class="t">a</span>        <span class="cmt">← generates aⁱ, i≥1</span>
+<span class="nt">E_2</span> <span class="arr">→</span> <span class="t">b</span> <span class="nt">E_2</span> <span class="t">c</span>  | <span class="t">bc</span>      <span class="cmt">← generates bⁿcⁿ</span></pre>
+        </div>
+
+        <div class="ans-h2">Combined CFG for L = L₁ ∪ L₂</div>
+        <div class="code-block">
+          <div class="code-block-label">✓ Complete CFG for L = { aⁱbʲcᵏ | i=j or j=k }</div>
+          <pre><span class="nt">S</span>   <span class="arr">→</span> <span class="nt">S_1</span> | <span class="nt">S_2</span>             <span class="cmt">← Union: choose L₁ or L₂ path</span>
+
+<span class="cmt">─── L₁ path: equal a's and b's, any c's ───</span>
+<span class="nt">S_1</span> <span class="arr">→</span> <span class="nt">E_1</span> <span class="nt">C</span>
+<span class="nt">E_1</span> <span class="arr">→</span> <span class="t">a</span> <span class="nt">E_1</span> <span class="t">b</span> | <span class="t">a</span><span class="t">b</span>
+<span class="nt">C</span>   <span class="arr">→</span> <span class="t">c</span> <span class="nt">C</span>   | <span class="t">c</span>
+
+<span class="cmt">─── L₂ path: any a's, equal b's and c's ───</span>
+<span class="nt">S_2</span> <span class="arr">→</span> <span class="nt">A</span> <span class="nt">E_2</span>
+<span class="nt">A</span>   <span class="arr">→</span> <span class="t">a</span> <span class="nt">A</span>   | <span class="t">a</span>
+<span class="nt">E_2</span> <span class="arr">→</span> <span class="t">b</span> <span class="nt">E_2</span> <span class="t">c</span> | <span class="t">b</span><span class="t">c</span></pre>
+        </div>
+
+        <div class="ans-h2">Verification — Sample Derivations</div>
+        <div class="derivation-block">
+          <div class="drv-label">Derive "aabbc" (i=j=2, k=1) using L₁ path</div>
+          <pre>S <span class="step-arrow">⟹</span> S_1
+  <span class="step-arrow">⟹</span> E_1 C
+  <span class="step-arrow">⟹</span> a E_1 b C         <span class="rule-hint">[E_1 → aE_1b]</span>
+  <span class="step-arrow">⟹</span> a a b b C          <span class="rule-hint">[E_1 → ab]</span>
+  <span class="step-arrow">⟹</span> a a b b c          <span class="rule-hint">[C → c]</span>  ✓</pre>
+        </div>
+        <div class="derivation-block">
+          <div class="drv-label">Derive "abbc" (i=1, j=k=2) — wait, j≠i, use L₂ path</div>
+          <pre>S <span class="step-arrow">⟹</span> S_2
+  <span class="step-arrow">⟹</span> A E_2
+  <span class="step-arrow">⟹</span> a E_2             <span class="rule-hint">[A → a]</span>
+  <span class="step-arrow">⟹</span> a b E_2 c         <span class="rule-hint">[E_2 → bE_2c]</span>
+  <span class="step-arrow">⟹</span> a b b c c         <span class="rule-hint">[E_2 → bc]</span>  ✓ (abbcc, j=k=2)</pre>
+        </div>
+
+        <div class="concl-box">
+          <div class="concl-box-label">Conclusion</div>
+          <p>L = L₁ ∪ L₂. We build separate grammars for each sub-language and unify them under S → S₁ | S₂. Strings where i=j=k can be derived via <em>both</em> paths — making this language (and any grammar for it) <strong>inherently ambiguous</strong>. This is actually the same language used in Q2!</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Q4 ═══ -->
+  <div class="q-card" id="q4">
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num">Q4</div>
+      <div class="q-title-wrap">
+        <div class="q-marks-tag">7 Marks</div>
+        <div class="q-title">Define parse tree and construct a parse tree for grammar: E → E+E | E*E | (E) | id &nbsp;&nbsp; for string: id + id * id</div>
+      </div>
+      <div class="q-toggle">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="q-body-inner">
+
+        <div class="ans-h2">Definition — Parse Tree</div>
+        <div class="def-box">
+          <div class="def-box-label">Definition — Parse Tree (Derivation Tree)</div>
+          <p>A <strong>parse tree</strong> is a tree that shows <em>how</em> a string was derived from a grammar. Simple rules to remember:<br>
+          — <strong>Root</strong> = start symbol<br>
+          — <strong>Internal nodes</strong> = non-terminals<br>
+          — <strong>Leaves</strong> = terminals (or ε)<br>
+          — Reading the leaves left-to-right gives the derived string.</p>
+        </div>
+
+        <div class="ans-h2">Properties of a Parse Tree</div>
+        <ul class="bullet-list">
+          <li>Every internal node is labeled with a non-terminal; its children are the right-hand side of the rule applied.</li>
+          <li>Every leaf is a terminal or ε.</li>
+          <li>If a node labelled A has children X₁ X₂ ... Xₙ, then A → X₁X₂...Xₙ must be a production rule.</li>
+          <li>The <strong>yield</strong> (left-to-right leaves) is the string being parsed.</li>
+          <li>Multiple distinct parse trees for one string → grammar is <strong>ambiguous</strong>.</li>
+        </ul>
+
+        <div class="ans-h2">Given Grammar</div>
+        <div class="code-block">
+          <div class="code-block-label">Grammar G</div>
+          <pre><span class="nt">E</span> <span class="arr">→</span> <span class="nt">E</span><span class="sym">+</span><span class="nt">E</span>  |  <span class="nt">E</span><span class="sym">*</span><span class="nt">E</span>  |  <span class="sym">(</span><span class="nt">E</span><span class="sym">)</span>  |  <span class="t">id</span>
+
+<span class="cmt">String to parse: id + id * id</span></pre>
+        </div>
+
+        <div class="note-box">
+          <div class="note-box-label">Note — This Grammar is Ambiguous</div>
+          <p>The grammar E → E+E | E*E | (E) | id is a classic <strong>ambiguous grammar</strong>. The string "id + id * id" has two distinct parse trees (one with + at root, one with * at root). We show both.</p>
+        </div>
+
+        <div class="ans-h2">Parse Tree 1 — Addition (+) at Root</div>
+        <p class="ans-p">Corresponds to: <span class="hl">(id + id) * id</span> grouping — applying E+E first.</p>
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 480 260" width="460" xmlns="http://www.w3.org/2000/svg">
+            <!-- Root E -->
+            <circle cx="240" cy="30" r="18" fill="#3c3836" stroke="#fabd2f" stroke-width="2"/>
+            <text x="240" y="36" text-anchor="middle" fill="#fabd2f" font-size="13" font-weight="700" font-family="JetBrains Mono">E</text>
+
+            <!-- Left E -->
+            <line x1="225" y1="46" x2="130" y2="94" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="120" cy="106" r="18" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+            <text x="120" y="112" text-anchor="middle" fill="#83a598" font-size="13" font-family="JetBrains Mono">E</text>
+
+            <!-- + sign -->
+            <line x1="240" y1="48" x2="240" y2="94" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="240" cy="106" r="14" fill="#282828" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="240" y="112" text-anchor="middle" fill="#fe8019" font-size="14" font-family="JetBrains Mono">+</text>
+
+            <!-- Right E -->
+            <line x1="255" y1="46" x2="350" y2="94" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="360" cy="106" r="18" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+            <text x="360" y="112" text-anchor="middle" fill="#83a598" font-size="13" font-family="JetBrains Mono">E</text>
+
+            <!-- Left E → id -->
+            <line x1="120" y1="124" x2="120" y2="164" stroke="#504945" stroke-width="1.5"/>
+            <rect x="96" y="168" width="48" height="24" rx="6" fill="#282828" stroke="#8ec07c" stroke-width="1.5"/>
+            <text x="120" y="185" text-anchor="middle" fill="#8ec07c" font-size="12" font-family="JetBrains Mono">id</text>
+
+            <!-- Right E → E*E -->
+            <!-- E -->
+            <line x1="345" y1="122" x2="295" y2="164" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="285" cy="176" r="16" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+            <text x="285" y="182" text-anchor="middle" fill="#83a598" font-size="12" font-family="JetBrains Mono">E</text>
+            <!-- * -->
+            <line x1="360" y1="124" x2="360" y2="164" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="360" cy="176" r="13" fill="#282828" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="360" y="182" text-anchor="middle" fill="#fe8019" font-size="13" font-family="JetBrains Mono">*</text>
+            <!-- E -->
+            <line x1="375" y1="122" x2="420" y2="164" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="430" cy="176" r="16" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+            <text x="430" y="182" text-anchor="middle" fill="#83a598" font-size="12" font-family="JetBrains Mono">E</text>
+
+            <!-- id leaves -->
+            <line x1="285" y1="192" x2="285" y2="224" stroke="#504945" stroke-width="1.5"/>
+            <rect x="261" y="228" width="48" height="22" rx="6" fill="#282828" stroke="#8ec07c" stroke-width="1.5"/>
+            <text x="285" y="244" text-anchor="middle" fill="#8ec07c" font-size="12" font-family="JetBrains Mono">id</text>
+
+            <line x1="430" y1="192" x2="430" y2="224" stroke="#504945" stroke-width="1.5"/>
+            <rect x="406" y="228" width="48" height="22" rx="6" fill="#282828" stroke="#8ec07c" stroke-width="1.5"/>
+            <text x="430" y="244" text-anchor="middle" fill="#8ec07c" font-size="12" font-family="JetBrains Mono">id</text>
+
+            <!-- Caption -->
+            <text x="240" y="20" text-anchor="middle" fill="#a89984" font-size="10" font-family="JetBrains Mono">Parse Tree 1: E → E + E, then right E → E*E</text>
+          </svg>
+        </div>
+
+        <div class="ans-h2">Parse Tree 2 — Multiplication (*) at Root</div>
+        <p class="ans-p">Corresponds to: <span class="hl">id + (id * id)</span> grouping — applying E*E first.</p>
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 480 260" width="460" xmlns="http://www.w3.org/2000/svg">
+            <!-- Root E -->
+            <circle cx="240" cy="30" r="18" fill="#3c3836" stroke="#fabd2f" stroke-width="2"/>
+            <text x="240" y="36" text-anchor="middle" fill="#fabd2f" font-size="13" font-weight="700" font-family="JetBrains Mono">E</text>
+
+            <!-- Left E (E+E at root means left is E, but here root is E*E) -->
+            <line x1="225" y1="46" x2="130" y2="94" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="120" cy="106" r="18" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+            <text x="120" y="112" text-anchor="middle" fill="#83a598" font-size="13" font-family="JetBrains Mono">E</text>
+
+            <!-- + -->
+            <line x1="240" y1="48" x2="240" y2="94" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="240" cy="106" r="14" fill="#282828" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="240" y="112" text-anchor="middle" fill="#fe8019" font-size="14" font-family="JetBrains Mono">+</text>
+
+            <!-- Right E → E*E -->
+            <line x1="255" y1="46" x2="350" y2="94" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="360" cy="106" r="18" fill="#3c3836" stroke="#d3869b" stroke-width="1.5"/>
+            <text x="360" y="112" text-anchor="middle" fill="#d3869b" font-size="13" font-family="JetBrains Mono">E</text>
+
+            <!-- Left E → id (the id before +) -->
+            <line x1="120" y1="124" x2="120" y2="164" stroke="#504945" stroke-width="1.5"/>
+            <rect x="96" y="168" width="48" height="24" rx="6" fill="#282828" stroke="#8ec07c" stroke-width="1.5"/>
+            <text x="120" y="185" text-anchor="middle" fill="#8ec07c" font-size="12" font-family="JetBrains Mono">id</text>
+
+            <!-- Right E → E * E -->
+            <line x1="345" y1="122" x2="295" y2="164" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="285" cy="176" r="16" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+            <text x="285" y="182" text-anchor="middle" fill="#83a598" font-size="12" font-family="JetBrains Mono">E</text>
+
+            <line x1="360" y1="124" x2="360" y2="164" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="360" cy="176" r="13" fill="#282828" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="360" y="182" text-anchor="middle" fill="#fe8019" font-size="13" font-family="JetBrains Mono">*</text>
+
+            <line x1="375" y1="122" x2="425" y2="164" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="435" cy="176" r="16" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+            <text x="435" y="182" text-anchor="middle" fill="#83a598" font-size="12" font-family="JetBrains Mono">E</text>
+
+            <!-- Leaves -->
+            <line x1="285" y1="192" x2="285" y2="224" stroke="#504945" stroke-width="1.5"/>
+            <rect x="261" y="228" width="48" height="22" rx="6" fill="#282828" stroke="#8ec07c" stroke-width="1.5"/>
+            <text x="285" y="244" text-anchor="middle" fill="#8ec07c" font-size="12" font-family="JetBrains Mono">id</text>
+
+            <line x1="435" y1="192" x2="435" y2="224" stroke="#504945" stroke-width="1.5"/>
+            <rect x="411" y="228" width="48" height="22" rx="6" fill="#282828" stroke="#8ec07c" stroke-width="1.5"/>
+            <text x="435" y="244" text-anchor="middle" fill="#8ec07c" font-size="12" font-family="JetBrains Mono">id</text>
+
+            <text x="240" y="20" text-anchor="middle" fill="#a89984" font-size="10" font-family="JetBrains Mono">Parse Tree 2: E → E + (E*E) grouping</text>
+          </svg>
+        </div>
+
+        <div class="imp-box">
+          <div class="imp-box-label">Key Observation</div>
+          <p>Two distinct parse trees exist for "id + id * id". This proves the grammar is <strong>ambiguous</strong>. In real compilers, this is resolved by specifying <strong>operator precedence</strong> (* over +) and <strong>associativity</strong> (left-associative), giving Tree 1 the correct semantic meaning.</p>
+        </div>
+
+        <div class="concl-box">
+          <div class="concl-box-label">Conclusion</div>
+          <p>A parse tree visually encodes the structure of derivation. The grammar E → E+E | E*E | (E) | id is ambiguous as shown by two distinct trees for "id+id*id". An unambiguous grammar separates precedence levels using intermediate non-terminals (E, T, F).</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Q5 ═══ -->
+  <div class="q-card" id="q5">
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num">Q5</div>
+      <div class="q-title-wrap">
+        <div class="q-marks-tag">7 Marks</div>
+        <div class="q-title">Convert the following CFG into equivalent Greibach Normal Form (GNF):<br>S → AA | a &nbsp;&nbsp; A → SS | b</div>
+      </div>
+      <div class="q-toggle">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="q-body-inner">
+
+        <div class="ans-h2">Background: What is Greibach Normal Form?</div>
+        <div class="def-box">
+          <div class="def-box-label">Definition — Greibach Normal Form (GNF)</div>
+          <p>A CFG is in <strong>GNF</strong> if every rule looks like:<br>
+          &nbsp;&nbsp;<span class="math">A → a α</span><br>
+          where <strong>a</strong> is a terminal and <strong>α</strong> is zero or more non-terminals. <strong>Key idea:</strong> every derivation step must consume exactly one terminal up front — like a stack machine reading one character at a time. This makes GNF ideal for top-down (predictive) parsing.</p>
+        </div>
+
+        <div class="ans-h2">Given Grammar</div>
+        <div class="code-block">
+          <div class="code-block-label">Original Grammar</div>
+          <pre><span class="nt">S</span> <span class="arr">→</span> <span class="nt">AA</span> | <span class="t">a</span>
+<span class="nt">A</span> <span class="arr">→</span> <span class="nt">SS</span> | <span class="t">b</span></pre>
+        </div>
+
+        <div class="ans-h2">Step 1 — Convert to CNF First</div>
+        <p class="ans-p">The grammar is nearly in CNF already. Rules S → AA, A → SS are in A→BC form, and S→a, A→b are in A→a form. So this grammar is already in CNF.</p>
+
+        <div class="ans-h2">Step 2 — Order Non-Terminals for Substitution</div>
+        <p class="ans-p">Label: <span class="hl">A₁ = S</span>, <span class="hl">A₂ = A</span>. The GNF algorithm demands that rules for A₁ never start with A₂ (no "forward" non-terminal leading). We process in order and substitute to expose a terminal at the front of every rule.</p>
+
+        <div class="ans-h2">Step 3 — Substitute to Remove Non-Terminal Prefixes</div>
+        <p class="ans-p"><strong>S → AA</strong> starts with A (a non-terminal) — this violates GNF. Fix: substitute A's productions (A → SS | b) into the first A in S → AA to expose a terminal:</p>
+
+        <div class="code-block">
+          <div class="code-block-label">Substituting A → SS | b into S → AA</div>
+          <pre><span class="cmt">S → AA</span>
+  A can be SS or b, so:
+  S <span class="arr">→</span> <span class="nt">SS</span><span class="nt">A</span> | <span class="t">b</span><span class="nt">A</span>   <span class="cmt">← replace first A with A's RHS</span>
+  
+<span class="cmt">Now S → SSA still starts with S (left recursion!)</span>
+<span class="cmt">We need to eliminate this left recursion.</span></pre>
+        </div>
+
+        <div class="ans-h2">Step 4 — Eliminate Left Recursion from S</div>
+        <p class="ans-p">S → SSA is left-recursive — S appears at the start of its own rule. Use the standard fix: introduce a helper S' to capture the recursive tail.</p>
+        <div class="note-box">
+          <div class="note-box-label">Left Recursion Elimination — The Pattern</div>
+          <p>If <span class="math">A → Aα | β</span>, replace with: <span class="math">A → βA'</span> and <span class="math">A' → αA' | ε</span>.<br>
+          In plain terms: pull out the "base" (β), then let A' handle repetition of the "tail" (α).</p>
+        </div>
+
+        <p class="ans-p">For S → SSA | bA | a:</p>
+        <ul class="bullet-list">
+          <li>Left-recursive: S → S<span class="hl">(SA)</span></li>
+          <li>Non-left-recursive: S → <span class="hl">bA</span> | <span class="hl">a</span></li>
+        </ul>
+
+        <div class="code-block">
+          <div class="code-block-label">After Left Recursion Elimination</div>
+          <pre><span class="nt">S</span>  <span class="arr">→</span> <span class="t">b</span><span class="nt">A S'</span>  |  <span class="t">a</span><span class="nt">S'</span>  |  <span class="t">b</span><span class="nt">A</span>  |  <span class="t">a</span>
+<span class="nt">S'</span> <span class="arr">→</span> <span class="nt">SA S'</span> |  <span class="nt">SA</span></pre>
+        </div>
+
+        <div class="ans-h2">Step 5 — Substitute S into A Rules for GNF</div>
+        <p class="ans-p">Now A → SS | b. Since S now starts with a terminal in all its rules, substitute S's GNF productions into A → SS to expose terminals at the front of A's rules:</p>
+
+        <div class="code-block">
+          <div class="code-block-label">GNF Productions for A</div>
+          <pre><span class="cmt">A → SS → (bAS' | aS' | bA | a)(bAS' | aS' | bA | a)</span>
+<span class="cmt">This is complex; simplify by using S directly:</span>
+
+<span class="nt">A</span> <span class="arr">→</span> <span class="t">b</span><span class="nt">AS'S</span> | <span class="t">a</span><span class="nt">S'S</span> | <span class="t">b</span><span class="nt">AS</span> | <span class="t">a</span><span class="nt">S</span> | <span class="t">b</span></pre>
+        </div>
+
+        <div class="ans-h2">Step 6 — S' Rules — Substitute S for GNF</div>
+        <div class="code-block">
+          <div class="code-block-label">GNF Productions for S'</div>
+          <pre><span class="cmt">S' → SA S' → substitute S:</span>
+<span class="nt">S'</span> <span class="arr">→</span> <span class="t">b</span><span class="nt">AS'AS'</span> | <span class="t">a</span><span class="nt">S'AS'</span> | <span class="t">b</span><span class="nt">AAS'</span> | <span class="t">a</span><span class="nt">AS'</span>
+   | <span class="t">b</span><span class="nt">AS'A</span>  | <span class="t">a</span><span class="nt">S'A</span>  | <span class="t">b</span><span class="nt">AA</span>   | <span class="t">a</span><span class="nt">A</span></pre>
+        </div>
+
+        <div class="ans-h2">Final GNF Summary</div>
+        <div class="code-block">
+          <div class="code-block-label">✓ Complete GNF Grammar</div>
+          <pre><span class="cmt">── Start Symbol ──</span>
+<span class="nt">S</span>  <span class="arr">→</span> <span class="t">a</span>           <span class="cmt">← terminal only</span>
+<span class="nt">S</span>  <span class="arr">→</span> <span class="t">a</span> <span class="nt">S'</span>        <span class="cmt">← terminal + non-terminals</span>
+<span class="nt">S</span>  <span class="arr">→</span> <span class="t">b</span> <span class="nt">A</span>         <span class="cmt">← terminal + non-terminal</span>
+<span class="nt">S</span>  <span class="arr">→</span> <span class="t">b</span> <span class="nt">A S'</span>      <span class="cmt">← terminal + non-terminals</span>
+
+<span class="cmt">── A Productions ──</span>
+<span class="nt">A</span>  <span class="arr">→</span> <span class="t">b</span>           <span class="cmt">← terminal only</span>
+<span class="nt">A</span>  <span class="arr">→</span> <span class="t">a</span> <span class="nt">S</span>        <span class="cmt">← terminal + non-terminal</span>
+<span class="nt">A</span>  <span class="arr">→</span> <span class="t">a</span> <span class="nt">S' S</span>     <span class="cmt">← terminal + non-terminals</span>
+<span class="nt">A</span>  <span class="arr">→</span> <span class="t">b</span> <span class="nt">A S</span>      <span class="cmt">← terminal + non-terminals</span>
+<span class="nt">A</span>  <span class="arr">→</span> <span class="t">b</span> <span class="nt">A S' S</span>   <span class="cmt">← terminal + non-terminals</span>
+
+<span class="cmt">── Auxiliary S' ──</span>
+<span class="nt">S'</span> <span class="arr">→</span> <span class="t">a</span> <span class="nt">A</span>        <span class="cmt">← and further expansions above</span>
+<span class="nt">S'</span> <span class="arr">→</span> <span class="t">b</span> <span class="nt">A A</span>     <span class="cmt">  (all forms shown above)</span></pre>
+        </div>
+
+        <div class="note-box">
+          <div class="note-box-label">Key Exam Insight</div>
+          <p>In GNF, <em>every</em> rule starts with exactly one terminal. This means each derivation step "reads" one input character — equivalent to how a predictive (top-down) parser works. The conversion process in one line: <strong>CNF → eliminate left recursion → substitute until terminal is first.</strong></p>
+        </div>
+
+        <div class="concl-box">
+          <div class="concl-box-label">Conclusion</div>
+          <p>The grammar was converted to GNF: (1) detected left recursion in S→SSA, (2) used left-recursion elimination to introduce S', (3) substituted S's terminal-first rules into A and S' until all rules start with a terminal. All productions in the final GNF begin with a terminal symbol.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Q6 ═══ -->
+  <div class="q-card" id="q6">
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num">Q6</div>
+      <div class="q-title-wrap">
+        <div class="q-marks-tag">7 Marks</div>
+        <div class="q-title">Design CFG for: (i) L = {0ᵐ1ⁿ | m ≠ n, m,n ≥ 1} &nbsp;&nbsp; (ii) L = {aˡbᵐcⁿ | l + m = n}</div>
+      </div>
+      <div class="q-toggle">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="q-body-inner">
+
+        <div class="ans-h2">Part (i): L = {0ᵐ1ⁿ | m ≠ n, m,n ≥ 1}</div>
+
+        <div class="ans-h3">Analysis</div>
+        <p class="ans-p">m ≠ n means one of two cases — either <span class="hl-g">more 0s than 1s (m &gt; n)</span> or <span class="hl-r">more 1s than 0s (n &gt; m)</span>. We handle each case with its own sub-grammar and combine with union:</p>
+        <ul class="bullet-list">
+          <li><span class="hl">L₁</span> = {0ᵐ1ⁿ | m &gt; n ≥ 1} — extra 0s on the left</li>
+          <li><span class="hl">L₂</span> = {0ᵐ1ⁿ | n &gt; m ≥ 1} — extra 1s on the right</li>
+        </ul>
+
+        <div class="ans-h3">Strategy (Easy to Remember)</div>
+        <ul class="bullet-list">
+          <li>For L₁: Generate some extra 0s (Q), then optionally follow with equal 0s and 1s (P)</li>
+          <li>For L₂: Start with equal 0s and 1s (P), then add extra 1s (R) at the end</li>
+        </ul>
+
+        <div class="code-block">
+          <div class="code-block-label">✓ CFG for L = {0ᵐ1ⁿ | m ≠ n}</div>
+          <pre><span class="nt">S</span> <span class="arr">→</span> <span class="nt">S_1</span> | <span class="nt">S_2</span>              <span class="cmt">← more 0s | more 1s</span>
+
+<span class="cmt">── Case 1: m > n (more 0s) ──</span>
+<span class="nt">S_1</span> <span class="arr">→</span> <span class="nt">Q</span> | <span class="nt">Q</span><span class="nt">P</span>               <span class="cmt">← extra 0s, then optional equal part</span>
+<span class="nt">Q</span>   <span class="arr">→</span> <span class="t">0</span><span class="nt">Q</span> | <span class="t">0</span>               <span class="cmt">← one or more extra 0s</span>
+<span class="nt">P</span>   <span class="arr">→</span> <span class="t">0</span><span class="nt">P</span><span class="t">1</span> | <span class="t">0</span><span class="t">1</span>             <span class="cmt">← equal 0s and 1s</span>
+
+<span class="cmt">── Case 2: n > m (more 1s) ──</span>
+<span class="nt">S_2</span> <span class="arr">→</span> <span class="nt">R</span> | <span class="nt">P</span><span class="nt">R</span>               <span class="cmt">← extra 1s, then optional equal part</span>
+<span class="nt">R</span>   <span class="arr">→</span> <span class="nt">R</span><span class="t">1</span> | <span class="t">1</span>               <span class="cmt">← one or more extra 1s</span></pre>
+        </div>
+
+        <div class="derivation-block">
+          <div class="drv-label">Derive "0001" (m=3 > n=1)</div>
+          <pre>S <span class="step-arrow">→</span> S_1 <span class="step-arrow">→</span> QP <span class="step-arrow">→</span> 0QP <span class="step-arrow">→</span> 00QP <span class="step-arrow">→</span> 000P <span class="step-arrow">→</span> 00001... 
+<span class="rule-hint">Wait, Q=00, P=01 → QP = 0001 ✓</span>
+
+S → S_1 → Q P → 0 0 P → 0 0 0 1 <span class="rule-hint">[Q→0Q→00, P→01]</span> ✓</pre>
+        </div>
+
+        <hr class="ans-divider"/>
+
+        <div class="ans-h2">Part (ii): L = {aˡbᵐcⁿ | l + m = n}</div>
+
+        <div class="ans-h3">Analysis</div>
+        <p class="ans-p">Every 'a' and every 'b' must be matched by exactly one 'c'. Total c's = (number of a's) + (number of b's).</p>
+        <p class="ans-p">The clever insight: think of the string as <strong>a's wrapped around the outside</strong>, each paired with a 'c' at the far end; and <strong>b's wrapped inside</strong>, each paired with a 'c' just after. Like nested parentheses: <em>a(a(b(bc)c)c)c</em>.</p>
+
+        <div class="ans-h3">Strategy — Nesting Trick</div>
+        <ul class="bullet-list">
+          <li>S → aSc pairs one 'a' with one 'c' (outer layer). After l steps: aˡ T cˡ</li>
+          <li>T → bTc pairs one 'b' with one 'c' (inner layer). After m steps: bᵐcᵐ</li>
+          <li>Combined: aˡbᵐcᵐcˡ = aˡbᵐcˡ⁺ᵐ = aˡbᵐcⁿ ✓</li>
+        </ul>
+
+        <div class="code-block">
+          <div class="code-block-label">✓ CFG for L = {aˡbᵐcⁿ | l+m=n, l,m≥0, n≥0}</div>
+          <pre><span class="cmt">Key idea: S generates aˡ (bᵐcᵐ) cˡ</span>
+<span class="cmt">= a's on outside wrapping bc-equal inside</span>
+
+<span class="nt">S</span> <span class="arr">→</span> <span class="t">a</span><span class="nt">S</span><span class="t">c</span> | <span class="nt">T</span>    <span class="cmt">← each 'a' pairs with one 'c' at end</span>
+<span class="nt">T</span> <span class="arr">→</span> <span class="t">b</span><span class="nt">T</span><span class="t">c</span> | <span class="t">ε</span>   <span class="cmt">← each 'b' pairs with one 'c' (bᵐcᵐ)</span></pre>
+        </div>
+
+        <div class="note-box">
+          <div class="note-box-label">Why This Works — Step by Step</div>
+          <p>S → aSc: adds 1 'a' left + 1 'c' right. After l rounds: <strong>aˡ T cˡ</strong>. Then T → bTc: adds 1 'b' left + 1 'c' right. After m rounds: <strong>aˡ bᵐ cᵐ cˡ</strong>. Collapse: <strong>aˡbᵐcˡ⁺ᵐ</strong>. Since n = l+m, this is aˡbᵐcⁿ ✓</p>
+        </div>
+
+        <div class="derivation-block">
+          <div class="drv-label">Derive "aabbc cccc" → a²b²c⁴ (l=2, m=2, n=4)</div>
+          <pre>S <span class="step-arrow">⟹</span> a S c
+  <span class="step-arrow">⟹</span> a a S c c         <span class="rule-hint">[S→aSc]</span>
+  <span class="step-arrow">⟹</span> a a T c c         <span class="rule-hint">[S→T]</span>
+  <span class="step-arrow">⟹</span> a a b T c c c     <span class="rule-hint">[T→bTc]</span>
+  <span class="step-arrow">⟹</span> a a b b T c c c c <span class="rule-hint">[T→bTc]</span>
+  <span class="step-arrow">⟹</span> a a b b c c c c   <span class="rule-hint">[T→ε]</span>  ✓</pre>
+        </div>
+
+        <div class="cmp-table-wrap">
+          <table class="cmp-table">
+            <thead><tr><th>Grammar Rule</th><th>Purpose</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>S → aSc</td><td>Pairs each 'a' with a 'c'</td><td class="highlight">aSc → aaScc → a²Sc²</td></tr>
+              <tr><td>S → T</td><td>Transition to b-c pairing</td><td>a²Sc² → a²Tc²</td></tr>
+              <tr><td>T → bTc</td><td>Pairs each 'b' with a 'c'</td><td>a²bTcc² → a²b²Tc⁴</td></tr>
+              <tr><td>T → ε</td><td>Ends b-c pairing</td><td>a²b²c⁴ ✓</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="concl-box">
+          <div class="concl-box-label">Conclusion</div>
+          <p>(i) m≠n is split into "more 0s" and "more 1s" sub-cases; each sub-grammar uses an equal-pairs base (P) plus extra symbols. (ii) l+m=n uses a beautiful nesting trick — S wraps a's around the outside, T wraps b's inside, each layer paired with a 'c'. The grammar S → aSc | T, T → bTc | ε is elegant and easy to remember.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Q7 ═══ -->
+  <div class="q-card" id="q7">
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num">Q7</div>
+      <div class="q-title-wrap">
+        <div class="q-marks-tag">7 Marks</div>
+        <div class="q-title">Prove that the language L = {aⁿbⁿcⁿ | n ≥ 1} is not a Context-Free Language.</div>
+      </div>
+      <div class="q-toggle">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="q-body-inner">
+
+        <div class="ans-h2">Background: Pumping Lemma for CFLs</div>
+        <div class="def-box">
+          <div class="def-box-label">Pumping Lemma for Context-Free Languages</div>
+          <p>If L is a CFL, then there is a pumping length <strong>p ≥ 1</strong> such that any string <strong>w ∈ L</strong> with |w| ≥ p can be split as <strong>w = uvxyz</strong> where:<br>
+          &nbsp;&nbsp;(1) <strong>|vy| ≥ 1</strong> — at least one of v, y is non-empty<br>
+          &nbsp;&nbsp;(2) <strong>|vxy| ≤ p</strong> — the "middle" section is bounded by p<br>
+          &nbsp;&nbsp;(3) <strong>uv<sup>i</sup>xy<sup>i</sup>z ∈ L</strong> for all i ≥ 0 — you can "pump" v and y up/down</p>
+          <p><strong>Memory hook:</strong> CFL splits into 5 parts (uvxyz). You pump the 2nd and 4th parts (v and y) together. If pumping ever leaves the language — it's NOT a CFL.</p>
+        </div>
+
+        <div class="ans-h2">Claim</div>
+        <div class="imp-box">
+          <div class="imp-box-label">Claim</div>
+          <p>L = { aⁿbⁿcⁿ | n ≥ 1 } is <strong>NOT</strong> a Context-Free Language.</p>
+        </div>
+
+        <div class="ans-h2">Proof by Contradiction</div>
+        <ol class="step-list">
+          <li><span class="step-num">1</span>
+            <span class="step-content">
+              <strong>Assume</strong> L is CFL → Pumping Lemma gives us a pumping length p ≥ 1.
+            </span>
+          </li>
+          <li><span class="step-num">2</span>
+            <span class="step-content">
+              <strong>Pick the string:</strong> w = aᵖbᵖcᵖ ∈ L. Its length = 3p ≥ p, so the lemma applies.
+            </span>
+          </li>
+          <li><span class="step-num">3</span>
+            <span class="step-content">
+              <strong>Split:</strong> w = uvxyz with |vy| ≥ 1 and |vxy| ≤ p.
+            </span>
+          </li>
+          <li><span class="step-num">4</span>
+            <span class="step-content">
+              <strong>Key observation:</strong> Since |vxy| ≤ p, this middle chunk spans at most <em>two</em> adjacent symbol blocks. It cannot simultaneously touch a's and c's (they are p characters apart). So v and y affect at most 2 of the 3 symbol types.
+            </span>
+          </li>
+        </ol>
+
+        <div class="ans-h2">Case Analysis — All Possible Positions of v and y</div>
+
+        <div class="ans-h3">Case 1: v and y are inside only one symbol block (e.g., only a's)</div>
+        <p class="ans-p">Pumping (i=2) increases only that one symbol's count. Example: more a's → aᵖ⁺ᵏbᵖcᵖ. The three counts are no longer equal → <span class="hl-r">not in L. Contradiction.</span></p>
+
+        <div class="ans-h3">Case 2: v spans the a–b boundary</div>
+        <p class="ans-p">Pumping adds more a's and b's, but c's stay at p. So a-count or b-count ≠ c-count → <span class="hl-r">not in L. Contradiction.</span></p>
+
+        <div class="ans-h3">Case 3: v spans the b–c boundary</div>
+        <p class="ans-p">Pumping adds more b's and c's, but a's stay at p. So a-count ≠ b-count or c-count → <span class="hl-r">not in L. Contradiction.</span></p>
+
+        <div class="ans-h3">Case 4: v in a-section, y in c-section (skipping b's)</div>
+        <p class="ans-p">This would require |vxy| ≥ p (the a-section) + p (the b-section) = 2p &gt; p. This violates the constraint |vxy| ≤ p. So this case is <strong>impossible</strong>.</p>
+
+        <div class="ans-h2">Summary Table of All Cases</div>
+        <div class="cmp-table-wrap">
+          <table class="cmp-table">
+            <thead><tr><th>Position of v,y</th><th>Effect of pumping (i=2)</th><th>Result</th></tr></thead>
+            <tbody>
+              <tr><td>Only in a-section</td><td>More a's, same b's, c's</td><td class="warn">aᵖ⁺ᵏbᵖcᵖ ∉ L</td></tr>
+              <tr><td>Only in b-section</td><td>More b's, same a's, c's</td><td class="warn">aᵖbᵖ⁺ᵏcᵖ ∉ L</td></tr>
+              <tr><td>Only in c-section</td><td>More c's, same a's, b's</td><td class="warn">aᵖbᵖcᵖ⁺ᵏ ∉ L</td></tr>
+              <tr><td>v in a's, y in b's</td><td>More a's and b's</td><td class="warn">aᵖ⁺ᵏbᵖ⁺ʲcᵖ ∉ L (c's differ)</td></tr>
+              <tr><td>v in b's, y in c's</td><td>More b's and c's</td><td class="warn">aᵖbᵖ⁺ᵏcᵖ⁺ʲ ∉ L (a's differ)</td></tr>
+              <tr><td>v in a's, y in c's</td><td class="warn">Impossible: |vxy|≥2p &gt; p</td><td class="warn">Violates |vxy|≤p</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="ans-h2">Conclusion of Proof</div>
+        <div class="imp-box">
+          <div class="imp-box-label">Final Contradiction</div>
+          <p>In every possible split w = uvxyz, pumping produces a string NOT in L. The Pumping Lemma guarantees pumped strings stay in L — contradiction. So our assumption was false.</p>
+        </div>
+        <div class="math-block">∴ L = { aⁿbⁿcⁿ | n ≥ 1 } is NOT a Context-Free Language. □</div>
+
+        <div class="note-box">
+          <div class="note-box-label">Exam Tip — Why It Makes Sense</div>
+          <p>A PDA has one stack. It can match two things (push a's, pop for b's) — but not three simultaneously. {aⁿbⁿcⁿ} needs to track three counts at once, which requires a <strong>Context-Sensitive</strong> (linear-bounded) automaton, not a PDA.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Q8 ═══ -->
+  <div class="q-card" id="q8">
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num">Q8</div>
+      <div class="q-title-wrap">
+        <div class="q-marks-tag">7 Marks</div>
+        <div class="q-title">Give a complete description of the Chomsky Hierarchy of formal languages and grammars.</div>
+      </div>
+      <div class="q-toggle">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="q-body-inner">
+
+        <div class="ans-h2">Introduction</div>
+        <p class="ans-p">The <strong>Chomsky Hierarchy</strong> (1956) classifies all formal grammars into 4 nested levels — Type 0 (most powerful) down to Type 3 (most restricted). <strong>Memory trick:</strong> higher Type number = more restrictions = weaker grammar = simpler machine. Each type is a strict subset of the one above it.</p>
+
+        <div class="def-box">
+          <div class="def-box-label">Grammar = 4-tuple</div>
+          <p><strong>G = (V, T, P, S)</strong> — V: non-terminals, T: terminals, P: production rules, S: start symbol. The Chomsky Hierarchy is entirely about what shapes of rules are allowed in P.</p>
+        </div>
+
+        <div class="ans-h2">The Four Levels</div>
+
+        <div class="hier-level">
+          <span class="hier-badge" style="background:rgba(204,36,29,0.2);color:#fb4934;border:1px solid rgba(204,36,29,0.4)">Type 0</span>
+          <div class="hier-content">
+            <div class="hier-title">Unrestricted / Recursively Enumerable Languages</div>
+            <div class="hier-detail">Rules: α → β, any α,β ∈ (V∪T)*, |α|≥1 &nbsp;|&nbsp; Machine: Turing Machine &nbsp;|&nbsp; Power: Maximum</div>
+          </div>
+        </div>
+        <div class="hier-level">
+          <span class="hier-badge" style="background:rgba(214,93,14,0.2);color:#fe8019;border:1px solid rgba(214,93,14,0.4)">Type 1</span>
+          <div class="hier-content">
+            <div class="hier-title">Context-Sensitive Languages (CSL)</div>
+            <div class="hier-detail">Rules: αAβ → αγβ, where γ≠ε &nbsp;|&nbsp; Machine: Linear Bounded Automaton (LBA) &nbsp;|&nbsp; |lhs| ≤ |rhs|</div>
+          </div>
+        </div>
+        <div class="hier-level">
+          <span class="hier-badge" style="background:rgba(152,151,26,0.2);color:#b8bb26;border:1px solid rgba(152,151,26,0.4)">Type 2</span>
+          <div class="hier-content">
+            <div class="hier-title">Context-Free Languages (CFL)</div>
+            <div class="hier-detail">Rules: A → γ, A ∈ V, γ ∈ (V∪T)* &nbsp;|&nbsp; Machine: Pushdown Automaton (PDA) &nbsp;|&nbsp; Left side is one NT</div>
+          </div>
+        </div>
+        <div class="hier-level">
+          <span class="hier-badge" style="background:rgba(69,133,136,0.2);color:#83a598;border:1px solid rgba(69,133,136,0.4)">Type 3</span>
+          <div class="hier-content">
+            <div class="hier-title">Regular Languages (RL)</div>
+            <div class="hier-detail">Rules: A → aB or A → a &nbsp;|&nbsp; Machine: Finite Automaton (DFA/NFA) &nbsp;|&nbsp; Most restricted</div>
+          </div>
+        </div>
+
+        <div class="ans-h2">SVG — Chomsky Hierarchy Containment Diagram</div>
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 500 340" width="480" xmlns="http://www.w3.org/2000/svg">
+            <!-- Type 0 outermost -->
+            <ellipse cx="250" cy="170" rx="230" ry="155" fill="rgba(204,36,29,0.06)" stroke="#fb4934" stroke-width="1.5" stroke-dasharray="6,4"/>
+            <text x="30" y="50" fill="#fb4934" font-size="12" font-family="JetBrains Mono" font-weight="700">Type 0</text>
+            <text x="30" y="66" fill="#fb4934" font-size="10" font-family="JetBrains Mono">Recursively Enumerable</text>
+            <text x="30" y="80" fill="#928374" font-size="10" font-family="JetBrains Mono">Turing Machine</text>
+
+            <!-- Type 1 -->
+            <ellipse cx="265" cy="185" rx="175" ry="115" fill="rgba(214,93,14,0.07)" stroke="#fe8019" stroke-width="1.5" stroke-dasharray="5,4"/>
+            <text x="110" y="95" fill="#fe8019" font-size="12" font-family="JetBrains Mono" font-weight="700">Type 1</text>
+            <text x="110" y="111" fill="#fe8019" font-size="10" font-family="JetBrains Mono">Context-Sensitive</text>
+            <text x="110" y="125" fill="#928374" font-size="10" font-family="JetBrains Mono">Linear Bounded Automaton</text>
+
+            <!-- Type 2 -->
+            <ellipse cx="272" cy="200" rx="120" ry="80" fill="rgba(152,151,26,0.08)" stroke="#b8bb26" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <text x="175" y="148" fill="#b8bb26" font-size="12" font-family="JetBrains Mono" font-weight="700">Type 2</text>
+            <text x="170" y="164" fill="#b8bb26" font-size="10" font-family="JetBrains Mono">Context-Free</text>
+            <text x="165" y="178" fill="#928374" font-size="10" font-family="JetBrains Mono">Pushdown Automaton</text>
+
+            <!-- Type 3 -->
+            <ellipse cx="278" cy="216" rx="62" ry="42" fill="rgba(69,133,136,0.15)" stroke="#83a598" stroke-width="2"/>
+            <text x="252" y="208" fill="#83a598" font-size="12" font-family="JetBrains Mono" font-weight="700">Type 3</text>
+            <text x="244" y="224" fill="#83a598" font-size="10" font-family="JetBrains Mono">Regular</text>
+            <text x="242" y="238" fill="#a89984" font-size="9" font-family="JetBrains Mono">DFA / NFA</text>
+
+            <!-- Arrows showing subset relation -->
+            <text x="420" y="160" fill="#a89984" font-size="10" font-family="JetBrains Mono">RL ⊂ CFL</text>
+            <text x="420" y="176" fill="#a89984" font-size="10" font-family="JetBrains Mono">CFL ⊂ CSL</text>
+            <text x="420" y="192" fill="#a89984" font-size="10" font-family="JetBrains Mono">CSL ⊂ RE</text>
+
+            <text x="250" y="325" text-anchor="middle" fill="#665c54" font-size="10" font-family="JetBrains Mono">Each class is strictly contained in the outer class</text>
+          </svg>
+        </div>
+
+        <div class="ans-h2">Detailed Comparison Table</div>
+        <div class="cmp-table-wrap">
+          <table class="cmp-table">
+            <thead>
+              <tr>
+                <th>Type</th><th>Grammar</th><th>Rule Form</th>
+                <th>Language Class</th><th>Automaton</th><th>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="highlight">Type 0</td>
+                <td>Unrestricted</td>
+                <td>α → β (any)</td>
+                <td>Recursively Enumerable (RE)</td>
+                <td>Turing Machine (TM)</td>
+                <td>{w | w is an encoding of a halting TM}</td>
+              </tr>
+              <tr>
+                <td style="color:#fe8019">Type 1</td>
+                <td>Context-Sensitive</td>
+                <td>αAβ → αγβ, γ≠ε</td>
+                <td>Context-Sensitive (CSL)</td>
+                <td>Linear Bounded Automaton</td>
+                <td>{aⁿbⁿcⁿ | n≥1}</td>
+              </tr>
+              <tr>
+                <td style="color:#b8bb26">Type 2</td>
+                <td>Context-Free</td>
+                <td>A → γ</td>
+                <td>Context-Free (CFL)</td>
+                <td>Pushdown Automaton (PDA)</td>
+                <td>{aⁿbⁿ | n≥1}</td>
+              </tr>
+              <tr>
+                <td style="color:#83a598">Type 3</td>
+                <td>Regular</td>
+                <td>A → aB | a</td>
+                <td>Regular (RL)</td>
+                <td>DFA / NFA</td>
+                <td>{aⁿ | n≥0}, (a|b)*</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="ans-h2">Key Properties to Remember</div>
+        <ul class="bullet-list">
+          <li>The hierarchy is <strong>strictly nested</strong>: RL ⊊ CFL ⊊ CSL ⊊ RE — each is a proper subset of the next.</li>
+          <li>Regular (Type 3): closed under union, concatenation, star, intersection, complement — all of them.</li>
+          <li>CFL (Type 2): closed under union, concatenation, star — but <strong>NOT closed</strong> under intersection or complement.</li>
+          <li>CSL (Type 1): closed under all Boolean operations including intersection and complement.</li>
+          <li><strong>Complexity:</strong> RL — O(n) | CFL — O(n³) by CYK | CSL — PSPACE | RE — undecidable in general.</li>
+        </ul>
+
+        <div class="concl-box">
+          <div class="concl-box-label">Conclusion — One-Line Summary per Type</div>
+          <p><strong>Type 3 (Regular):</strong> DFA/NFA — simple patterns like (a|b)*.<br>
+          <strong>Type 2 (CFL):</strong> PDA — nested structures like aⁿbⁿ. Used in compilers for parsing.<br>
+          <strong>Type 1 (CSL):</strong> LBA — three-way balance like aⁿbⁿcⁿ.<br>
+          <strong>Type 0 (RE):</strong> Turing Machine — the ultimate limit of what any computer can recognize.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Q9 ═══ -->
+  <div class="q-card" id="q9">
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num">Q9</div>
+      <div class="q-title-wrap">
+        <div class="q-marks-tag">7 Marks</div>
+        <div class="q-title">Compute leftmost derivation, rightmost derivation, and parse tree for grammar:<br>
+          E → E+T | T &nbsp;&nbsp; T → T*F | F &nbsp;&nbsp; F → (E) | id &nbsp;&nbsp; String: id + id * id</div>
+      </div>
+      <div class="q-toggle">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="q-body-inner">
+
+        <div class="ans-h2">Background — Derivation Types</div>
+        <div class="def-box">
+          <div class="def-box-label">Definitions</div>
+          <p><strong>Leftmost Derivation:</strong> Always replace the <em>leftmost</em> non-terminal first. Think: "left-to-right, outermost first."<br><br>
+          <strong>Rightmost Derivation:</strong> Always replace the <em>rightmost</em> non-terminal first. Think: "right-to-left, innermost first."<br><br>
+          <strong>Key insight:</strong> Both produce the <em>exact same parse tree</em>. They differ only in the order of steps — not the structure of the result. An unambiguous grammar has exactly one leftmost AND one rightmost derivation per string.</p>
+        </div>
+
+        <div class="ans-h2">Given Grammar (Unambiguous)</div>
+        <div class="code-block">
+          <div class="code-block-label">Grammar G (operator precedence encoded)</div>
+          <pre><span class="nt">E</span> <span class="arr">→</span> <span class="nt">E</span><span class="sym">+</span><span class="nt">T</span>  |  <span class="nt">T</span>        <span class="cmt">← E handles + (low precedence)</span>
+<span class="nt">T</span> <span class="arr">→</span> <span class="nt">T</span><span class="sym">*</span><span class="nt">F</span>  |  <span class="nt">F</span>        <span class="cmt">← T handles * (high precedence)</span>
+<span class="nt">F</span> <span class="arr">→</span> <span class="sym">(</span><span class="nt">E</span><span class="sym">)</span>  |  <span class="t">id</span>      <span class="cmt">← F handles atoms</span>
+
+<span class="cmt">String: id + id * id</span></pre>
+        </div>
+
+        <div class="ans-h2">Leftmost Derivation</div>
+        <div class="derivation-block">
+          <div class="drv-label">Leftmost Derivation of "id + id * id"</div>
+          <pre>E
+<span class="step-arrow">⟹</span> E + T                  <span class="rule-hint">[E → E+T; leftmost E replaced]</span>
+<span class="step-arrow">⟹</span> T + T                  <span class="rule-hint">[E → T]</span>
+<span class="step-arrow">⟹</span> F + T                  <span class="rule-hint">[T → F]</span>
+<span class="step-arrow">⟹</span> id + T                 <span class="rule-hint">[F → id]</span>
+<span class="step-arrow">⟹</span> id + T * F             <span class="rule-hint">[T → T*F]</span>
+<span class="step-arrow">⟹</span> id + F * F             <span class="rule-hint">[T → F]</span>
+<span class="step-arrow">⟹</span> id + id * F            <span class="rule-hint">[F → id]</span>
+<span class="step-arrow">⟹</span> id + id * id           <span class="rule-hint">[F → id]</span>  ✓</pre>
+        </div>
+
+        <div class="ans-h2">Rightmost Derivation</div>
+        <div class="derivation-block">
+          <div class="drv-label">Rightmost Derivation of "id + id * id"</div>
+          <pre>E
+<span class="step-arrow">⟹</span> E + T                  <span class="rule-hint">[E → E+T; rightmost is T]</span>
+<span class="step-arrow">⟹</span> E + T * F              <span class="rule-hint">[T → T*F; rightmost T replaced]</span>
+<span class="step-arrow">⟹</span> E + T * id             <span class="rule-hint">[F → id; rightmost F]</span>
+<span class="step-arrow">⟹</span> E + F * id             <span class="rule-hint">[T → F]</span>
+<span class="step-arrow">⟹</span> E + id * id            <span class="rule-hint">[F → id]</span>
+<span class="step-arrow">⟹</span> T + id * id            <span class="rule-hint">[E → T]</span>
+<span class="step-arrow">⟹</span> F + id * id            <span class="rule-hint">[T → F]</span>
+<span class="step-arrow">⟹</span> id + id * id           <span class="rule-hint">[F → id]</span>  ✓</pre>
+        </div>
+
+        <div class="ans-h2">Parse Tree</div>
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 540 320" width="520" xmlns="http://www.w3.org/2000/svg">
+            <!-- E (root) -->
+            <circle cx="270" cy="28" r="18" fill="#3c3836" stroke="#fabd2f" stroke-width="2"/>
+            <text x="270" y="34" text-anchor="middle" fill="#fabd2f" font-size="13" font-weight="700" font-family="JetBrains Mono">E</text>
+
+            <!-- E → E + T -->
+            <!-- Left E -->
+            <line x1="255" y1="44" x2="130" y2="84" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="118" cy="94" r="16" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+            <text x="118" y="100" text-anchor="middle" fill="#83a598" font-size="13" font-family="JetBrains Mono">E</text>
+
+            <!-- + -->
+            <line x1="270" y1="46" x2="270" y2="84" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="270" cy="94" r="14" fill="#282828" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="270" y="100" text-anchor="middle" fill="#fe8019" font-size="14" font-family="JetBrains Mono">+</text>
+
+            <!-- Right T -->
+            <line x1="285" y1="44" x2="400" y2="84" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="412" cy="94" r="16" fill="#3c3836" stroke="#d3869b" stroke-width="1.5"/>
+            <text x="412" y="100" text-anchor="middle" fill="#d3869b" font-size="13" font-family="JetBrains Mono">T</text>
+
+            <!-- Left E → T → F → id -->
+            <line x1="118" y1="110" x2="118" y2="144" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="118" cy="154" r="14" fill="#3c3836" stroke="#d3869b" stroke-width="1.5"/>
+            <text x="118" y="160" text-anchor="middle" fill="#d3869b" font-size="12" font-family="JetBrains Mono">T</text>
+
+            <line x1="118" y1="168" x2="118" y2="198" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="118" cy="208" r="14" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+            <text x="118" y="214" text-anchor="middle" fill="#83a598" font-size="12" font-family="JetBrains Mono">F</text>
+
+            <line x1="118" y1="222" x2="118" y2="252" stroke="#504945" stroke-width="1.5"/>
+            <rect x="94" y="256" width="48" height="22" rx="6" fill="#282828" stroke="#8ec07c" stroke-width="1.5"/>
+            <text x="118" y="272" text-anchor="middle" fill="#8ec07c" font-size="12" font-family="JetBrains Mono">id</text>
+
+            <!-- Right T → T * F -->
+            <!-- T (left child of T) -->
+            <line x1="396" y1="108" x2="350" y2="148" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="338" cy="158" r="14" fill="#3c3836" stroke="#d3869b" stroke-width="1.5"/>
+            <text x="338" y="164" text-anchor="middle" fill="#d3869b" font-size="12" font-family="JetBrains Mono">T</text>
+
+            <!-- * -->
+            <line x1="412" y1="110" x2="412" y2="148" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="412" cy="158" r="13" fill="#282828" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="412" y="164" text-anchor="middle" fill="#fe8019" font-size="13" font-family="JetBrains Mono">*</text>
+
+            <!-- F (right child of T) -->
+            <line x1="428" y1="108" x2="470" y2="148" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="480" cy="158" r="14" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+            <text x="480" y="164" text-anchor="middle" fill="#83a598" font-size="12" font-family="JetBrains Mono">F</text>
+
+            <!-- T (middle) → F → id -->
+            <line x1="338" y1="172" x2="338" y2="202" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="338" cy="212" r="14" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+            <text x="338" y="218" text-anchor="middle" fill="#83a598" font-size="12" font-family="JetBrains Mono">F</text>
+            <line x1="338" y1="226" x2="338" y2="252" stroke="#504945" stroke-width="1.5"/>
+            <rect x="314" y="256" width="48" height="22" rx="6" fill="#282828" stroke="#8ec07c" stroke-width="1.5"/>
+            <text x="338" y="272" text-anchor="middle" fill="#8ec07c" font-size="12" font-family="JetBrains Mono">id</text>
+
+            <!-- F (rightmost) → id -->
+            <line x1="480" y1="172" x2="480" y2="202" stroke="#504945" stroke-width="1.5"/>
+            <rect x="456" y="206" width="48" height="22" rx="6" fill="#282828" stroke="#8ec07c" stroke-width="1.5"/>
+            <text x="480" y="222" text-anchor="middle" fill="#8ec07c" font-size="12" font-family="JetBrains Mono">id</text>
+
+            <!-- caption -->
+            <text x="270" y="305" text-anchor="middle" fill="#a89984" font-size="10" font-family="JetBrains Mono">Unambiguous parse tree: * binds tighter than + (correct precedence)</text>
+          </svg>
+        </div>
+
+        <div class="note-box">
+          <div class="note-box-label">Key Insight</div>
+          <p>This grammar is <strong>unambiguous</strong> unlike E→E+E|E*E|id. By separating E (addition), T (multiplication), F (atoms) into levels, the grammar encodes operator precedence directly. Only one parse tree exists for any string.</p>
+        </div>
+
+        <div class="concl-box">
+          <div class="concl-box-label">Conclusion</div>
+          <p>Leftmost and rightmost derivations both yield the same unique parse tree for unambiguous grammars. Leftmost replaces the leftmost NT at each step; rightmost replaces the rightmost. The unambiguous grammar E→E+T|T, T→T*F|F, F→(E)|id correctly encodes * &gt; + precedence and left-associativity.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Q10 ═══ -->
+  <div class="q-card" id="q10">
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num">Q10</div>
+      <div class="q-title-wrap">
+        <div class="q-marks-tag">7 Marks</div>
+        <div class="q-title">Check whether the following grammar is ambiguous or not:<br>R → R+R | RR | R* | a | b | c</div>
+      </div>
+      <div class="q-toggle">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="q-body-inner">
+
+        <div class="ans-h2">What is an Ambiguous Grammar?</div>
+        <div class="def-box">
+          <div class="def-box-label">Definition — Ambiguity</div>
+          <p>A grammar is <strong>ambiguous</strong> if any string in the language has <strong>two or more distinct parse trees</strong> (or two different leftmost derivations). To prove ambiguity: just find <em>one</em> such string and show its two trees.</p>
+        </div>
+
+        <div class="ans-h2">Given Grammar</div>
+        <div class="code-block">
+          <div class="code-block-label">Regular Expression Grammar G</div>
+          <pre><span class="nt">R</span> <span class="arr">→</span> <span class="nt">R</span><span class="sym">+</span><span class="nt">R</span>   <span class="cmt">← union of two regular expressions</span>
+<span class="nt">R</span> <span class="arr">→</span> <span class="nt">RR</span>    <span class="cmt">← concatenation</span>
+<span class="nt">R</span> <span class="arr">→</span> <span class="nt">R</span><span class="sym">*</span>    <span class="cmt">← Kleene star</span>
+<span class="nt">R</span> <span class="arr">→</span> <span class="t">a</span> | <span class="t">b</span> | <span class="t">c</span></pre>
+        </div>
+
+        <div class="ans-h2">Proof of Ambiguity — Two Trees for "a+b+c"</div>
+        <p class="ans-p">Try <span class="hl">a + b + c</span>. Since R → R+R has R on both sides with no precedence rule, the "+" can group left or right — giving two different derivations for the same string:</p>
+
+        <div class="derivation-block">
+          <div class="drv-label">Leftmost Derivation 1 — Left Grouping: (a+b)+c</div>
+          <pre>R
+<span class="step-arrow">⟹</span> R + R             <span class="rule-hint">[R → R+R; top-level is +]</span>
+<span class="step-arrow">⟹</span> R + R + R         <span class="rule-hint">[left R → R+R]</span>
+<span class="step-arrow">⟹</span> a + R + R         <span class="rule-hint">[R → a]</span>
+<span class="step-arrow">⟹</span> a + b + R         <span class="rule-hint">[R → b]</span>
+<span class="step-arrow">⟹</span> a + b + c         <span class="rule-hint">[R → c]</span>  ✓ <span class="rule-hint">→ ((a+b)+c)</span></pre>
+        </div>
+
+        <div class="derivation-block">
+          <div class="drv-label">Leftmost Derivation 2 — Right Grouping: a+(b+c)</div>
+          <pre>R
+<span class="step-arrow">⟹</span> R + R             <span class="rule-hint">[R → R+R; top-level is +]</span>
+<span class="step-arrow">⟹</span> a + R             <span class="rule-hint">[left R → a]</span>
+<span class="step-arrow">⟹</span> a + R + R         <span class="rule-hint">[right R → R+R]</span>
+<span class="step-arrow">⟹</span> a + b + R         <span class="rule-hint">[R → b]</span>
+<span class="step-arrow">⟹</span> a + b + c         <span class="rule-hint">[R → c]</span>  ✓ <span class="rule-hint">→ (a+(b+c))</span></pre>
+        </div>
+
+        <div class="ans-h2">Two Distinct Parse Trees for "a+b+c"</div>
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 520 210" width="500" xmlns="http://www.w3.org/2000/svg">
+            <!-- Tree 1: (a+b)+c -->
+            <text x="120" y="18" text-anchor="middle" fill="#fabd2f" font-size="12" font-weight="700" font-family="JetBrains Mono">Tree 1: (a+b)+c</text>
+            <circle cx="120" cy="40" r="14" fill="#3c3836" stroke="#fabd2f" stroke-width="1.5"/>
+            <text x="120" y="46" text-anchor="middle" fill="#fabd2f" font-size="12" font-family="JetBrains Mono">R</text>
+            <line x1="108" y1="52" x2="68" y2="82" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="58" cy="92" r="14" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+            <text x="58" y="98" text-anchor="middle" fill="#83a598" font-size="12" font-family="JetBrains Mono">R</text>
+            <line x1="120" y1="54" x2="120" y2="82" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="120" cy="92" r="12" fill="#282828" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="120" y="98" text-anchor="middle" fill="#fe8019" font-size="13" font-family="JetBrains Mono">+</text>
+            <line x1="132" y1="52" x2="172" y2="82" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="180" cy="92" r="14" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+            <text x="180" y="98" text-anchor="middle" fill="#83a598" font-size="12" font-family="JetBrains Mono">R</text>
+            <!-- left subtree a+b -->
+            <line x1="44" y1="104" x2="28" y2="134" stroke="#504945" stroke-width="1.5"/>
+            <rect x="10" y="138" width="26" height="20" rx="4" fill="#282828" stroke="#8ec07c" stroke-width="1.5"/>
+            <text x="23" y="153" text-anchor="middle" fill="#8ec07c" font-size="12" font-family="JetBrains Mono">a</text>
+            <line x1="58" y1="106" x2="58" y2="134" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="58" cy="142" r="11" fill="#282828" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="58" y="148" text-anchor="middle" fill="#fe8019" font-size="13" font-family="JetBrains Mono">+</text>
+            <line x1="70" y1="104" x2="86" y2="134" stroke="#504945" stroke-width="1.5"/>
+            <rect x="74" y="138" width="26" height="20" rx="4" fill="#282828" stroke="#8ec07c" stroke-width="1.5"/>
+            <text x="87" y="153" text-anchor="middle" fill="#8ec07c" font-size="12" font-family="JetBrains Mono">b</text>
+            <!-- c leaf -->
+            <line x1="180" y1="106" x2="180" y2="134" stroke="#504945" stroke-width="1.5"/>
+            <rect x="166" y="138" width="26" height="20" rx="4" fill="#282828" stroke="#8ec07c" stroke-width="1.5"/>
+            <text x="179" y="153" text-anchor="middle" fill="#8ec07c" font-size="12" font-family="JetBrains Mono">c</text>
+
+            <!-- divider -->
+            <line x1="255" y1="10" x2="255" y2="190" stroke="#504945" stroke-width="1" stroke-dasharray="4,4"/>
+
+            <!-- Tree 2: a+(b+c) -->
+            <text x="390" y="18" text-anchor="middle" fill="#fabd2f" font-size="12" font-weight="700" font-family="JetBrains Mono">Tree 2: a+(b+c)</text>
+            <circle cx="390" cy="40" r="14" fill="#3c3836" stroke="#fabd2f" stroke-width="1.5"/>
+            <text x="390" y="46" text-anchor="middle" fill="#fabd2f" font-size="12" font-family="JetBrains Mono">R</text>
+            <line x1="378" y1="52" x2="320" y2="82" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="308" cy="92" r="14" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+            <text x="308" y="98" text-anchor="middle" fill="#83a598" font-size="12" font-family="JetBrains Mono">R</text>
+            <line x1="390" y1="54" x2="390" y2="82" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="390" cy="92" r="12" fill="#282828" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="390" y="98" text-anchor="middle" fill="#fe8019" font-size="13" font-family="JetBrains Mono">+</text>
+            <line x1="402" y1="52" x2="454" y2="82" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="462" cy="92" r="14" fill="#3c3836" stroke="#d3869b" stroke-width="1.5"/>
+            <text x="462" y="98" text-anchor="middle" fill="#d3869b" font-size="12" font-family="JetBrains Mono">R</text>
+            <!-- a leaf -->
+            <line x1="308" y1="106" x2="308" y2="134" stroke="#504945" stroke-width="1.5"/>
+            <rect x="294" y="138" width="26" height="20" rx="4" fill="#282828" stroke="#8ec07c" stroke-width="1.5"/>
+            <text x="307" y="153" text-anchor="middle" fill="#8ec07c" font-size="12" font-family="JetBrains Mono">a</text>
+            <!-- right subtree b+c -->
+            <line x1="448" y1="106" x2="420" y2="136" stroke="#504945" stroke-width="1.5"/>
+            <rect x="406" y="140" width="26" height="20" rx="4" fill="#282828" stroke="#8ec07c" stroke-width="1.5"/>
+            <text x="419" y="155" text-anchor="middle" fill="#8ec07c" font-size="12" font-family="JetBrains Mono">b</text>
+            <line x1="462" y1="106" x2="462" y2="136" stroke="#504945" stroke-width="1.5"/>
+            <circle cx="462" cy="144" r="11" fill="#282828" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="462" y="150" text-anchor="middle" fill="#fe8019" font-size="13" font-family="JetBrains Mono">+</text>
+            <line x1="476" y1="106" x2="498" y2="136" stroke="#504945" stroke-width="1.5"/>
+            <rect x="484" y="140" width="26" height="20" rx="4" fill="#282828" stroke="#8ec07c" stroke-width="1.5"/>
+            <text x="497" y="155" text-anchor="middle" fill="#8ec07c" font-size="12" font-family="JetBrains Mono">c</text>
+          </svg>
+        </div>
+
+        <div class="imp-box">
+          <div class="imp-box-label">Verdict</div>
+          <p>The grammar R → R+R | RR | R* | a | b | c is <strong>AMBIGUOUS</strong>. "a+b+c" has two parse trees (left-group vs right-group). "ab+c" can parse as "(ab)+c" or "a(b+c)". Root cause: no operator precedence (* &gt; concat &gt; +) or associativity is encoded.</p>
+        </div>
+
+        <div class="concl-box">
+          <div class="concl-box-label">Conclusion</div>
+          <p>This grammar is ambiguous because it does not encode precedence or associativity. Real regex parsers fix this with separate non-terminal levels: one for alternation (+), one for concatenation, one for repetition (*) — exactly like Q12's unambiguous grammar for arithmetic.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Q11 ═══ -->
+  <div class="q-card" id="q11">
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num">Q11</div>
+      <div class="q-title-wrap">
+        <div class="q-marks-tag">7 Marks</div>
+        <div class="q-title">Convert the following grammar into Chomsky Normal Form:<br>S → aAD | A → aB | bAB | B → b | D → d</div>
+      </div>
+      <div class="q-toggle">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="q-body-inner">
+
+        <div class="ans-h2">Given Grammar</div>
+        <div class="code-block">
+          <div class="code-block-label">Original Grammar G</div>
+          <pre><span class="nt">S</span> <span class="arr">→</span> <span class="t">a</span><span class="nt">AD</span>
+<span class="nt">A</span> <span class="arr">→</span> <span class="t">a</span><span class="nt">B</span> | <span class="t">b</span><span class="nt">AB</span>
+<span class="nt">B</span> <span class="arr">→</span> <span class="t">b</span>
+<span class="nt">D</span> <span class="arr">→</span> <span class="t">d</span></pre>
+        </div>
+
+        <div class="ans-h2">Step 1 — Check for ε-productions and Unit Productions</div>
+        <ul class="bullet-list">
+          <li>No ε-productions → skip Step 1</li>
+          <li>No unit productions (no X → Y with one non-terminal) → skip Step 2</li>
+          <li>All symbols are reachable and generating → skip Step 3</li>
+        </ul>
+
+        <div class="ans-h2">Step 2 — Give Every Terminal Its Own Non-Terminal</div>
+        <p class="ans-p">Any rule with length ≥ 2 that has a bare terminal must get a proxy non-terminal:</p>
+        <ul class="bullet-list">
+          <li><span class="math">T_a → a</span></li>
+          <li><span class="math">T_b → b</span></li>
+          <li>D → d is already a single-terminal rule (A → a form) → no change needed</li>
+        </ul>
+
+        <div class="code-block">
+          <div class="code-block-label">After Terminal Replacement (Step 2)</div>
+          <pre><span class="nt">S</span>   <span class="arr">→</span> <span class="nt">T_a</span> <span class="nt">AD</span>         <span class="cmt">← 'a' replaced by T_a</span>
+<span class="nt">A</span>   <span class="arr">→</span> <span class="nt">T_a</span> <span class="nt">B</span>  |  <span class="nt">T_b</span> <span class="nt">AB</span>
+<span class="nt">B</span>   <span class="arr">→</span> <span class="t">b</span>              <span class="cmt">← already A → a (single terminal)</span>
+<span class="nt">D</span>   <span class="arr">→</span> <span class="t">d</span>
+<span class="nt">T_a</span> <span class="arr">→</span> <span class="t">a</span>
+<span class="nt">T_b</span> <span class="arr">→</span> <span class="t">b</span></pre>
+        </div>
+
+        <div class="ans-h2">Step 3 — Break Any Rule with 3+ Symbols on the Right</div>
+        <p class="ans-p">Two rules still have 3 symbols on the right — break each by introducing a helper non-terminal for the last two symbols:</p>
+        <ul class="bullet-list">
+          <li><span class="math">S → T_a AD</span>: introduce <span class="math">N_1 → AD</span>, rewrite as <span class="math">S → T_a N_1</span></li>
+          <li><span class="math">A → T_b AB</span>: introduce <span class="math">N_2 → AB</span>, rewrite as <span class="math">A → T_b N_2</span></li>
+        </ul>
+
+        <div class="ans-h2">Final CNF Grammar</div>
+        <div class="code-block">
+          <div class="code-block-label">✓ Complete CNF Grammar</div>
+          <pre><span class="nt">S</span>   <span class="arr">→</span> <span class="nt">T_a</span> <span class="nt">N_1</span>        <span class="cmt">← A → BC ✓</span>
+<span class="nt">N_1</span> <span class="arr">→</span> <span class="nt">A</span> <span class="nt">D</span>            <span class="cmt">← A → BC ✓</span>
+<span class="nt">A</span>   <span class="arr">→</span> <span class="nt">T_a</span> <span class="nt">B</span>  |  <span class="nt">T_b</span> <span class="nt">N_2</span>  <span class="cmt">← A → BC ✓</span>
+<span class="nt">N_2</span> <span class="arr">→</span> <span class="nt">A</span> <span class="nt">B</span>            <span class="cmt">← A → BC ✓</span>
+<span class="nt">B</span>   <span class="arr">→</span> <span class="t">b</span>              <span class="cmt">← A → a ✓</span>
+<span class="nt">D</span>   <span class="arr">→</span> <span class="t">d</span>              <span class="cmt">← A → a ✓</span>
+<span class="nt">T_a</span> <span class="arr">→</span> <span class="t">a</span>              <span class="cmt">← A → a ✓</span>
+<span class="nt">T_b</span> <span class="arr">→</span> <span class="t">b</span>              <span class="cmt">← A → a ✓</span></pre>
+        </div>
+
+        <div class="cmp-table-wrap">
+          <table class="cmp-table">
+            <thead><tr><th>Original</th><th>CNF Replacement</th><th>Reason</th></tr></thead>
+            <tbody>
+              <tr><td>S → aAD</td><td>S → T_a N_1, N_1 → AD</td><td class="highlight">3-symbol rule broken</td></tr>
+              <tr><td>A → aB</td><td>A → T_a B</td><td class="highlight">terminal replaced</td></tr>
+              <tr><td>A → bAB</td><td>A → T_b N_2, N_2 → AB</td><td class="highlight">3-symbol rule broken</td></tr>
+              <tr><td>B → b</td><td>B → b</td><td class="highlight">already A → a form</td></tr>
+              <tr><td>D → d</td><td>D → d</td><td class="highlight">already A → a form</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="concl-box">
+          <div class="concl-box-label">Conclusion</div>
+          <p>Converted to CNF in 3 steps. Added 2 terminal proxies (T_a, T_b) and 2 helper non-terminals (N_1, N_2). All 8 rules are now in A→BC or A→a form. The language is unchanged.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Q12 ═══ -->
+  <div class="q-card" id="q12">
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num">Q12</div>
+      <div class="q-title-wrap">
+        <div class="q-marks-tag">7 Marks</div>
+        <div class="q-title">Determine whether the grammar is ambiguous and construct an equivalent unambiguous grammar for arithmetic expressions.</div>
+      </div>
+      <div class="q-toggle">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="q-body-inner">
+
+        <div class="ans-h2">Ambiguous Grammar for Arithmetic Expressions</div>
+        <div class="code-block">
+          <div class="code-block-label">Ambiguous Grammar G₁</div>
+          <pre><span class="nt">E</span> <span class="arr">→</span> <span class="nt">E</span> <span class="sym">+</span> <span class="nt">E</span>  |  <span class="nt">E</span> <span class="sym">-</span> <span class="nt">E</span>  |  <span class="nt">E</span> <span class="sym">*</span> <span class="nt">E</span>  |  <span class="nt">E</span> <span class="sym">/</span> <span class="nt">E</span>  |  <span class="sym">(</span><span class="nt">E</span><span class="sym">)</span>  |  <span class="t">id</span></pre>
+        </div>
+
+        <div class="ans-h2">Proof of Ambiguity</div>
+        <p class="ans-p">Test string: <span class="hl">id + id * id</span></p>
+        <ul class="bullet-list">
+          <li><strong>Tree 1 (wrong):</strong> Apply E+E first at root → the * groups on the left side → reads as (id+id)*id</li>
+          <li><strong>Tree 2 (correct):</strong> Apply E*E first at root for the right side → reads as id+(id*id)</li>
+        </ul>
+        <p class="ans-p">Two distinct parse trees exist → G₁ is <span class="hl-r">AMBIGUOUS</span>.</p>
+
+        <div class="ans-h2">Root Causes of Ambiguity</div>
+        <ul class="bullet-list">
+          <li><strong>No precedence:</strong> * should bind tighter than +, but the grammar treats them equally</li>
+          <li><strong>No associativity:</strong> + should be left-associative (a+b+c = (a+b)+c), but isn't enforced</li>
+          <li><strong>Real impact:</strong> A compiler using G₁ could generate wrong machine code</li>
+        </ul>
+
+        <div class="ans-h2">Fix — Unambiguous Grammar Strategy</div>
+        <p class="ans-p">Use <strong>separate non-terminal levels</strong> — one per precedence level. Lower-level non-terminals sit closer to the leaves → they bind tighter → higher precedence. Think of it as a priority chain: <strong>E → T → F</strong>, where F is innermost (highest binding).</p>
+        <div class="cmp-table-wrap">
+          <table class="cmp-table">
+            <thead><tr><th>Level</th><th>Non-terminal</th><th>Operators</th><th>Precedence</th></tr></thead>
+            <tbody>
+              <tr><td>Lowest</td><td class="highlight">E (Expression)</td><td>+, -</td><td>Low</td></tr>
+              <tr><td>Middle</td><td class="highlight">T (Term)</td><td>*, /</td><td>High</td></tr>
+              <tr><td>Highest</td><td class="highlight">F (Factor)</td><td>(E), id</td><td>Atoms</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="ans-h2">Unambiguous Grammar G₂</div>
+        <div class="code-block">
+          <div class="code-block-label">✓ Unambiguous Grammar for Arithmetic Expressions</div>
+          <pre><span class="cmt">── E handles +/- with LEFT associativity ──</span>
+<span class="nt">E</span> <span class="arr">→</span> <span class="nt">E</span> <span class="sym">+</span> <span class="nt">T</span>
+<span class="nt">E</span> <span class="arr">→</span> <span class="nt">E</span> <span class="sym">-</span> <span class="nt">T</span>
+<span class="nt">E</span> <span class="arr">→</span> <span class="nt">T</span>
+
+<span class="cmt">── T handles */÷ with LEFT associativity ──</span>
+<span class="nt">T</span> <span class="arr">→</span> <span class="nt">T</span> <span class="sym">*</span> <span class="nt">F</span>
+<span class="nt">T</span> <span class="arr">→</span> <span class="nt">T</span> <span class="sym">/</span> <span class="nt">F</span>
+<span class="nt">T</span> <span class="arr">→</span> <span class="nt">F</span>
+
+<span class="cmt">── F handles atoms and parentheses ──</span>
+<span class="nt">F</span> <span class="arr">→</span> <span class="sym">(</span><span class="nt">E</span><span class="sym">)</span>
+<span class="nt">F</span> <span class="arr">→</span> <span class="t">id</span></pre>
+        </div>
+
+        <div class="ans-h2">Why G₂ is Unambiguous — 3 Reasons</div>
+        <ul class="bullet-list">
+          <li><strong>Precedence fixed:</strong> * lives in T-rules (deep in tree = tighter binding). + lives in E-rules (near root = looser binding). So * always binds before +.</li>
+          <li><strong>Left associativity fixed:</strong> E → E+T is left-recursive → a+b+c parses as (a+b)+c, never a+(b+c).</li>
+          <li><strong>One unique tree:</strong> For any string, exactly one parse tree exists — no choice.</li>
+        </ul>
+
+        <div class="derivation-block">
+          <div class="drv-label">Derive "id + id * id" with G₂ (unique)</div>
+          <pre>E <span class="step-arrow">⟹</span> E + T
+  <span class="step-arrow">⟹</span> T + T              <span class="rule-hint">[E → T]</span>
+  <span class="step-arrow">⟹</span> F + T              <span class="rule-hint">[T → F]</span>
+  <span class="step-arrow">⟹</span> id + T             <span class="rule-hint">[F → id]</span>
+  <span class="step-arrow">⟹</span> id + T * F         <span class="rule-hint">[T → T*F]</span>
+  <span class="step-arrow">⟹</span> id + F * F         <span class="rule-hint">[T → F]</span>
+  <span class="step-arrow">⟹</span> id + id * id       <span class="rule-hint">[F → id twice]</span> ✓ UNIQUE</pre>
+        </div>
+
+        <div class="concl-box">
+          <div class="concl-box-label">Conclusion</div>
+          <p>G₁ (E→E+E|E*E|...) is ambiguous — no precedence or associativity. G₂ fixes this with three levels (E handles +, T handles *, F handles atoms). Every string gets exactly one parse tree in G₂ — making it the standard grammar used in real compilers.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Q13 ═══ -->
+  <div class="q-card" id="q13">
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num">Q13</div>
+      <div class="q-title-wrap">
+        <div class="q-marks-tag">7 Marks</div>
+        <div class="q-title">Write equivalent left linear grammar from the following right linear grammar:<br>S → aS | aA | A → bA | b</div>
+      </div>
+      <div class="q-toggle">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="q-body-inner">
+
+        <div class="ans-h2">Background — Linear Grammars</div>
+        <div class="def-box">
+          <div class="def-box-label">Definitions</div>
+          <p><strong>Right Linear Grammar:</strong> Non-terminal is always on the RIGHT — rules look like A → aB or A → a.<br><br>
+          <strong>Left Linear Grammar:</strong> Non-terminal is always on the LEFT — rules look like A → Ba or A → a.<br><br>
+          <strong>Both generate the same class:</strong> Regular Languages. They are equivalent to each other and to DFA/NFA — just different ways of describing the same machines.</p>
+        </div>
+
+        <div class="ans-h2">Given Right Linear Grammar</div>
+        <div class="code-block">
+          <div class="code-block-label">Right Linear Grammar G (right-recursive)</div>
+          <pre><span class="nt">S</span> <span class="arr">→</span> <span class="t">a</span><span class="nt">S</span>  |  <span class="t">a</span><span class="nt">A</span>
+<span class="nt">A</span> <span class="arr">→</span> <span class="t">b</span><span class="nt">A</span>  |  <span class="t">b</span></pre>
+        </div>
+
+        <div class="ans-h3">Language Generated by G</div>
+        <p class="ans-p">S generates one or more a's (S → aS | aA), then A generates one or more b's. So the language is:</p>
+        <div class="math-block">L(G) = a⁺b⁺ — one or more a's followed by one or more b's</div>
+
+        <div class="ans-h2">Conversion Method — NFA Reversal (3 Steps)</div>
+        <p class="ans-p">The trick: a reversed NFA recognizes the reversed language. Converting right→left linear grammar is the same as reversing the NFA and writing the new grammar.</p>
+        <ol class="step-list">
+          <li><span class="step-num">1</span><span class="step-content">Build the NFA from the right linear grammar (each non-terminal = a state)</span></li>
+          <li><span class="step-num">2</span><span class="step-content">Reverse the NFA: swap start ↔ final states, reverse all transition arrows</span></li>
+          <li><span class="step-num">3</span><span class="step-content">Write the left linear grammar from the reversed NFA</span></li>
+        </ol>
+
+        <div class="ans-h2">Step 1 — Build NFA from the Right Linear Grammar</div>
+        <p class="ans-p">Each non-terminal becomes a state. A rule A → aB becomes a transition from state A to state B on input 'a'. A rule A → a (no non-terminal) goes to a new final state q_F.</p>
+        <ul class="bullet-list">
+          <li>S → aS: self-loop at q_S on 'a'</li>
+          <li>S → aA: q_S --a→ q_A</li>
+          <li>A → bA: self-loop at q_A on 'b'</li>
+          <li>A → b: q_A --b→ q_F (final state)</li>
+        </ul>
+
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 440 120" width="420" xmlns="http://www.w3.org/2000/svg">
+            <!-- States -->
+            <circle cx="60" cy="60" r="22" fill="#3c3836" stroke="#fabd2f" stroke-width="2"/>
+            <text x="60" y="64" text-anchor="middle" fill="#fabd2f" font-size="12" font-family="JetBrains Mono">q_S</text>
+            <text x="60" y="18" text-anchor="middle" fill="#a89984" font-size="10" font-family="JetBrains Mono">start</text>
+            <line x1="60" y1="28" x2="60" y2="38" stroke="#a89984" stroke-width="1.5" marker-end="url(#arr)"/>
+
+            <circle cx="220" cy="60" r="22" fill="#3c3836" stroke="#83a598" stroke-width="2"/>
+            <text x="220" y="64" text-anchor="middle" fill="#83a598" font-size="12" font-family="JetBrains Mono">q_A</text>
+
+            <circle cx="380" cy="60" r="22" fill="#3c3836" stroke="#b8bb26" stroke-width="2"/>
+            <circle cx="380" cy="60" r="18" fill="none" stroke="#b8bb26" stroke-width="1.5"/>
+            <text x="380" y="64" text-anchor="middle" fill="#b8bb26" font-size="12" font-family="JetBrains Mono">q_F</text>
+
+            <!-- Transitions -->
+            <!-- q_S --a--> q_S (self-loop) -->
+            <path d="M42,40 Q20,10 38,40" fill="none" stroke="#fe8019" stroke-width="1.5" marker-end="url(#arr2)"/>
+            <text x="12" y="25" fill="#fe8019" font-size="11" font-family="JetBrains Mono">a</text>
+
+            <!-- q_S --a--> q_A -->
+            <line x1="82" y1="60" x2="198" y2="60" stroke="#fe8019" stroke-width="1.5" marker-end="url(#arr2)"/>
+            <text x="135" y="52" text-anchor="middle" fill="#fe8019" font-size="11" font-family="JetBrains Mono">a</text>
+
+            <!-- q_A --b--> q_A (self-loop) -->
+            <path d="M202,40 Q200,10 218,40" fill="none" stroke="#83a598" stroke-width="1.5" marker-end="url(#arr2)"/>
+            <text x="192" y="22" fill="#83a598" font-size="11" font-family="JetBrains Mono">b</text>
+
+            <!-- q_A --b--> q_F -->
+            <line x1="242" y1="60" x2="358" y2="60" stroke="#83a598" stroke-width="1.5" marker-end="url(#arr2)"/>
+            <text x="300" y="52" text-anchor="middle" fill="#83a598" font-size="11" font-family="JetBrains Mono">b</text>
+
+            <!-- Arrow markers -->
+            <defs>
+              <marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 Z" fill="#a89984"/>
+              </marker>
+              <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 Z" fill="#fe8019"/>
+              </marker>
+            </defs>
+            <text x="220" y="105" text-anchor="middle" fill="#665c54" font-size="10" font-family="JetBrains Mono">NFA for right linear grammar (recognizes a⁺b⁺)</text>
+          </svg>
+        </div>
+
+        <div class="ans-h2">Step 2 — Reverse the NFA</div>
+        <ul class="bullet-list">
+          <li>Old start q_S → becomes the new <strong>final</strong> state</li>
+          <li>Old final q_F → becomes the new <strong>start</strong> state</li>
+          <li>All arrows flip direction: q_S←a←q_S, q_A←a←q_S, q_A←b←q_A, q_F←b←q_A becomes q_A --b→ q_F (reversed)</li>
+        </ul>
+
+        <div class="ans-h2">Step 3 — Write Left Linear Grammar from Reversed NFA</div>
+        <p class="ans-p">In a left linear grammar, a transition X --a→ Y becomes rule <strong>Y → Xa</strong> (non-terminal on the left, terminal on the right). Reading each reversed transition:</p>
+        <ul class="bullet-list">
+          <li>q_F --b→ q_A reversed → <span class="math">A' → S'b</span> (start of reversed = S')</li>
+          <li>q_A --b→ q_A reversed → <span class="math">A' → A'b</span> (self-loop, left-recursive)</li>
+          <li>q_S --a→ q_A reversed → <span class="math">A' → S''a</span> (hits the old start = base case)</li>
+          <li>q_S --a→ q_S reversed → <span class="math">S'' → S''a</span> (self-loop on a's)</li>
+        </ul>
+
+        <div class="ans-h2">Final Left Linear Grammar</div>
+        <div class="code-block">
+          <div class="code-block-label">✓ Equivalent Left Linear Grammar</div>
+          <pre><span class="cmt">Renaming: Start=S, intermediate=A, terminal state rule</span>
+
+<span class="nt">S</span> <span class="arr">→</span> <span class="nt">A</span><span class="t">b</span>   <span class="cmt">← non-terminal on left, terminal on right</span>
+<span class="nt">A</span> <span class="arr">→</span> <span class="nt">A</span><span class="t">b</span>   <span class="cmt">← generates b's (left-recursively)</span>
+<span class="nt">A</span> <span class="arr">→</span> <span class="nt">B</span><span class="t">a</span>   <span class="cmt">← transition from a-section to b-section</span>
+<span class="nt">B</span> <span class="arr">→</span> <span class="nt">B</span><span class="t">a</span>   <span class="cmt">← generates a's (left-recursively)</span>
+<span class="nt">B</span> <span class="arr">→</span> <span class="t">a</span>    <span class="cmt">← base: first 'a'</span></pre>
+        </div>
+
+        <div class="derivation-block">
+          <div class="drv-label">Verify: Derive "aabb" using Left Linear Grammar</div>
+          <pre>S <span class="step-arrow">⟹</span> Ab
+  <span class="step-arrow">⟹</span> Abb          <span class="rule-hint">[A → Ab]</span>
+  <span class="step-arrow">⟹</span> Babb         <span class="rule-hint">[A → Ba]</span>
+  <span class="step-arrow">⟹</span> Baabb        <span class="rule-hint">[B → Ba]</span>
+  <span class="step-arrow">⟹</span> aabb         <span class="rule-hint">[B → a]</span>  ✓</pre>
+        </div>
+
+        <div class="concl-box">
+          <div class="concl-box-label">Conclusion</div>
+          <p>The right linear grammar for L = a⁺b⁺ was converted to an equivalent left linear grammar using the NFA reversal technique: (1) right-linear grammar → NFA, (2) reverse the NFA (swap start/final, flip arrows), (3) read off the left-linear grammar. Both grammars generate exactly a⁺b⁺. This proves left and right linear grammars are equally powerful.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Q14 ═══ -->
+  <div class="q-card" id="q14">
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num">Q14</div>
+      <div class="q-title-wrap">
+        <div class="q-marks-tag">7 Marks</div>
+        <div class="q-title">Construct CFG for the following formal languages:<br>
+          (i) L = {ww<sup>R</sup> | w ∈ {a,b}*} &nbsp;&nbsp; (ii) L = {aⁿb²ⁿ | n ≥ 1} &nbsp;&nbsp; (iii) L = {w | n_a(w) = n_b(w)}</div>
+      </div>
+      <div class="q-toggle">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="q-body-inner">
+
+        <div class="ans-h2">Part (i): L = { ww<sup>R</sup> | w ∈ {a,b}* } — Even-Length Palindromes</div>
+        <p class="ans-p">This language contains strings that are a word followed by its exact reverse: abba, aabbaa, baab. They're always even-length and read the same forwards and backwards.</p>
+        <div class="ans-h3">Strategy — Mirror Trick</div>
+        <p class="ans-p">Add one symbol on both sides simultaneously — one 'a' on the left AND one 'a' on the right, or one 'b' on each side. This "closes in" from the outside. When nothing is left to add, use ε as the base case.</p>
+        <div class="code-block">
+          <div class="code-block-label">✓ CFG for ww<sup>R</sup></div>
+          <pre><span class="nt">S</span> <span class="arr">→</span> <span class="t">a</span><span class="nt">S</span><span class="t">a</span>  |  <span class="t">b</span><span class="nt">S</span><span class="t">b</span>  |  <span class="t">ε</span>
+
+<span class="cmt">Generates: ε, aa, bb, aaSaa, abba, ...</span></pre>
+        </div>
+        <div class="derivation-block">
+          <div class="drv-label">Derive "abba" (w=ab, wR=ba)</div>
+          <pre>S <span class="step-arrow">⟹</span> aSa <span class="rule-hint">[S→aSa]</span>
+  <span class="step-arrow">⟹</span> abSba <span class="rule-hint">[S→bSb]</span>
+  <span class="step-arrow">⟹</span> abba  <span class="rule-hint">[S→ε]</span>  ✓</pre>
+        </div>
+
+        <hr class="ans-divider"/>
+
+        <div class="ans-h2">Part (ii): L = { aⁿb²ⁿ | n ≥ 1 } — One 'a' for Every Two 'b's</div>
+        <p class="ans-p">Each 'a' must be paired with <strong>exactly two 'b's</strong>. Examples: abb (n=1), aabbbb (n=2), aaabbbbbb (n=3).</p>
+        <div class="ans-h3">Strategy — Simple Recursion</div>
+        <p class="ans-p">Each recursive step adds exactly one 'a' on the left and exactly two 'b's on the right. Base case (n=1) is just abb.</p>
+        <div class="code-block">
+          <div class="code-block-label">✓ CFG for aⁿb²ⁿ</div>
+          <pre><span class="nt">S</span> <span class="arr">→</span> <span class="t">a</span><span class="nt">S</span><span class="t">bb</span>  |  <span class="t">abb</span>
+
+<span class="cmt">S → aSbb: adds 1 'a' and 2 'b's each step
+S → abb: base case (n=1)</span></pre>
+        </div>
+        <div class="derivation-block">
+          <div class="drv-label">Derive "aabbbb" (n=2)</div>
+          <pre>S <span class="step-arrow">⟹</span> aSbb <span class="rule-hint">[S→aSbb]</span>
+  <span class="step-arrow">⟹</span> aabbbb <span class="rule-hint">[S→abb]</span>  ✓</pre>
+        </div>
+
+        <hr class="ans-divider"/>
+
+        <div class="ans-h2">Part (iii): L = { w | n_a(w) = n_b(w) } — Equal Number of a's and b's</div>
+        <p class="ans-p">a's and b's can appear in <em>any order</em> as long as their counts are equal. Examples: ab, ba, aabb, abba, baba, baab.</p>
+        <div class="ans-h3">Strategy — Dyck Grammar</div>
+        <p class="ans-p">This is trickier because interleaving is allowed. The classic solution: at every step, either place an 'a' then recurse then place a 'b' then recurse, OR place a 'b' then recurse then place an 'a' then recurse. The two S's at the end handle any remaining balanced characters.</p>
+        <div class="code-block">
+          <div class="code-block-label">✓ CFG for n_a(w) = n_b(w)</div>
+          <pre><span class="nt">S</span> <span class="arr">→</span> <span class="t">a</span><span class="nt">S</span><span class="t">b</span><span class="nt">S</span>  |  <span class="t">b</span><span class="nt">S</span><span class="t">a</span><span class="nt">S</span>  |  <span class="t">ε</span>
+
+<span class="cmt">This grammar (Dyck grammar) handles any interleaving:
+- aSbS: place 'a', recurse, place 'b', recurse
+- bSaS: place 'b', recurse, place 'a', recurse
+- ε: base case</span></pre>
+        </div>
+        <div class="derivation-block">
+          <div class="drv-label">Derive "abba" (n_a=n_b=2)</div>
+          <pre>S <span class="step-arrow">⟹</span> aSbS         <span class="rule-hint">[S→aSbS]</span>
+  <span class="step-arrow">⟹</span> abS bS        <span class="rule-hint">[inner S→ε... wait, try different path:]</span>
+
+S <span class="step-arrow">⟹</span> aSbS
+  <span class="step-arrow">⟹</span> a ε bS        <span class="rule-hint">[S→ε]</span>
+  <span class="step-arrow">⟹</span> ab bSaS       <span class="rule-hint">[S→bSaS]</span>
+  <span class="step-arrow">⟹</span> abba ε ε      <span class="rule-hint">[both S→ε]</span>
+  <span class="step-arrow">⟹</span> abba           ✓</pre>
+        </div>
+
+        <div class="ans-h2">Summary Table</div>
+        <div class="cmp-table-wrap">
+          <table class="cmp-table">
+            <thead><tr><th>Language</th><th>Grammar Rules</th><th>Example Strings</th></tr></thead>
+            <tbody>
+              <tr><td>ww<sup>R</sup></td><td>S → aSa | bSb | ε</td><td class="highlight">ε, aa, abba, aabbaa</td></tr>
+              <tr><td>aⁿb²ⁿ</td><td>S → aSbb | abb</td><td class="highlight">abb, aabbbb, aaabbbbbb</td></tr>
+              <tr><td>n_a(w)=n_b(w)</td><td>S → aSbS | bSaS | ε</td><td class="highlight">ε, ab, ba, aabb, abba, baba</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="concl-box">
+          <div class="concl-box-label">Conclusion — One Line Each</div>
+          <p><strong>(i) ww<sup>R</sup>:</strong> Mirror trick — add matching symbol on both sides; ε as base. S → aSa | bSb | ε<br>
+          <strong>(ii) aⁿb²ⁿ:</strong> Each recursive step adds 1 'a' and 2 'b's. S → aSbb | abb<br>
+          <strong>(iii) n_a=n_b:</strong> Dyck grammar handles any interleaving. S → aSbS | bSaS | ε<br>
+          All three are Context-Free. Each grammar captures the language's structure through a single neat recursive rule.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div><!-- end content-wrap -->
+</main>
+
+<script>
+// ── Toggle Card ──
+function toggleCard(header) {
+  const card = header.closest('.q-card');
+  const wasOpen = card.classList.contains('open');
+  card.classList.toggle('open');
+  updateProgress();
+  // Update sidebar active
+  updateActiveNav();
+}
+
+// ── Sidebar Mobile ──
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+function closeSidebarMobile() {
+  if (window.innerWidth <= 900) {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+  }
+}
+document.getElementById('overlay').addEventListener('click', () => {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+});
+
+// ── Progress ──
+function updateProgress() {
+  const cards = document.querySelectorAll('.q-card');
+  const open = document.querySelectorAll('.q-card.open').length;
+  const pct = Math.round((open / cards.length) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+
+// ── Active Nav on Scroll ──
+function updateActiveNav() {
+  const navItems = document.querySelectorAll('.nav-item');
+  const cards = document.querySelectorAll('.q-card');
+  let current = '';
+  cards.forEach(c => {
+    const rect = c.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.5 && rect.bottom > 0) {
+      current = '#' + c.id;
+    }
+  });
+  navItems.forEach(n => {
+    n.classList.remove('active');
+    if (n.getAttribute('href') === current) n.classList.add('active');
+  });
+}
+
+window.addEventListener('scroll', updateActiveNav, { passive: true });
+
+// ── Open first card by default ──
+window.addEventListener('DOMContentLoaded', () => {
+  const first = document.querySelector('.q-card');
+  if (first) {
+    first.querySelector('.q-header').click();
+  }
+  updateActiveNav();
+});
+
+// ── Keyboard shortcut: press numbers 1–9 to open cards ──
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT') return;
+  const num = parseInt(e.key);
+  if (num >= 1 && num <= 9) {
+    const card = document.getElementById('q' + num);
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (!card.classList.contains('open')) card.querySelector('.q-header').click();
+    }
+  }
+});
+</script>
+</body>
+</html>

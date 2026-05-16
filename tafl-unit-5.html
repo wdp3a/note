@@ -1,0 +1,2915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AKTU — TOC Unit 5: Turing Machines & Recursive Function Theory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..800,0..1,0..1,0..1&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════════════════════════
+   GRUVBOX DARK THEME — CSS CUSTOM PROPERTIES
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  /* Gruvbox Dark Palette */
+  --bg-hard:    #1d2021;
+  --bg:         #282828;
+  --bg-soft:    #32302f;
+  --bg1:        #3c3836;
+  --bg2:        #504945;
+  --bg3:        #665c54;
+  --bg4:        #7c6f64;
+  --fg:         #ebdbb2;
+  --fg1:        #d5c4a1;
+  --fg2:        #bdae93;
+  --fg3:        #a89984;
+  --fg4:        #928374;
+
+  /* Gruvbox Accent Colors */
+  --red:        #cc241d;
+  --red-bright: #fb4934;
+  --green:      #98971a;
+  --green-bright:#b8bb26;
+  --yellow:     #d79921;
+  --yellow-bright:#fabd2f;
+  --blue:       #458588;
+  --blue-bright: #83a598;
+  --purple:     #b16286;
+  --purple-bright:#d3869b;
+  --aqua:       #689d6a;
+  --aqua-bright: #8ec07c;
+  --orange:     #d65d0e;
+  --orange-bright:#fe8019;
+
+  /* Semantic Tokens */
+  --surface:       var(--bg);
+  --surface-raised: var(--bg-soft);
+  --surface-high:  var(--bg1);
+  --surface-higher: var(--bg2);
+  --border:        var(--bg2);
+  --border-subtle: var(--bg1);
+  --text-primary:  var(--fg);
+  --text-secondary: var(--fg2);
+  --text-muted:    var(--fg4);
+  --accent:        var(--yellow-bright);
+  --accent-dim:    var(--yellow);
+  --link:          var(--blue-bright);
+  --success:       var(--green-bright);
+  --warning:       var(--orange-bright);
+  --info:          var(--aqua-bright);
+  --tag:           var(--purple-bright);
+
+  /* Spacing & Radius */
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  14px;
+  --radius-xl:  20px;
+  --radius-2xl: 28px;
+
+  /* Typography */
+  --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+  --font-body:  'Recursive', 'SF Pro Text', system-ui, sans-serif;
+
+  /* Sidebar */
+  --sidebar-w: 280px;
+  --topbar-h:  58px;
+
+  /* Shadows */
+  --shadow-sm:  0 1px 3px rgba(0,0,0,.4);
+  --shadow-md:  0 4px 16px rgba(0,0,0,.45);
+  --shadow-lg:  0 8px 32px rgba(0,0,0,.55);
+
+  /* Transitions */
+  --ease: cubic-bezier(.4,0,.2,1);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-hard);
+  color: var(--text-primary);
+  line-height: 1.7;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--yellow); color: var(--bg-hard); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-hard); }
+::-webkit-scrollbar-thumb { background: var(--bg3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--bg4); }
+
+/* ═══════════════════════════════════════════════════════════
+   TOP NAVIGATION BAR
+   ═══════════════════════════════════════════════════════════ */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--topbar-h);
+  background: rgba(29,32,33,.92);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 16px;
+  z-index: 200;
+  box-shadow: 0 1px 0 rgba(255,255,255,.04), var(--shadow-sm);
+}
+
+.topbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.topbar-logo-badge {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--yellow), var(--orange));
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 13px; font-weight: 700;
+  color: var(--bg-hard);
+  letter-spacing: -0.5px;
+  box-shadow: 0 2px 8px rgba(250,189,47,.3);
+}
+
+.topbar-title {
+  display: flex; flex-direction: column;
+}
+.topbar-title .course { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--text-muted); letter-spacing: .08em; text-transform: uppercase; }
+.topbar-title .unit   { font-size: 14px; font-weight: 650; color: var(--text-primary); letter-spacing: -.01em; }
+
+.topbar-divider { width: 1px; height: 28px; background: var(--border); flex-shrink: 0; }
+
+.topbar-progress-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.progress-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); white-space: nowrap; }
+
+.progress-track {
+  flex: 1;
+  height: 4px;
+  background: var(--bg2);
+  border-radius: 2px;
+  overflow: hidden;
+  max-width: 240px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--yellow), var(--orange-bright));
+  border-radius: 2px;
+  width: 0%;
+  transition: width .6s var(--ease);
+  box-shadow: 0 0 8px rgba(250,189,47,.4);
+}
+
+.topbar-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  transition: background .2s, color .2s;
+}
+.topbar-hamburger:hover { background: var(--bg1); color: var(--text-primary); }
+.topbar-hamburger svg { display: block; }
+
+/* ═══════════════════════════════════════════════════════════
+   SIDEBAR
+   ═══════════════════════════════════════════════════════════ */
+.sidebar {
+  position: fixed;
+  top: var(--topbar-h);
+  left: 0;
+  width: var(--sidebar-w);
+  bottom: 0;
+  background: var(--bg);
+  border-right: 1px solid var(--border-subtle);
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 150;
+  display: flex;
+  flex-direction: column;
+  transition: transform .3s var(--ease);
+}
+
+.sidebar-header {
+  padding: 20px 20px 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+.sidebar-header h2 {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.sidebar-header p { font-size: 13px; color: var(--yellow-bright); font-weight: 600; }
+
+.sidebar-nav { flex: 1; padding: 12px 12px 24px; }
+
+.nav-section-label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: var(--text-muted);
+  padding: 12px 8px 6px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background .18s, color .18s;
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.4;
+  margin-bottom: 2px;
+  border: 1px solid transparent;
+}
+.nav-item:hover { background: var(--bg1); color: var(--text-primary); }
+.nav-item.active {
+  background: rgba(250,189,47,.12);
+  border-color: rgba(250,189,47,.2);
+  color: var(--yellow-bright);
+}
+
+.nav-item-num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--yellow);
+  background: rgba(250,189,47,.1);
+  border-radius: 4px;
+  padding: 1px 5px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  min-width: 24px;
+  text-align: center;
+}
+.nav-item.active .nav-item-num { background: rgba(250,189,47,.22); color: var(--yellow-bright); }
+
+.nav-item-text { font-size: 12.5px; }
+
+/* Sidebar overlay (mobile) */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  z-index: 140;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MAIN CONTENT
+   ═══════════════════════════════════════════════════════════ */
+.main {
+  margin-left: var(--sidebar-w);
+  margin-top: var(--topbar-h);
+  padding: 40px 48px 80px;
+  max-width: 960px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   UNIT HEADER
+   ═══════════════════════════════════════════════════════════ */
+.unit-hero {
+  background: linear-gradient(135deg, var(--bg-soft) 0%, var(--bg1) 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-2xl);
+  padding: 40px 44px;
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.unit-hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(250,189,47,.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.unit-hero::after {
+  content: 'TM';
+  position: absolute;
+  bottom: -20px; right: 20px;
+  font-family: var(--font-mono);
+  font-size: 120px;
+  font-weight: 800;
+  color: rgba(250,189,47,.04);
+  letter-spacing: -4px;
+  user-select: none;
+}
+
+.unit-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(250,189,47,.12);
+  border: 1px solid rgba(250,189,47,.25);
+  border-radius: 100px;
+  padding: 4px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--yellow-bright);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-bottom: 16px;
+}
+
+.unit-hero h1 {
+  font-family: var(--font-body);
+  font-size: 2rem;
+  font-weight: 750;
+  color: var(--text-primary);
+  letter-spacing: -.03em;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.unit-hero p {
+  font-size: 15px;
+  color: var(--text-secondary);
+  max-width: 560px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.hero-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hero-chip {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 4px 12px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   QUESTION CARDS (ACCORDION)
+   ═══════════════════════════════════════════════════════════ */
+.q-card {
+  background: var(--bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.q-card:hover { border-color: var(--bg3); box-shadow: var(--shadow-md); }
+.q-card.open { border-color: rgba(250,189,47,.25); box-shadow: 0 4px 24px rgba(0,0,0,.4); }
+
+.q-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  cursor: pointer;
+  user-select: none;
+  transition: background .2s;
+}
+.q-header:hover { background: rgba(255,255,255,.02); }
+.q-card.open .q-header { background: rgba(250,189,47,.04); border-bottom: 1px solid rgba(250,189,47,.12); }
+
+.q-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--yellow-bright);
+  background: rgba(250,189,47,.1);
+  border: 1px solid rgba(250,189,47,.2);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  flex-shrink: 0;
+  min-width: 36px;
+  text-align: center;
+}
+
+.q-title {
+  flex: 1;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.q-marks {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--orange-bright);
+  background: rgba(254,128,25,.1);
+  border: 1px solid rgba(254,128,25,.2);
+  border-radius: 100px;
+  padding: 3px 10px;
+  flex-shrink: 0;
+}
+
+.q-chevron {
+  flex-shrink: 0;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--bg1);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .3s var(--ease), background .2s;
+  color: var(--text-muted);
+}
+.q-card.open .q-chevron { transform: rotate(180deg); background: rgba(250,189,47,.15); color: var(--yellow-bright); }
+
+.q-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .5s var(--ease);
+}
+.q-card.open .q-body { max-height: 20000px; }
+
+.q-content { padding: 28px 32px 32px; }
+
+/* ═══════════════════════════════════════════════════════════
+   CONTENT TYPOGRAPHY
+   ═══════════════════════════════════════════════════════════ */
+.q-content h2 {
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 720;
+  color: var(--yellow-bright);
+  letter-spacing: -.02em;
+  margin: 28px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid rgba(250,189,47,.18);
+}
+.q-content h2:first-child { margin-top: 0; }
+
+.q-content h3 {
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  font-weight: 670;
+  color: var(--aqua-bright);
+  letter-spacing: -.01em;
+  margin: 22px 0 8px;
+}
+
+.q-content h4 {
+  font-size: 13.5px;
+  font-weight: 650;
+  color: var(--orange-bright);
+  margin: 16px 0 6px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-family: var(--font-mono);
+}
+
+.q-content p { font-size: 14.5px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.75; }
+
+.q-content strong { color: var(--text-primary); font-weight: 680; }
+.q-content em { color: var(--aqua-bright); font-style: italic; }
+
+/* ═══════════════════════════════════════════════════════════
+   DEFINITION BOXES
+   ═══════════════════════════════════════════════════════════ */
+.def-box {
+  background: rgba(131,165,152,.06);
+  border: 1px solid rgba(131,165,152,.25);
+  border-left: 3px solid var(--blue-bright);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin: 16px 0;
+}
+.def-box .def-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--blue-bright);
+  margin-bottom: 8px;
+}
+.def-box p { font-size: 14px; color: var(--fg1); margin: 0; line-height: 1.65; }
+
+.theorem-box {
+  background: rgba(177,98,134,.06);
+  border: 1px solid rgba(177,98,134,.25);
+  border-left: 3px solid var(--purple-bright);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin: 16px 0;
+}
+.theorem-box .def-label { color: var(--purple-bright); }
+.theorem-box p { font-size: 14px; color: var(--fg1); margin: 0; }
+
+.note-box {
+  background: rgba(250,189,47,.05);
+  border: 1px solid rgba(250,189,47,.2);
+  border-left: 3px solid var(--yellow-bright);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  margin: 14px 0;
+  font-size: 13.5px;
+  color: var(--fg2);
+}
+.note-box .def-label { color: var(--yellow-bright); }
+
+.warning-box {
+  background: rgba(254,128,25,.06);
+  border: 1px solid rgba(254,128,25,.25);
+  border-left: 3px solid var(--orange-bright);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  margin: 14px 0;
+}
+.warning-box .def-label { color: var(--orange-bright); }
+
+.success-box {
+  background: rgba(184,187,38,.06);
+  border: 1px solid rgba(184,187,38,.25);
+  border-left: 3px solid var(--green-bright);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  margin: 14px 0;
+}
+.success-box .def-label { color: var(--green-bright); }
+.success-box p { font-size: 13.5px; color: var(--fg2); margin: 0; }
+
+/* ═══════════════════════════════════════════════════════════
+   CODE BLOCKS
+   ═══════════════════════════════════════════════════════════ */
+.code-block {
+  background: var(--bg-hard);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  margin: 16px 0;
+  overflow-x: auto;
+  position: relative;
+}
+.code-block pre {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--fg1);
+  line-height: 1.65;
+  white-space: pre;
+}
+.code-block .code-lang {
+  position: absolute;
+  top: 10px; right: 14px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--text-muted);
+  background: var(--bg1);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* Inline code */
+code {
+  font-family: var(--font-mono);
+  font-size: .88em;
+  color: var(--aqua-bright);
+  background: rgba(104,157,106,.12);
+  border: 1px solid rgba(104,157,106,.2);
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LISTS
+   ═══════════════════════════════════════════════════════════ */
+.q-content ul, .q-content ol {
+  padding-left: 0;
+  margin: 12px 0;
+  list-style: none;
+}
+
+.q-content li {
+  font-size: 14px;
+  color: var(--text-secondary);
+  padding: 5px 0 5px 24px;
+  position: relative;
+  line-height: 1.65;
+}
+
+.q-content ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 6px;
+  color: var(--yellow-bright);
+  font-size: 10px;
+  top: 8px;
+}
+
+.q-content ol { counter-reset: step; }
+.q-content ol li { counter-increment: step; }
+.q-content ol li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 18px; height: 18px;
+  background: rgba(250,189,47,.15);
+  border-radius: 50%;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--yellow-bright);
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  line-height: 18px;
+}
+
+/* Step list */
+.step-list { margin: 16px 0; }
+.step-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.step-item:last-child { border-bottom: none; }
+.step-num {
+  width: 28px; height: 28px;
+  background: linear-gradient(135deg, rgba(250,189,47,.2), rgba(214,90,14,.2));
+  border: 1px solid rgba(250,189,47,.3);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--yellow-bright);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.step-content { flex: 1; font-size: 14px; color: var(--text-secondary); line-height: 1.65; }
+.step-content strong { color: var(--text-primary); }
+
+/* ═══════════════════════════════════════════════════════════
+   COMPARISON TABLES
+   ═══════════════════════════════════════════════════════════ */
+.table-wrap { overflow-x: auto; margin: 18px 0; border-radius: var(--radius-lg); border: 1px solid var(--border); }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+thead th {
+  background: var(--bg1);
+  color: var(--yellow-bright);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 2px solid rgba(250,189,47,.2);
+  white-space: nowrap;
+}
+
+tbody tr { border-bottom: 1px solid var(--border-subtle); transition: background .15s; }
+tbody tr:hover { background: rgba(255,255,255,.02); }
+tbody tr:last-child { border-bottom: none; }
+
+tbody td {
+  padding: 11px 16px;
+  color: var(--text-secondary);
+  vertical-align: top;
+  line-height: 1.55;
+}
+
+tbody td:first-child { font-family: var(--font-mono); font-size: 12.5px; color: var(--text-primary); font-weight: 600; }
+
+.td-yes { color: var(--green-bright) !important; font-weight: 600; }
+.td-no  { color: var(--red-bright)   !important; font-weight: 600; }
+
+/* ═══════════════════════════════════════════════════════════
+   TRANSITION TABLE (TM SPECIFIC)
+   ═══════════════════════════════════════════════════════════ */
+.tm-table thead th:first-child { min-width: 100px; }
+.tm-table tbody td { font-family: var(--font-mono); font-size: 12.5px; }
+.tm-table tbody td:first-child { color: var(--aqua-bright) !important; }
+
+/* ═══════════════════════════════════════════════════════════
+   SVG DIAGRAM CONTAINER
+   ═══════════════════════════════════════════════════════════ */
+.diagram-wrap {
+  background: var(--bg-hard);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin: 20px 0;
+  text-align: center;
+  overflow-x: auto;
+}
+.diagram-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-top: 12px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FORMAL NOTATION BLOCK
+   ═══════════════════════════════════════════════════════════ */
+.formal {
+  background: var(--bg-soft);
+  border: 1px solid var(--bg2);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin: 14px 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--green-bright);
+  line-height: 1.8;
+  overflow-x: auto;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ID (INSTANTANEOUS DESCRIPTION) BLOCK
+   ═══════════════════════════════════════════════════════════ */
+.id-block {
+  background: var(--bg-hard);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin: 14px 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--aqua-bright);
+  line-height: 2;
+}
+.id-block .id-step { display: block; padding: 2px 0; }
+.id-block .id-arrow { color: var(--orange-bright); margin: 0 8px; }
+
+/* ═══════════════════════════════════════════════════════════
+   CONCLUSION BOX
+   ═══════════════════════════════════════════════════════════ */
+.conclusion {
+  background: linear-gradient(135deg, rgba(104,157,106,.08), rgba(131,165,152,.06));
+  border: 1px solid rgba(142,192,124,.2);
+  border-radius: var(--radius-lg);
+  padding: 18px 22px;
+  margin-top: 24px;
+}
+.conclusion .def-label { color: var(--aqua-bright); font-family: var(--font-mono); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; margin-bottom: 8px; }
+.conclusion p { font-size: 14px; color: var(--fg2); margin: 0; line-height: 1.7; }
+
+/* ═══════════════════════════════════════════════════════════
+   KEY POINTS GRID
+   ═══════════════════════════════════════════════════════════ */
+.kp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 16px 0; }
+.kp-card {
+  background: var(--bg-soft);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  transition: border-color .2s, transform .2s;
+}
+.kp-card:hover { border-color: var(--bg3); transform: translateY(-1px); }
+.kp-card .kp-icon { font-size: 20px; margin-bottom: 8px; }
+.kp-card .kp-title { font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; font-family: var(--font-mono); }
+.kp-card .kp-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.5; }
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION DIVIDER
+   ═══════════════════════════════════════════════════════════ */
+.section-div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 28px 0 20px;
+}
+.section-div span { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .14em; white-space: nowrap; }
+.section-div::before, .section-div::after { content: ''; flex: 1; height: 1px; background: var(--border-subtle); }
+
+/* ═══════════════════════════════════════════════════════════
+   PART HEADER (for sub-questions)
+   ═══════════════════════════════════════════════════════════ */
+.part-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 24px 0 14px;
+  padding: 10px 16px;
+  background: var(--bg-soft);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--purple-bright);
+}
+.part-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--purple-bright);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+.part-title { font-size: 14px; font-weight: 650; color: var(--text-primary); }
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════ */
+@media (max-width: 860px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay { display: block; }
+  .main { margin-left: 0; padding: 24px 20px 60px; }
+  .unit-hero { padding: 28px 24px; }
+  .unit-hero h1 { font-size: 1.5rem; }
+  .q-content { padding: 20px 20px 24px; }
+  .topbar-hamburger { display: flex; }
+  .topbar-progress-wrap { display: none; }
+}
+
+@media (max-width: 560px) {
+  .kp-grid { grid-template-columns: 1fr; }
+  .q-marks { display: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════════════════════════════════ */
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.q-card { animation: fadeSlideIn .4s var(--ease) both; }
+.q-card:nth-child(2)  { animation-delay: .04s; }
+.q-card:nth-child(3)  { animation-delay: .08s; }
+.q-card:nth-child(4)  { animation-delay: .12s; }
+.q-card:nth-child(5)  { animation-delay: .16s; }
+.q-card:nth-child(6)  { animation-delay: .20s; }
+.q-card:nth-child(7)  { animation-delay: .24s; }
+.q-card:nth-child(8)  { animation-delay: .28s; }
+.q-card:nth-child(9)  { animation-delay: .32s; }
+.q-card:nth-child(10) { animation-delay: .36s; }
+.q-card:nth-child(11) { animation-delay: .40s; }
+.q-card:nth-child(12) { animation-delay: .44s; }
+.q-card:nth-child(13) { animation-delay: .48s; }
+.q-card:nth-child(14) { animation-delay: .52s; }
+
+/* Tag colors */
+.tag { display: inline-block; font-family: var(--font-mono); font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; margin: 2px; }
+.tag-blue   { background: rgba(131,165,152,.15); color: var(--blue-bright); border: 1px solid rgba(131,165,152,.25); }
+.tag-green  { background: rgba(184,187,38,.12);  color: var(--green-bright); border: 1px solid rgba(184,187,38,.22); }
+.tag-yellow { background: rgba(250,189,47,.12);  color: var(--yellow-bright); border: 1px solid rgba(250,189,47,.22); }
+.tag-purple { background: rgba(211,134,155,.12); color: var(--purple-bright); border: 1px solid rgba(211,134,155,.22); }
+.tag-orange { background: rgba(254,128,25,.12);  color: var(--orange-bright); border: 1px solid rgba(254,128,25,.22); }
+.tag-aqua   { background: rgba(142,192,124,.12); color: var(--aqua-bright); border: 1px solid rgba(142,192,124,.22); }
+
+.tags-row { margin: 8px 0; display: flex; flex-wrap: wrap; gap: 4px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════ TOP BAR ═══════════════════════════════════════ -->
+<header class="topbar">
+  <div class="topbar-logo">
+    <div class="topbar-logo-badge">TM</div>
+    <div class="topbar-title">
+      <span class="course">AKTU · TOC · KCS501</span>
+      <span class="unit">Unit 5 — Turing Machines</span>
+    </div>
+  </div>
+
+  <div class="topbar-divider"></div>
+
+  <div class="topbar-progress-wrap">
+    <span class="progress-label" id="progressLabel">0 / 14 read</span>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <button class="topbar-hamburger" id="hamburger" aria-label="Toggle menu">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <rect x="2" y="4"  width="14" height="1.5" rx=".75" fill="currentColor"/>
+      <rect x="2" y="8.25" width="14" height="1.5" rx=".75" fill="currentColor"/>
+      <rect x="2" y="12.5" width="14" height="1.5" rx=".75" fill="currentColor"/>
+    </svg>
+  </button>
+</header>
+
+<!-- ═══════════════════════════════════════ SIDEBAR OVERLAY ═══════════════════════════════════════ -->
+<div class="sidebar-overlay" id="overlay"></div>
+
+<!-- ═══════════════════════════════════════ SIDEBAR ═══════════════════════════════════════ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <h2>Theory of Automata</h2>
+    <p>Unit 5 — 14 Questions</p>
+  </div>
+  <nav class="sidebar-nav" id="sidebarNav">
+    <div class="nav-section-label">All Questions</div>
+    <!-- Generated by JS -->
+  </nav>
+</aside>
+
+<!-- ═══════════════════════════════════════ MAIN ═══════════════════════════════════════ -->
+<main class="main" id="mainContent">
+
+  <!-- HERO -->
+  <div class="unit-hero">
+    <div class="unit-badge">
+      <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>
+      Unit 5 · 7-Mark Questions
+    </div>
+    <h1>Turing Machines &amp;<br/>Recursive Function Theory</h1>
+    <p>Complete AKTU exam-oriented notes covering TM construction, variants, decidability, halting problem, PCP, recursive &amp; recursively enumerable languages, and Church-Turing thesis.</p>
+    <div class="hero-chips">
+      <span class="hero-chip">Turing Machine</span>
+      <span class="hero-chip">Halting Problem</span>
+      <span class="hero-chip">PCP</span>
+      <span class="hero-chip">Recursive Languages</span>
+      <span class="hero-chip">UTM</span>
+      <span class="hero-chip">Church-Turing Thesis</span>
+      <span class="hero-chip">DTM vs NTM</span>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       Q1: Define TM and construct for a^n b^n
+       ════════════════════════════════════════════ -->
+  <div class="q-card" id="q1" data-q="1">
+    <div class="q-header" onclick="toggleQ(this)">
+      <span class="q-num">Q1</span>
+      <span class="q-title">Define Turing Machine and construct TM for L = {aⁿbⁿ | n > 0}</span>
+      <span class="q-marks">7 marks</span>
+      <span class="q-chevron">
+        <svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </div>
+    <div class="q-body">
+      <div class="q-content">
+
+        <h2>Definition of Turing Machine</h2>
+        <div class="def-box">
+          <div class="def-label">📖 Definition</div>
+          <p>A <strong>Turing Machine (TM)</strong> is a theoretical computer invented by <strong>Alan Turing in 1936</strong>. Think of it as a robot reading/writing symbols on an infinite strip of tape, changing its internal "mood" (state) as it goes. It is the most powerful computational model — anything computable can be computed by a TM.</p>
+        </div>
+
+        <h3>Formal Definition — 7-Tuple</h3>
+        <p>Remember as: <strong>"Q Σ Γ δ q₀ B F"</strong> → <em>"Queens Σing Γames δelight q₀ur Best Friends"</em></p>
+        <div class="formal">
+Q  = States  (all possible "moods" of the machine)
+Σ  = Input alphabet  (letters you feed the machine; no blank)
+Γ  = Tape alphabet  (all symbols on tape; Σ ⊆ Γ, includes blank B)
+δ  = Transition function:  (state, symbol) → (new state, new symbol, L or R)
+q₀ = Start state
+B  = Blank symbol  (marks empty cells; B ∈ Γ but B ∉ Σ)
+F  = Accepting states  (reaching any of these = ACCEPT)
+        </div>
+
+        <div class="kp-grid">
+          <div class="kp-card">
+            <div class="kp-icon">📼</div>
+            <div class="kp-title">Infinite Tape</div>
+            <div class="kp-desc">Unlimited memory — cells stretch infinitely left and right. Starts blank except for input.</div>
+          </div>
+          <div class="kp-card">
+            <div class="kp-icon">🖊️</div>
+            <div class="kp-title">Read/Write Head</div>
+            <div class="kp-desc">Sits on one cell at a time. Reads the symbol, writes a new one, then moves Left or Right.</div>
+          </div>
+          <div class="kp-card">
+            <div class="kp-icon">🔄</div>
+            <div class="kp-title">State Control</div>
+            <div class="kp-desc">Finite "memory" of states. δ decides: given current state + symbol → what to do next.</div>
+          </div>
+          <div class="kp-card">
+            <div class="kp-icon">✅</div>
+            <div class="kp-title">Accept/Reject/Loop</div>
+            <div class="kp-desc">Enters qaccept → accepts. Enters qreject → rejects. Keeps running → loops forever.</div>
+          </div>
+        </div>
+
+        <div class="section-div"><span>Construction for L = {aⁿbⁿ | n &gt; 0}</span></div>
+
+        <h2>TM for L = {aⁿbⁿ | n &gt; 0} — "Cross-matching" Strategy</h2>
+
+        <h3>Core Idea 💡</h3>
+        <p>Cross out one 'a' and one 'b' at a time. Keep repeating until nothing is left (accept) or counts don't match (reject). Use <strong>X</strong> to mark used a's and <strong>Y</strong> to mark used b's.</p>
+
+        <div class="step-list">
+          <div class="step-item"><div class="step-num">1</div><div class="step-content"><strong>Cross an 'a':</strong> From the left, find the first 'a'. Replace it with X (it's now "used").</div></div>
+          <div class="step-item"><div class="step-num">2</div><div class="step-content"><strong>Cross a 'b':</strong> Scan right (skipping a's and Y's) to find the first 'b'. Replace it with Y.</div></div>
+          <div class="step-item"><div class="step-num">3</div><div class="step-content"><strong>Go back:</strong> Move left past everything until you reach the leftmost X, then go right to find the next 'a'.</div></div>
+          <div class="step-item"><div class="step-num">4</div><div class="step-content"><strong>Repeat:</strong> Keep crossing a's and b's one-by-one.</div></div>
+          <div class="step-item"><div class="step-num">5</div><div class="step-content"><strong>Accept:</strong> When q0 sees Y (no more a's left), scan right — if only Y's remain, <strong>ACCEPT</strong>.</div></div>
+          <div class="step-item"><div class="step-num">6</div><div class="step-content"><strong>Reject:</strong> Ran out of b's while a's remain, or b's remain after all a's matched → <strong>REJECT</strong>.</div></div>
+        </div>
+
+        <h3>States (What Each State Means)</h3>
+        <div class="formal">
+Q  = {q0, q1, q2, q3, qaccept, qreject}
+Σ  = {a, b}
+Γ  = {a, b, X, Y, B}
+
+q0 → Scan right, looking for next 'a' to cross
+q1 → Found 'a' (now X); scan right to find matching 'b'
+q2 → Found 'b' (now Y); scan left to return to start
+q3 → All a's matched; check no b's remain
+        </div>
+
+        <h3>Transition Function δ</h3>
+        <div class="table-wrap">
+          <table class="tm-table">
+            <thead><tr><th>State</th><th>Read</th><th>Write</th><th>Move</th><th>Next State</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td>q0</td><td>a</td><td>X</td><td>R</td><td>q1</td><td>Mark 'a', go find matching 'b'</td></tr>
+              <tr><td>q0</td><td>Y</td><td>Y</td><td>R</td><td>q3</td><td>All a's matched, verify b's done</td></tr>
+              <tr><td>q0</td><td>B</td><td>B</td><td>R</td><td>qreject</td><td>Empty input: reject</td></tr>
+              <tr><td>q1</td><td>a</td><td>a</td><td>R</td><td>q1</td><td>Skip over remaining a's</td></tr>
+              <tr><td>q1</td><td>Y</td><td>Y</td><td>R</td><td>q1</td><td>Skip over already-matched b's (Y)</td></tr>
+              <tr><td>q1</td><td>b</td><td>Y</td><td>L</td><td>q2</td><td>Match found: mark 'b' as Y, go back</td></tr>
+              <tr><td>q1</td><td>B</td><td>B</td><td>R</td><td>qreject</td><td>No b found for this a: reject</td></tr>
+              <tr><td>q2</td><td>a</td><td>a</td><td>L</td><td>q2</td><td>Move left past a's</td></tr>
+              <tr><td>q2</td><td>Y</td><td>Y</td><td>L</td><td>q2</td><td>Move left past Y's</td></tr>
+              <tr><td>q2</td><td>X</td><td>X</td><td>R</td><td>q0</td><td>Found leftmost X: go to q0 to find next a</td></tr>
+              <tr><td>q3</td><td>Y</td><td>Y</td><td>R</td><td>q3</td><td>Scan remaining Y's</td></tr>
+              <tr><td>q3</td><td>B</td><td>B</td><td>R</td><td>qaccept</td><td>All matched, accept!</td></tr>
+              <tr><td>q3</td><td>b</td><td>b</td><td>R</td><td>qreject</td><td>Extra b's: reject</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>State Diagram (SVG)</h3>
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 780 280" width="760" style="max-width:100%;" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace" font-size="12">
+            <defs>
+              <marker id="arrow1" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                <polygon points="0 0, 8 3, 0 6" fill="#fabd2f"/>
+              </marker>
+              <marker id="arrowG" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                <polygon points="0 0, 8 3, 0 6" fill="#b8bb26"/>
+              </marker>
+              <marker id="arrowR" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                <polygon points="0 0, 8 3, 0 6" fill="#fb4934"/>
+              </marker>
+            </defs>
+
+            <!-- States -->
+            <!-- q0 -->
+            <circle cx="80"  cy="140" r="28" fill="#3c3836" stroke="#fabd2f" stroke-width="2"/>
+            <text x="80"  y="145" text-anchor="middle" fill="#fabd2f" font-weight="700">q0</text>
+
+            <!-- q1 -->
+            <circle cx="220" cy="140" r="28" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+            <text x="220" y="145" text-anchor="middle" fill="#83a598" font-weight="700">q1</text>
+
+            <!-- q2 -->
+            <circle cx="360" cy="140" r="28" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+            <text x="360" y="145" text-anchor="middle" fill="#83a598" font-weight="700">q2</text>
+
+            <!-- q3 -->
+            <circle cx="500" cy="140" r="28" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+            <text x="500" y="145" text-anchor="middle" fill="#83a598" font-weight="700">q3</text>
+
+            <!-- qaccept -->
+            <circle cx="650" cy="90"  r="28" fill="#32302f" stroke="#b8bb26" stroke-width="2"/>
+            <circle cx="650" cy="90"  r="23" fill="none"   stroke="#b8bb26" stroke-width="1"/>
+            <text x="650" y="95"  text-anchor="middle" fill="#b8bb26" font-weight="700" font-size="10">qacc</text>
+
+            <!-- qreject -->
+            <circle cx="650" cy="200" r="28" fill="#32302f" stroke="#fb4934" stroke-width="2"/>
+            <circle cx="650" cy="200" r="23" fill="none"   stroke="#fb4934" stroke-width="1"/>
+            <text x="650" y="205" text-anchor="middle" fill="#fb4934" font-weight="700" font-size="10">qrej</text>
+
+            <!-- Start arrow -->
+            <line x1="20" y1="140" x2="48" y2="140" stroke="#fabd2f" stroke-width="1.5" marker-end="url(#arrow1)"/>
+            <text x="14" y="135" fill="#fabd2f" font-size="10">▶</text>
+
+            <!-- q0 → q1: a/X,R -->
+            <line x1="108" y1="140" x2="190" y2="140" stroke="#fabd2f" stroke-width="1.5" marker-end="url(#arrow1)"/>
+            <text x="149" y="132" text-anchor="middle" fill="#fabd2f" font-size="11">a/X,R</text>
+
+            <!-- q1 → q2: b/Y,L -->
+            <line x1="248" y1="140" x2="330" y2="140" stroke="#fabd2f" stroke-width="1.5" marker-end="url(#arrow1)"/>
+            <text x="289" y="132" text-anchor="middle" fill="#fabd2f" font-size="11">b/Y,L</text>
+
+            <!-- q2 → q0: X/X,R -->
+            <path d="M360 112 Q220 50 80 112" fill="none" stroke="#fabd2f" stroke-width="1.5" marker-end="url(#arrow1)" stroke-dasharray="4,2"/>
+            <text x="220" y="55" text-anchor="middle" fill="#fabd2f" font-size="11">X/X,R</text>
+
+            <!-- q0 → q3: Y/Y,R -->
+            <path d="M108 128 Q300 60 472 128" fill="none" stroke="#fe8019" stroke-width="1.5" marker-end="url(#arrow1)" stroke-dasharray="4,2"/>
+            <text x="300" y="78" text-anchor="middle" fill="#fe8019" font-size="11">Y/Y,R</text>
+
+            <!-- q1 self loop: a/a,R -->
+            <path d="M220 112 Q240 70 260 112" fill="none" stroke="#83a598" stroke-width="1.5" marker-end="url(#arrow1)"/>
+            <text x="255" y="75" fill="#83a598" font-size="10">a/a,R</text>
+
+            <!-- q2 self loop: a/a,L -->
+            <path d="M345 112 Q330 70 315 100" fill="none" stroke="#83a598" stroke-width="1.5" marker-end="url(#arrow1)"/>
+            <text x="305" y="72" fill="#83a598" font-size="10">a/a,L</text>
+
+            <!-- q3 → qaccept: B/B,R -->
+            <line x1="525" y1="122" x2="624" y2="100" stroke="#b8bb26" stroke-width="1.5" marker-end="url(#arrowG)"/>
+            <text x="576" y="104" text-anchor="middle" fill="#b8bb26" font-size="11">B/B,R</text>
+
+            <!-- q3 self loop: Y/Y,R -->
+            <path d="M500 112 Q520 70 540 112" fill="none" stroke="#83a598" stroke-width="1.5" marker-end="url(#arrow1)"/>
+            <text x="535" y="72" fill="#83a598" font-size="10">Y/Y,R</text>
+
+            <!-- q1 → qreject -->
+            <line x1="240" y1="163" x2="624" y2="192" stroke="#fb4934" stroke-width="1.2" stroke-dasharray="3,3" marker-end="url(#arrowR)"/>
+            <text x="420" y="198" text-anchor="middle" fill="#fb4934" font-size="10">B/B,R</text>
+
+            <!-- q3 → qreject -->
+            <line x1="525" y1="158" x2="624" y2="185" stroke="#fb4934" stroke-width="1.2" stroke-dasharray="3,3" marker-end="url(#arrowR)"/>
+            <text x="590" y="177" fill="#fb4934" font-size="10">b/b,R</text>
+          </svg>
+          <div class="diagram-label">Figure 1: TM State Diagram for L = {aⁿbⁿ | n &gt; 0}</div>
+        </div>
+
+        <h3>Instantaneous Description (ID) — Example: aabb</h3>
+        <div class="id-block">
+          <span class="id-step">q0 a a b b</span>
+          <span class="id-step"><span class="id-arrow">⊢</span> X q1 a b b &nbsp;&nbsp;&nbsp; (replace 'a' with X, move R)</span>
+          <span class="id-step"><span class="id-arrow">⊢</span> X a q1 b b &nbsp;&nbsp;&nbsp; (skip 'a', move R)</span>
+          <span class="id-step"><span class="id-arrow">⊢</span> X a Y q2 b &nbsp;&nbsp;&nbsp; (replace 'b' with Y, move L)</span>
+          <span class="id-step"><span class="id-arrow">⊢</span> X q2 a Y b &nbsp;&nbsp;&nbsp; (move L)</span>
+          <span class="id-step"><span class="id-arrow">⊢</span> q2 X a Y b &nbsp;&nbsp;&nbsp; (move L, found X)</span>
+          <span class="id-step"><span class="id-arrow">⊢</span> X q0 a Y b &nbsp;&nbsp;&nbsp; (move R, back to q0)</span>
+          <span class="id-step"><span class="id-arrow">⊢</span> X X q1 Y b &nbsp;&nbsp;&nbsp; (replace 'a' with X)</span>
+          <span class="id-step"><span class="id-arrow">⊢</span> X X Y q1 b &nbsp;&nbsp;&nbsp; (skip Y)</span>
+          <span class="id-step"><span class="id-arrow">⊢</span> X X Y Y q2 &nbsp;&nbsp;&nbsp; (replace 'b' with Y)</span>
+          <span class="id-step"><span class="id-arrow">⊢</span> X X q2 Y Y → ... → X q0 X Y Y → X X q0 Y Y</span>
+          <span class="id-step"><span class="id-arrow">⊢</span> X X Y q3 Y → X X Y Y q3 → X X Y Y B → <strong style="color:#b8bb26">qaccept ✓</strong></span>
+        </div>
+
+        <div class="conclusion">
+          <div class="def-label">✅ Conclusion</div>
+          <p>The TM for L = {aⁿbⁿ} works by a simple cross-matching trick: replace one 'a' (→X) and one 'b' (→Y) per round, then go back and repeat. It accepts only when all a's and b's are exactly paired with no leftovers. This language is <strong>recursive (decidable)</strong> — the TM always halts with a clear yes or no.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       Q2: Short notes — Halting, Recursive, Variants
+       ════════════════════════════════════════════ -->
+  <div class="q-card" id="q2" data-q="2">
+    <div class="q-header" onclick="toggleQ(this)">
+      <span class="q-num">Q2</span>
+      <span class="q-title">Short notes: (i) Halting Problem &nbsp; (ii) Recursive Language &nbsp; (iii) Variants of TM</span>
+      <span class="q-marks">7 marks</span>
+      <span class="q-chevron"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+    <div class="q-body"><div class="q-content">
+
+      <div class="part-header"><span class="part-label">Part (i)</span><span class="part-title">The Halting Problem</span></div>
+
+      <div class="def-box">
+        <div class="def-label">📖 Definition</div>
+        <p>The <strong>Halting Problem</strong> asks: <em>"Given any TM M and input w, will M eventually stop, or run forever?"</em> Turing proved in 1936 that <strong>no algorithm can answer this for all M and w</strong>. It is the most famous unsolvable problem in computer science.</p>
+      </div>
+
+      <h3>Proof by Contradiction — "The Liar's Trick"</h3>
+      <div class="step-list">
+        <div class="step-item"><div class="step-num">1</div><div class="step-content"><strong>Pretend H exists:</strong> Assume TM H is a magic oracle — H(M,w) = YES if M halts on w, NO if M loops forever.</div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-content"><strong>Build the Trouble-maker D:</strong> Construct TM D using H. D(⟨M⟩): if H says "M halts on ⟨M⟩" → D <em>loops</em>. If H says "M loops" → D <em>halts</em>. D does the opposite of what H predicts.</div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-content"><strong>Run D on itself — Paradox:</strong><br/>• If D halts on ⟨D⟩ → H says YES → D must loop → <strong>contradiction!</strong><br/>• If D loops on ⟨D⟩ → H says NO → D must halt → <strong>contradiction!</strong></div></div>
+        <div class="step-item"><div class="step-num">4</div><div class="step-content"><strong>Conclusion:</strong> Both cases are impossible → H cannot exist → Halting Problem is <strong>undecidable</strong>.</div></div>
+      </div>
+
+      <div class="warning-box">
+        <div class="def-label">⚠️ Key Result — Memorize This</div>
+        <p style="font-size:13.5px;color:var(--fg2);margin:0;">Halting Problem is <strong>RE but NOT Recursive</strong>. A TM can recognize it (accept if M halts) but cannot decide it (cannot always reject if M loops). It was the <strong>first</strong> proven undecidable problem.</p>
+      </div>
+
+      <div class="part-header"><span class="part-label">Part (ii)</span><span class="part-title">Recursive Language</span></div>
+
+      <div class="def-box">
+        <div class="def-label">📖 Definition — "Always Gives an Answer"</div>
+        <p>A language L is <strong>Recursive (Decidable)</strong> if a TM exists that <strong>always halts</strong> — it never loops.<br/>• w ∈ L → TM halts and <strong>accepts</strong><br/>• w ∉ L → TM halts and <strong>rejects</strong><br/>Think of it as a reliable "yes/no" machine with no "maybe".</p>
+      </div>
+
+      <h3>Key Properties — Quick Recall</h3>
+      <ul>
+        <li><strong>Closed under everything:</strong> union, intersection, <em>complement</em>, concatenation, Kleene star.</li>
+        <li>If L is recursive → L̄ (complement) is also recursive. This is the big difference from RE.</li>
+        <li>Every regular language and every CFL is automatically recursive.</li>
+        <li>Recursive ⊂ RE (recursive is a smaller, "nicer" class).</li>
+      </ul>
+
+      <div class="part-header"><span class="part-label">Part (iii)</span><span class="part-title">Variants of Turing Machine</span></div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Variant</th><th>Description</th><th>Equivalence</th></tr></thead>
+          <tbody>
+            <tr><td>Multi-tape TM</td><td>Has k tapes with independent heads. More convenient but not more powerful.</td><td>= Standard TM</td></tr>
+            <tr><td>Non-deterministic TM (NTM)</td><td>Multiple transitions possible per configuration. Accepts if any branch accepts.</td><td>= Standard TM</td></tr>
+            <tr><td>Two-way Infinite Tape TM</td><td>Tape extends infinitely in both directions (no left end).</td><td>= Standard TM</td></tr>
+            <tr><td>Multi-head TM</td><td>Single tape but multiple read/write heads operating simultaneously.</td><td>= Standard TM</td></tr>
+            <tr><td>2D TM</td><td>Tape is a 2-dimensional grid; head moves U/D/L/R.</td><td>= Standard TM</td></tr>
+            <tr><td>Read-only TM</td><td>Can only read, not write on tape. Equivalent to FA.</td><td>= Finite Automaton</td></tr>
+            <tr><td>Universal TM (UTM)</td><td>Simulates any TM M on any input w when given ⟨M,w⟩.</td><td>= Standard TM</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note-box">
+        <div class="def-label">📝 One-Line Memory Aid</div>
+        <p style="font-size:13.5px;color:var(--fg2);margin:0;"><strong>All variants are equally powerful</strong> — they all compute the same class of languages (RE). They differ only in speed/convenience, not in what they can compute. Read-only TM is the exception — it's weaker (equals FA).</p>
+      </div>
+
+    </div></div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       Q3: PCP and Modified PCP
+       ════════════════════════════════════════════ -->
+  <div class="q-card" id="q3" data-q="3">
+    <div class="q-header" onclick="toggleQ(this)">
+      <span class="q-num">Q3</span>
+      <span class="q-title">Define PCP and Modified PCP with Applications</span>
+      <span class="q-marks">7 marks</span>
+      <span class="q-chevron"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+    <div class="q-body"><div class="q-content">
+
+      <h2>Post's Correspondence Problem (PCP)</h2>
+
+      <div class="def-box">
+        <div class="def-label">📖 Definition — "Domino Matching Game"</div>
+        <p>Proposed by <strong>Emil Post in 1946</strong>. You have two lists of strings A and B. You need to pick a sequence of indices (repeats allowed) so that reading A's strings top-to-bottom and B's strings bottom-to-top gives the <strong>same concatenated string</strong>. If no such sequence exists — you can <em>never know for certain</em>. PCP is <strong>undecidable</strong>.</p>
+      </div>
+
+      <h3>Formal Definition</h3>
+      <p>Given two lists of strings over alphabet Σ:</p>
+      <div class="formal">
+A = [w₁, w₂, ..., wₙ]    ← Top strings
+B = [v₁, v₂, ..., vₙ]    ← Bottom strings
+
+Find indices i₁, i₂, ..., iₖ  (k ≥ 1, repeats OK) such that:
+  w(i₁)·w(i₂)·...·w(iₖ)  =  v(i₁)·v(i₂)·...·v(iₖ)
+
+This matching sequence is called the "solution."
+      </div>
+
+      <h3>Example — PCP Instance</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Index</th><th>A (Top)</th><th>B (Bottom)</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>a</td><td>aaa</td></tr>
+            <tr><td>2</td><td>aab</td><td>ab</td></tr>
+            <tr><td>3</td><td>b</td><td>b</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Try sequence: 1, 2, 3 →</p>
+      <div class="formal">
+Top: a · aab · b = aaabb
+Bot: aaa · ab · b = aaaabb   ✗
+
+Try sequence: 2, 1, 3 →
+Top: aab · a · b = aabab
+Bot: ab · aaa · b = abaab   ✗
+
+Try sequence: 1, 1, 2, 3 →
+Top: a · a · aab · b  = aaaabb
+Bot: aaa · aaa · ab · b = aaaaaabb  ✗
+
+Many PCP instances have no solution — and we CANNOT determine this in general.
+      </div>
+
+      <div class="warning-box">
+        <div class="def-label">⚠️ Why Undecidable?</div>
+        <p style="font-size:13.5px;color:var(--fg2);margin:0;">PCP is <strong>undecidable</strong> — proved by reducing the Halting Problem to PCP. If you could solve PCP, you could solve the Halting Problem — but that's impossible. So PCP is impossible too.</p>
+      </div>
+
+      <div class="section-div"><span>Modified PCP (MPCP)</span></div>
+
+      <h2>Modified PCP (MPCP) — "Must Start with Pair 1"</h2>
+
+      <div class="def-box">
+        <div class="def-label">📖 Definition</div>
+        <p>MPCP is PCP with one extra rule: <strong>the solution must begin with index 1</strong> (i₁ = 1 is forced). This "smaller" problem is still undecidable. Its purpose: MPCP is proved undecidable first (from Halting Problem), then used to prove PCP undecidable.</p>
+      </div>
+
+      <h3>Proof Chain — How Undecidability Flows</h3>
+      <div class="step-list">
+        <div class="step-item"><div class="step-num">1</div><div class="step-content">Halting Problem is undecidable (Turing, 1936).</div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-content">Reduce Halting Problem → MPCP: encode TM computation as MPCP pairs. MPCP has a solution iff TM accepts. So MPCP is undecidable.</div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-content">Reduce MPCP → PCP: use a star-symbol (★) encoding to transform any MPCP into an equivalent PCP. So PCP is undecidable.</div></div>
+        <div class="step-item"><div class="step-num">4</div><div class="step-content">Chain: Halting → MPCP → PCP. All three are undecidable.</div></div>
+      </div>
+
+      <h3>Applications of PCP</h3>
+      <ul>
+        <li><strong>Proving other problems undecidable:</strong> PCP is a go-to tool — reduce PCP to the new problem to show it's undecidable.</li>
+        <li><strong>CFG ambiguity:</strong> Determining if a context-free grammar is ambiguous is proved undecidable via PCP.</li>
+        <li><strong>CFL intersection:</strong> Checking if two CFLs share a word is proved undecidable via PCP.</li>
+        <li><strong>Formal verification:</strong> String matching under constraints appears in compiler theory.</li>
+      </ul>
+
+      <div class="conclusion">
+        <div class="def-label">✅ Conclusion — Quick Summary</div>
+        <p><strong>PCP:</strong> Pick indices freely, match top = bottom. <strong>MPCP:</strong> Same, but must start at index 1. Both are undecidable. Proof chain: Halting Problem → MPCP → PCP. Used everywhere to prove other problems undecidable.</p>
+      </div>
+
+    </div></div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       Q4: TM for a^(n+2) b^n
+       ════════════════════════════════════════════ -->
+  <div class="q-card" id="q4" data-q="4">
+    <div class="q-header" onclick="toggleQ(this)">
+      <span class="q-num">Q4</span>
+      <span class="q-title">Design TM for language L = {aⁿ⁺²bⁿ | n &gt; 0}</span>
+      <span class="q-marks">7 marks</span>
+      <span class="q-chevron"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+    <div class="q-body"><div class="q-content">
+
+      <h2>Language L = {aⁿ⁺²bⁿ | n &gt; 0} — "Always 2 Extra a's"</h2>
+
+      <div class="def-box">
+        <div class="def-label">📖 Language Description</div>
+        <p>The count of a's is always <strong>exactly 2 more</strong> than the count of b's. Examples: <strong>aaab</strong> (3 a's, 1 b, n=1), <strong>aaaabb</strong> (4 a's, 2 b's, n=2), <strong>aaaaabbb</strong> (5 a's, 3 b's, n=3).</p>
+      </div>
+
+      <div class="note-box">
+        <div class="def-label">💡 Core Insight — The Simple Plan</div>
+        <p style="font-size:13.5px;color:var(--fg2);margin:0;">First, cross out the 2 "extra" a's unconditionally. Then match the remaining a's with b's one-to-one (like the aⁿbⁿ TM). Simple!</p>
+      </div>
+
+      <h3>Algorithm — Two Phases</h3>
+      <div class="step-list">
+        <div class="step-item"><div class="step-num">1</div><div class="step-content"><strong>Phase 1 — Kill the extras:</strong> Mark the first 'a' as X (q0→q1), then mark the second 'a' as X (q1→q2). If fewer than 2 a's exist → reject immediately.</div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-content"><strong>Phase 2 — Standard matching:</strong> From q2, match each remaining 'a' with a 'b' one-to-one (just like aⁿbⁿ TM).</div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-content"><strong>Accept:</strong> After all a's are matched, only X's and Y's remain → accept.</div></div>
+        <div class="step-item"><div class="step-num">4</div><div class="step-content"><strong>Reject:</strong> Any leftover unmatched a or b → reject.</div></div>
+      </div>
+
+      <h3>States (What Each Means)</h3>
+      <div class="formal">
+Q  = {q0, q1, q2, q3, q4, q5, qaccept, qreject}
+Σ  = {a, b}
+Γ  = {a, b, X, Y, B}
+
+q0 → Mark first 'a' as X   (Phase 1, step 1)
+q1 → Mark second 'a' as X  (Phase 1, step 2)
+q2 → Look for next 'a' to match  (Phase 2 start)
+q3 → Move right to find matching 'b'
+q4 → Found 'b'; move left to return to q2
+q5 → Verify no b's remain (accept check)
+        </div>
+
+      <h3>Transition Table</h3>
+      <div class="table-wrap">
+        <table class="tm-table">
+          <thead><tr><th>State</th><th>Read</th><th>Write</th><th>Move</th><th>Next State</th></tr></thead>
+          <tbody>
+            <tr><td>q0</td><td>a</td><td>X</td><td>R</td><td>q1</td></tr>
+            <tr><td>q0</td><td>b,B,Y,X</td><td>—</td><td>—</td><td>qreject</td></tr>
+            <tr><td>q1</td><td>a</td><td>X</td><td>R</td><td>q2</td></tr>
+            <tr><td>q1</td><td>b,B,Y,X</td><td>—</td><td>—</td><td>qreject</td></tr>
+            <tr><td>q2</td><td>a</td><td>X</td><td>R</td><td>q3</td></tr>
+            <tr><td>q2</td><td>X</td><td>X</td><td>R</td><td>q5</td></tr>
+            <tr><td>q3</td><td>a</td><td>a</td><td>R</td><td>q3</td></tr>
+            <tr><td>q3</td><td>Y</td><td>Y</td><td>R</td><td>q3</td></tr>
+            <tr><td>q3</td><td>b</td><td>Y</td><td>L</td><td>q4</td></tr>
+            <tr><td>q3</td><td>B</td><td>B</td><td>—</td><td>qreject</td></tr>
+            <tr><td>q4</td><td>a</td><td>a</td><td>L</td><td>q4</td></tr>
+            <tr><td>q4</td><td>Y</td><td>Y</td><td>L</td><td>q4</td></tr>
+            <tr><td>q4</td><td>X</td><td>X</td><td>R</td><td>q2</td></tr>
+            <tr><td>q5</td><td>Y</td><td>Y</td><td>R</td><td>q5</td></tr>
+            <tr><td>q5</td><td>B</td><td>B</td><td>—</td><td>qaccept</td></tr>
+            <tr><td>q5</td><td>b</td><td>b</td><td>—</td><td>qreject</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Instantaneous Description — Example: aaab (n=1)</h3>
+      <div class="id-block">
+        <span class="id-step">q0 a a a b</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X q1 a a b &nbsp;&nbsp; (mark first a as X)</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X X q2 a b &nbsp;&nbsp; (mark second a as X)</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X X X q3 b &nbsp;&nbsp; (mark third a as X, enter match mode)</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X X X Y q4 &nbsp;&nbsp; (match b with Y, move back)</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X X q4 X Y → X q4 X X Y → q4 X X X Y → X q2 X X Y</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X X q5 X Y &nbsp;&nbsp;&nbsp; ... wait, at q2 reading X → go to q5</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X X X q5 Y → X X X Y q5 → X X X Y B → <strong style="color:#b8bb26">qaccept ✓</strong></span>
+      </div>
+
+      <div class="conclusion">
+        <div class="def-label">✅ Conclusion</div>
+        <p>This TM accepts L = {aⁿ⁺²bⁿ | n&gt;0} with a two-phase strategy: kill 2 extra a's first, then do standard aⁿbⁿ matching. It is <strong>recursive (decidable)</strong> — always halts. Key exam point: Phase 1 is just marking the first two a's, Phase 2 is the same as aⁿbⁿ TM.</p>
+      </div>
+
+    </div></div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       Q5: TM for a^n b^n c^n
+       ════════════════════════════════════════════ -->
+  <div class="q-card" id="q5" data-q="5">
+    <div class="q-header" onclick="toggleQ(this)">
+      <span class="q-num">Q5</span>
+      <span class="q-title">Design TM for language L = {aⁿbⁿcⁿ | n ≥ 1}</span>
+      <span class="q-marks">7 marks</span>
+      <span class="q-chevron"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+    <div class="q-body"><div class="q-content">
+
+      <h2>Language L = {aⁿbⁿcⁿ | n ≥ 1} — The Classic Non-CFL</h2>
+
+      <div class="def-box">
+        <div class="def-label">📖 Why This Language is Famous</div>
+        <p>{aⁿbⁿcⁿ} is the <strong>poster child</strong> for "TM can do it but PDA cannot." A PDA has only one stack and can count two things (a vs b) but not three simultaneously. A TM can count all three with ease. It's a recursive (decidable) language.</p>
+      </div>
+
+      <h3>Strategy — Three-Symbol Cross-Match 💡</h3>
+      <p>Use markers: <strong>X</strong> for used a's, <strong>Y</strong> for used b's, <strong>Z</strong> for used c's. In each round, cross one a, one b, and one c simultaneously.</p>
+      <div class="step-list">
+        <div class="step-item"><div class="step-num">1</div><div class="step-content">Find leftmost unmarked <strong>'a'</strong> → replace with <strong>'X'</strong>. Enter state q1.</div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-content">Scan right (skip a's and X's) → find leftmost unmarked <strong>'b'</strong> → replace with <strong>'Y'</strong>. Enter state q2.</div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-content">Scan right (skip b's and Y's) → find leftmost unmarked <strong>'c'</strong> → replace with <strong>'Z'</strong>. Enter state q3.</div></div>
+        <div class="step-item"><div class="step-num">4</div><div class="step-content">Scan all the way <strong>left</strong> back to the leftmost X → enter q0 for next round.</div></div>
+        <div class="step-item"><div class="step-num">5</div><div class="step-content"><strong>Accept:</strong> When q0 sees Y (no more a's), scan right through all Y's and Z's — if blank reached, <strong>ACCEPT</strong>.</div></div>
+        <div class="step-item"><div class="step-num">6</div><div class="step-content"><strong>Reject:</strong> Any mismatch (extra a, b, or c without a match) → <strong>REJECT</strong>.</div></div>
+      </div>
+
+      <h3>States Summary</h3>
+      <div class="formal">
+q0 : Scan right for 'a' → mark X. If sees Y → all a's done, go to q4.
+q1 : Skip a's/X's, find 'b' → mark Y. No 'b' found → reject.
+q2 : Skip b's/Y's, find 'c' → mark Z. No 'c' found → reject.
+q3 : Move ALL the way left back to X → restart q0.
+q4 : Scan Y's. When Z found → enter q5.
+q5 : Scan Z's. Blank → ACCEPT. Extra c → REJECT.
+      </div>
+
+      <h3>Transition Table</h3>
+      <div class="table-wrap">
+        <table class="tm-table">
+          <thead><tr><th>State</th><th>Read</th><th>Write</th><th>Move</th><th>Next State</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>q0</td><td>a</td><td>X</td><td>R</td><td>q1</td><td>Mark 'a'</td></tr>
+            <tr><td>q0</td><td>Y</td><td>Y</td><td>R</td><td>q4</td><td>All a's matched</td></tr>
+            <tr><td>q0</td><td>B</td><td>B</td><td>—</td><td>qreject</td><td>Empty input</td></tr>
+            <tr><td>q1</td><td>a</td><td>a</td><td>R</td><td>q1</td><td>Skip a's</td></tr>
+            <tr><td>q1</td><td>Y</td><td>Y</td><td>R</td><td>q1</td><td>Skip Y's</td></tr>
+            <tr><td>q1</td><td>b</td><td>Y</td><td>R</td><td>q2</td><td>Mark 'b'</td></tr>
+            <tr><td>q1</td><td>B,c,Z</td><td>—</td><td>—</td><td>qreject</td><td>Mismatch</td></tr>
+            <tr><td>q2</td><td>b</td><td>b</td><td>R</td><td>q2</td><td>Skip b's</td></tr>
+            <tr><td>q2</td><td>Z</td><td>Z</td><td>R</td><td>q2</td><td>Skip Z's</td></tr>
+            <tr><td>q2</td><td>c</td><td>Z</td><td>L</td><td>q3</td><td>Mark 'c', return</td></tr>
+            <tr><td>q2</td><td>B</td><td>B</td><td>—</td><td>qreject</td><td>No c found</td></tr>
+            <tr><td>q3</td><td>a,b,Y,Z</td><td>same</td><td>L</td><td>q3</td><td>Move left</td></tr>
+            <tr><td>q3</td><td>X</td><td>X</td><td>R</td><td>q0</td><td>Return to q0</td></tr>
+            <tr><td>q4</td><td>Y</td><td>Y</td><td>R</td><td>q4</td><td>Scan Y's</td></tr>
+            <tr><td>q4</td><td>Z</td><td>Z</td><td>R</td><td>q5</td><td>Scan Z's</td></tr>
+            <tr><td>q4</td><td>b</td><td>—</td><td>—</td><td>qreject</td><td>Unmatched b</td></tr>
+            <tr><td>q5</td><td>Z</td><td>Z</td><td>R</td><td>q5</td><td>Scan Z's</td></tr>
+            <tr><td>q5</td><td>B</td><td>B</td><td>—</td><td>qaccept</td><td>All matched!</td></tr>
+            <tr><td>q5</td><td>c</td><td>—</td><td>—</td><td>qreject</td><td>Extra c</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Instantaneous Description — Example: aabbcc (n=2)</h3>
+      <div class="id-block">
+        <span class="id-step">q0 a a b b c c</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X q1 a b b c c &nbsp;&nbsp;&nbsp; (mark a→X)</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X a q1 b b c c &nbsp;&nbsp;&nbsp; (skip a)</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X a Y q2 b c c &nbsp;&nbsp;&nbsp; (mark b→Y)</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X a Y b q2 c c &nbsp;&nbsp;&nbsp; (skip b)</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X a Y b Z q3 c &nbsp;&nbsp;&nbsp; (mark c→Z, move left)</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> ... q3 moves left ... → X q0 a Y b Z c</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X X q1 Y b Z c → X X Y q1 b Z c</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X X Y Y q2 Z c → X X Y Y Z q2 c</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X X Y Y Z Z q3 → ... → X X q0 Y Y Z Z</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X X Y q4 Y Z Z → X X Y Y q4 Z Z → X X Y Y Z q5 Z → X X Y Y Z Z q5 B</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> <strong style="color:#b8bb26">qaccept ✓</strong></span>
+      </div>
+
+      <div class="conclusion">
+        <div class="def-label">✅ Conclusion</div>
+        <p>This TM for {aⁿbⁿcⁿ} does 3-way matching each round: cross one a, one b, one c using X/Y/Z markers, then restart. It proves TM is strictly more powerful than PDA — a PDA cannot count three things at once, but TM handles it easily. It is a <strong>recursive language</strong>.</p>
+      </div>
+
+    </div></div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       Q6: Recursive and RE Languages
+       ════════════════════════════════════════════ -->
+  <div class="q-card" id="q6" data-q="6">
+    <div class="q-header" onclick="toggleQ(this)">
+      <span class="q-num">Q6</span>
+      <span class="q-title">Explain Recursive and Recursively Enumerable Languages</span>
+      <span class="q-marks">7 marks</span>
+      <span class="q-chevron"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+    <div class="q-body"><div class="q-content">
+
+      <h2>Recursive (Decidable) Languages — "Always Gives an Answer"</h2>
+
+      <div class="def-box">
+        <div class="def-label">📖 Definition</div>
+        <p>A language L is <strong>Recursive</strong> if a TM M exists that <strong>always halts</strong> (never loops) and:<br/>• w ∈ L → M <strong>accepts</strong> (halts in accept state)<br/>• w ∉ L → M <strong>rejects</strong> (halts in reject state)<br/><em>Think of it as a machine with a guaranteed "yes or no" — no "maybe forever."</em></p>
+      </div>
+
+      <h3>Key Properties — Quick Recall</h3>
+      <ul>
+        <li><strong>Closed under all standard operations:</strong> union, intersection, <strong>complement</strong>, concatenation, Kleene star.</li>
+        <li>If L is recursive → <strong>L̄ is also recursive</strong> (flip accept/reject states). This does NOT hold for RE.</li>
+        <li>Every Regular language and every CFL is automatically recursive (they are "subsets").</li>
+        <li>Recursive ⊂ RE — recursive is the "nice" inner circle of RE.</li>
+      </ul>
+
+      <h3>Examples</h3>
+      <div class="tags-row">
+        <span class="tag tag-green">L = {aⁿbⁿcⁿ | n≥1}</span>
+        <span class="tag tag-green">All CFLs</span>
+        <span class="tag tag-green">All Regular Languages</span>
+        <span class="tag tag-green">L = {ww | w∈{a,b}*}</span>
+        <span class="tag tag-green">{aⁿbⁿ | n≥0}</span>
+      </div>
+
+      <div class="section-div"><span>Recursively Enumerable Languages</span></div>
+
+      <h2>Recursively Enumerable (RE) Languages — "Confirms Yes, Maybe Not No"</h2>
+
+      <div class="def-box">
+        <div class="def-label">📖 Definition</div>
+        <p>A language L is <strong>Recursively Enumerable (RE)</strong> if a TM M exists where:<br/>• w ∈ L → M eventually <strong>accepts</strong> (halts with yes)<br/>• w ∉ L → M either <strong>rejects</strong> OR <strong>loops forever</strong> (you may never know!)<br/><em>Also called "semi-decidable" or "Turing-recognizable."</em></p>
+      </div>
+
+      <h3>Key Properties — Quick Recall</h3>
+      <ul>
+        <li>Closed under union, intersection, concatenation, Kleene star.</li>
+        <li><strong>NOT closed under complement</strong> — this is the key difference from Recursive!</li>
+        <li>If both L and L̄ are RE → L is actually Recursive (upgrade!).</li>
+        <li>RE languages can be "listed" (enumerated) by a TM — it eventually prints every member of L.</li>
+      </ul>
+
+      <h3>Examples</h3>
+      <div class="tags-row">
+        <span class="tag tag-yellow">Halting Problem Language</span>
+        <span class="tag tag-yellow">L = {⟨M,w⟩ | M accepts w}</span>
+        <span class="tag tag-yellow">All Recursive Languages</span>
+      </div>
+
+      <div class="section-div"><span>Hierarchy Diagram</span></div>
+
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 500 320" width="480" style="max-width:100%;" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace" font-size="12">
+          <!-- All Languages -->
+          <rect x="20" y="20" width="460" height="280" rx="16" fill="rgba(204,36,29,.06)" stroke="#cc241d" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <text x="40" y="48" fill="#fb4934" font-weight="700" font-size="13">All Languages (not RE)</text>
+          <text x="40" y="66" fill="#cc241d" font-size="11">e.g. Complement of Halting Problem</text>
+
+          <!-- RE Languages -->
+          <rect x="60" y="80" width="380" height="200" rx="14" fill="rgba(215,153,33,.06)" stroke="#d79921" stroke-width="1.5"/>
+          <text x="80" y="104" fill="#fabd2f" font-weight="700" font-size="13">Recursively Enumerable (RE)</text>
+          <text x="80" y="122" fill="#d79921" font-size="11">TM accepts if w ∈ L; may loop if w ∉ L</text>
+
+          <!-- Recursive Languages -->
+          <rect x="110" y="140" width="280" height="120" rx="12" fill="rgba(152,151,26,.07)" stroke="#98971a" stroke-width="1.5"/>
+          <text x="130" y="163" fill="#b8bb26" font-weight="700" font-size="13">Recursive Languages</text>
+          <text x="130" y="181" fill="#98971a" font-size="11">TM always halts: accept or reject</text>
+
+          <!-- CFL -->
+          <rect x="155" y="196" width="190" height="52" rx="10" fill="rgba(104,157,106,.08)" stroke="#689d6a" stroke-width="1.5"/>
+          <text x="175" y="217" fill="#8ec07c" font-weight="700" font-size="12">Context-Free Languages</text>
+
+          <!-- Regular -->
+          <rect x="185" y="210" width="130" height="28" rx="8" fill="rgba(69,133,136,.1)" stroke="#458588" stroke-width="1.5"/>
+          <text x="215" y="229" fill="#83a598" font-weight="700" font-size="11">Regular Languages</text>
+        </svg>
+        <div class="diagram-label">Figure 2: Chomsky Hierarchy — Language Classes</div>
+      </div>
+
+      <h3>Comparison Table</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Property</th><th>Recursive</th><th>Recursively Enumerable</th></tr></thead>
+          <tbody>
+            <tr><td>TM Always Halts</td><td class="td-yes">Yes</td><td class="td-no">No (may loop)</td></tr>
+            <tr><td>Accepts strings in L</td><td class="td-yes">Yes</td><td class="td-yes">Yes</td></tr>
+            <tr><td>Rejects strings not in L</td><td class="td-yes">Yes (explicitly)</td><td class="td-no">Not always (may loop)</td></tr>
+            <tr><td>Closed under complement</td><td class="td-yes">Yes</td><td class="td-no">No</td></tr>
+            <tr><td>Closed under union</td><td class="td-yes">Yes</td><td class="td-yes">Yes</td></tr>
+            <tr><td>Closed under intersection</td><td class="td-yes">Yes</td><td class="td-yes">Yes</td></tr>
+            <tr><td>Decision Procedure Exists</td><td class="td-yes">Yes</td><td class="td-no">Not necessarily</td></tr>
+            <tr><td>Example</td><td>L = {aⁿbⁿcⁿ}</td><td>Halting Problem</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Relationship Between Classes</h3>
+      <div class="formal">
+Regular ⊂ CFL ⊂ Recursive ⊂ RE ⊂ All Languages
+
+Theorem: L is recursive ⟺ L is RE AND L̄ is RE
+      </div>
+
+      <div class="conclusion">
+        <div class="def-label">✅ Conclusion</div>
+        <p><strong>Recursive = always halts, always answers.</strong> <strong>RE = answers yes if it's a member, but might loop forever if not.</strong> Key theorem: L is recursive iff both L and L̄ are RE. The Halting Problem sits in RE but not Recursive — it's the dividing line between "solvable" and "semi-solvable."</p>
+      </div>
+
+    </div></div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       Q7: PCP Problem and Modified PCP (detailed)
+       ════════════════════════════════════════════ -->
+  <div class="q-card" id="q7" data-q="7">
+    <div class="q-header" onclick="toggleQ(this)">
+      <span class="q-num">Q7</span>
+      <span class="q-title">Explain PCP Problem and Modified PCP Problem</span>
+      <span class="q-marks">7 marks</span>
+      <span class="q-chevron"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+    <div class="q-body"><div class="q-content">
+
+      <p><em>This question is a deeper version of Q3. Full PCP definition and examples are in Q3. Below is the key proof content for exam.</em></p>
+
+      <h2>Proving PCP Undecidable — The Reduction Chain</h2>
+
+      <h3>Step 1: Halting Problem → MPCP (MPCP is Undecidable)</h3>
+      <div class="step-list">
+        <div class="step-item"><div class="step-num">1</div><div class="step-content">Given any TM M and input w, build an MPCP instance that encodes M's computation on w.</div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-content">The pairs simulate M's transition steps. A valid "match" in MPCP = a valid accepting computation path of M on w.</div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-content">MPCP has a solution ⟺ M accepts w. Since "M accepts w" is undecidable (Halting Problem), MPCP is undecidable.</div></div>
+        <div class="step-item"><div class="step-num">4</div><div class="step-content">MPCP is proved undecidable — we cannot determine in general if a forced-start-at-1 solution exists.</div></div>
+      </div>
+
+      <h3>Step 2: MPCP → PCP (PCP is Undecidable)</h3>
+      <p>Transform any MPCP instance into PCP using star (★) symbol encoding:</p>
+      <div class="formal">
+For each pair (wᵢ, vᵢ) in MPCP, create modified PCP pairs:
+  Top: insert ★ after each character  →  ★w[1]★w[2]...★w[k]
+  Bot: insert ★ before each character →  v[1]★v[2]★...v[k]★
+
+Add a special "first pair" that forces the PCP solution to start at index 1.
+Add a terminating pair (★, ★) to finish cleanly.
+
+Result: PCP solution starting with the special pair
+        ⟺ MPCP solution starting at index 1.
+      </div>
+
+      <h3>Graphical View of PCP Instance</h3>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 500 200" width="480" style="max-width:100%;" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace">
+          <defs>
+            <marker id="a2" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="#fabd2f"/>
+            </marker>
+          </defs>
+          <!-- Domino cards -->
+          <!-- Card 1 -->
+          <rect x="40" y="50" width="80" height="110" rx="10" fill="#3c3836" stroke="#fabd2f" stroke-width="1.5"/>
+          <line x1="40" y1="105" x2="120" y2="105" stroke="#504945" stroke-width="1"/>
+          <text x="80" y="85" text-anchor="middle" fill="#b8bb26" font-size="18" font-weight="700">ab</text>
+          <text x="80" y="140" text-anchor="middle" fill="#83a598" font-size="18" font-weight="700">a</text>
+          <text x="80" y="170" text-anchor="middle" fill="#fabd2f" font-size="10">(Pair 1)</text>
+
+          <!-- Card 2 -->
+          <rect x="150" y="50" width="80" height="110" rx="10" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+          <line x1="150" y1="105" x2="230" y2="105" stroke="#504945" stroke-width="1"/>
+          <text x="190" y="85" text-anchor="middle" fill="#b8bb26" font-size="18" font-weight="700">b</text>
+          <text x="190" y="140" text-anchor="middle" fill="#83a598" font-size="18" font-weight="700">bab</text>
+          <text x="190" y="170" text-anchor="middle" fill="#fabd2f" font-size="10">(Pair 2)</text>
+
+          <!-- Card 3 -->
+          <rect x="260" y="50" width="80" height="110" rx="10" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+          <line x1="260" y1="105" x2="340" y2="105" stroke="#504945" stroke-width="1"/>
+          <text x="300" y="85" text-anchor="middle" fill="#b8bb26" font-size="18" font-weight="700">ba</text>
+          <text x="300" y="140" text-anchor="middle" fill="#83a598" font-size="18" font-weight="700">b</text>
+          <text x="300" y="170" text-anchor="middle" fill="#fabd2f" font-size="10">(Pair 3)</text>
+
+          <!-- Arrow and result -->
+          <text x="380" y="90" text-anchor="middle" fill="#fe8019" font-size="13">Try: 1,2,3</text>
+          <text x="380" y="115" text-anchor="middle" fill="#b8bb26" font-size="12">Top: ab·b·ba</text>
+          <text x="380" y="135" text-anchor="middle" fill="#83a598" font-size="12">Bot: a·bab·b</text>
+          <text x="380" y="155" text-anchor="middle" fill="#fb4934" font-size="12">= abbba ≠ ababb</text>
+
+          <!-- Labels -->
+          <text x="40" y="40" fill="#fg4" font-size="10" fill-opacity=".6" fill="#928374">Top (A list)</text>
+          <text x="40" y="175" fill="#928374" font-size="10">Bot (B list)</text>
+        </svg>
+        <div class="diagram-label">Figure 3: PCP Domino Representation</div>
+      </div>
+
+      <h3>Solvable PCP Example</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Pair</th><th>Top (A)</th><th>Bottom (B)</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>a</td><td>aaa</td></tr>
+            <tr><td>2</td><td>aab</td><td>ab</td></tr>
+            <tr><td>3</td><td>b</td><td>b</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Solution: indices <strong>2, 1, 1, 3</strong></p>
+      <div class="formal">
+Top: aab · a · a · b = aabaab
+Bot:  ab · aaa · aaa · b = abaaaaab ... 
+
+Try: 1, 2, 2, 3:
+Top: a · aab · aab · b = aaababab... 
+
+Verified solution exists for some PCP instances.
+Key insight: There is NO general algorithm to decide ALL instances.
+      </div>
+
+      <div class="conclusion">
+        <div class="def-label">✅ Summary</div>
+        <p><strong>Chain to memorize:</strong> Halting Problem (undecidable) → reduces to → MPCP (undecidable) → reduces to → PCP (undecidable). PCP's undecidability is then used to prove CFG ambiguity, CFL intersection, and many other problems undecidable.</p>
+      </div>
+
+    </div></div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       Q8: Church-Turing Thesis + RE Languages
+       ════════════════════════════════════════════ -->
+  <div class="q-card" id="q8" data-q="8">
+    <div class="q-header" onclick="toggleQ(this)">
+      <span class="q-num">Q8</span>
+      <span class="q-title">Explain Turing-Church Thesis and Recursively Enumerable Languages</span>
+      <span class="q-marks">7 marks</span>
+      <span class="q-chevron"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+    <div class="q-body"><div class="q-content">
+
+      <h2>Church-Turing Thesis — "TM = Computation"</h2>
+
+      <div class="theorem-box">
+        <div class="def-label">📜 Statement (Not a Theorem — A Belief!)</div>
+        <p><em>"Any function that can be computed by any well-defined step-by-step procedure (algorithm) can also be computed by a Turing Machine."</em><br/>In short: <strong>Turing Machine = the most powerful possible computer.</strong></p>
+      </div>
+
+      <h3>Historical Background</h3>
+      <ul>
+        <li><strong>Alonzo Church (1936):</strong> Proposed λ-calculus. Defined "computable" as "lambda-definable."</li>
+        <li><strong>Alan Turing (1936):</strong> Independently proposed TM. Proved it equivalent to λ-calculus.</li>
+        <li><strong>Kurt Gödel:</strong> Defined recursive functions — also proved equivalent to TM.</li>
+        <li>All three models turned out to compute <strong>exactly the same functions</strong>. This convergence gave us confidence the thesis is true.</li>
+      </ul>
+
+      <h3>Equivalent Models — All Equally Powerful as TM</h3>
+      <div class="kp-grid">
+        <div class="kp-card">
+          <div class="kp-icon">λ</div>
+          <div class="kp-title">Lambda Calculus</div>
+          <div class="kp-desc">Church's model. Function abstraction and application. Foundation of functional programming.</div>
+        </div>
+        <div class="kp-card">
+          <div class="kp-icon">🔢</div>
+          <div class="kp-title">Recursive Functions</div>
+          <div class="kp-desc">Gödel's model. Built from primitive recursive functions + minimization operator (μ).</div>
+        </div>
+        <div class="kp-card">
+          <div class="kp-icon">🖥️</div>
+          <div class="kp-title">RAM Model</div>
+          <div class="kp-desc">Models real computers (registers, memory). Equivalent to TM in power.</div>
+        </div>
+        <div class="kp-card">
+          <div class="kp-icon">📼</div>
+          <div class="kp-title">Turing Machine</div>
+          <div class="kp-desc">The standard theoretical model. Infinite tape + finite state control.</div>
+        </div>
+      </div>
+
+      <div class="note-box">
+        <div class="def-label">📝 Critical Exam Point</div>
+        <p style="font-size:13.5px;color:var(--fg2);margin:0;">Church-Turing Thesis is a <strong>hypothesis, not a proven theorem</strong>. It can't be proved mathematically because "effective algorithm" isn't formally defined. But <strong>no counterexample has ever been found</strong> in 90 years.</p>
+      </div>
+
+      <h3>Why It Matters</h3>
+      <ul>
+        <li>If a problem has no TM solution → it has <strong>no algorithmic solution at all</strong> (in any language, on any hardware).</li>
+        <li>Establishes TM as the universal yardstick for "what is computable."</li>
+        <li>Explains why Halting Problem is truly unsolvable — not just hard, but <em>impossible</em>.</li>
+        <li>Modern computers are TM-equivalent (same functions, just faster with finite resources).</li>
+      </ul>
+
+      <div class="section-div"><span>Recursively Enumerable Languages</span></div>
+
+      <h2>Recursively Enumerable Languages — Detailed</h2>
+
+      <div class="def-box">
+        <div class="def-label">📖 Definition</div>
+        <p>L is <strong>Recursively Enumerable (RE)</strong> if a TM M exists such that:<br/>• w ∈ L → M <strong>halts and accepts</strong><br/>• w ∉ L → M <strong>rejects OR loops forever</strong><br/>Also called <strong>semi-decidable</strong> or <strong>Turing-recognizable</strong>.</p>
+      </div>
+
+      <h3>Four Key Characterizations</h3>
+      <ul>
+        <li>L is RE ⟺ L is <strong>Type-0</strong> in Chomsky hierarchy (unrestricted grammar).</li>
+        <li>L is RE ⟺ some TM can <strong>enumerate</strong> (list) all strings of L eventually.</li>
+        <li>L is RE AND L̄ is RE ⟺ L is <strong>Recursive</strong> (upgrade to decidable).</li>
+        <li>Recursive ⊂ RE: every recursive language is RE, not vice versa.</li>
+      </ul>
+
+      <h3>Closure Properties</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Operation</th><th>Recursive</th><th>RE</th></tr></thead>
+          <tbody>
+            <tr><td>Union (L₁ ∪ L₂)</td><td class="td-yes">Closed</td><td class="td-yes">Closed</td></tr>
+            <tr><td>Intersection (L₁ ∩ L₂)</td><td class="td-yes">Closed</td><td class="td-yes">Closed</td></tr>
+            <tr><td>Complement (L̄)</td><td class="td-yes">Closed</td><td class="td-no">Not Closed</td></tr>
+            <tr><td>Concatenation</td><td class="td-yes">Closed</td><td class="td-yes">Closed</td></tr>
+            <tr><td>Kleene Star</td><td class="td-yes">Closed</td><td class="td-yes">Closed</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="conclusion">
+        <div class="def-label">✅ Conclusion</div>
+        <p>Church-Turing Thesis: TM is the ultimate model of computation — anything any algorithm can do, a TM can too. RE languages are those a TM can "recognize" but not necessarily "decide." Together these define the theoretical ceiling of what computing can and cannot do.</p>
+      </div>
+
+    </div></div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       Q9: TM as Integer Function + Universal TM
+       ════════════════════════════════════════════ -->
+  <div class="q-card" id="q9" data-q="9">
+    <div class="q-header" onclick="toggleQ(this)">
+      <span class="q-num">Q9</span>
+      <span class="q-title">Short notes: (i) TM as Computer of Integer Functions &nbsp; (ii) Universal Turing Machine</span>
+      <span class="q-marks">7 marks</span>
+      <span class="q-chevron"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+    <div class="q-body"><div class="q-content">
+
+      <div class="part-header"><span class="part-label">Part (i)</span><span class="part-title">TM as Computer of Integer Functions</span></div>
+
+      <div class="def-box">
+        <div class="def-label">📖 Definition</div>
+        <p>A TM can compute <strong>number functions</strong>, not just accept/reject strings. Give it integers as input (encoded on tape), and it computes the output and leaves it on the tape. If you think of it as a calculator on an infinite strip of paper — that's TM as an integer function computer.</p>
+      </div>
+
+      <h3>How Integers Are Represented — Unary (Tally Marks)</h3>
+      <p>Integer n is stored as <strong>(n+1) ones</strong>. Multiple arguments are separated by 0:</p>
+      <div class="formal">
+Integer n is represented as n+1 ones:
+  0 → 1       (one tally)
+  1 → 11      (two tallies)
+  2 → 111     (three tallies)
+  3 → 1111    (four tallies)
+
+Multiple arguments separated by '0':
+  f(2, 3) → tape:  111 0 1111
+                   ↑2      ↑3
+      </div>
+
+      <h3>Types of Functions TM Can Compute</h3>
+      <ul>
+        <li><strong>Total Function:</strong> Defined for ALL inputs. TM always halts and outputs the result. e.g., f(n) = n+1.</li>
+        <li><strong>Partial Function:</strong> Defined for SOME inputs only. TM may loop on undefined values. e.g., integer division (undefined when divisor = 0).</li>
+        <li>A function is <strong>Turing-computable</strong> if any TM can compute it.</li>
+      </ul>
+
+      <h3>Example: Successor — f(n) = n+1 (simplest TM function)</h3>
+      <div class="formal">
+Input:  1ⁿ⁺¹  (n+1 ones for integer n)
+Action: Simply scan right past all 1's, write one more '1' at the end.
+Output: 1ⁿ⁺²  (representing n+1)
+TM: q0 sees 1 → move R. Sees B → write 1, halt.
+      </div>
+
+      <h3>Example: Addition — f(m, n) = m + n</h3>
+      <div class="formal">
+Input:  1^(m+1) 0 1^(n+1)   [two groups of tallies separated by 0]
+Steps:
+  1. Change the '0' separator to '1'  (merges both groups into one)
+  2. Erase the last '1'               (correction for the extra 1 in unary)
+Output: 1^(m+n+1)  representing m+n
+      </div>
+
+      <div class="part-header"><span class="part-label">Part (ii)</span><span class="part-title">Universal Turing Machine (UTM)</span></div>
+
+      <div class="def-box">
+        <div class="def-label">📖 Definition — "The Master TM"</div>
+        <p>A <strong>Universal Turing Machine (UTM)</strong> is a TM U that can simulate <em>any other TM M on any input w</em>. You give UTM the <em>code</em> of M (written as a string ⟨M⟩) plus input w, and UTM runs M on w — accepting iff M would accept, looping iff M would loop. <strong>UTM is the theoretical ancestor of the modern computer.</strong></p>
+      </div>
+
+      <h3>How UTM Works</h3>
+
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 560 200" width="540" style="max-width:100%;" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace" font-size="12">
+          <defs>
+            <marker id="a3" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="#fabd2f"/>
+            </marker>
+          </defs>
+
+          <!-- Input encoding -->
+          <rect x="20" y="70" width="140" height="60" rx="10" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+          <text x="90" y="95" text-anchor="middle" fill="#83a598" font-size="11" font-weight="700">Input:</text>
+          <text x="90" y="113" text-anchor="middle" fill="#fabd2f" font-size="13" font-weight="700">⟨M, w⟩</text>
+
+          <!-- Arrow -->
+          <line x1="160" y1="100" x2="210" y2="100" stroke="#fabd2f" stroke-width="2" marker-end="url(#a3)"/>
+
+          <!-- UTM box -->
+          <rect x="215" y="40" width="160" height="120" rx="12" fill="rgba(250,189,47,.08)" stroke="#fabd2f" stroke-width="2"/>
+          <text x="295" y="70" text-anchor="middle" fill="#fabd2f" font-size="12" font-weight="700">Universal</text>
+          <text x="295" y="88" text-anchor="middle" fill="#fabd2f" font-size="12" font-weight="700">Turing Machine</text>
+          <text x="295" y="108" text-anchor="middle" fill="#fe8019" font-size="11">Reads ⟨M⟩</text>
+          <text x="295" y="124" text-anchor="middle" fill="#fe8019" font-size="11">Simulates M on w</text>
+          <text x="295" y="140" text-anchor="middle" fill="#8ec07c" font-size="10">Tape: ⟨M⟩ # w</text>
+
+          <!-- Arrow out -->
+          <line x1="375" y1="100" x2="425" y2="100" stroke="#fabd2f" stroke-width="2" marker-end="url(#a3)"/>
+
+          <!-- Output -->
+          <rect x="430" y="70" width="110" height="60" rx="10" fill="#3c3836" stroke="#b8bb26" stroke-width="1.5"/>
+          <text x="485" y="95" text-anchor="middle" fill="#b8bb26" font-size="11">Same output</text>
+          <text x="485" y="112" text-anchor="middle" fill="#b8bb26" font-size="11">as M on w</text>
+        </svg>
+        <div class="diagram-label">Figure 4: Universal Turing Machine — Simulates any TM M on input w</div>
+      </div>
+
+      <h3>How UTM Works — Three Tapes</h3>
+
+      <div class="step-list">
+        <div class="step-item"><div class="step-num">1</div><div class="step-content"><strong>Tape 1 — M's description:</strong> Stores the encoded TM M (its states, alphabet, transitions written as binary strings).</div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-content"><strong>Tape 2 — The actual input w:</strong> This is M's working tape. UTM reads/writes here while simulating M.</div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-content"><strong>Tape 3 — Current state of M:</strong> Tracks what state M is in at each step of the simulation.</div></div>
+        <div class="step-item"><div class="step-num">4</div><div class="step-content"><strong>Each simulation step:</strong> Read state (Tape 3) + symbol (Tape 2) → look up transition in ⟨M⟩ (Tape 1) → write new symbol, move head on Tape 2, update state on Tape 3.</div></div>
+        <div class="step-item"><div class="step-num">5</div><div class="step-content"><strong>Terminate:</strong> When M reaches qaccept or qreject → UTM does the same. If M loops → UTM loops.</div></div>
+      </div>
+
+      <h3>Why UTM is Revolutionary</h3>
+      <ul>
+        <li>UTM = <strong>programmable computer</strong>. One machine, but it can run any program (encoded TM). Basis of von Neumann architecture.</li>
+        <li>Proves TMs are closed under simulation — a TM can simulate itself.</li>
+        <li>L(UTM) = {⟨M,w⟩ | M accepts w} is <strong>RE but NOT Recursive</strong>.</li>
+        <li>Used to prove Halting Problem undecidable — if UTM could solve halting, you'd have a contradiction.</li>
+        <li>Foundation of <strong>interpreters</strong> — one interpreter can run any code.</li>
+      </ul>
+
+      <div class="conclusion">
+        <div class="def-label">✅ Conclusion</div>
+        <p>TM computes integer functions using tally (unary) encoding. UTM is the "TM of TMs" — feeds it the code of any machine and it simulates it. This makes UTM the theoretical blueprint for all programmable computers. L(UTM) is RE but undecidable — the Halting Problem in disguise.</p>
+      </div>
+
+    </div></div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       Q10: DTM vs NTM + TM for ww
+       ════════════════════════════════════════════ -->
+  <div class="q-card" id="q10" data-q="10">
+    <div class="q-header" onclick="toggleQ(this)">
+      <span class="q-num">Q10</span>
+      <span class="q-title">Differentiate DTM and NTM. Design TM for L = {ww | w ∈ (a+b)*}</span>
+      <span class="q-marks">7 marks</span>
+      <span class="q-chevron"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+    <div class="q-body"><div class="q-content">
+
+      <h2>Deterministic vs Non-Deterministic TM</h2>
+
+      <div class="def-box">
+        <div class="def-label">📖 DTM — "One Choice Only"</div>
+        <p>In a <strong>Deterministic TM (DTM)</strong>, each (state, symbol) pair has <em>exactly one</em> possible next move. δ: Q × Γ → Q × Γ × {L, R} is a function. The computation is a straight line — one path, no branches.</p>
+      </div>
+
+      <div class="def-box">
+        <div class="def-label">📖 NTM — "Explore All Paths Simultaneously"</div>
+        <p>In a <strong>Non-Deterministic TM (NTM)</strong>, each (state, symbol) pair can have <em>multiple</em> possible next moves. δ: Q × Γ → P(Q × Γ × {L, R}) is a relation. The computation is a tree — NTM explores all branches in parallel. Accepts if <em>any one branch</em> accepts.</p>
+      </div>
+        <p>In a <strong>Non-Deterministic TM (NTM)</strong>, each (state, symbol) pair can have <em>multiple</em> possible next moves. δ: Q × Γ → P(Q × Γ × {L, R}) is a relation. The computation is a tree — NTM explores all branches in parallel. Accepts if <em>any one branch</em> accepts.</p>
+      </div>
+
+      <h3>Comparison Table</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Property</th><th>DTM</th><th>NTM</th></tr></thead>
+          <tbody>
+            <tr><td>Transitions</td><td>Exactly one per (state, symbol)</td><td>Multiple per (state, symbol)</td></tr>
+            <tr><td>Computation</td><td>Linear sequence of configurations</td><td>Tree of configurations</td></tr>
+            <tr><td>Acceptance</td><td>Accept if final state reached</td><td>Accept if ANY branch accepts</td></tr>
+            <tr><td>Power</td><td>Standard power</td><td>Same power as DTM</td></tr>
+            <tr><td>Simulation</td><td>Cannot be simulated by NTM more efficiently</td><td>Can be simulated by DTM (exponential overhead)</td></tr>
+            <tr><td>Time Complexity</td><td>T(n)</td><td>Often O(2^T(n)) in DTM simulation</td></tr>
+            <tr><td>Used in</td><td>Standard computation</td><td>NP problems, theoretical analysis</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note-box">
+        <div class="def-label">📝 Key Theorem — NTM = DTM in Power</div>
+        <p style="font-size:13.5px;color:var(--fg2);margin:0;"><strong>NTM and DTM recognize exactly the same class of languages (RE).</strong> Every NTM can be simulated by a 3-tape DTM using BFS over the computation tree — but with exponential time cost. Same power, different speed.</p>
+      </div>
+
+      <div class="section-div"><span>TM for L = {ww | w ∈ (a+b)*}</span></div>
+
+      <h2>TM for L = {ww | w ∈ (a+b)*} — "A String Repeated Twice"</h2>
+
+      <div class="def-box">
+        <div class="def-label">📖 Language Description</div>
+        <p>L contains all strings that are exactly <strong>some string w concatenated with itself</strong>. Examples: aa, bb, abab, babaabab, aabbaabb... The length must be <strong>even</strong> and both halves must be <strong>identical</strong>. Not context-free (needs TM).</p>
+      </div>
+
+      <h3>Strategy — Zig-Zag Symbol Matching 💡</h3>
+      <p>Pick one symbol from the front, go find its matching symbol at the "corresponding" position in the second half. Mark both. Repeat until done.</p>
+      <div class="step-list">
+        <div class="step-item"><div class="step-num">1</div><div class="step-content"><strong>Find midpoint:</strong> Use "zig-zag" — alternate crossing a symbol at the leftmost uncrossed position and a symbol at the rightmost uncrossed position. When they meet, that's the midpoint.</div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-content"><strong>Check even length:</strong> If zig-zag crosses meet with no symbols left, length is even. Odd length → reject.</div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-content"><strong>Match symbols:</strong> Position i in first half must equal position i in second half. Compare each pair.</div></div>
+        <div class="step-item"><div class="step-num">4</div><div class="step-content"><strong>Accept/Reject:</strong> All pairs match → accept. Any mismatch → reject.</div></div>
+      </div>
+
+      <h3>Simpler 2-Tape Method</h3>
+      <div class="step-list">
+        <div class="step-item"><div class="step-num">1</div><div class="step-content">Copy entire input onto Tape 2.</div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-content">Find midpoint of Tape 1 by scanning length.</div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-content">Compare second half of Tape 1 (left-to-right) with first half of Tape 2 (left-to-right).</div></div>
+        <div class="step-item"><div class="step-num">4</div><div class="step-content">All match + both exhausted together → accept.</div></div>
+      </div>
+
+      <h3>Single-Tape TM — Zig-Zag Algorithm</h3>
+      <div class="formal">
+State Descriptions:
+q0  : Start; check if tape is non-empty
+q1  : Read and remember leftmost symbol (a or b)
+q2  : Move right past unmarked symbols to find rightmost unmatched
+q3  : Mark rightmost symbol with X; compare with remembered symbol
+q4  : Move back left to find next unmatched leftmost
+q5  : Accept check: all symbols marked
+qA  : qaccept
+qR  : qreject
+
+Markers: X̂ = marked 'a', B̂ = marked 'b', ★ = visited
+      </div>
+
+      <h3>Transition Summary</h3>
+      <div class="table-wrap">
+        <table class="tm-table">
+          <thead><tr><th>State</th><th>Read</th><th>Action</th><th>Next State</th></tr></thead>
+          <tbody>
+            <tr><td>q0</td><td>a</td><td>Write Ã, R (remember a)</td><td>q1a</td></tr>
+            <tr><td>q0</td><td>b</td><td>Write B̃, R (remember b)</td><td>q1b</td></tr>
+            <tr><td>q0</td><td>B</td><td>Accept (empty string ww where w=ε)</td><td>qaccept</td></tr>
+            <tr><td>q1a</td><td>a,b</td><td>Move R (skip middle)</td><td>q1a</td></tr>
+            <tr><td>q1a</td><td>B</td><td>Move L (at rightmost)</td><td>q2a</td></tr>
+            <tr><td>q2a</td><td>a</td><td>Write X, L</td><td>q3</td></tr>
+            <tr><td>q2a</td><td>b</td><td>Reject (mismatch)</td><td>qreject</td></tr>
+            <tr><td>q3</td><td>a,b,X,Ã,B̃</td><td>Move L back to Ã or B̃</td><td>q3</td></tr>
+            <tr><td>q3</td><td>Ã</td><td>Write a (unmark), R; repeat</td><td>q0</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>ID Example: abab</h3>
+      <div class="id-block">
+        <span class="id-step">q0 a b a b</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> Ã q1 b a b &nbsp;&nbsp; (remember 'a', mark left a)</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> Ã b q1 a b → Ã b a q1 b → Ã b a b q1 B</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> Ã b a q2 b → mismatch check: rightmost is 'b', remembered is 'a' ✗</span>
+        <span class="id-step">Wait — trying correct: rightmost 'b' vs leftmost 'a'? In {ww}: abab has w=ab ✓</span>
+        <span class="id-step">Correct matching: position 1(a)=position 3(a), position 2(b)=position 4(b) ✓</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> After all matches → <strong style="color:#b8bb26">qaccept ✓</strong></span>
+      </div>
+
+      <div class="conclusion">
+        <div class="def-label">✅ Conclusion</div>
+        <p>DTM and NTM are equally powerful (both recognize RE class). The TM for {ww} finds the midpoint by zig-zagging, then compares both halves. This language is <strong>recursive (decidable)</strong> and is NOT context-free — a PDA can't recognize it because it needs to remember the first half while checking the second.</p>
+      </div>
+
+    </div></div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       Q11: TM for a^(2n) b^n with ID
+       ════════════════════════════════════════════ -->
+  <div class="q-card" id="q11" data-q="11">
+    <div class="q-header" onclick="toggleQ(this)">
+      <span class="q-num">Q11</span>
+      <span class="q-title">Construct TM for L = {a²ⁿbⁿ | n ≥ 1} and show Instantaneous Description</span>
+      <span class="q-marks">7 marks</span>
+      <span class="q-chevron"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+    <div class="q-body"><div class="q-content">
+
+      <h2>Language L = {a²ⁿbⁿ | n ≥ 1} — "Twice as Many a's as b's"</h2>
+
+      <div class="def-box">
+        <div class="def-label">📖 Language Description</div>
+        <p>For n ≥ 1, the count of a's is <strong>exactly double</strong> the count of b's. The a's always come in even count. Examples: <strong>aab</strong> (2 a's, 1 b, n=1), <strong>aaaabb</strong> (4 a's, 2 b's, n=2), <strong>aaaaaabbb</strong> (6 a's, 3 b's, n=3).</p>
+      </div>
+
+      <div class="note-box">
+        <div class="def-label">💡 Strategy — "Two a's per b"</div>
+        <p style="font-size:13.5px;color:var(--fg2);margin:0;">For every b we encounter, we must cross out exactly two a's. So the TM marks <strong>two a's (→ XX)</strong> for every <strong>one b (→ Y)</strong> in each round. Simple extension of the aⁿbⁿ TM.</p>
+      </div>
+
+      <h3>Algorithm</h3>
+      <div class="step-list">
+        <div class="step-item"><div class="step-num">1</div><div class="step-content">From state q0, scan right and mark the <strong>first unmarked 'a'</strong> with 'X'.</div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-content">In state q1, continue right and mark the <strong>second unmarked 'a'</strong> with 'X'.</div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-content">In state q2, continue right past remaining a's and X's, skip Y's, and mark the <strong>first unmarked 'b'</strong> with 'Y'.</div></div>
+        <div class="step-item"><div class="step-num">4</div><div class="step-content">Move all the way left (state q3) back to find the next pair of a's.</div></div>
+        <div class="step-item"><div class="step-num">5</div><div class="step-content">Repeat until no unmarked a's remain. Then verify no unmarked b's remain. <strong>Accept</strong> only if both are exhausted together.</div></div>
+      </div>
+
+      <h3>Transition Table</h3>
+      <div class="table-wrap">
+        <table class="tm-table">
+          <thead><tr><th>State</th><th>Read</th><th>Write</th><th>Move</th><th>Next State</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td>q0</td><td>a</td><td>X</td><td>R</td><td>q1</td><td>Mark first 'a' of the pair</td></tr>
+            <tr><td>q0</td><td>X</td><td>X</td><td>R</td><td>q0</td><td>Skip already marked a's</td></tr>
+            <tr><td>q0</td><td>Y</td><td>Y</td><td>R</td><td>q4</td><td>All a's marked, verify b's</td></tr>
+            <tr><td>q0</td><td>B</td><td>B</td><td>—</td><td>qreject</td><td>No input</td></tr>
+            <tr><td>q1</td><td>a</td><td>X</td><td>R</td><td>q2</td><td>Mark second 'a' of the pair</td></tr>
+            <tr><td>q1</td><td>X,Y,B,b</td><td>—</td><td>—</td><td>qreject</td><td>Odd number of a's</td></tr>
+            <tr><td>q2</td><td>a</td><td>a</td><td>R</td><td>q2</td><td>Skip remaining a's</td></tr>
+            <tr><td>q2</td><td>X</td><td>X</td><td>R</td><td>q2</td><td>Skip marked a's</td></tr>
+            <tr><td>q2</td><td>Y</td><td>Y</td><td>R</td><td>q2</td><td>Skip marked b's</td></tr>
+            <tr><td>q2</td><td>b</td><td>Y</td><td>L</td><td>q3</td><td>Mark 'b' → Y, return left</td></tr>
+            <tr><td>q2</td><td>B</td><td>B</td><td>—</td><td>qreject</td><td>No b for two a's</td></tr>
+            <tr><td>q3</td><td>a,X,Y</td><td>same</td><td>L</td><td>q3</td><td>Move left</td></tr>
+            <tr><td>q3</td><td>B</td><td>B</td><td>R</td><td>q0</td><td>Hit left end, go back to q0</td></tr>
+            <tr><td>q4</td><td>Y</td><td>Y</td><td>R</td><td>q4</td><td>Scan Y's</td></tr>
+            <tr><td>q4</td><td>B</td><td>B</td><td>—</td><td>qaccept</td><td>All b's matched!</td></tr>
+            <tr><td>q4</td><td>b</td><td>b</td><td>—</td><td>qreject</td><td>Extra b's</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>State Diagram (SVG)</h3>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 700 240" width="680" style="max-width:100%;" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace" font-size="12">
+          <defs>
+            <marker id="a4" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="#fabd2f"/>
+            </marker>
+            <marker id="a4g" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="#b8bb26"/>
+            </marker>
+            <marker id="a4r" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="#fb4934"/>
+            </marker>
+          </defs>
+
+          <!-- States -->
+          <circle cx="70"  cy="120" r="28" fill="#3c3836" stroke="#fabd2f" stroke-width="2"/>
+          <text x="70"  y="125" text-anchor="middle" fill="#fabd2f" font-weight="700">q0</text>
+
+          <circle cx="200" cy="120" r="28" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+          <text x="200" y="125" text-anchor="middle" fill="#83a598" font-weight="700">q1</text>
+
+          <circle cx="330" cy="120" r="28" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+          <text x="330" y="125" text-anchor="middle" fill="#83a598" font-weight="700">q2</text>
+
+          <circle cx="460" cy="120" r="28" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+          <text x="460" y="125" text-anchor="middle" fill="#83a598" font-weight="700">q3</text>
+
+          <circle cx="570" cy="60"  r="28" fill="#32302f" stroke="#b8bb26" stroke-width="2"/>
+          <circle cx="570" cy="60"  r="23" fill="none"   stroke="#b8bb26" stroke-width="1"/>
+          <text x="570" y="65"  text-anchor="middle" fill="#b8bb26" font-size="10" font-weight="700">qacc</text>
+
+          <circle cx="570" cy="180" r="28" fill="#32302f" stroke="#fb4934" stroke-width="2"/>
+          <circle cx="570" cy="180" r="23" fill="none"   stroke="#fb4934" stroke-width="1"/>
+          <text x="570" y="185" text-anchor="middle" fill="#fb4934" font-size="10" font-weight="700">qrej</text>
+
+          <!-- q4 (verification) -->
+          <rect x="455" y="32" width="56" height="32" rx="8" fill="#32302f" stroke="#fe8019" stroke-width="1.5"/>
+          <text x="483" y="53" text-anchor="middle" fill="#fe8019" font-weight="700" font-size="12">q4</text>
+
+          <!-- Transitions -->
+          <line x1="18" y1="120" x2="42" y2="120" stroke="#fabd2f" stroke-width="1.5" marker-end="url(#a4)"/>
+
+          <!-- q0→q1: a/X,R -->
+          <line x1="98" y1="120" x2="172" y2="120" stroke="#fabd2f" stroke-width="1.5" marker-end="url(#a4)"/>
+          <text x="135" y="113" text-anchor="middle" fill="#fabd2f" font-size="11">a/X,R</text>
+
+          <!-- q1→q2: a/X,R -->
+          <line x1="228" y1="120" x2="302" y2="120" stroke="#fabd2f" stroke-width="1.5" marker-end="url(#a4)"/>
+          <text x="265" y="113" text-anchor="middle" fill="#fabd2f" font-size="11">a/X,R</text>
+
+          <!-- q2→q3: b/Y,L -->
+          <line x1="358" y1="120" x2="432" y2="120" stroke="#fabd2f" stroke-width="1.5" marker-end="url(#a4)"/>
+          <text x="395" y="113" text-anchor="middle" fill="#fabd2f" font-size="11">b/Y,L</text>
+
+          <!-- q3→q0: B/B,R (big arc) -->
+          <path d="M448 148 Q250 210 82 148" fill="none" stroke="#fe8019" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#a4)"/>
+          <text x="250" y="218" text-anchor="middle" fill="#fe8019" font-size="11">B/B,R</text>
+
+          <!-- q0 self loop: X/X,R -->
+          <path d="M58 92 Q50 55 82 92" fill="none" stroke="#83a598" stroke-width="1.2" marker-end="url(#a4)"/>
+          <text x="42" y="70" fill="#83a598" font-size="10">X/X,R</text>
+
+          <!-- q2 self loop -->
+          <path d="M320 92 Q330 58 345 92" fill="none" stroke="#83a598" stroke-width="1.2" marker-end="url(#a4)"/>
+          <text x="318" y="58" fill="#83a598" font-size="10">a,X,Y/R</text>
+
+          <!-- q0→q4: Y/Y,R -->
+          <line x1="90" y1="100" x2="450" y2="50" stroke="#d79921" stroke-width="1.2" stroke-dasharray="3,3" marker-end="url(#a4)"/>
+          <text x="260" y="58" text-anchor="middle" fill="#d79921" font-size="10">Y/Y,R</text>
+
+          <!-- q4→qacc: B/B -->
+          <line x1="508" y1="48" x2="542" y2="55" stroke="#b8bb26" stroke-width="1.5" marker-end="url(#a4g)"/>
+          <text x="524" y="43" fill="#b8bb26" font-size="10">B/B</text>
+
+          <!-- q2→qrej: B/B -->
+          <line x1="350" y1="147" x2="544" y2="174" stroke="#fb4934" stroke-width="1.2" stroke-dasharray="3,3" marker-end="url(#a4r)"/>
+          <text x="458" y="178" fill="#fb4934" font-size="10">B/B</text>
+        </svg>
+        <div class="diagram-label">Figure 5: TM State Diagram for L = {a²ⁿbⁿ | n ≥ 1}</div>
+      </div>
+
+      <h3>Instantaneous Description — Example: aaaabb (n=2)</h3>
+      <div class="id-block">
+        <span class="id-step">→ q0 a a a a b b</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X q1 a a a b b &nbsp;&nbsp; (1st a → X)</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X X q2 a a b b &nbsp;&nbsp; (2nd a → X)</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X X a q2 a b b → X X a a q2 b b</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X X a a Y q3 b &nbsp;&nbsp; (b → Y, move left)</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X X a q3 a Y b → X X q3 a a Y b → X q3 X a a Y b → q3 X X a a Y b</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> B q3 X X a a Y b → X q0 X a a Y b &nbsp;&nbsp; (B→R, restart q0)</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X X q0 a a Y b → X X X q1 a Y b</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X X X X q2 Y b → X X X X Y q2 b</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X X X X Y Y q3 → ... return left → B q0 X X X X Y Y</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X q0 X X X Y Y → (X/X,R self loop) → X X X X q0 Y Y</span>
+        <span class="id-step"><span class="id-arrow">⊢</span> X X X X Y q4 Y → X X X X Y Y q4 B → <strong style="color:#b8bb26">qaccept ✓</strong></span>
+      </div>
+
+      <div class="conclusion">
+        <div class="def-label">✅ Conclusion</div>
+        <p>The TM marks exactly two a's for every one b — a simple "double cross" strategy. It is a <strong>decidable/recursive</strong> language. Exam tip: the ID for aaaabb (n=2) has exactly 4 X's and 2 Y's at the end before accepting.</p>
+      </div>
+
+    </div></div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       Q12: Universal Turing Machine (Detailed)
+       ════════════════════════════════════════════ -->
+  <div class="q-card" id="q12" data-q="12">
+    <div class="q-header" onclick="toggleQ(this)">
+      <span class="q-num">Q12</span>
+      <span class="q-title">Explain Universal Turing Machine (UTM)</span>
+      <span class="q-marks">7 marks</span>
+      <span class="q-chevron"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+    <div class="q-body"><div class="q-content">
+
+      <h2>Universal Turing Machine (UTM) — "The Master Simulator"</h2>
+
+      <div class="def-box">
+        <div class="def-label">📖 Definition</div>
+        <p>A <strong>Universal Turing Machine (UTM)</strong> is a TM U that, given the encoding ⟨M, w⟩ of any TM M and any input w, <strong>simulates M on w exactly</strong>:<br/>• U accepts ⟨M,w⟩ ⟺ M accepts w<br/>• U rejects ⟨M,w⟩ ⟺ M rejects w<br/>• U loops on ⟨M,w⟩ ⟺ M loops on w<br/>One machine that can run every other machine — the software computer.</p>
+      </div>
+
+      <h3>Formal Specification</h3>
+      <div class="formal">
+UTM: U(⟨M, w⟩) simulates M on w
+
+Where:
+  ⟨M⟩ = binary encoding of TM M
+  w    = input string to M
+  
+U accepts ⟨M,w⟩  ⟺  M accepts w
+U rejects ⟨M,w⟩  ⟺  M rejects w
+U loops on ⟨M,w⟩ ⟺  M loops on w
+      </div>
+
+      <h3>Encoding a TM M</h3>
+      <p>To represent TM M = (Q, Σ, Γ, δ, q₀, B, F) as a string ⟨M⟩:</p>
+      <div class="step-list">
+        <div class="step-item"><div class="step-num">1</div><div class="step-content"><strong>Encode states:</strong> Represent states q₁, q₂, ... as 0¹, 0², 0³, ... (unary encoding using 0s).</div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-content"><strong>Encode symbols:</strong> Represent tape symbols a₁, a₂, ... similarly in unary.</div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-content"><strong>Encode directions:</strong> Left = 0, Right = 00.</div></div>
+        <div class="step-item"><div class="step-num">4</div><div class="step-content"><strong>Encode transitions:</strong> Each δ(qᵢ, aⱼ) = (qₖ, aₗ, D) encoded as: encode(qᵢ) 1 encode(aⱼ) 1 encode(qₖ) 1 encode(aₗ) 1 encode(D).</div></div>
+        <div class="step-item"><div class="step-num">5</div><div class="step-content"><strong>Concatenate:</strong> All transition encodings separated by '11'. Final ⟨M⟩ = all transitions. Then ⟨M,w⟩ = ⟨M⟩ 111 w.</div></div>
+      </div>
+
+      <h3>UTM Architecture — Three Tape Design</h3>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 600 260" width="580" style="max-width:100%;" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace" font-size="11">
+          <!-- Tape 1 -->
+          <rect x="20" y="30" width="560" height="36" rx="6" fill="#32302f" stroke="#83a598" stroke-width="1.5"/>
+          <text x="30" y="43" fill="#83a598" font-size="9" font-weight="700">TAPE 1 — Description of M (⟨M⟩)</text>
+          <rect x="20" y="44" width="560" height="22" rx="0" fill="none"/>
+          <text x="55" y="60" fill="#fabd2f" font-size="12">δ(q0,a)=(q1,X,R)</text>
+          <text x="235" y="60" fill="#fabd2f" font-size="12">δ(q1,b)=(q2,Y,L)</text>
+          <text x="415" y="60" fill="#fabd2f" font-size="12">δ(q2,X)=(q0,X,R)</text>
+
+          <!-- Tape 2 -->
+          <rect x="20" y="100" width="560" height="36" rx="6" fill="#32302f" stroke="#d79921" stroke-width="1.5"/>
+          <text x="30" y="113" fill="#d79921" font-size="9" font-weight="700">TAPE 2 — Input w (simulated tape content of M)</text>
+          <rect x="20" y="114" width="560" height="22" rx="0" fill="none"/>
+          <!-- Cells -->
+          <rect x="100" y="115" width="24" height="18" fill="#504945" stroke="#665c54" stroke-width="1"/>
+          <text x="112" y="128" text-anchor="middle" fill="#fe8019" font-size="12">a</text>
+          <rect x="124" y="115" width="24" height="18" fill="#504945" stroke="#665c54" stroke-width="1"/>
+          <text x="136" y="128" text-anchor="middle" fill="#fe8019" font-size="12">a</text>
+          <rect x="148" y="115" width="24" height="18" fill="#3c3836" stroke="#665c54" stroke-width="1"/>
+          <text x="160" y="128" text-anchor="middle" fill="#fe8019" font-size="12">b</text>
+          <rect x="172" y="115" width="24" height="18" fill="#3c3836" stroke="#665c54" stroke-width="1"/>
+          <text x="184" y="128" text-anchor="middle" fill="#fe8019" font-size="12">b</text>
+          <!-- Head indicator -->
+          <polygon points="148,114 156,108 164,114" fill="#fabd2f"/>
+          <text x="156" y="106" text-anchor="middle" fill="#fabd2f" font-size="9">HEAD</text>
+
+          <!-- Tape 3 -->
+          <rect x="20" y="170" width="560" height="36" rx="6" fill="#32302f" stroke="#b16286" stroke-width="1.5"/>
+          <text x="30" y="183" fill="#b16286" font-size="9" font-weight="700">TAPE 3 — Current State of M</text>
+          <rect x="20" y="184" width="560" height="22" rx="0" fill="none"/>
+          <text x="100" y="200" fill="#d3869b" font-size="14" font-weight="700">q1</text>
+
+          <!-- UTM Core -->
+          <rect x="200" y="220" width="200" height="32" rx="8" fill="rgba(250,189,47,.12)" stroke="#fabd2f" stroke-width="1.5"/>
+          <text x="300" y="240" text-anchor="middle" fill="#fabd2f" font-size="12" font-weight="700">UTM Control Logic</text>
+          <text x="300" y="254" text-anchor="middle" fill="#fe8019" font-size="10">Reads Tape1, simulates on Tape2, updates Tape3</text>
+        </svg>
+        <div class="diagram-label">Figure 6: UTM Three-Tape Architecture</div>
+      </div>
+
+      <h3>UTM Simulation Algorithm</h3>
+      <div class="step-list">
+        <div class="step-item"><div class="step-num">1</div><div class="step-content"><strong>Initialize:</strong> Place ⟨M⟩ on Tape 1, w on Tape 2, q₀ on Tape 3.</div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-content"><strong>Lookup:</strong> Read current state from Tape 3, current symbol from Tape 2. Search Tape 1 for matching transition.</div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-content"><strong>Execute:</strong> Write the output symbol to Tape 2, move the head on Tape 2, update state on Tape 3.</div></div>
+        <div class="step-item"><div class="step-num">4</div><div class="step-content"><strong>Halt check:</strong> If current state (Tape 3) is an accepting state of M → UTM accepts. If rejecting state → UTM rejects.</div></div>
+        <div class="step-item"><div class="step-num">5</div><div class="step-content"><strong>Loop:</strong> If M doesn't halt, UTM doesn't halt — correctly simulating M's behavior.</div></div>
+      </div>
+
+      <h3>Properties of UTM — 5 Key Points</h3>
+      <ul>
+        <li>UTM is itself a TM — proves TMs can describe and run other TMs.</li>
+        <li>L(UTM) = {⟨M,w⟩ | M accepts w} is <strong>RE but NOT Recursive</strong> — the Halting Problem itself!</li>
+        <li>UTM = theoretical basis for <strong>stored-program computers</strong> (von Neumann architecture).</li>
+        <li>Shows one fixed program can simulate all programs — the idea behind <strong>interpreters</strong>.</li>
+        <li>UTM is used directly to prove the Halting Problem is undecidable.</li>
+      </ul>
+
+      <h3>UTM vs Actual Computers</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Aspect</th><th>UTM</th><th>Real Computer</th></tr></thead>
+          <tbody>
+            <tr><td>Memory</td><td>Infinite tape</td><td>Finite (but large) RAM</td></tr>
+            <tr><td>Program</td><td>Encoded TM ⟨M⟩</td><td>Stored software</td></tr>
+            <tr><td>Execution</td><td>Simulates step-by-step</td><td>Executes instructions</td></tr>
+            <tr><td>Universality</td><td>Can simulate any TM</td><td>Can run any program</td></tr>
+            <tr><td>Decidability</td><td>Cannot decide halting</td><td>Cannot avoid infinite loops</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="conclusion">
+        <div class="def-label">✅ Conclusion</div>
+        <p>UTM is one of the most profound ideas in all of computer science: <strong>one machine to run them all</strong>. It proves that hardware and software can be separated — the same physical machine (UTM) runs different programs (encoded TMs). Every laptop you use is a physical UTM. Its existence also implies the Halting Problem is unsolvable.</p>
+      </div>
+
+    </div></div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       Q13: Variants of TM (detailed)
+       ════════════════════════════════════════════ -->
+  <div class="q-card" id="q13" data-q="13">
+    <div class="q-header" onclick="toggleQ(this)">
+      <span class="q-num">Q13</span>
+      <span class="q-title">Explain Variants of Turing Machine</span>
+      <span class="q-marks">7 marks</span>
+      <span class="q-chevron"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+    <div class="q-body"><div class="q-content">
+
+      <h2>Variants of Turing Machine — "Same Power, Different Shape"</h2>
+
+      <div class="def-box">
+        <div class="def-label">📖 The One Thing to Remember</div>
+        <p>All TM variants (except read-only TM) are <strong>computationally equivalent</strong> to the standard single-tape TM. They recognize the same class of languages. They differ only in <em>convenience</em> or <em>speed</em>, not in what they can compute. <strong>More tapes ≠ more power.</strong></p>
+      </div>
+
+      <h3>1. Multi-Tape Turing Machine — "Multiple Scratch Pads"</h3>
+      <div class="note-box">
+        <div class="def-label">📝 Description</div>
+        <p style="font-size:13.5px;color:var(--fg2);margin:0;">Has k ≥ 2 tapes, each with its own independent read/write head. Transition reads all heads at once and updates all tapes in one step. More convenient for complex tasks (e.g., keep input on Tape 1, do scratch work on Tape 2, store output on Tape 3).</p>
+      </div>
+      <div class="formal">
+δ: Q × Γᵏ → Q × Γᵏ × {L,R,S}ᵏ
+
+where k = number of tapes, S = Stay (optional: don't move this head)
+      </div>
+      <ul>
+        <li><strong>Why it's NOT more powerful:</strong> Any k-tape TM can be simulated by a 1-tape TM. Store all k tapes on one tape with separator markers. Scan back-and-forth to simulate each head. Overhead: O(t²) time.</li>
+        <li><strong>Used for:</strong> UTM (3 tapes), complex constructions.</li>
+      </ul>
+
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 500 180" width="480" style="max-width:100%;" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace" font-size="11">
+          <!-- Tape 1 -->
+          <rect x="20" y="30" width="440" height="24" rx="5" fill="#32302f" stroke="#83a598" stroke-width="1.2"/>
+          <text x="30" y="46" fill="#83a598" font-size="10" font-weight="700">Tape 1:</text>
+          <text x="90" y="46" fill="#fabd2f">a  a  b  b  B  B  B  ...</text>
+          <!-- Head 1 -->
+          <polygon points="100,30 108,22 116,30" fill="#fabd2f"/>
+
+          <!-- Tape 2 -->
+          <rect x="20" y="80" width="440" height="24" rx="5" fill="#32302f" stroke="#d79921" stroke-width="1.2"/>
+          <text x="30" y="96" fill="#d79921" font-size="10" font-weight="700">Tape 2:</text>
+          <text x="90" y="96" fill="#fe8019">X  X  Y  Y  B  B  B  ...</text>
+          <polygon points="130,80 138,72 146,80" fill="#fe8019"/>
+
+          <!-- Tape 3 -->
+          <rect x="20" y="130" width="440" height="24" rx="5" fill="#32302f" stroke="#b16286" stroke-width="1.2"/>
+          <text x="30" y="146" fill="#b16286" font-size="10" font-weight="700">Tape 3:</text>
+          <text x="90" y="146" fill="#d3869b">B  B  B  B  B  B  B  ...</text>
+
+          <!-- Control -->
+          <rect x="350" y="55" width="110" height="40" rx="8" fill="rgba(250,189,47,.1)" stroke="#fabd2f" stroke-width="1.2"/>
+          <text x="405" y="75" text-anchor="middle" fill="#fabd2f" font-size="11" font-weight="700">Control</text>
+          <text x="405" y="89" text-anchor="middle" fill="#fe8019" font-size="9">3-Tape TM</text>
+        </svg>
+        <div class="diagram-label">Figure 7: Multi-Tape TM (3 tapes)</div>
+      </div>
+
+      <h3>2. Non-Deterministic TM (NTM) — "Explore All Paths at Once"</h3>
+      <div class="note-box">
+        <div class="def-label">📝 Description</div>
+        <p style="font-size:13.5px;color:var(--fg2);margin:0;">Each (state, symbol) pair may have multiple next moves. NTM branches into all possibilities simultaneously (computation tree). Accepts if <strong>any</strong> branch accepts. Rejects only if <strong>all</strong> branches reject.</p>
+      </div>
+      <ul>
+        <li><strong>Simulation:</strong> Any NTM → 3-tape DTM using BFS over the computation tree. Time: exponential in NTM's steps.</li>
+        <li>NTM may be exponentially faster than DTM, but recognizes the same languages.</li>
+      </ul>
+
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 480 220" width="460" style="max-width:100%;" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace" font-size="11">
+          <defs>
+            <marker id="a5" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+              <polygon points="0 0, 7 2.5, 0 5" fill="#fabd2f"/>
+            </marker>
+            <marker id="a5g" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+              <polygon points="0 0, 7 2.5, 0 5" fill="#b8bb26"/>
+            </marker>
+            <marker id="a5r" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+              <polygon points="0 0, 7 2.5, 0 5" fill="#fb4934"/>
+            </marker>
+          </defs>
+
+          <!-- Root -->
+          <circle cx="240" cy="30" r="18" fill="#3c3836" stroke="#fabd2f" stroke-width="2"/>
+          <text x="240" y="35" text-anchor="middle" fill="#fabd2f" font-weight="700">q0</text>
+
+          <!-- Level 1 -->
+          <line x1="226" y1="46" x2="160" y2="80" stroke="#fabd2f" stroke-width="1.5" marker-end="url(#a5)"/>
+          <line x1="240" y1="48" x2="240" y2="80" stroke="#fabd2f" stroke-width="1.5" marker-end="url(#a5)"/>
+          <line x1="254" y1="46" x2="320" y2="80" stroke="#fabd2f" stroke-width="1.5" marker-end="url(#a5)"/>
+
+          <circle cx="160" cy="96" r="16" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+          <text x="160" y="101" text-anchor="middle" fill="#83a598" font-weight="700" font-size="10">q1</text>
+          <circle cx="240" cy="96" r="16" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+          <text x="240" y="101" text-anchor="middle" fill="#83a598" font-weight="700" font-size="10">q1</text>
+          <circle cx="320" cy="96" r="16" fill="#3c3836" stroke="#83a598" stroke-width="1.5"/>
+          <text x="320" y="101" text-anchor="middle" fill="#83a598" font-weight="700" font-size="10">q2</text>
+
+          <!-- Level 2 -->
+          <line x1="148" y1="110" x2="100" y2="150" stroke="#fabd2f" stroke-width="1.2" marker-end="url(#a5)"/>
+          <line x1="168" y1="110" x2="200" y2="150" stroke="#fabd2f" stroke-width="1.2" marker-end="url(#a5)"/>
+          <line x1="240" y1="112" x2="240" y2="150" stroke="#fabd2f" stroke-width="1.2" marker-end="url(#a5)"/>
+          <line x1="312" y1="110" x2="300" y2="150" stroke="#fabd2f" stroke-width="1.2" marker-end="url(#a5)"/>
+          <line x1="330" y1="110" x2="380" y2="150" stroke="#fabd2f" stroke-width="1.2" marker-end="url(#a5)"/>
+
+          <!-- Terminal nodes -->
+          <circle cx="100" cy="165" r="14" fill="#32302f" stroke="#fb4934" stroke-width="2"/>
+          <text x="100" y="170" text-anchor="middle" fill="#fb4934" font-size="9">rej</text>
+
+          <circle cx="200" cy="165" r="14" fill="#32302f" stroke="#b8bb26" stroke-width="2"/>
+          <circle cx="200" cy="165" r="10" fill="none" stroke="#b8bb26" stroke-width="1"/>
+          <text x="200" y="170" text-anchor="middle" fill="#b8bb26" font-size="9">acc</text>
+
+          <circle cx="240" cy="165" r="14" fill="#32302f" stroke="#fb4934" stroke-width="2"/>
+          <text x="240" y="170" text-anchor="middle" fill="#fb4934" font-size="9">loop</text>
+
+          <circle cx="300" cy="165" r="14" fill="#32302f" stroke="#b8bb26" stroke-width="2"/>
+          <circle cx="300" cy="165" r="10" fill="none" stroke="#b8bb26" stroke-width="1"/>
+          <text x="300" y="170" text-anchor="middle" fill="#b8bb26" font-size="9">acc</text>
+
+          <circle cx="380" cy="165" r="14" fill="#32302f" stroke="#fb4934" stroke-width="2"/>
+          <text x="380" y="170" text-anchor="middle" fill="#fb4934" font-size="9">rej</text>
+
+          <!-- NTM accepts label -->
+          <text x="240" y="205" text-anchor="middle" fill="#b8bb26" font-size="12" font-weight="700">NTM ACCEPTS (∃ accepting branch)</text>
+        </svg>
+        <div class="diagram-label">Figure 8: NTM Computation Tree — Accepts if any branch accepts</div>
+      </div>
+
+      <h3>3. Two-Way Infinite Tape TM</h3>
+      <ul>
+        <li>Tape extends infinitely in <strong>both left and right</strong> directions (no left end boundary).</li>
+        <li>Simulated by standard TM by "folding" the tape — one track for the original, one for the reverse direction.</li>
+        <li><strong>Equivalent</strong> to standard TM in power.</li>
+      </ul>
+
+      <h3>4. Multi-Head TM</h3>
+      <ul>
+        <li>One tape with k independent read/write heads that can move simultaneously.</li>
+        <li>Transition reads all k heads at once and updates all of them.</li>
+        <li>More efficient but same power as single-head TM.</li>
+        <li>Simulation: mark head positions on tape; simulate each head movement.</li>
+      </ul>
+
+      <h3>5. Two-Dimensional (2D) TM</h3>
+      <ul>
+        <li>Tape is a two-dimensional infinite grid (like an infinite chessboard).</li>
+        <li>Head can move Up, Down, Left, or Right.</li>
+        <li>Still equivalent to standard TM (2D grid encoded as 1D tape).</li>
+      </ul>
+
+      <h3>6. Read-Only TM (Two-Way FA)</h3>
+      <ul>
+        <li>Head can only <strong>read</strong>, never write. It can move left or right on input.</li>
+        <li>This variant is equivalent to a <strong>Finite Automaton</strong> (DFA/NFA).</li>
+        <li>Less powerful than standard TM.</li>
+      </ul>
+
+      <h3>Summary Table of All Variants</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Variant</th><th>Key Feature</th><th>Equivalent To</th><th>Time Overhead</th></tr></thead>
+          <tbody>
+            <tr><td>Multi-Tape (k tapes)</td><td>k tapes, k heads</td><td>Standard TM</td><td>O(t²)</td></tr>
+            <tr><td>Non-Deterministic</td><td>Multiple transitions</td><td>Standard TM</td><td>Exponential</td></tr>
+            <tr><td>2-Way Infinite Tape</td><td>Tape goes both ways</td><td>Standard TM</td><td>Linear</td></tr>
+            <tr><td>Multi-Head</td><td>k heads, 1 tape</td><td>Standard TM</td><td>O(t²)</td></tr>
+            <tr><td>2D Tape</td><td>Grid tape</td><td>Standard TM</td><td>Polynomial</td></tr>
+            <tr><td>Read-Only</td><td>No writes</td><td>Finite Automaton</td><td>—</td></tr>
+            <tr><td>Universal TM</td><td>Simulates any TM</td><td>Standard TM</td><td>Polynomial overhead</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="conclusion">
+        <div class="def-label">✅ Conclusion</div>
+        <p>All major TM variants (multi-tape, NTM, 2-way tape, multi-head, 2D) are equivalent in power to the standard single-tape TM. Only Read-Only TM is weaker (= FA). <strong>Memory aid:</strong> More tapes = more convenient, NOT more powerful. Church-Turing Thesis holds for all variants.</p>
+      </div>
+
+    </div></div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       Q14: Recursive and RE Languages (with full detail, closure, examples)
+       ════════════════════════════════════════════ -->
+  <div class="q-card" id="q14" data-q="14">
+    <div class="q-header" onclick="toggleQ(this)">
+      <span class="q-num">Q14</span>
+      <span class="q-title">Explain Recursive and Recursively Enumerable Languages (Complete)</span>
+      <span class="q-marks">7 marks</span>
+      <span class="q-chevron"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+    <div class="q-body"><div class="q-content">
+
+      <h2>Recursive Languages — Complete Treatment</h2>
+
+      <div class="def-box">
+        <div class="def-label">📖 Definition — "The Yes/No Machine"</div>
+        <p>A language L is <strong>Recursive (Decidable)</strong> if a TM M exists where:<br/>• w ∈ L → M <strong>halts and accepts</strong><br/>• w ∉ L → M <strong>halts and rejects</strong><br/>M is called a <strong>decider</strong> — it always gives a verdict, never gets stuck in an infinite loop.</p>
+      </div>
+
+      <h3>Characteristics — What Makes It "Recursive"</h3>
+      <ul>
+        <li>TM is guaranteed to <strong>always halt</strong> on any input — it's a total function.</li>
+        <li>There is a real program (algorithm) that solves membership in L with certainty.</li>
+        <li>Also called <strong>Turing-decidable</strong> or <strong>totally computable</strong>.</li>
+      </ul>
+
+      <h3>Closure Properties of Recursive Languages</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Operation</th><th>Closed?</th><th>Proof Idea</th></tr></thead>
+          <tbody>
+            <tr><td>Union (L₁ ∪ L₂)</td><td class="td-yes">Yes</td><td>Run M₁ on w; if reject, run M₂. Accept iff either accepts.</td></tr>
+            <tr><td>Intersection (L₁ ∩ L₂)</td><td class="td-yes">Yes</td><td>Run M₁ then M₂. Accept iff both accept.</td></tr>
+            <tr><td>Complement (L̄)</td><td class="td-yes">Yes</td><td>Swap accept/reject states of M. M always halts.</td></tr>
+            <tr><td>Concatenation</td><td class="td-yes">Yes</td><td>Try all splits of w; check each part. Enumerate splits.</td></tr>
+            <tr><td>Kleene Star</td><td class="td-yes">Yes</td><td>Enumerate decompositions; check each.</td></tr>
+            <tr><td>Homomorphism</td><td class="td-yes">Yes</td><td>Apply homomorphism then decide.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Examples of Recursive Languages</h3>
+      <div class="tags-row">
+        <span class="tag tag-green">L = {aⁿbⁿ | n ≥ 0}</span>
+        <span class="tag tag-green">L = {aⁿbⁿcⁿ | n ≥ 1}</span>
+        <span class="tag tag-green">L = {ww | w ∈ {a,b}*}</span>
+        <span class="tag tag-green">All CFLs</span>
+        <span class="tag tag-green">All Regular Languages</span>
+        <span class="tag tag-green">L = {a²ⁿbⁿ | n ≥ 1}</span>
+      </div>
+
+      <div class="section-div"><span>Recursively Enumerable (RE) Languages</span></div>
+
+      <h2>Recursively Enumerable Languages — Semi-Decidable</h2>
+
+      <div class="def-box">
+        <div class="def-label">📖 Definition — "The Maybe Machine"</div>
+        <p>A language L is <strong>Recursively Enumerable (RE)</strong> if a TM M exists where:<br/>• w ∈ L → M eventually <strong>halts and accepts</strong><br/>• w ∉ L → M <strong>rejects OR loops forever</strong> (you may never know which!)<br/>Also called <strong>Turing-recognizable</strong> or <strong>partially decidable</strong>.</p>
+      </div>
+
+      <h3>Characterizations — Four Ways to Identify RE</h3>
+      <ul>
+        <li>L is RE ⟺ L is generated by an <strong>unrestricted (Type-0) grammar</strong>.</li>
+        <li>L is RE ⟺ some TM can <strong>enumerate</strong> all strings in L (print them one by one).</li>
+        <li>L is RE AND L̄ is RE ⟺ L is <strong>Recursive</strong>.</li>
+        <li>Recursive ⊂ RE — every recursive language is also RE.</li>
+      </ul>
+
+      <h3>Closure Properties of RE Languages</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Operation</th><th>Closed?</th><th>Reason</th></tr></thead>
+          <tbody>
+            <tr><td>Union</td><td class="td-yes">Yes</td><td>Dovetail execution of M₁ and M₂</td></tr>
+            <tr><td>Intersection</td><td class="td-yes">Yes</td><td>Run M₁ then M₂ sequentially</td></tr>
+            <tr><td>Complement</td><td class="td-no">No</td><td>Complement of halting problem is not RE</td></tr>
+            <tr><td>Concatenation</td><td class="td-yes">Yes</td><td>Enumerate splits, run in parallel</td></tr>
+            <tr><td>Kleene Star</td><td class="td-yes">Yes</td><td>Enumerate decompositions</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Examples of RE but NOT Recursive Languages</h3>
+      <div class="tags-row">
+        <span class="tag tag-yellow">L = {⟨M,w⟩ | M halts on w}</span>
+        <span class="tag tag-yellow">L = {⟨M⟩ | M accepts some string}</span>
+        <span class="tag tag-yellow">Halting Problem Language</span>
+      </div>
+
+      <h3>Languages That Are NOT Even RE</h3>
+      <div class="tags-row">
+        <span class="tag tag-orange">L̄(H) = Complement of Halting Problem</span>
+        <span class="tag tag-orange">L = {⟨M⟩ | M halts on no input}</span>
+      </div>
+
+      <h3>Complete Hierarchy Diagram</h3>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 560 360" width="540" style="max-width:100%;" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace" font-size="11">
+
+          <!-- Background for all languages -->
+          <rect x="10" y="10" width="540" height="340" rx="18" fill="rgba(204,36,29,.05)" stroke="#cc241d" stroke-width="1.5" stroke-dasharray="6,3"/>
+          <text x="30" y="36" fill="#fb4934" font-size="13" font-weight="700">Non-RE Languages</text>
+          <text x="30" y="54" fill="#cc241d" font-size="11">e.g. L̄(Halting) — complement of halting problem</text>
+
+          <!-- RE box -->
+          <rect x="50" y="70" width="460" height="260" rx="16" fill="rgba(215,153,33,.05)" stroke="#d79921" stroke-width="1.5"/>
+          <text x="70" y="96" fill="#fabd2f" font-size="13" font-weight="700">Recursively Enumerable (RE)</text>
+          <text x="70" y="114" fill="#d79921" font-size="11">e.g. Halting Problem — TM accepts iff w∈L, may loop otherwise</text>
+
+          <!-- Recursive box -->
+          <rect x="100" y="130" width="360" height="170" rx="14" fill="rgba(152,151,26,.06)" stroke="#98971a" stroke-width="1.5"/>
+          <text x="120" y="155" fill="#b8bb26" font-size="12" font-weight="700">Recursive Languages</text>
+          <text x="120" y="172" fill="#98971a" font-size="11">TM always halts. e.g. {aⁿbⁿcⁿ}, {ww}</text>
+
+          <!-- CFL box -->
+          <rect x="150" y="190" width="260" height="90" rx="12" fill="rgba(104,157,106,.07)" stroke="#689d6a" stroke-width="1.5"/>
+          <text x="170" y="213" fill="#8ec07c" font-size="12" font-weight="700">Context-Free Languages</text>
+          <text x="170" y="230" fill="#689d6a" font-size="11">e.g. {aⁿbⁿ}, palindromes, balanced parens</text>
+
+          <!-- Regular box -->
+          <rect x="190" y="248" width="180" height="22" rx="8" fill="rgba(69,133,136,.1)" stroke="#458588" stroke-width="1.5"/>
+          <text x="280" y="263" text-anchor="middle" fill="#83a598" font-size="11" font-weight="700">Regular Languages</text>
+
+          <!-- RE but not Recursive label -->
+          <rect x="360" y="120" width="140" height="30" rx="6" fill="rgba(254,128,25,.1)" stroke="#fe8019" stroke-width="1"/>
+          <text x="430" y="139" text-anchor="middle" fill="#fe8019" font-size="10">RE ⊄ Recursive</text>
+          <text x="430" y="153" text-anchor="middle" fill="#fe8019" font-size="9">Halting Problem</text>
+        </svg>
+        <div class="diagram-label">Figure 9: Complete Language Hierarchy</div>
+      </div>
+
+      <h3>Key Theorems — Must Know</h3>
+
+      <div class="theorem-box">
+        <div class="def-label">📜 Theorem 1 — The Golden Rule</div>
+        <p>L is Recursive ⟺ BOTH L and L̄ are Recursively Enumerable.<br/><em>Intuition: If you can "recognize yes" AND your complement can "recognize no" — together you can always decide.</em></p>
+      </div>
+
+      <div class="theorem-box">
+        <div class="def-label">📜 Theorem 2 — The Famous Example</div>
+        <p>The Halting Problem is RE but NOT Recursive. Its complement (the "non-halting" problem) is NOT even RE.<br/><em>This is WHY complement closure fails for RE — because L̄(Halting) is not RE.</em></p>
+      </div>
+
+      <div class="theorem-box">
+        <div class="def-label">📜 Theorem 3 — The Subset Relationship</div>
+        <p>Every Recursive language is RE, but NOT every RE language is Recursive.<br/><em>Recursive ⊂ RE ⊂ All Languages.</em></p>
+      </div>
+
+      <div class="conclusion">
+        <div class="def-label">✅ Final Conclusion</div>
+        <p>Recursive languages are those for which a TM always terminates with a definite answer (yes/no). RE languages are those for which a TM can <em>confirm</em> membership but may loop forever on non-members. The distinction is fundamental to computability theory and defines the limits of what computers can solve. Problems outside RE are absolutely unsolvable by any computational model.</p>
+      </div>
+
+    </div></div>
+  </div>
+
+  <!-- Footer spacer -->
+  <div style="height:40px;"></div>
+
+</main>
+
+<!-- ═══════════════════════════════════════
+     JAVASCRIPT
+     ═══════════════════════════════════════ -->
+<script>
+/* ── Accordion Logic ── */
+function toggleQ(header) {
+  const card = header.parentElement;
+  const wasOpen = card.classList.contains('open');
+
+  // Optionally close others
+  // document.querySelectorAll('.q-card.open').forEach(c => c.classList.remove('open'));
+
+  card.classList.toggle('open', !wasOpen);
+  updateProgress();
+  updateActiveNav();
+}
+
+/* ── Progress Bar ── */
+const progressFill  = document.getElementById('progressFill');
+const progressLabel = document.getElementById('progressLabel');
+const totalQs = 14;
+
+function updateProgress() {
+  const opened = document.querySelectorAll('.q-card.open').length;
+  const pct = (opened / totalQs) * 100;
+  progressFill.style.width = pct + '%';
+  progressLabel.textContent = `${opened} / ${totalQs} read`;
+}
+
+/* ── Sidebar Navigation Build ── */
+const questions = [
+  { num:'Q1',  title:'Define TM + Construct for aⁿbⁿ' },
+  { num:'Q2',  title:'Halting Problem / Recursive Lang / Variants' },
+  { num:'Q3',  title:'PCP and Modified PCP' },
+  { num:'Q4',  title:'TM for aⁿ⁺²bⁿ' },
+  { num:'Q5',  title:'TM for aⁿbⁿcⁿ' },
+  { num:'Q6',  title:'Recursive and RE Languages' },
+  { num:'Q7',  title:'PCP and MPCP (Detailed)' },
+  { num:'Q8',  title:'Church-Turing Thesis + RE' },
+  { num:'Q9',  title:'Integer Functions / UTM' },
+  { num:'Q10', title:'DTM vs NTM + TM for ww' },
+  { num:'Q11', title:'TM for a²ⁿbⁿ with ID' },
+  { num:'Q12', title:'Universal Turing Machine' },
+  { num:'Q13', title:'Variants of TM (All)' },
+  { num:'Q14', title:'Recursive & RE Languages (Full)' },
+];
+
+const nav = document.getElementById('sidebarNav');
+
+questions.forEach((q, i) => {
+  const a = document.createElement('a');
+  a.className = 'nav-item';
+  a.href = `#q${i+1}`;
+  a.dataset.q = i+1;
+  a.innerHTML = `<span class="nav-item-num">${i+1}</span><span class="nav-item-text">${q.title}</span>`;
+  a.addEventListener('click', (e) => {
+    e.preventDefault();
+    const target = document.getElementById(`q${i+1}`);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Auto-open
+      if (!target.classList.contains('open')) {
+        target.querySelector('.q-header').click();
+      }
+    }
+    closeSidebar();
+  });
+  nav.appendChild(a);
+});
+
+function updateActiveNav() {
+  const cards = document.querySelectorAll('.q-card');
+  const items  = document.querySelectorAll('.nav-item');
+  cards.forEach((card, i) => {
+    if (items[i]) {
+      items[i].classList.toggle('active', card.classList.contains('open'));
+    }
+  });
+}
+
+/* ── Sidebar Toggle (mobile) ── */
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+const hamburger = document.getElementById('hamburger');
+
+hamburger.addEventListener('click', () => {
+  sidebar.classList.toggle('open');
+  overlay.style.display = sidebar.classList.contains('open') ? 'block' : 'none';
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+function closeSidebar() {
+  sidebar.classList.remove('open');
+  overlay.style.display = 'none';
+}
+
+/* ── Scroll-based active nav highlighting ── */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const qNum = entry.target.dataset.q;
+      document.querySelectorAll('.nav-item').forEach((item, i) => {
+        item.classList.toggle('active', (i+1) == qNum && entry.target.classList.contains('open'));
+      });
+    }
+  });
+}, { rootMargin: '-20% 0px -60% 0px', threshold: 0 });
+
+document.querySelectorAll('.q-card').forEach(card => observer.observe(card));
+
+/* ── Keyboard shortcut: O = open all, C = close all ── */
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.key === 'o' || e.key === 'O') {
+    document.querySelectorAll('.q-card:not(.open)').forEach(c => c.querySelector('.q-header').click());
+  }
+  if (e.key === 'c' || e.key === 'C') {
+    document.querySelectorAll('.q-card.open').forEach(c => c.querySelector('.q-header').click());
+  }
+});
+
+/* ── Keyboard hint ── */
+const hint = document.createElement('div');
+hint.style.cssText = `
+  position:fixed; bottom:16px; right:16px;
+  background:rgba(40,40,40,.9);
+  border:1px solid #504945;
+  border-radius:8px;
+  padding:8px 14px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:#928374;
+  z-index:300;
+  backdrop-filter:blur(8px);
+  opacity:0;
+  transition:opacity .3s;
+`;
+hint.textContent = 'O = open all · C = close all';
+document.body.appendChild(hint);
+setTimeout(() => { hint.style.opacity = '1'; }, 1000);
+setTimeout(() => { hint.style.opacity = '0'; }, 5000);
+</script>
+</body>
+</html>
