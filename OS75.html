@@ -1,0 +1,2645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AKTU OS — Unit 5: I/O Management & File System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Recursive:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg0:       #1d2021;
+    --bg0-hard:  #141617;
+    --bg1:       #282828;
+    --bg2:       #32302f;
+    --bg3:       #3c3836;
+    --bg4:       #504945;
+    --fg:        #ebdbb2;
+    --fg1:       #d5c4a1;
+    --fg2:       #bdae93;
+    --fg3:       #a89984;
+    --red:       #fb4934;
+    --green:     #b8bb26;
+    --yellow:    #fabd2f;
+    --blue:      #83a598;
+    --purple:    #d3869b;
+    --aqua:      #8ec07c;
+    --orange:    #fe8019;
+    --gray:      #928374;
+    --red-dim:   #cc241d;
+    --green-dim: #98971a;
+    --yellow-dim:#d79921;
+    --blue-dim:  #458588;
+    --purple-dim:#b16286;
+    --aqua-dim:  #689d6a;
+    --orange-dim:#d65d0e;
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+    --radius-xl: 24px;
+    --sidebar-w: 280px;
+    --topbar-h:  60px;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-body: 'Recursive', sans-serif;
+    --transition: 0.25s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg0-hard);
+    color: var(--fg);
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg1); }
+  ::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--gray); }
+
+  /* ═══════════════ TOP BAR ═══════════════ */
+  #topbar {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: var(--topbar-h);
+    background: rgba(20,22,23,0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--bg3);
+    display: flex; align-items: center;
+    padding: 0 20px 0 calc(var(--sidebar-w) + 20px);
+    z-index: 1000;
+    gap: 16px;
+  }
+
+  #hamburger {
+    display: none;
+    background: none; border: none; cursor: pointer;
+    color: var(--fg); padding: 6px; margin-right: 8px;
+  }
+
+  #topbar-title {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--yellow);
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis;
+  }
+
+  #progress-wrap {
+    flex: 1;
+    display: flex; align-items: center; gap: 10px;
+    min-width: 0;
+  }
+
+  #progress-bar-bg {
+    flex: 1;
+    height: 4px;
+    background: var(--bg3);
+    border-radius: 2px;
+    overflow: hidden;
+    min-width: 60px;
+  }
+
+  #progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--yellow-dim), var(--orange));
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  #progress-pct {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--fg3);
+    white-space: nowrap;
+  }
+
+  /* ═══════════════ SIDEBAR ═══════════════ */
+  #sidebar {
+    position: fixed; top: var(--topbar-h); left: 0; bottom: 0;
+    width: var(--sidebar-w);
+    background: var(--bg0-hard);
+    border-right: 1px solid var(--bg3);
+    overflow-y: auto;
+    z-index: 900;
+    transition: transform var(--transition);
+    padding: 16px 0 32px;
+  }
+
+  .sidebar-section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray);
+    padding: 12px 20px 6px;
+  }
+
+  .sidebar-unit-btn {
+    width: 100%;
+    background: none; border: none; cursor: pointer;
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 20px;
+    color: var(--fg2);
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    font-weight: 500;
+    text-align: left;
+    transition: all var(--transition);
+    border-left: 3px solid transparent;
+  }
+
+  .sidebar-unit-btn:hover {
+    background: var(--bg1);
+    color: var(--fg);
+    border-left-color: var(--bg4);
+  }
+
+  .sidebar-unit-btn.active {
+    background: var(--bg2);
+    color: var(--yellow);
+    border-left-color: var(--yellow);
+  }
+
+  .sidebar-unit-btn .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--bg4);
+    flex-shrink: 0;
+    transition: background var(--transition);
+  }
+
+  .sidebar-unit-btn.active .dot { background: var(--yellow); }
+
+  .nav-sub {
+    padding: 0 0 4px 32px;
+    display: none;
+  }
+
+  .nav-sub.open { display: block; }
+
+  .nav-sub a {
+    display: block;
+    color: var(--fg3);
+    font-size: 11.5px;
+    text-decoration: none;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .nav-sub a:hover { color: var(--aqua); background: var(--bg2); }
+
+  /* ═══════════════ MAIN CONTENT ═══════════════ */
+  #main {
+    margin-left: var(--sidebar-w);
+    padding-top: var(--topbar-h);
+    min-height: 100vh;
+  }
+
+  .unit-section {
+    padding: 40px 48px;
+    max-width: 960px;
+  }
+
+  .unit-header {
+    display: flex; align-items: flex-start; gap: 16px;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--bg3);
+  }
+
+  .unit-badge {
+    background: var(--bg3);
+    color: var(--yellow);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+    margin-top: 4px;
+  }
+
+  .unit-header h1 {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--fg);
+    line-height: 1.3;
+  }
+
+  .unit-header h1 span { color: var(--yellow); }
+
+  /* ═══════════════ Q&A ACCORDION ═══════════════ */
+  .qa-card {
+    background: var(--bg1);
+    border: 1px solid var(--bg3);
+    border-radius: var(--radius-lg);
+    margin-bottom: 16px;
+    overflow: hidden;
+    transition: border-color var(--transition), box-shadow var(--transition);
+  }
+
+  .qa-card:hover { border-color: var(--bg4); }
+  .qa-card.open { border-color: var(--yellow-dim); box-shadow: 0 0 0 1px var(--yellow-dim), 0 8px 32px rgba(0,0,0,0.4); }
+
+  .qa-question {
+    width: 100%; background: none; border: none; cursor: pointer;
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 20px 24px;
+    text-align: left;
+    transition: background var(--transition);
+  }
+
+  .qa-question:hover { background: var(--bg2); }
+  .qa-card.open .qa-question { background: var(--bg2); }
+
+  .q-badge {
+    flex-shrink: 0;
+    background: var(--bg3);
+    color: var(--yellow-dim);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    margin-top: 3px;
+    text-transform: uppercase;
+  }
+
+  .qa-card.open .q-badge { background: var(--yellow-dim); color: var(--bg0-hard); }
+
+  .q-text {
+    flex: 1;
+    color: var(--fg);
+    font-size: 14.5px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .q-marks {
+    flex-shrink: 0;
+    color: var(--orange);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(254,128,25,0.12);
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    margin-top: 2px;
+  }
+
+  .q-chevron {
+    flex-shrink: 0;
+    width: 20px; height: 20px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--fg3);
+    transition: transform var(--transition);
+    margin-top: 2px;
+  }
+
+  .qa-card.open .q-chevron { transform: rotate(180deg); color: var(--yellow); }
+
+  .qa-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .qa-card.open .qa-answer { max-height: 9999px; }
+
+  .answer-body {
+    padding: 8px 28px 28px;
+    border-top: 1px solid var(--bg3);
+    color: var(--fg1);
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  /* ═══════════════ ANSWER COMPONENTS ═══════════════ */
+  .ans-heading {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--yellow);
+    margin: 22px 0 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .ans-heading::before {
+    content: '';
+    display: inline-block;
+    width: 3px; height: 18px;
+    background: var(--yellow-dim);
+    border-radius: 2px;
+  }
+
+  .ans-subheading {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--orange);
+    margin: 16px 0 8px;
+  }
+
+  .def-box {
+    background: rgba(131,165,152,0.08);
+    border: 1px solid rgba(131,165,152,0.25);
+    border-left: 4px solid var(--blue);
+    border-radius: var(--radius-md);
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 13.5px;
+  }
+
+  .def-box .def-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--blue);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .note-box {
+    background: rgba(250,189,47,0.07);
+    border: 1px solid rgba(250,189,47,0.2);
+    border-left: 4px solid var(--yellow-dim);
+    border-radius: var(--radius-md);
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 13.5px;
+    color: var(--fg2);
+  }
+
+  .note-box strong { color: var(--yellow); }
+
+  .tip-box {
+    background: rgba(142,192,124,0.07);
+    border: 1px solid rgba(142,192,124,0.2);
+    border-left: 4px solid var(--aqua-dim);
+    border-radius: var(--radius-md);
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 13.5px;
+    color: var(--fg2);
+  }
+
+  .tip-box strong { color: var(--aqua); }
+
+  .ans-list {
+    margin: 10px 0 10px 20px;
+    color: var(--fg1);
+  }
+
+  .ans-list li {
+    margin: 6px 0;
+    padding-left: 4px;
+  }
+
+  .ans-list li::marker { color: var(--yellow-dim); }
+
+  .step-list {
+    list-style: none;
+    margin: 12px 0;
+    counter-reset: step-counter;
+  }
+
+  .step-list li {
+    counter-increment: step-counter;
+    display: flex; gap: 14px;
+    margin: 10px 0;
+    padding: 12px 16px;
+    background: var(--bg2);
+    border-radius: var(--radius-md);
+    font-size: 13.5px;
+  }
+
+  .step-list li::before {
+    content: counter(step-counter);
+    display: flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px;
+    background: var(--yellow-dim);
+    color: var(--bg0-hard);
+    border-radius: 50%;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .code-block {
+    background: var(--bg0-hard);
+    border: 1px solid var(--bg3);
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    margin: 14px 0;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--aqua);
+    overflow-x: auto;
+    line-height: 1.6;
+    white-space: pre;
+  }
+
+  .code-block .c-kw  { color: var(--red); }
+  .code-block .c-fn  { color: var(--yellow); }
+  .code-block .c-str { color: var(--green); }
+  .code-block .c-num { color: var(--purple); }
+  .code-block .c-cm  { color: var(--gray); }
+
+  table.ans-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  table.ans-table th {
+    background: var(--bg3);
+    color: var(--yellow);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 11px 14px;
+    text-align: left;
+  }
+
+  table.ans-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--bg3);
+    color: var(--fg1);
+    vertical-align: top;
+  }
+
+  table.ans-table tr:last-child td { border-bottom: none; }
+  table.ans-table tr:nth-child(even) td { background: rgba(50,48,47,0.5); }
+  table.ans-table td.highlight { color: var(--orange); font-family: var(--font-mono); font-weight: 700; }
+
+  .calc-box {
+    background: var(--bg0-hard);
+    border: 1px solid var(--green-dim);
+    border-radius: var(--radius-md);
+    padding: 18px 22px;
+    margin: 16px 0;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.9;
+  }
+
+  .calc-box .calc-title {
+    color: var(--green);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--bg3);
+    padding-bottom: 8px;
+  }
+
+  .calc-box .calc-step { color: var(--fg2); }
+  .calc-box .calc-arrow { color: var(--yellow-dim); }
+  .calc-box .calc-total { color: var(--green); font-weight: 700; font-size: 13px; margin-top: 8px; border-top: 1px solid var(--bg3); padding-top: 8px; }
+
+  /* RAID Badge colors */
+  .badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin: 2px 3px 2px 0;
+    letter-spacing: 0.5px;
+  }
+
+  .badge-red    { background: rgba(204,36,29,0.2);  color: var(--red); }
+  .badge-green  { background: rgba(152,151,26,0.2); color: var(--green); }
+  .badge-yellow { background: rgba(215,153,33,0.2); color: var(--yellow); }
+  .badge-blue   { background: rgba(69,133,136,0.2); color: var(--blue); }
+  .badge-purple { background: rgba(177,98,134,0.2); color: var(--purple); }
+  .badge-orange { background: rgba(214,93,14,0.2);  color: var(--orange); }
+  .badge-aqua   { background: rgba(104,157,106,0.2);color: var(--aqua); }
+
+  /* ═══════════════ SVG DIAGRAMS ═══════════════ */
+  .diagram-wrap {
+    background: var(--bg0-hard);
+    border: 1px solid var(--bg3);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin: 18px 0;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 10px;
+    overflow-x: auto;
+  }
+
+  .diagram-caption {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray);
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+
+  .diagram-wrap svg { max-width: 100%; height: auto; }
+
+  /* ═══════════════ SECTION DIVIDER ═══════════════ */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--bg3), transparent);
+    margin: 48px 0;
+  }
+
+  .subsection-tag {
+    display: inline-block;
+    background: var(--bg3);
+    color: var(--orange);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 20px;
+  }
+
+  /* ═══════════════ SIDEBAR OVERLAY ═══════════════ */
+  #sidebar-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 850;
+  }
+
+  /* ═══════════════ RESPONSIVE ═══════════════ */
+  @media (max-width: 900px) {
+    #topbar { padding-left: 16px; }
+    #hamburger { display: flex; }
+
+    #sidebar {
+      transform: translateX(-100%);
+      box-shadow: none;
+    }
+
+    #sidebar.open {
+      transform: translateX(0);
+      box-shadow: 8px 0 40px rgba(0,0,0,0.6);
+    }
+
+    #sidebar-overlay.open { display: block; }
+
+    #main { margin-left: 0; }
+    .unit-section { padding: 28px 20px; }
+  }
+
+  @media (max-width: 600px) {
+    .unit-header h1 { font-size: 20px; }
+    .unit-section { padding: 20px 14px; }
+    .answer-body { padding: 8px 16px 20px; }
+    table.ans-table { font-size: 11.5px; }
+    .calc-box { font-size: 11px; }
+  }
+
+  /* ═══════════════ ANIMATIONS ═══════════════ */
+  @keyframes fadeInUp {
+    from { opacity:0; transform: translateY(20px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  .qa-card { animation: fadeInUp 0.4s ease both; }
+
+  /* stagger */
+  .qa-card:nth-child(1)  { animation-delay: 0.05s; }
+  .qa-card:nth-child(2)  { animation-delay: 0.10s; }
+  .qa-card:nth-child(3)  { animation-delay: 0.15s; }
+  .qa-card:nth-child(4)  { animation-delay: 0.20s; }
+  .qa-card:nth-child(5)  { animation-delay: 0.25s; }
+  .qa-card:nth-child(6)  { animation-delay: 0.30s; }
+  .qa-card:nth-child(7)  { animation-delay: 0.35s; }
+  .qa-card:nth-child(8)  { animation-delay: 0.40s; }
+  .qa-card:nth-child(9)  { animation-delay: 0.45s; }
+  .qa-card:nth-child(10) { animation-delay: 0.50s; }
+
+  p { margin: 8px 0; }
+  strong { color: var(--fg); }
+  em { color: var(--yellow-dim); font-style: normal; font-weight: 600; }
+  code {
+    font-family: var(--font-mono);
+    background: var(--bg3);
+    color: var(--aqua);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 12.5px;
+  }
+
+  .pro-con-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 14px 0;
+  }
+
+  @media (max-width: 600px) {
+    .pro-con-grid { grid-template-columns: 1fr; }
+  }
+
+  .pro-box {
+    background: rgba(152,151,26,0.08);
+    border: 1px solid rgba(152,151,26,0.25);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+  }
+
+  .pro-box .pbox-label { color: var(--green); font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+
+  .con-box {
+    background: rgba(204,36,29,0.08);
+    border: 1px solid rgba(204,36,29,0.25);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+  }
+
+  .con-box .pbox-label { color: var(--red); font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+
+  .pro-box ul, .con-box ul { margin: 0; padding-left: 16px; font-size: 13px; }
+  .pro-box ul li { color: var(--fg2); margin: 4px 0; }
+  .con-box ul li { color: var(--fg2); margin: 4px 0; }
+</style>
+</head>
+<body>
+
+<!-- ══ SIDEBAR OVERLAY ══ -->
+<div id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<!-- ══ TOP BAR ══ -->
+<header id="topbar">
+  <button id="hamburger" onclick="toggleSidebar()" aria-label="Menu">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <rect y="3" width="20" height="2" rx="1" fill="currentColor"/>
+      <rect y="9" width="20" height="2" rx="1" fill="currentColor"/>
+      <rect y="15" width="20" height="2" rx="1" fill="currentColor"/>
+    </svg>
+  </button>
+  <div id="topbar-title">AKTU OS — Unit 5</div>
+  <div id="progress-wrap">
+    <div id="progress-bar-bg"><div id="progress-bar-fill"></div></div>
+    <span id="progress-pct">0%</span>
+  </div>
+</header>
+
+<!-- ══ SIDEBAR ══ -->
+<nav id="sidebar">
+  <div class="sidebar-section-label">Unit 5</div>
+
+  <button class="sidebar-unit-btn active" onclick="toggleNav('nav-disk')">
+    <span class="dot"></span>Disk Scheduling &amp; RAID
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="margin-left:auto;transition:transform 0.25s" id="icon-nav-disk"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+  <div class="nav-sub open" id="nav-disk">
+    <a href="#q1">2000-Cyl SSTF/FCFS</a>
+    <a href="#q2">I/O Buffering Notes</a>
+    <a href="#q3">Disk Storage &amp; Scheduling</a>
+    <a href="#q4">RAID Levels</a>
+    <a href="#q5">100-Track SSTF/SCAN/CSCAN/LOOK</a>
+    <a href="#q6">Buffering/Polling/DMA</a>
+  </div>
+
+  <button class="sidebar-unit-btn" onclick="toggleNav('nav-file')">
+    <span class="dot"></span>File System
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="margin-left:auto;transition:transform 0.25s" id="icon-nav-file"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+  <div class="nav-sub" id="nav-file">
+    <a href="#q7">File Allocation Methods</a>
+    <a href="#q8">Files &amp; Access Methods</a>
+    <a href="#q9">Protection &amp; Security</a>
+    <a href="#q10">File System Protection</a>
+    <a href="#q11">File Org &amp; Access</a>
+    <a href="#q12">File System Management</a>
+    <a href="#q13">Allocation Methods Org</a>
+    <a href="#q14">Directory Structure</a>
+  </div>
+</nav>
+
+<!-- ══ MAIN ══ -->
+<main id="main">
+<section class="unit-section">
+
+  <!-- ═ UNIT HEADER ═ -->
+  <div class="unit-header">
+    <div class="unit-badge">Unit 5</div>
+    <div>
+      <h1>I/O Management &amp; <span>File System</span></h1>
+      <p style="color:var(--fg3);font-size:13px;margin-top:6px;">AKTU Previous Year Questions · 7 Marks Each · Exam-Oriented</p>
+    </div>
+  </div>
+
+  <!-- ═════════════════════════════════════════
+       DISK SCHEDULING SECTION
+  ═══════════════════════════════════════════ -->
+  <div class="subsection-tag">Disk Scheduling / RAID / Buffering</div>
+
+  <!-- Q1 -->
+  <div class="qa-card" id="q1">
+    <button class="qa-question" onclick="toggleQA(this)">
+      <span class="q-badge">Q1</span>
+      <span class="q-text">A hard disk having 2000 cylinders (0–1999). Current head = 143, previous = 125, queue: 86,1470,913,1774,948,1509,1022,1750,130. Find total head movement using SSTF and FCFS Scheduling.</span>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-chevron"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    </button>
+    <div class="qa-answer">
+      <div class="answer-body">
+
+        <div class="def-box">
+          <div class="def-label">What is Disk Scheduling?</div>
+          The disk head can only be at one place at a time. When many programs want to read from different parts of the disk, the OS decides <strong>the order</strong> to serve them. Smart ordering = less head movement = faster disk.
+        </div>
+
+        <div class="ans-heading">Given Information</div>
+        <ul class="ans-list">
+          <li>Total cylinders: 0 to 1999</li>
+          <li>Current head position: <strong>143</strong></li>
+          <li>Previous head position: <strong>125</strong> (head moving in increasing direction)</li>
+          <li>Request queue: <strong>86, 1470, 913, 1774, 948, 1509, 1022, 1750, 130</strong></li>
+        </ul>
+
+        <!-- ══ FCFS ══ -->
+        <div class="ans-heading">① FCFS (First Come First Served) Scheduling</div>
+        <div class="def-box">
+          <div class="def-label">Simple Definition</div>
+          FCFS is simple: serve requests in the exact order they arrive. First request in = first served. No optimization. Like a queue at a ticket counter — you serve people in the order they arrive, even if it's not efficient.
+        </div>
+
+        <p>Service order: <code>143 → 86 → 1470 → 913 → 1774 → 948 → 1509 → 1022 → 1750 → 130</code></p>
+
+        <div class="calc-box">
+          <div class="calc-title">FCFS Calculation</div>
+          <span class="calc-step">143 → 86   </span><span class="calc-arrow">  |143 - 86|   = </span>57<br>
+          <span class="calc-step"> 86 → 1470 </span><span class="calc-arrow">  |86 - 1470|  = </span>1384<br>
+          <span class="calc-step">1470 → 913 </span><span class="calc-arrow">  |1470 - 913| = </span>557<br>
+          <span class="calc-step"> 913 → 1774</span><span class="calc-arrow">  |913 - 1774| = </span>861<br>
+          <span class="calc-step">1774 → 948 </span><span class="calc-arrow">  |1774 - 948| = </span>826<br>
+          <span class="calc-step"> 948 → 1509</span><span class="calc-arrow">  |948 - 1509| = </span>561<br>
+          <span class="calc-step">1509 → 1022</span><span class="calc-arrow">  |1509 - 1022|= </span>487<br>
+          <span class="calc-step">1022 → 1750</span><span class="calc-arrow">  |1022 - 1750|= </span>728<br>
+          <span class="calc-step">1750 → 130 </span><span class="calc-arrow">  |1750 - 130| = </span>1620<br>
+          <div class="calc-total">Total Head Movement = 57+1384+557+861+826+561+487+728+1620 = <strong>7081 cylinders</strong></div>
+        </div>
+
+        <!-- FCFS Diagram -->
+        <div class="diagram-wrap">
+          <svg width="780" height="120" viewBox="0 0 780 120" xmlns="http://www.w3.org/2000/svg">
+            <!-- Track line -->
+            <line x1="30" y1="60" x2="750" y2="60" stroke="#504945" stroke-width="2"/>
+            <!-- Tick marks and labels for key positions -->
+            <!-- positions scaled: 0→30, 1999→750, so scale=(750-30)/1999=0.36 px/cyl -->
+            <!-- pos to x: 30 + pos*0.36 -->
+            <!-- 143→81.5, 86→60.96, 1470→559.2, 913→358.7, 1774→668.7, 948→371.3, 1509→573.2, 1022→397.9, 1750→660.0, 130→76.8 -->
+            <defs>
+              <marker id="arr1" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+                <path d="M0,0 L7,3.5 L0,7 L1.5,3.5 Z" fill="#fabd2f" opacity="0.7"/>
+              </marker>
+            </defs>
+            <!-- Sequence arrows -->
+            <polyline points="81,60 61,60" stroke="#fb4934" stroke-width="1.5" fill="none" marker-end="url(#arr1)" opacity="0.8"/>
+            <polyline points="61,60 560,60" stroke="#fabd2f" stroke-width="1.5" fill="none" marker-end="url(#arr1)" opacity="0.8"/>
+            <polyline points="560,60 359,60" stroke="#fb4934" stroke-width="1.5" fill="none" marker-end="url(#arr1)" opacity="0.8"/>
+            <polyline points="359,60 669,60" stroke="#fabd2f" stroke-width="1.5" fill="none" marker-end="url(#arr1)" opacity="0.8"/>
+            <polyline points="669,60 371,60" stroke="#fb4934" stroke-width="1.5" fill="none" marker-end="url(#arr1)" opacity="0.8"/>
+            <!-- dots -->
+            <circle cx="81" cy="60" r="5" fill="#fe8019"/>
+            <circle cx="61" cy="60" r="4" fill="#83a598"/>
+            <circle cx="560" cy="60" r="4" fill="#83a598"/>
+            <circle cx="359" cy="60" r="4" fill="#83a598"/>
+            <circle cx="669" cy="60" r="4" fill="#83a598"/>
+            <!-- labels -->
+            <text x="81" y="50" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fe8019">143</text>
+            <text x="61" y="80" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#ebdbb2">86</text>
+            <text x="560" y="50" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#ebdbb2">1470</text>
+            <text x="359" y="80" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#ebdbb2">913</text>
+            <text x="669" y="50" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#ebdbb2">1774</text>
+            <text x="30" y="100" font-family="JetBrains Mono" font-size="9" fill="#928374">0</text>
+            <text x="735" y="100" font-family="JetBrains Mono" font-size="9" fill="#928374">1999</text>
+            <text x="390" y="110" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#fabd2f">FCFS — Disk Head Movement (partial view)</text>
+          </svg>
+          <p class="diagram-caption">Fig 1.1 — FCFS Disk Head Movement (cylinders 0–1999)</p>
+        </div>
+
+        <!-- ══ SSTF ══ -->
+        <div class="ans-heading">② SSTF (Shortest Seek Time First) Scheduling</div>
+        <div class="def-box">
+          <div class="def-label">Simple Definition</div>
+          SSTF always picks the closest request. At each step, look at all waiting requests and serve whichever one is nearest to the current head position. Much faster than FCFS but can starve far-away requests.
+        </div>
+
+        <p>Starting at <strong>143</strong>, we pick the nearest cylinder at each step:</p>
+
+        <div class="code-block">Queue sorted for reference: 86, 130, 913, 948, 1022, 1470, 1509, 1750, 1774
+
+Step 1: Head=143 → Nearest from queue → 130  (diff=13)
+Step 2: Head=130 → Nearest remaining → 86   (diff=44)
+Step 3: Head=86  → Nearest remaining → 913  (diff=827)
+Step 4: Head=913 → Nearest remaining → 948  (diff=35)
+Step 5: Head=948 → Nearest remaining → 1022 (diff=74)
+Step 6: Head=1022→ Nearest remaining → 1470 (diff=448)
+Step 7: Head=1470→ Nearest remaining → 1509 (diff=39)
+Step 8: Head=1509→ Nearest remaining → 1750 (diff=241)
+Step 9: Head=1750→ Nearest remaining → 1774 (diff=24)</div>
+
+        <div class="calc-box">
+          <div class="calc-title">SSTF Calculation</div>
+          <span class="calc-step">143 → 130  </span><span class="calc-arrow"> = </span>13<br>
+          <span class="calc-step">130 → 86   </span><span class="calc-arrow"> = </span>44<br>
+          <span class="calc-step"> 86 → 913  </span><span class="calc-arrow"> = </span>827<br>
+          <span class="calc-step">913 → 948  </span><span class="calc-arrow"> = </span>35<br>
+          <span class="calc-step">948 → 1022 </span><span class="calc-arrow"> = </span>74<br>
+          <span class="calc-step">1022 → 1470</span><span class="calc-arrow"> = </span>448<br>
+          <span class="calc-step">1470 → 1509</span><span class="calc-arrow"> = </span>39<br>
+          <span class="calc-step">1509 → 1750</span><span class="calc-arrow"> = </span>241<br>
+          <span class="calc-step">1750 → 1774</span><span class="calc-arrow"> = </span>24<br>
+          <div class="calc-total">Total Head Movement = 13+44+827+35+74+448+39+241+24 = <strong>1745 cylinders</strong></div>
+        </div>
+
+        <div class="note-box"><strong>Conclusion:</strong> SSTF (1745) is far more efficient than FCFS (7081) for this queue — nearly 4× reduction in total head movement. However SSTF can cause starvation for cylinders far from current head position.</div>
+
+        <table class="ans-table">
+          <thead><tr><th>Algorithm</th><th>Service Order</th><th>Total Movement</th></tr></thead>
+          <tbody>
+            <tr><td>FCFS</td><td>143→86→1470→913→1774→948→1509→1022→1750→130</td><td class="highlight">7081</td></tr>
+            <tr><td>SSTF</td><td>143→130→86→913→948→1022→1470→1509→1750→1774</td><td class="highlight">1745</td></tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="qa-card" id="q2">
+    <button class="qa-question" onclick="toggleQA(this)">
+      <span class="q-badge">Q2</span>
+      <span class="q-text">Write short notes on: (a) I/O Buffering &nbsp;&nbsp; (b) Disk Storage and Disk Scheduling</span>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-chevron"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    </button>
+    <div class="qa-answer">
+      <div class="answer-body">
+
+        <div class="ans-heading">(a) I/O Buffering</div>
+        <div class="def-box">
+          <div class="def-label">What is Buffering?</div>
+          <strong>Buffering</strong> means temporarily holding data in memory while it moves between devices. Think of it like a waiting room — because different devices work at different speeds, the buffer catches and holds data so nothing gets lost.
+        </div>
+
+        <div class="ans-subheading">Why Buffering is Needed?</div>
+        <ul class="ans-list">
+          <li><strong>Speed problem:</strong> CPU is super fast, I/O devices are slow. Buffer lets CPU keep working while slow device finishes.</li>
+          <li><strong>Smooth data flow:</strong> Without buffer, fast device has to wait for slow device (wastes time).</li>
+          <li><strong>Block storage:</strong> Disks read/write data in chunks (blocks), not single bytes. Buffer collects chunks so nothing is wasted.</li>
+          <li><strong>Decoupling:</strong> Lets the producer (sender) and consumer (receiver) work at their own pace without waiting for each other.</li>
+        </ul>
+
+        <div class="ans-subheading">Types of Buffering</div>
+
+        <div class="diagram-wrap">
+          <svg width="700" height="250" viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="a2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 L1.5,4 Z" fill="#83a598"/>
+              </marker>
+            </defs>
+            <!-- Single Buffer -->
+            <text x="10" y="20" font-family="JetBrains Mono" font-size="11" fill="#fabd2f" font-weight="700">① Single Buffer</text>
+            <rect x="10" y="30" width="80" height="40" rx="6" fill="#32302f" stroke="#83a598" stroke-width="1.5"/>
+            <text x="50" y="55" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#83a598">Input</text>
+            <line x1="90" y1="50" x2="130" y2="50" stroke="#83a598" stroke-width="1.5" marker-end="url(#a2)"/>
+            <rect x="130" y="30" width="80" height="40" rx="6" fill="#3c3836" stroke="#fabd2f" stroke-width="1.5"/>
+            <text x="170" y="55" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#fabd2f">Buffer</text>
+            <line x1="210" y1="50" x2="250" y2="50" stroke="#83a598" stroke-width="1.5" marker-end="url(#a2)"/>
+            <rect x="250" y="30" width="80" height="40" rx="6" fill="#32302f" stroke="#83a598" stroke-width="1.5"/>
+            <text x="290" y="55" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#83a598">Process</text>
+
+            <!-- Double Buffer -->
+            <text x="10" y="110" font-family="JetBrains Mono" font-size="11" fill="#fabd2f" font-weight="700">② Double Buffer</text>
+            <rect x="10" y="120" width="80" height="40" rx="6" fill="#32302f" stroke="#83a598" stroke-width="1.5"/>
+            <text x="50" y="145" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#83a598">Input</text>
+            <line x1="90" y1="133" x2="130" y2="130" stroke="#83a598" stroke-width="1.5" marker-end="url(#a2)"/>
+            <line x1="90" y1="147" x2="130" y2="150" stroke="#83a598" stroke-width="1.5" marker-end="url(#a2)"/>
+            <rect x="130" y="118" width="70" height="30" rx="5" fill="#3c3836" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="165" y="138" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fe8019">Buf A</text>
+            <rect x="130" y="152" width="70" height="30" rx="5" fill="#3c3836" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="165" y="172" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fe8019">Buf B</text>
+            <line x1="200" y1="138" x2="240" y2="145" stroke="#83a598" stroke-width="1.5" marker-end="url(#a2)"/>
+            <line x1="200" y1="167" x2="240" y2="155" stroke="#83a598" stroke-width="1.5" marker-end="url(#a2)"/>
+            <rect x="240" y="128" width="80" height="34" rx="6" fill="#32302f" stroke="#83a598" stroke-width="1.5"/>
+            <text x="280" y="149" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#83a598">Process</text>
+            <text x="350" y="148" font-family="Recursive" font-size="11" fill="#a89984">← While one buffer fills,</text>
+            <text x="350" y="164" font-family="Recursive" font-size="11" fill="#a89984">   process reads the other</text>
+
+            <!-- Circular Buffer -->
+            <text x="10" y="215" font-family="JetBrains Mono" font-size="11" fill="#fabd2f" font-weight="700">③ Circular (Ring) Buffer</text>
+            <text x="10" y="235" font-family="Recursive" font-size="12" fill="#a89984">Multiple buffers in a circular queue — producer writes to next free slot, consumer reads from oldest filled slot</text>
+          </svg>
+          <p class="diagram-caption">Fig 2.1 — Types of I/O Buffering</p>
+        </div>
+
+        <table class="ans-table">
+          <thead><tr><th>Type</th><th>Description</th><th>Use Case</th></tr></thead>
+          <tbody>
+            <tr><td>Single Buffer</td><td>One buffer shared between I/O and process</td><td>Simple sequential reads</td></tr>
+            <tr><td>Double Buffer</td><td>Two alternating buffers — one fills while other is consumed</td><td>Continuous streaming</td></tr>
+            <tr><td>Circular Buffer</td><td>N buffers in a ring; producer-consumer model</td><td>Real-time audio, network</td></tr>
+            <tr><td>Buffer Pool</td><td>OS maintains a pool of buffers for all processes</td><td>General OS I/O subsystem</td></tr>
+          </tbody>
+        </table>
+
+        <div class="ans-heading">(b) Disk Storage and Disk Scheduling</div>
+
+        <div class="ans-subheading">Disk Storage Structure</div>
+        <div class="def-box">
+          <div class="def-label">Definition</div>
+          A hard disk stores data on circular magnetic platters divided into concentric rings called <em>tracks</em>, which are further divided into <em>sectors</em>. Multiple platters on a common spindle form <em>cylinders</em>.
+        </div>
+
+        <div class="diagram-wrap">
+          <svg width="340" height="220" viewBox="0 0 340 220" xmlns="http://www.w3.org/2000/svg">
+            <!-- Platter representation -->
+            <ellipse cx="170" cy="110" rx="120" ry="35" fill="none" stroke="#504945" stroke-width="2"/>
+            <ellipse cx="170" cy="110" rx="90" ry="26" fill="none" stroke="#3c3836" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <ellipse cx="170" cy="110" rx="60" ry="17" fill="none" stroke="#3c3836" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <ellipse cx="170" cy="110" rx="30" ry="9" fill="none" stroke="#3c3836" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <!-- Sector lines -->
+            <line x1="170" y1="75" x2="260" y2="105" stroke="#3c3836" stroke-width="1"/>
+            <line x1="170" y1="75" x2="80" y2="105" stroke="#3c3836" stroke-width="1"/>
+            <line x1="170" y1="145" x2="260" y2="115" stroke="#3c3836" stroke-width="1"/>
+            <line x1="170" y1="145" x2="80" y2="115" stroke="#3c3836" stroke-width="1"/>
+            <!-- Spindle -->
+            <ellipse cx="170" cy="110" rx="10" ry="3" fill="#fabd2f" opacity="0.7"/>
+            <!-- Labels -->
+            <text x="268" y="105" font-family="JetBrains Mono" font-size="10" fill="#fe8019">Track</text>
+            <text x="268" y="119" font-family="JetBrains Mono" font-size="10" fill="#83a598">Sector</text>
+            <text x="200" y="88" font-family="JetBrains Mono" font-size="10" fill="#b8bb26">Cylinder</text>
+            <!-- Arm -->
+            <line x1="170" y1="110" x2="290" y2="60" stroke="#fabd2f" stroke-width="2"/>
+            <rect x="285" y="55" width="20" height="10" rx="3" fill="#fabd2f" opacity="0.8"/>
+            <text x="295" y="48" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fabd2f">R/W Head</text>
+            <text x="170" y="200" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#928374">Fig 2.2 — Hard Disk Structure</text>
+          </svg>
+          <p class="diagram-caption">Fig 2.2 — Hard Disk Anatomy: Tracks, Sectors, Cylinders</p>
+        </div>
+
+        <div class="ans-subheading">Disk Access Time Components</div>
+        <ul class="ans-list">
+          <li><strong>Seek Time:</strong> Time to move head to target cylinder (most significant)</li>
+          <li><strong>Rotational Latency:</strong> Wait for target sector to rotate under head</li>
+          <li><strong>Transfer Time:</strong> Actual data transfer time</li>
+        </ul>
+        <p style="font-family:var(--font-mono);color:var(--aqua);background:var(--bg0-hard);padding:10px 14px;border-radius:8px;font-size:12.5px;">
+          Total Access Time = Seek Time + Rotational Latency + Transfer Time
+        </p>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="qa-card" id="q3">
+    <button class="qa-question" onclick="toggleQA(this)">
+      <span class="q-badge">Q3</span>
+      <span class="q-text">Explain Disk Storage and Disk Scheduling in detail.</span>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-chevron"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    </button>
+    <div class="qa-answer">
+      <div class="answer-body">
+
+        <div class="ans-heading">Disk Storage</div>
+        <div class="def-box">
+          <div class="def-label">What is Disk Storage?</div>
+          A hard disk stores data permanently on spinning magnetic platters. The data is arranged in circular rings called <strong>tracks</strong>, each track is divided into <strong>sectors</strong> (smallest storage unit), and all same-position tracks across multiple platters form a <strong>cylinder</strong>.
+        </div>
+
+        <div class="ans-subheading">Physical Structure</div>
+        <ul class="ans-list">
+          <li><strong>Platter:</strong> Circular magnetic disk coated with magnetic material</li>
+          <li><strong>Track:</strong> Concentric ring on a platter where data is written</li>
+          <li><strong>Sector:</strong> Smallest unit of storage on a track (typically 512 bytes or 4KB)</li>
+          <li><strong>Cylinder:</strong> All tracks at the same radial distance across all platters</li>
+          <li><strong>Read/Write Head:</strong> Electromagnetic component that reads/writes data</li>
+        </ul>
+
+        <div class="diagram-wrap">
+          <svg width="640" height="180" viewBox="0 0 640 180" xmlns="http://www.w3.org/2000/svg">
+            <!-- Cylinder view - 3 platters stacked -->
+            <rect x="20" y="10" width="200" height="50" rx="4" fill="#32302f" stroke="#504945" stroke-width="1.5"/>
+            <rect x="20" y="75" width="200" height="50" rx="4" fill="#32302f" stroke="#504945" stroke-width="1.5"/>
+            <rect x="20" y="140" width="200" height="30" rx="4" fill="#32302f" stroke="#504945" stroke-width="1.5"/>
+            <text x="120" y="40" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">Platter 1</text>
+            <text x="120" y="105" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">Platter 2</text>
+            <text x="120" y="158" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">Platter 3</text>
+            <!-- spindle -->
+            <line x1="120" y1="5" x2="120" y2="175" stroke="#fabd2f" stroke-width="3" opacity="0.6"/>
+            <text x="135" y="175" font-family="JetBrains Mono" font-size="9" fill="#fabd2f">Spindle</text>
+            <!-- cylinder brace -->
+            <line x1="240" y1="25" x2="260" y2="25" stroke="#b8bb26" stroke-width="1.5"/>
+            <line x1="240" y1="100" x2="260" y2="100" stroke="#b8bb26" stroke-width="1.5"/>
+            <line x1="260" y1="25" x2="260" y2="100" stroke="#b8bb26" stroke-width="1.5"/>
+            <text x="265" y="67" font-family="JetBrains Mono" font-size="10" fill="#b8bb26">Cylinder</text>
+
+            <!-- Sector diagram on right -->
+            <circle cx="480" cy="90" r="70" fill="none" stroke="#504945" stroke-width="2"/>
+            <circle cx="480" cy="90" r="45" fill="none" stroke="#504945" stroke-width="1.5" stroke-dasharray="4,4"/>
+            <circle cx="480" cy="90" r="20" fill="#1d2021" stroke="#504945" stroke-width="1"/>
+            <!-- Sector dividing lines -->
+            <line x1="480" y1="20" x2="480" y2="160" stroke="#3c3836" stroke-width="1"/>
+            <line x1="410" y1="90" x2="550" y2="90" stroke="#3c3836" stroke-width="1"/>
+            <line x1="430.6" y1="40.6" x2="529.4" y2="139.4" stroke="#3c3836" stroke-width="1"/>
+            <line x1="529.4" y1="40.6" x2="430.6" y2="139.4" stroke="#3c3836" stroke-width="1"/>
+            <!-- Highlight one sector -->
+            <path d="M480,90 L524,54 A70,70 0 0,1 550,90 Z" fill="rgba(254,128,25,0.15)" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="530" y="75" font-family="JetBrains Mono" font-size="9" fill="#fe8019">Sector</text>
+            <text x="492" y="65" font-family="JetBrains Mono" font-size="9" fill="#83a598">Track</text>
+            <text x="480" y="170" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#928374">Top View — Tracks &amp; Sectors</text>
+          </svg>
+          <p class="diagram-caption">Fig 3.1 — Disk Structure: Platter Stack (left) and Track/Sector View (right)</p>
+        </div>
+
+        <div class="ans-heading">Disk Scheduling Algorithms</div>
+        <p>The OS must decide the order of serving multiple disk I/O requests. The goal is to minimize total head movement and improve throughput.</p>
+
+        <div class="ans-subheading">1. FCFS — First Come First Served</div>
+        <ul class="ans-list">
+          <li>Requests served in order of arrival</li>
+          <li>Fair but highly inefficient; no optimization</li>
+          <li>May result in a "wild swing" pattern</li>
+        </ul>
+
+        <div class="ans-subheading">2. SSTF — Shortest Seek Time First</div>
+        <ul class="ans-list">
+          <li>Serves the pending request closest to current head</li>
+          <li>Reduces average seek time significantly</li>
+          <li><strong>Problem:</strong> Starvation of far cylinders (they keep getting skipped)</li>
+        </ul>
+
+        <div class="ans-subheading">3. SCAN (Elevator Algorithm)</div>
+        <ul class="ans-list">
+          <li>Head moves in one direction serving all requests, then reverses</li>
+          <li>Like an elevator — goes up, then comes down</li>
+          <li>No starvation; good for heavily loaded disks</li>
+        </ul>
+
+        <div class="ans-subheading">4. C-SCAN (Circular SCAN)</div>
+        <ul class="ans-list">
+          <li>Head moves in one direction only; when it reaches the end, it returns to start without serving</li>
+          <li>More uniform wait time than SCAN</li>
+        </ul>
+
+        <div class="ans-subheading">5. LOOK / C-LOOK</div>
+        <ul class="ans-list">
+          <li>Optimized SCAN/C-SCAN: head only goes as far as the last pending request, not to the disk end</li>
+          <li>Most practical and efficient</li>
+        </ul>
+
+        <table class="ans-table">
+          <thead><tr><th>Algorithm</th><th>Order</th><th>Starvation</th><th>Performance</th></tr></thead>
+          <tbody>
+            <tr><td>FCFS</td><td>Arrival order</td><td>No</td><td>Poor</td></tr>
+            <tr><td>SSTF</td><td>Nearest first</td><td>Yes</td><td>Good avg</td></tr>
+            <tr><td>SCAN</td><td>Bidirectional sweep</td><td>No</td><td>Good</td></tr>
+            <tr><td>C-SCAN</td><td>Unidirectional + jump</td><td>No</td><td>Very Good</td></tr>
+            <tr><td>LOOK/C-LOOK</td><td>Up to last request</td><td>No</td><td>Best</td></tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="qa-card" id="q4">
+    <button class="qa-question" onclick="toggleQA(this)">
+      <span class="q-badge">Q4</span>
+      <span class="q-text">Explain RAID and its characteristics. Also explain various RAID levels with their advantages and disadvantages.</span>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-chevron"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    </button>
+    <div class="qa-answer">
+      <div class="answer-body">
+
+        <div class="def-box">
+          <div class="def-label">What is RAID?</div>
+          <strong>RAID (Redundant Array of Independent Disks)</strong> means using <strong>multiple disks together</strong> as if they were one. This gives you either <em>faster speed</em> (by splitting data across disks), <em>safety from disk failure</em> (by keeping copies), or <em>both</em> — depending on the RAID level you choose.
+        </div>
+
+        <div class="ans-heading">Key RAID Characteristics</div>
+        <ul class="ans-list">
+          <li><strong>Striping:</strong> Data split across multiple disks for parallel I/O → faster read/write</li>
+          <li><strong>Mirroring:</strong> Exact duplicate copies on separate disks → fault tolerance</li>
+          <li><strong>Parity:</strong> Error correction data stored to reconstruct lost data</li>
+          <li><strong>Redundancy:</strong> System can recover if one (or more) disks fail</li>
+        </ul>
+
+        <!-- RAID Levels -->
+        <div class="ans-heading">RAID Levels</div>
+
+        <!-- RAID 0 -->
+        <div class="ans-subheading">RAID 0 — Striping (No Redundancy)</div>
+        <div class="diagram-wrap">
+          <svg width="380" height="110" viewBox="0 0 380 110" xmlns="http://www.w3.org/2000/svg">
+            <text x="190" y="16" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#fabd2f" font-weight="700">RAID 0 — Data Striping</text>
+            <!-- Data blocks -->
+            <rect x="10" y="30" width="80" height="25" rx="4" fill="rgba(254,128,25,0.2)" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="50" y="47" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#fe8019">A1 A3 A5</text>
+            <rect x="10" y="60" width="80" height="25" rx="4" fill="rgba(254,128,25,0.2)" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="50" y="77" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#fe8019">A7 A9 ...</text>
+            <text x="50" y="100" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">Disk 1</text>
+
+            <rect x="110" y="30" width="80" height="25" rx="4" fill="rgba(131,165,152,0.2)" stroke="#83a598" stroke-width="1.5"/>
+            <text x="150" y="47" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#83a598">A2 A4 A6</text>
+            <rect x="110" y="60" width="80" height="25" rx="4" fill="rgba(131,165,152,0.2)" stroke="#83a598" stroke-width="1.5"/>
+            <text x="150" y="77" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#83a598">A8 A10...</text>
+            <text x="150" y="100" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">Disk 2</text>
+
+            <text x="220" y="55" font-family="Recursive" font-size="12" fill="#a89984">✓ Fast (parallel R/W)</text>
+            <text x="220" y="75" font-family="Recursive" font-size="12" fill="#fb4934">✗ No fault tolerance</text>
+            <text x="220" y="95" font-family="Recursive" font-size="12" fill="#a89984">Capacity = N × disk</text>
+          </svg>
+          <p class="diagram-caption">Fig 4.1 — RAID 0: Striping across 2 disks</p>
+        </div>
+        <div class="pro-con-grid">
+          <div class="pro-box"><div class="pbox-label">Advantages</div><ul><li>Maximum read/write performance</li><li>Full capacity utilization</li></ul></div>
+          <div class="con-box"><div class="pbox-label">Disadvantages</div><ul><li>No redundancy — one disk fail = all data lost</li><li>Not suitable for critical data</li></ul></div>
+        </div>
+
+        <!-- RAID 1 -->
+        <div class="ans-subheading">RAID 1 — Mirroring</div>
+        <div class="diagram-wrap">
+          <svg width="380" height="110" viewBox="0 0 380 110" xmlns="http://www.w3.org/2000/svg">
+            <text x="190" y="16" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#fabd2f" font-weight="700">RAID 1 — Mirroring</text>
+            <rect x="10" y="30" width="80" height="60" rx="4" fill="rgba(184,187,38,0.15)" stroke="#b8bb26" stroke-width="1.5"/>
+            <text x="50" y="55" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#b8bb26">Data</text>
+            <text x="50" y="72" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#b8bb26">A1...An</text>
+            <text x="50" y="100" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">Disk 1</text>
+            <!-- mirror arrow -->
+            <line x1="100" y1="60" x2="130" y2="60" stroke="#928374" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <text x="115" y="54" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#928374">copy</text>
+            <rect x="130" y="30" width="80" height="60" rx="4" fill="rgba(184,187,38,0.15)" stroke="#b8bb26" stroke-width="1.5"/>
+            <text x="170" y="55" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#b8bb26">Mirror</text>
+            <text x="170" y="72" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#b8bb26">A1...An</text>
+            <text x="170" y="100" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">Disk 2</text>
+            <text x="240" y="50" font-family="Recursive" font-size="12" fill="#a89984">✓ High fault tolerance</text>
+            <text x="240" y="70" font-family="Recursive" font-size="12" fill="#fb4934">✗ 50% capacity waste</text>
+          </svg>
+          <p class="diagram-caption">Fig 4.2 — RAID 1: Full disk mirroring</p>
+        </div>
+        <div class="pro-con-grid">
+          <div class="pro-box"><div class="pbox-label">Advantages</div><ul><li>High fault tolerance (survives 1 disk failure)</li><li>Fast read (reads from both disks)</li></ul></div>
+          <div class="con-box"><div class="pbox-label">Disadvantages</div><ul><li>50% storage efficiency (high cost)</li><li>Write speed same as single disk</li></ul></div>
+        </div>
+
+        <!-- RAID 4 and 5 -->
+        <div class="ans-subheading">RAID 4 — Block-Level Striping with Dedicated Parity</div>
+        <ul class="ans-list">
+          <li>Data striped across N-1 disks; one dedicated parity disk</li>
+          <li>Parity = XOR of corresponding blocks from data disks</li>
+          <li><strong>Problem:</strong> Parity disk becomes a bottleneck on every write</li>
+        </ul>
+
+        <div class="ans-subheading">RAID 5 — Distributed Parity (Most Popular)</div>
+        <div class="diagram-wrap">
+          <svg width="480" height="130" viewBox="0 0 480 130" xmlns="http://www.w3.org/2000/svg">
+            <text x="240" y="16" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#fabd2f" font-weight="700">RAID 5 — Distributed Parity</text>
+            <!-- 3 disks + parity distributed -->
+            <rect x="20" y="30" width="70" height="80" rx="5" fill="#1d2021" stroke="#504945" stroke-width="1.5"/>
+            <rect x="22" y="32" width="66" height="18" rx="3" fill="rgba(254,128,25,0.2)" stroke="#fe8019" stroke-width="1"/>
+            <text x="55" y="45" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fe8019">A1</text>
+            <rect x="22" y="54" width="66" height="18" rx="3" fill="rgba(131,165,152,0.2)" stroke="#83a598" stroke-width="1"/>
+            <text x="55" y="67" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">B1</text>
+            <rect x="22" y="76" width="66" height="18" rx="3" fill="rgba(211,134,155,0.2)" stroke="#d3869b" stroke-width="1"/>
+            <text x="55" y="89" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#d3869b">Pp</text>
+            <text x="55" y="120" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#928374">Disk 1</text>
+
+            <rect x="110" y="30" width="70" height="80" rx="5" fill="#1d2021" stroke="#504945" stroke-width="1.5"/>
+            <rect x="112" y="32" width="66" height="18" rx="3" fill="rgba(254,128,25,0.2)" stroke="#fe8019" stroke-width="1"/>
+            <text x="145" y="45" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fe8019">A2</text>
+            <rect x="112" y="54" width="66" height="18" rx="3" fill="rgba(211,134,155,0.2)" stroke="#d3869b" stroke-width="1"/>
+            <text x="145" y="67" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#d3869b">Bp</text>
+            <rect x="112" y="76" width="66" height="18" rx="3" fill="rgba(184,187,38,0.2)" stroke="#b8bb26" stroke-width="1"/>
+            <text x="145" y="89" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#b8bb26">C1</text>
+            <text x="145" y="120" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#928374">Disk 2</text>
+
+            <rect x="200" y="30" width="70" height="80" rx="5" fill="#1d2021" stroke="#504945" stroke-width="1.5"/>
+            <rect x="202" y="32" width="66" height="18" rx="3" fill="rgba(211,134,155,0.2)" stroke="#d3869b" stroke-width="1"/>
+            <text x="235" y="45" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#d3869b">Ap</text>
+            <rect x="202" y="54" width="66" height="18" rx="3" fill="rgba(131,165,152,0.2)" stroke="#83a598" stroke-width="1"/>
+            <text x="235" y="67" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">B2</text>
+            <rect x="202" y="76" width="66" height="18" rx="3" fill="rgba(184,187,38,0.2)" stroke="#b8bb26" stroke-width="1"/>
+            <text x="235" y="89" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#b8bb26">C2</text>
+            <text x="235" y="120" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#928374">Disk 3</text>
+
+            <!-- legend -->
+            <rect x="310" y="40" width="14" height="10" rx="2" fill="rgba(254,128,25,0.3)" stroke="#fe8019"/>
+            <text x="330" y="50" font-family="JetBrains Mono" font-size="9" fill="#a89984">Data Block</text>
+            <rect x="310" y="58" width="14" height="10" rx="2" fill="rgba(211,134,155,0.3)" stroke="#d3869b"/>
+            <text x="330" y="68" font-family="JetBrains Mono" font-size="9" fill="#a89984">Parity Block</text>
+            <text x="310" y="90" font-family="Recursive" font-size="11" fill="#b8bb26">Parity is distributed</text>
+            <text x="310" y="106" font-family="Recursive" font-size="11" fill="#b8bb26">across all disks →</text>
+            <text x="310" y="122" font-family="Recursive" font-size="11" fill="#b8bb26">no bottleneck!</text>
+          </svg>
+          <p class="diagram-caption">Fig 4.3 — RAID 5: Distributed parity across 3 disks</p>
+        </div>
+        <div class="pro-con-grid">
+          <div class="pro-box"><div class="pbox-label">Advantages</div><ul><li>Good read performance (parallel)</li><li>Tolerates 1 disk failure</li><li>Better write than RAID 4 (no bottleneck)</li></ul></div>
+          <div class="con-box"><div class="pbox-label">Disadvantages</div><ul><li>Complex parity computation</li><li>Slow write (XOR for every write)</li><li>Rebuild time is long on large disks</li></ul></div>
+        </div>
+
+        <!-- RAID 6 and RAID 10 -->
+        <div class="ans-subheading">RAID 6 — Double Parity</div>
+        <ul class="ans-list">
+          <li>Like RAID 5 but with <strong>two independent parity blocks</strong> per stripe</li>
+          <li>Can survive <strong>two simultaneous disk failures</strong></li>
+          <li>Requires minimum 4 disks; write overhead is higher</li>
+        </ul>
+
+        <div class="ans-subheading">RAID 10 (1+0) — Striped Mirrors</div>
+        <ul class="ans-list">
+          <li>Combination of RAID 1 (mirroring) + RAID 0 (striping)</li>
+          <li>High performance AND high fault tolerance</li>
+          <li>Requires minimum 4 disks; 50% efficiency</li>
+          <li>Most used in enterprise databases</li>
+        </ul>
+
+        <table class="ans-table">
+          <thead><tr><th>Level</th><th>Technique</th><th>Min Disks</th><th>Fault Tolerance</th><th>Efficiency</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge-red">RAID 0</span></td><td>Striping</td><td>2</td><td>None</td><td>100%</td></tr>
+            <tr><td><span class="badge badge-green">RAID 1</span></td><td>Mirroring</td><td>2</td><td>1 disk</td><td>50%</td></tr>
+            <tr><td><span class="badge badge-yellow">RAID 4</span></td><td>Block Stripe + Dedicated Parity</td><td>3</td><td>1 disk</td><td>(N-1)/N</td></tr>
+            <tr><td><span class="badge badge-blue">RAID 5</span></td><td>Block Stripe + Distributed Parity</td><td>3</td><td>1 disk</td><td>(N-1)/N</td></tr>
+            <tr><td><span class="badge badge-purple">RAID 6</span></td><td>Double Parity</td><td>4</td><td>2 disks</td><td>(N-2)/N</td></tr>
+            <tr><td><span class="badge badge-orange">RAID 10</span></td><td>Stripe of Mirrors</td><td>4</td><td>1/mirror group</td><td>50%</td></tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="qa-card" id="q5">
+    <button class="qa-question" onclick="toggleQA(this)">
+      <span class="q-badge">Q5</span>
+      <span class="q-text">Disk with 100 tracks. Seek sequence: 45,20,90,10,50,60,80,25,70. Initial head = 49. Calculate total head movement using SSTF, SCAN, CSCAN, LOOK.</span>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-chevron"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    </button>
+    <div class="qa-answer">
+      <div class="answer-body">
+
+        <div class="note-box"><strong>Given:</strong> Tracks 0–99 | Head starts at 49 (moving towards higher cylinders) | Queue: 45, 20, 90, 10, 50, 60, 80, 25, 70</div>
+
+        <!-- SSTF -->
+        <div class="ans-heading">① SSTF Scheduling</div>
+        <div class="code-block">Sorted queue: 10, 20, 25, 45, 50, 60, 70, 80, 90
+Head = 49
+
+Step 1: 49 → 50  (diff = 1)
+Step 2: 50 → 45  (diff = 5)
+Step 3: 45 → 60  (diff = 15)   ← nearest remaining
+Step 4: 60 → 70  (diff = 10)
+Step 5: 70 → 80  (diff = 10)
+Step 6: 80 → 90  (diff = 10)
+Step 7: 90 → 25  (diff = 65)
+Step 8: 25 → 20  (diff = 5)
+Step 9: 20 → 10  (diff = 10)</div>
+        <div class="calc-box">
+          <div class="calc-title">SSTF Total</div>
+          1 + 5 + 15 + 10 + 10 + 10 + 65 + 5 + 10
+          <div class="calc-total">= <strong>131 cylinders</strong></div>
+        </div>
+
+        <!-- SCAN -->
+        <div class="ans-heading">② SCAN (Elevator) Scheduling</div>
+        <div class="def-box">
+          <div class="def-label">SCAN Rule — Think: Elevator</div>
+          The head moves in one direction (say, increasing), serves all requests on the way, hits the end (track 99), then reverses and serves requests going back. Just like an elevator going up, then coming back down.
+        </div>
+        <div class="code-block">Head = 49, Direction = High (→)
+
+Going HIGH: 49 → 50 → 60 → 70 → 80 → 90 → [end:99]
+Reverse LOW: 99 → 45 → 25 → 20 → 10</div>
+        <div class="calc-box">
+          <div class="calc-title">SCAN Calculation</div>
+          <span class="calc-step">49→50  </span>= 1<br>
+          <span class="calc-step">50→60  </span>= 10<br>
+          <span class="calc-step">60→70  </span>= 10<br>
+          <span class="calc-step">70→80  </span>= 10<br>
+          <span class="calc-step">80→90  </span>= 10<br>
+          <span class="calc-step">90→99  </span>= 9  (reach end)<br>
+          <span class="calc-step">99→45  </span>= 54<br>
+          <span class="calc-step">45→25  </span>= 20<br>
+          <span class="calc-step">25→20  </span>= 5<br>
+          <span class="calc-step">20→10  </span>= 10<br>
+          <div class="calc-total">Total = 1+10+10+10+10+9+54+20+5+10 = <strong>139 cylinders</strong></div>
+        </div>
+
+        <!-- CSCAN -->
+        <div class="ans-heading">③ C-SCAN Scheduling</div>
+        <div class="def-box">
+          <div class="def-label">C-SCAN Rule — One-Way Only</div>
+          Head moves only towards higher tracks, serves all requests, then <strong>jumps back to 0 without serving anything</strong> on the way back, and starts again. Like a typewriter carriage — goes one way, snaps back to start.
+        </div>
+        <div class="code-block">Head = 49, Direction = High only (→)
+
+Going HIGH: 49 → 50 → 60 → 70 → 80 → 90 → [end:99]
+Jump to 0 (no service), then:
+        0 → 10 → 20 → 25 → 45</div>
+        <div class="calc-box">
+          <div class="calc-title">C-SCAN Calculation</div>
+          <span class="calc-step">49→50   </span>= 1<br>
+          <span class="calc-step">50→60   </span>= 10<br>
+          <span class="calc-step">60→70   </span>= 10<br>
+          <span class="calc-step">70→80   </span>= 10<br>
+          <span class="calc-step">80→90   </span>= 10<br>
+          <span class="calc-step">90→99   </span>= 9<br>
+          <span class="calc-step">99→0    </span>= 99 (jump, no service)<br>
+          <span class="calc-step">0→10    </span>= 10<br>
+          <span class="calc-step">10→20   </span>= 10<br>
+          <span class="calc-step">20→25   </span>= 5<br>
+          <span class="calc-step">25→45   </span>= 20<br>
+          <div class="calc-total">Total = 1+10+10+10+10+9+99+10+10+5+20 = <strong>194 cylinders</strong></div>
+        </div>
+
+        <!-- LOOK -->
+        <div class="ans-heading">④ LOOK Scheduling</div>
+        <div class="def-box">
+          <div class="def-label">LOOK Rule — Smarter SCAN</div>
+          Same as SCAN, but the head <strong>doesn't waste time going to the physical end</strong> of the disk. It only goes as far as the last actual request, then reverses. More efficient than SCAN.
+        </div>
+        <div class="code-block">Head = 49, Direction = High (→)
+Highest request = 90 (not 99!)
+
+Going HIGH: 49 → 50 → 60 → 70 → 80 → 90  [reverse at 90]
+Going LOW:  90 → 45 → 25 → 20 → 10</div>
+        <div class="calc-box">
+          <div class="calc-title">LOOK Calculation</div>
+          <span class="calc-step">49→50  </span>= 1<br>
+          <span class="calc-step">50→60  </span>= 10<br>
+          <span class="calc-step">60→70  </span>= 10<br>
+          <span class="calc-step">70→80  </span>= 10<br>
+          <span class="calc-step">80→90  </span>= 10<br>
+          <span class="calc-step">90→45  </span>= 45 (reverse here)<br>
+          <span class="calc-step">45→25  </span>= 20<br>
+          <span class="calc-step">25→20  </span>= 5<br>
+          <span class="calc-step">20→10  </span>= 10<br>
+          <div class="calc-total">Total = 1+10+10+10+10+45+20+5+10 = <strong>121 cylinders</strong></div>
+        </div>
+
+        <table class="ans-table">
+          <thead><tr><th>Algorithm</th><th>Service Order</th><th>Total Movement</th></tr></thead>
+          <tbody>
+            <tr><td>SSTF</td><td>49→50→45→60→70→80→90→25→20→10</td><td class="highlight">131</td></tr>
+            <tr><td>SCAN</td><td>49→50→60→70→80→90→99→45→25→20→10</td><td class="highlight">139</td></tr>
+            <tr><td>C-SCAN</td><td>49→50→60→70→80→90→99→0→10→20→25→45</td><td class="highlight">194</td></tr>
+            <tr><td>LOOK</td><td>49→50→60→70→80→90→45→25→20→10</td><td class="highlight">121</td></tr>
+          </tbody>
+        </table>
+
+        <div class="tip-box"><strong>Exam Tip:</strong> LOOK is most efficient here. SCAN and LOOK are both "elevator" algorithms — LOOK just avoids traveling to disk ends unnecessarily.</div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="qa-card" id="q6">
+    <button class="qa-question" onclick="toggleQA(this)">
+      <span class="q-badge">Q6</span>
+      <span class="q-text">Explain the following: (a) Buffering &nbsp; (b) Polling &nbsp; (c) Direct Memory Access (DMA)</span>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-chevron"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    </button>
+    <div class="qa-answer">
+      <div class="answer-body">
+
+        <div class="ans-heading">(a) Buffering</div>
+        <div class="def-box">
+          <div class="def-label">Definition</div>
+          <strong>Buffering</strong> is a technique where a temporary memory area (buffer) holds data in transit between two components (e.g., CPU and disk, network and process) to handle speed differences and ensure smooth data flow.
+        </div>
+        <ul class="ans-list">
+          <li><strong>Purpose:</strong> Smooth out speed differences between producer (fast) and consumer (slow) or vice versa</li>
+          <li><strong>Single Buffer:</strong> OS keeps one buffer; CPU waits while I/O fills it</li>
+          <li><strong>Double Buffer:</strong> Two buffers alternate — while CPU processes buffer A, I/O fills buffer B</li>
+          <li><strong>Circular Buffer:</strong> Ring of N buffers; allows continuous overlapping I/O and processing</li>
+          <li><strong>Benefit:</strong> Increases CPU utilization and I/O throughput simultaneously</li>
+        </ul>
+
+        <div class="ans-heading">(b) Polling</div>
+        <div class="def-box">
+          <div class="def-label">What is Polling?</div>
+          <strong>Polling</strong> means the CPU keeps asking the device "Are you done yet?" over and over. It's like asking someone "Are you finished?" every second instead of letting them tell you when done. It wastes the CPU's time but is simple to build.
+        </div>
+
+        <div class="diagram-wrap">
+          <svg width="500" height="180" viewBox="0 0 500 180" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="a6" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 L1.5,4 Z" fill="#fabd2f"/>
+              </marker>
+            </defs>
+            <!-- CPU box -->
+            <rect x="20" y="60" width="90" height="60" rx="8" fill="#32302f" stroke="#fabd2f" stroke-width="2"/>
+            <text x="65" y="88" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#fabd2f" font-weight="700">CPU</text>
+            <text x="65" y="106" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#a89984">(busy-wait)</text>
+            <!-- Arrow down = poll -->
+            <path d="M110,90 L200,90" stroke="#83a598" stroke-width="2" marker-end="url(#a6)"/>
+            <text x="155" y="83" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">poll?</text>
+            <!-- Device -->
+            <rect x="200" y="60" width="90" height="60" rx="8" fill="#32302f" stroke="#83a598" stroke-width="2"/>
+            <text x="245" y="88" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#83a598">Device</text>
+            <!-- status loop -->
+            <path d="M245,120 Q245,155 155,155 Q65,155 65,120" stroke="#fb4934" stroke-width="1.5" stroke-dasharray="5,3" fill="none" marker-end="url(#a6)"/>
+            <text x="155" y="168" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fb4934">Not Ready → CPU loops again</text>
+            <!-- ready path -->
+            <path d="M290,90 L380,90" stroke="#b8bb26" stroke-width="2" marker-end="url(#a6)"/>
+            <rect x="380" y="70" width="90" height="40" rx="6" fill="rgba(152,151,26,0.15)" stroke="#b8bb26"/>
+            <text x="425" y="88" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#b8bb26">Ready!</text>
+            <text x="425" y="102" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#a89984">CPU reads data</text>
+          </svg>
+          <p class="diagram-caption">Fig 6.1 — Polling: CPU busy-waits until device is ready</p>
+        </div>
+
+        <div class="pro-con-grid">
+          <div class="pro-box"><div class="pbox-label">Advantages</div><ul><li>Simple to implement</li><li>No interrupt overhead</li><li>Good for fast devices</li></ul></div>
+          <div class="con-box"><div class="pbox-label">Disadvantages</div><ul><li>Wastes CPU cycles (busy-wait)</li><li>Not suitable for slow devices</li><li>CPU cannot do other work</li></ul></div>
+        </div>
+
+        <div class="ans-heading">(c) Direct Memory Access (DMA)</div>
+        <div class="def-box">
+          <div class="def-label">What is DMA?</div>
+          <strong>DMA (Direct Memory Access)</strong> lets devices send data directly to memory <em>without the CPU doing the work</em>. A special helper (DMA Controller) manages the transfer, so the CPU is free to do other important tasks. Think of it like a delivery person putting packages on a shelf while you do other work.
+        </div>
+
+        <div class="diagram-wrap">
+          <svg width="600" height="200" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="a6b" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 L1.5,4 Z" fill="#83a598"/>
+              </marker>
+              <marker id="a6c" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 L1.5,4 Z" fill="#b8bb26"/>
+              </marker>
+              <marker id="a6d" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 L1.5,4 Z" fill="#fabd2f"/>
+              </marker>
+            </defs>
+            <!-- CPU -->
+            <rect x="20" y="60" width="90" height="50" rx="8" fill="#32302f" stroke="#fabd2f" stroke-width="2"/>
+            <text x="65" y="90" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#fabd2f" font-weight="700">CPU</text>
+            <!-- DMA -->
+            <rect x="220" y="60" width="120" height="50" rx="8" fill="#32302f" stroke="#fe8019" stroke-width="2"/>
+            <text x="280" y="82" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#fe8019" font-weight="700">DMA</text>
+            <text x="280" y="97" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#a89984">Controller</text>
+            <!-- Memory -->
+            <rect x="440" y="30" width="110" height="50" rx="8" fill="#32302f" stroke="#83a598" stroke-width="2"/>
+            <text x="495" y="60" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#83a598" font-weight="700">Memory</text>
+            <!-- Device -->
+            <rect x="440" y="110" width="110" height="50" rx="8" fill="#32302f" stroke="#b8bb26" stroke-width="2"/>
+            <text x="495" y="140" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#b8bb26" font-weight="700">Device</text>
+            <!-- Arrows -->
+            <!-- CPU → DMA (setup) -->
+            <path d="M110,85 L220,85" stroke="#fabd2f" stroke-width="1.5" marker-end="url(#a6d)"/>
+            <text x="165" y="79" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fabd2f">① Setup</text>
+            <!-- DMA ↔ Memory -->
+            <path d="M340,70 L440,55" stroke="#83a598" stroke-width="2" marker-end="url(#a6b)"/>
+            <text x="390" y="55" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">③ Direct Transfer</text>
+            <!-- DMA ↔ Device -->
+            <path d="M340,100 L440,130" stroke="#b8bb26" stroke-width="2" marker-end="url(#a6c)"/>
+            <!-- CPU does other work -->
+            <rect x="20" y="130" width="170" height="40" rx="6" fill="rgba(152,151,26,0.08)" stroke="rgba(152,151,26,0.3)"/>
+            <text x="105" y="148" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#b8bb26">② CPU free → does other work</text>
+            <text x="105" y="163" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#a89984">while DMA handles transfer</text>
+            <!-- Interrupt -->
+            <path d="M340,85 Q370,180 200,180 Q110,180 65,170" stroke="#fb4934" stroke-width="1.5" stroke-dasharray="5,3" fill="none" marker-end="url(#a6d)"/>
+            <text x="250" y="188" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fb4934">④ Interrupt: Transfer complete!</text>
+          </svg>
+          <p class="diagram-caption">Fig 6.2 — DMA Operation: CPU sets up DMA, then does other work while DMA transfers data</p>
+        </div>
+
+        <div class="ans-subheading">DMA Working Steps</div>
+        <ol class="step-list">
+          <li><strong>Setup:</strong> CPU tells DMA: "Here's where data is, here's where it goes, here's how much"</li>
+          <li><strong>Go:</strong> DMA takes over and moves data without asking CPU for help</li>
+          <li><strong>CPU free:</strong> Meanwhile, CPU does other important work (no waiting!)</li>
+          <li><strong>Done:</strong> When transfer is complete, DMA rings a bell (interrupt) to tell CPU</li>
+          <li><strong>Resume:</strong> CPU wakes up and continues its normal work</li>
+        </ol>
+
+        <table class="ans-table">
+          <thead><tr><th>Comparison</th><th>Polling</th><th>Interrupt-Driven</th><th>DMA</th></tr></thead>
+          <tbody>
+            <tr><td>CPU does work?</td><td>Keeps asking device</td><td>Asked when ready</td><td>Only to start/stop</td></tr>
+            <tr><td>CPU efficiency</td><td>Terrible (wastes time)</td><td>Better</td><td>Best (very efficient)</td></tr>
+            <tr><td>Cost to build</td><td>Cheap</td><td>Medium</td><td>Expensive</td></tr>
+            <tr><td>Best for</td><td>Super fast devices</td><td>Slower devices</td><td>Moving lots of data fast</td></tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION DIVIDER -->
+  <div class="section-divider"></div>
+  <div class="subsection-tag">File System</div>
+
+  <!-- Q7 -->
+  <div class="qa-card" id="q7">
+    <button class="qa-question" onclick="toggleQA(this)">
+      <span class="q-badge">Q7</span>
+      <span class="q-text">Discuss: Contiguous, Linked, Indexed, and Multilevel Indexed Allocation. Also explain which method minimizes directory space and why.</span>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-chevron"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    </button>
+    <div class="qa-answer">
+      <div class="answer-body">
+
+        <div class="def-box">
+          <div class="def-label">What is File Allocation?</div>
+          When you save a file, the OS has to decide <strong>which disk blocks to use</strong> and how to track them. This is called file allocation. Different methods have different trade-offs: some are fast to access, some save space, some handle growing files better.
+        </div>
+
+        <!-- CONTIGUOUS -->
+        <div class="ans-heading">① Contiguous Allocation</div>
+        <p>File data sits in <strong>consecutive (neighboring) blocks</strong> on the disk — like having pages 1, 2, 3 all next to each other. The directory just remembers where it starts and how many blocks it uses.</p>
+
+        <div class="diagram-wrap">
+          <svg width="560" height="120" viewBox="0 0 560 120" xmlns="http://www.w3.org/2000/svg">
+            <text x="280" y="16" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#fabd2f" font-weight="700">Contiguous Allocation</text>
+            <!-- Disk blocks -->
+            <rect x="20" y="30" width="40" height="40" rx="4" fill="#3c3836" stroke="#504945"/>
+            <text x="40" y="54" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#928374">0</text>
+            <!-- File A blocks: 1-4 -->
+            <rect x="65" y="30" width="40" height="40" rx="4" fill="rgba(254,128,25,0.25)" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="85" y="47" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fe8019">A</text>
+            <text x="85" y="60" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fe8019">1</text>
+            <rect x="110" y="30" width="40" height="40" rx="4" fill="rgba(254,128,25,0.25)" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="130" y="47" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fe8019">A</text>
+            <text x="130" y="60" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fe8019">2</text>
+            <rect x="155" y="30" width="40" height="40" rx="4" fill="rgba(254,128,25,0.25)" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="175" y="47" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fe8019">A</text>
+            <text x="175" y="60" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fe8019">3</text>
+            <!-- File B blocks: 5-7 -->
+            <rect x="200" y="30" width="40" height="40" rx="4" fill="rgba(131,165,152,0.25)" stroke="#83a598" stroke-width="1.5"/>
+            <text x="220" y="54" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#83a598">B1</text>
+            <rect x="245" y="30" width="40" height="40" rx="4" fill="rgba(131,165,152,0.25)" stroke="#83a598" stroke-width="1.5"/>
+            <text x="265" y="54" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#83a598">B2</text>
+            <rect x="290" y="30" width="40" height="40" rx="4" fill="#3c3836" stroke="#504945"/>
+            <text x="310" y="54" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#928374">free</text>
+            <!-- Directory -->
+            <rect x="370" y="20" width="170" height="70" rx="6" fill="#1d2021" stroke="#3c3836"/>
+            <text x="455" y="38" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fabd2f">Directory</text>
+            <text x="380" y="54" font-family="JetBrains Mono" font-size="9" fill="#a89984">File A: start=1, len=3</text>
+            <text x="380" y="68" font-family="JetBrains Mono" font-size="9" fill="#a89984">File B: start=5, len=2</text>
+            <!-- Block numbers -->
+            <text x="40" y="84" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#928374">0</text>
+            <text x="85" y="84" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#928374">1</text>
+            <text x="130" y="84" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#928374">2</text>
+            <text x="175" y="84" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#928374">3</text>
+            <text x="220" y="84" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#928374">4</text>
+            <text x="265" y="84" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#928374">5</text>
+            <text x="310" y="84" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#928374">6</text>
+            <text x="280" y="108" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#928374">Fig 7.1 — Contiguous Allocation</text>
+          </svg>
+          <p class="diagram-caption">Fig 7.1 — Contiguous Allocation: File A at blocks 1–3, File B at blocks 4–5</p>
+        </div>
+
+        <div class="pro-con-grid">
+          <div class="pro-box"><div class="pbox-label">Good Points</div><ul><li>Easy to find file (just remember start + size)</li><li>Fast reading (blocks are next to each other)</li><li>Works for both jump-to-page and read-in-order</li></ul></div>
+          <div class="con-box"><div class="pbox-label">Bad Points</div><ul><li>Wastes disk space (fragmentation)</li><li>Hard to grow files without moving them</li><li>Need to know file size when creating it</li></ul></div>
+        </div>
+
+        <!-- LINKED -->
+        <div class="ans-heading">② Linked Allocation</div>
+        <p>File data blocks are <strong>scattered all over the disk, but they're connected with arrows</strong>. Each block points to the next block (like a treasure hunt). The directory only needs to remember the first block — it can find all others by following the arrows.</p>
+
+        <div class="diagram-wrap">
+          <svg width="560" height="110" viewBox="0 0 560 110" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="a7" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 L1.5,4 Z" fill="#83a598"/>
+              </marker>
+            </defs>
+            <text x="280" y="16" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#fabd2f" font-weight="700">Linked Allocation</text>
+            <!-- Block 2 -->
+            <rect x="20" y="30" width="80" height="50" rx="5" fill="#32302f" stroke="#83a598" stroke-width="1.5"/>
+            <text x="60" y="50" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">Data[2]</text>
+            <text x="60" y="65" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fabd2f">next→9</text>
+            <!-- arrow -->
+            <line x1="100" y1="55" x2="140" y2="55" stroke="#83a598" stroke-width="1.5" marker-end="url(#a7)"/>
+            <!-- Block 9 -->
+            <rect x="140" y="30" width="80" height="50" rx="5" fill="#32302f" stroke="#83a598" stroke-width="1.5"/>
+            <text x="180" y="50" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">Data[9]</text>
+            <text x="180" y="65" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fabd2f">next→4</text>
+            <line x1="220" y1="55" x2="260" y2="55" stroke="#83a598" stroke-width="1.5" marker-end="url(#a7)"/>
+            <!-- Block 4 -->
+            <rect x="260" y="30" width="80" height="50" rx="5" fill="#32302f" stroke="#83a598" stroke-width="1.5"/>
+            <text x="300" y="50" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">Data[4]</text>
+            <text x="300" y="65" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fb4934">next→-1</text>
+            <!-- Directory -->
+            <rect x="380" y="30" width="160" height="50" rx="6" fill="#1d2021" stroke="#3c3836"/>
+            <text x="460" y="48" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fabd2f">Directory</text>
+            <text x="390" y="64" font-family="JetBrains Mono" font-size="9" fill="#a89984">File: start=2, end=4</text>
+            <text x="280" y="98" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#928374">Fig 7.2 — Linked Allocation (blocks 2→9→4)</text>
+          </svg>
+          <p class="diagram-caption">Fig 7.2 — Linked Allocation: blocks scattered but linked via pointers</p>
+        </div>
+        <div class="pro-con-grid">
+          <div class="pro-box"><div class="pbox-label">Good Points</div><ul><li>No disk space wasted (no fragmentation)</li><li>Files grow easily (just add new blocks)</li><li>Easy to add more data to files</li></ul></div>
+          <div class="con-box"><div class="pbox-label">Bad Points</div><ul><li>Slow to jump to page 100 (must follow arrows from start)</li><li>Extra space used for arrows (pointers) in each block</li><li>If an arrow breaks, file is damaged</li></ul></div>
+        </div>
+
+        <!-- INDEXED -->
+        <div class="ans-heading">③ Indexed Allocation</div>
+        <p>Each file has a <strong>"table of contents" block (index)</strong> that lists all the blocks where the file's data is stored. Instead of following arrows like linked allocation, you look at the table and jump directly to any block. Fast and flexible!</p>
+
+        <div class="diagram-wrap">
+          <svg width="480" height="200" viewBox="0 0 480 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="a7b" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+                <path d="M0,0 L7,3.5 L0,7 L1.5,3.5 Z" fill="#b8bb26"/>
+              </marker>
+            </defs>
+            <text x="240" y="16" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#fabd2f" font-weight="700">Indexed Allocation</text>
+            <!-- Index block -->
+            <rect x="150" y="30" width="90" height="130" rx="6" fill="#1d2021" stroke="#fabd2f" stroke-width="2"/>
+            <text x="195" y="50" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fabd2f">Index Block</text>
+            <rect x="160" y="58" width="70" height="16" rx="3" fill="#32302f"/>
+            <text x="195" y="70" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#b8bb26">→ 9</text>
+            <rect x="160" y="78" width="70" height="16" rx="3" fill="#32302f"/>
+            <text x="195" y="90" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#b8bb26">→ 16</text>
+            <rect x="160" y="98" width="70" height="16" rx="3" fill="#32302f"/>
+            <text x="195" y="110" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#b8bb26">→ 1</text>
+            <rect x="160" y="118" width="70" height="16" rx="3" fill="#32302f"/>
+            <text x="195" y="130" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#b8bb26">→ 25</text>
+            <!-- data blocks -->
+            <rect x="320" y="40" width="50" height="30" rx="4" fill="rgba(184,187,38,0.15)" stroke="#b8bb26"/>
+            <text x="345" y="59" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#b8bb26">Blk 9</text>
+            <rect x="320" y="80" width="50" height="30" rx="4" fill="rgba(184,187,38,0.15)" stroke="#b8bb26"/>
+            <text x="345" y="99" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#b8bb26">Blk 16</text>
+            <rect x="320" y="120" width="50" height="30" rx="4" fill="rgba(184,187,38,0.15)" stroke="#b8bb26"/>
+            <text x="345" y="139" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#b8bb26">Blk 1</text>
+            <rect x="320" y="160" width="50" height="30" rx="4" fill="rgba(184,187,38,0.15)" stroke="#b8bb26"/>
+            <text x="345" y="179" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#b8bb26">Blk 25</text>
+            <!-- arrows from index to blocks -->
+            <line x1="230" y1="66" x2="320" y2="55" stroke="#b8bb26" stroke-width="1" marker-end="url(#a7b)"/>
+            <line x1="230" y1="86" x2="320" y2="95" stroke="#b8bb26" stroke-width="1" marker-end="url(#a7b)"/>
+            <line x1="230" y1="106" x2="320" y2="135" stroke="#b8bb26" stroke-width="1" marker-end="url(#a7b)"/>
+            <line x1="230" y1="126" x2="320" y2="175" stroke="#b8bb26" stroke-width="1" marker-end="url(#a7b)"/>
+            <!-- Dir entry -->
+            <rect x="20" y="70" width="110" height="36" rx="5" fill="#32302f" stroke="#3c3836"/>
+            <text x="75" y="86" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fabd2f">Directory</text>
+            <text x="75" y="100" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#a89984">index_blk = 5</text>
+            <line x1="130" y1="88" x2="150" y2="88" stroke="#fabd2f" stroke-width="1.5" marker-end="url(#a7b)"/>
+          </svg>
+          <p class="diagram-caption">Fig 7.3 — Indexed Allocation: Index block holds all block pointers</p>
+        </div>
+        <div class="pro-con-grid">
+          <div class="pro-box"><div class="pbox-label">Good Points</div><ul><li>Jump to any block instantly (use the table)</li><li>No disk space wasted (no fragmentation)</li><li>Files can grow (add more index entries)</li></ul></div>
+          <div class="con-box"><div class="pbox-label">Bad Points</div><ul><li>Wastes space for tiny files (index block still takes a whole block)</li><li>Super large files need multiple index blocks</li></ul></div>
+        </div>
+
+        <!-- MULTILEVEL INDEXED -->
+        <div class="ans-heading">④ Multilevel Indexed Allocation</div>
+        <p>For huge files, use a <strong>chain of index blocks</strong> — like a table of tables:</p>
+        <ul class="ans-list">
+          <li><strong>Direct blocks:</strong> Inode points straight to first few data blocks (fastest)</li>
+          <li><strong>Single Indirect:</strong> Index block → points to more data blocks</li>
+          <li><strong>Double Indirect:</strong> Index block → points to other index blocks → points to data blocks</li>
+          <li><strong>Triple Indirect:</strong> Even more levels for extremely large files</li>
+          <li>Used in Unix/Linux — called inode</li>
+        </ul>
+
+        <div class="diagram-wrap">
+          <svg width="560" height="170" viewBox="0 0 560 170" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="a7c" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+                <path d="M0,0 L7,3.5 L0,7 L1.5,3.5 Z" fill="#d3869b"/>
+              </marker>
+            </defs>
+            <!-- inode -->
+            <rect x="10" y="20" width="100" height="130" rx="6" fill="#1d2021" stroke="#d3869b" stroke-width="2"/>
+            <text x="60" y="38" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#d3869b">inode</text>
+            <rect x="18" y="44" width="84" height="14" rx="3" fill="#32302f"/>
+            <text x="60" y="55" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#83a598">direct[0] → 8</text>
+            <rect x="18" y="62" width="84" height="14" rx="3" fill="#32302f"/>
+            <text x="60" y="73" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#83a598">direct[1] → 11</text>
+            <rect x="18" y="80" width="84" height="14" rx="3" fill="#32302f"/>
+            <text x="60" y="91" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fe8019">single_ind →</text>
+            <rect x="18" y="98" width="84" height="14" rx="3" fill="#32302f"/>
+            <text x="60" y="109" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fabd2f">double_ind →</text>
+            <rect x="18" y="116" width="84" height="14" rx="3" fill="#32302f"/>
+            <text x="60" y="127" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#b8bb26">triple_ind →</text>
+            <!-- Single indirect -->
+            <rect x="160" y="75" width="80" height="50" rx="5" fill="#1d2021" stroke="#fe8019"/>
+            <text x="200" y="94" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fe8019">Single</text>
+            <text x="200" y="107" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fe8019">Indirect</text>
+            <line x1="102" y1="88" x2="160" y2="100" stroke="#fe8019" stroke-width="1" marker-end="url(#a7c)"/>
+            <!-- data blocks -->
+            <rect x="280" y="65" width="60" height="25" rx="4" fill="#32302f" stroke="#504945"/>
+            <text x="310" y="82" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#a89984">Data...</text>
+            <line x1="240" y1="100" x2="280" y2="77" stroke="#fe8019" stroke-width="1" stroke-dasharray="3,2"/>
+            <!-- Double indirect -->
+            <rect x="160" y="135" width="80" height="25" rx="5" fill="#1d2021" stroke="#fabd2f"/>
+            <text x="200" y="152" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fabd2f">Double Indirect</text>
+            <line x1="102" y1="106" x2="160" y2="147" stroke="#fabd2f" stroke-width="1" marker-end="url(#a7c)"/>
+            <!-- labels -->
+            <text x="350" y="55" font-family="Recursive" font-size="12" fill="#a89984">Direct blocks: fastest</text>
+            <text x="350" y="75" font-family="Recursive" font-size="12" fill="#fe8019">Single Indirect: medium files</text>
+            <text x="350" y="95" font-family="Recursive" font-size="12" fill="#fabd2f">Double Indirect: large files</text>
+            <text x="350" y="115" font-family="Recursive" font-size="12" fill="#b8bb26">Triple Indirect: very large</text>
+          </svg>
+          <p class="diagram-caption">Fig 7.4 — Unix Inode: Direct + Indirect block structure</p>
+        </div>
+
+        <!-- Which minimizes directory space -->
+        <div class="ans-heading">Which Method Minimizes Directory Space?</div>
+        <div class="note-box">
+          <strong>Answer: Contiguous Allocation</strong> minimizes directory space because the directory only needs to store <strong>two values per file</strong>: the starting block number and the file length. No pointers, no index blocks, no linked list traversal — just two integers.
+          <br><br>
+          In contrast, Linked Allocation stores start+end pointers, Indexed stores the index block address (which itself takes an entire disk block), and Multilevel Indexed requires multiple indirect blocks — all consuming more space overall.
+        </div>
+
+        <table class="ans-table">
+          <thead><tr><th>Method</th><th>Directory Entry</th><th>Random Access</th><th>Fragmentation</th></tr></thead>
+          <tbody>
+            <tr><td>Contiguous</td><td>Start + Length (2 values)</td><td>Yes (direct)</td><td>External</td></tr>
+            <tr><td>Linked</td><td>Start + End pointers</td><td>No</td><td>None</td></tr>
+            <tr><td>Indexed</td><td>Index block address</td><td>Yes</td><td>Internal (index block)</td></tr>
+            <tr><td>Multilevel</td><td>inode number</td><td>Yes (with levels)</td><td>Minimal</td></tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="qa-card" id="q8">
+    <button class="qa-question" onclick="toggleQA(this)">
+      <span class="q-badge">Q8</span>
+      <span class="q-text">What are files? Explain different file access methods.</span>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-chevron"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    </button>
+    <div class="qa-answer">
+      <div class="answer-body">
+
+        <div class="def-box">
+          <div class="def-label">Definition — File</div>
+          A <strong>file</strong> is a named collection of related data or program stored as a unit on secondary storage. It is the basic unit of storage that the OS provides to users. Files are managed by the OS through the File System.
+        </div>
+
+        <div class="ans-heading">File Attributes</div>
+        <ul class="ans-list">
+          <li><strong>Name:</strong> Human-readable string identifier (e.g., report.txt)</li>
+          <li><strong>Identifier:</strong> Unique tag (usually inode number) used internally by OS</li>
+          <li><strong>Type:</strong> File extension or MIME type (text, binary, executable)</li>
+          <li><strong>Location:</strong> Pointer to device and block address</li>
+          <li><strong>Size:</strong> Current file size in bytes</li>
+          <li><strong>Protection:</strong> Access control information (read/write/execute permissions)</li>
+          <li><strong>Timestamps:</strong> Creation, last modified, last accessed times</li>
+        </ul>
+
+        <div class="ans-heading">File Operations</div>
+        <ul class="ans-list">
+          <li>Create, Delete, Open, Close, Read, Write, Append, Seek, Rename, Get/Set Attributes</li>
+        </ul>
+
+        <div class="ans-heading">File Access Methods</div>
+
+        <div class="ans-subheading">1. Sequential Access</div>
+        <div class="def-box">
+          <div class="def-label">Definition</div>
+          Data is read one record at a time, <strong>in order from start to end</strong>. You cannot jump to the middle — you must read through everything before it. Like a cassette tape: to get to song 5, you must fast-forward past songs 1–4.
+        </div>
+        <div class="diagram-wrap">
+          <svg width="500" height="80" viewBox="0 0 500 80" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="a8" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+                <path d="M0,0 L7,3.5 L0,7 L1.5,3.5 Z" fill="#83a598"/>
+              </marker>
+            </defs>
+            <text x="250" y="16" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#fabd2f">Sequential Access</text>
+            <rect x="20" y="28" width="55" height="30" rx="4" fill="rgba(131,165,152,0.3)" stroke="#83a598"/>
+            <text x="47" y="47" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">Rec 1</text>
+            <rect x="80" y="28" width="55" height="30" rx="4" fill="rgba(131,165,152,0.3)" stroke="#83a598"/>
+            <text x="107" y="47" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">Rec 2</text>
+            <rect x="140" y="28" width="55" height="30" rx="4" fill="rgba(254,128,25,0.4)" stroke="#fe8019" stroke-width="2"/>
+            <text x="167" y="47" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fe8019">Rec 3</text>
+            <rect x="200" y="28" width="55" height="30" rx="4" fill="rgba(131,165,152,0.1)" stroke="#504945"/>
+            <text x="227" y="47" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#928374">Rec 4</text>
+            <rect x="260" y="28" width="55" height="30" rx="4" fill="rgba(131,165,152,0.1)" stroke="#504945"/>
+            <text x="287" y="47" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#928374">Rec 5</text>
+            <text x="167" y="68" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fe8019">↑ Current pointer</text>
+            <text x="380" y="43" font-family="Recursive" font-size="12" fill="#a89984">Must read 1,2 to get to 3</text>
+          </svg>
+          <p class="diagram-caption">Fig 8.1 — Sequential Access: File pointer advances linearly</p>
+        </div>
+        <ul class="ans-list">
+          <li>Used in: text editors, compilers reading source files, tape drives</li>
+          <li>Operations: read_next(), write_next(), reset(), rewind()</li>
+        </ul>
+
+        <div class="ans-subheading">2. Direct Access (Random Access)</div>
+        <div class="def-box">
+          <div class="def-label">Definition</div>
+          You can jump directly to <strong>any block by its number</strong>, without reading anything before it. Like a book with page numbers — you can open it straight to page 57 without reading pages 1–56.
+        </div>
+        <ul class="ans-list">
+          <li>Used in: databases, disk files, OS paging systems</li>
+          <li>Operations: read(n), write(n), seek(n) — where n is block/record number</li>
+          <li>Position is set using: <code>seek(position)</code> then read/write</li>
+        </ul>
+
+        <div class="ans-subheading">3. Indexed Access</div>
+        <div class="def-box">
+          <div class="def-label">Definition</div>
+          Built on top of direct access. A separate <strong>index file</strong> works like a book's index — it maps keys to locations. You look up the key in the index, get the exact block number, then jump there directly.
+        </div>
+        <ul class="ans-list">
+          <li>Used in: database management systems (ISAM — Indexed Sequential Access Method)</li>
+          <li>Allows fast search by key without reading entire file</li>
+          <li>Index itself may be kept in memory for faster access</li>
+        </ul>
+
+        <table class="ans-table">
+          <thead><tr><th>Method</th><th>Access Pattern</th><th>Speed</th><th>Use Case</th></tr></thead>
+          <tbody>
+            <tr><td>Sequential</td><td>Record by record, in order</td><td>Fast for sequential</td><td>Text files, logs</td></tr>
+            <tr><td>Direct</td><td>Any record by block number</td><td>Fast random access</td><td>Databases, OS</td></tr>
+            <tr><td>Indexed</td><td>By key via index</td><td>Very fast search</td><td>DBMS, file systems</td></tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="qa-card" id="q9">
+    <button class="qa-question" onclick="toggleQA(this)">
+      <span class="q-badge">Q9</span>
+      <span class="q-text">Write short notes on: (a) File System Protection and Security &nbsp;&nbsp; (b) Linked File Allocation Method</span>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-chevron"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    </button>
+    <div class="qa-answer">
+      <div class="answer-body">
+
+        <div class="ans-heading">(a) File System Protection and Security</div>
+        <div class="def-box">
+          <div class="def-label">What is File Protection?</div>
+          <strong>File Protection</strong> means making sure only the right people can do the right things with a file. The OS acts as a gatekeeper — it checks if you're allowed to read, write, or run a file before letting you do it.
+        </div>
+
+        <div class="ans-subheading">Protection Mechanisms</div>
+
+        <p><strong>1. Access Control Lists (ACL)</strong></p>
+        <p>Each file maintains a list of users and their permitted operations. Example:</p>
+        <div class="code-block">file: report.txt
+  Alice  : read, write
+  Bob    : read
+  Charlie: none</div>
+
+        <p><strong>2. Unix-style Permission Bits</strong></p>
+        <div class="code-block">chmod 754 file.txt
+7 = rwx (owner)   → 111 in binary
+5 = r-x (group)   → 101 in binary
+4 = r-- (others)  → 100 in binary</div>
+
+        <div class="diagram-wrap">
+          <svg width="480" height="130" viewBox="0 0 480 130" xmlns="http://www.w3.org/2000/svg">
+            <text x="240" y="18" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#fabd2f" font-weight="700">Unix File Permission Model</text>
+            <!-- Three groups -->
+            <rect x="20" y="30" width="110" height="70" rx="6" fill="rgba(254,128,25,0.1)" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="75" y="50" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#fe8019">Owner</text>
+            <text x="75" y="68" text-anchor="middle" font-family="JetBrains Mono" font-size="13" fill="#fe8019" font-weight="700">rwx</text>
+            <text x="75" y="86" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#a89984">read+write+exec</text>
+            <rect x="155" y="30" width="110" height="70" rx="6" fill="rgba(131,165,152,0.1)" stroke="#83a598" stroke-width="1.5"/>
+            <text x="210" y="50" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#83a598">Group</text>
+            <text x="210" y="68" text-anchor="middle" font-family="JetBrains Mono" font-size="13" fill="#83a598" font-weight="700">r-x</text>
+            <text x="210" y="86" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#a89984">read+exec only</text>
+            <rect x="290" y="30" width="110" height="70" rx="6" fill="rgba(146,131,116,0.1)" stroke="#928374" stroke-width="1.5"/>
+            <text x="345" y="50" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#928374">Others</text>
+            <text x="345" y="68" text-anchor="middle" font-family="JetBrains Mono" font-size="13" fill="#928374" font-weight="700">r--</text>
+            <text x="345" y="86" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#a89984">read only</text>
+            <text x="240" y="118" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#928374">Fig 9.1 — Unix Permission Triplet</text>
+          </svg>
+          <p class="diagram-caption">Fig 9.1 — Unix File Permissions: Owner | Group | Others</p>
+        </div>
+
+        <p><strong>3. Password Protection:</strong> Files can be protected with passwords (less common)</p>
+        <p><strong>4. Cryptographic Protection:</strong> Data encrypted with keys; only authorized users with correct key can decrypt</p>
+
+        <div class="ans-subheading">Security Goals (CIA Triad)</div>
+        <ul class="ans-list">
+          <li><strong>Confidentiality:</strong> Only authorized users read the data</li>
+          <li><strong>Integrity:</strong> Data is not modified by unauthorized users</li>
+          <li><strong>Availability:</strong> Data is accessible to authorized users when needed</li>
+        </ul>
+
+        <div class="ans-heading">(b) Linked File Allocation Method</div>
+        <p>Already covered in detail in Q7(②). Key summary:</p>
+        <ul class="ans-list">
+          <li>Each disk block has a <strong>pointer to the next block</strong></li>
+          <li>Directory stores only <strong>start block</strong> (and optionally end block)</li>
+          <li>No external fragmentation since any free block can be used</li>
+          <li>Random access is <em>slow</em> — must traverse from start for every seek</li>
+          <li><strong>FAT (File Allocation Table)</strong> is an improvement: all pointers stored in a table in memory, avoiding disk traversal</li>
+        </ul>
+        <div class="note-box"><strong>FAT File System (DOS/Windows):</strong> All linked list pointers are stored in a central FAT table kept in memory. This allows faster access than reading pointers from disk blocks individually.</div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="qa-card" id="q10">
+    <button class="qa-question" onclick="toggleQA(this)">
+      <span class="q-badge">Q10</span>
+      <span class="q-text">Explain File System Protection and Security in detail.</span>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-chevron"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    </button>
+    <div class="qa-answer">
+      <div class="answer-body">
+
+        <div class="def-box">
+          <div class="def-label">What is File System Protection?</div>
+          <strong>File System Protection</strong> is the OS's way of controlling who can do what with files. Think of it as a security guard — every time you try to read, change, or delete a file, the OS checks if you're allowed. If not, it blocks you.
+        </div>
+
+        <div class="ans-heading">Types of Access to Protect</div>
+        <ul class="ans-list">
+          <li><strong>Read:</strong> Read data from a file</li>
+          <li><strong>Write:</strong> Write/modify data in a file</li>
+          <li><strong>Execute:</strong> Load and run a program file</li>
+          <li><strong>Append:</strong> Add data to end of file</li>
+          <li><strong>Delete:</strong> Remove a file</li>
+          <li><strong>List:</strong> View directory contents</li>
+          <li><strong>Rename:</strong> Change file name</li>
+        </ul>
+
+        <div class="ans-heading">Protection Mechanisms</div>
+
+        <div class="ans-subheading">1. Discretionary Access Control (DAC) — Owner Decides</div>
+        <p>The file's owner chooses who can access it. In Unix/Linux, every file shows 9 permission bits — 3 for owner, 3 for group, 3 for everyone else:</p>
+        <div class="code-block">-rwxr-xr-- 1 alice devteam 4096 Apr 10 file.sh
+ ↑owner    ↑group    ↑others
+ rwx=7     r-x=5     r--=4
+</div>
+        <p>Each permission set has three bits: <strong>r</strong> (read=4), <strong>w</strong> (write=2), <strong>x</strong> (execute=1)</p>
+
+        <div class="ans-subheading">2. Access Control Lists (ACL) — Fine-Grained Control</div>
+        <p>More detailed than Unix bits. Each file keeps a list of exactly which users/groups can do what — even specific individuals:</p>
+        <div class="code-block">setfacl -m u:bob:rw- sensitive_doc.txt
+getfacl sensitive_doc.txt
+# file: sensitive_doc.txt
+# owner: alice
+user::rw-
+user:bob:rw-
+group::r--
+other::---</div>
+
+        <div class="ans-subheading">3. Mandatory Access Control (MAC) — System Decides</div>
+        <ul class="ans-list">
+          <li>The <strong>system</strong> (not the user) makes all access decisions — users can't override</li>
+          <li>Used in high-security systems (military, government)</li>
+          <li>Files are labeled (Top Secret, Confidential, etc.) and users have a clearance level</li>
+          <li>You can only access files at <em>your level or below</em></li>
+        </ul>
+
+        <div class="ans-subheading">4. Role-Based Access Control (RBAC) — Job Title Decides</div>
+        <ul class="ans-list">
+          <li>Access is tied to your <strong>role/job</strong>, not your individual identity</li>
+          <li>Example: Admin → full access; Developer → read/write code; Viewer → read only</li>
+          <li>Easy to manage in companies — change someone's role, their access changes automatically</li>
+        </ul>
+
+        <div class="diagram-wrap">
+          <svg width="560" height="180" viewBox="0 0 560 180" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="a10" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+                <path d="M0,0 L7,3.5 L0,7 L1.5,3.5 Z" fill="#83a598"/>
+              </marker>
+            </defs>
+            <text x="280" y="18" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#fabd2f" font-weight="700">Access Control Matrix</text>
+            <!-- Table header -->
+            <rect x="20" y="28" width="100" height="30" rx="0" fill="#3c3836" stroke="#504945"/>
+            <text x="70" y="48" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fabd2f">Subject\Object</text>
+            <rect x="120" y="28" width="100" height="30" fill="#3c3836" stroke="#504945"/>
+            <text x="170" y="48" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">file1.txt</text>
+            <rect x="220" y="28" width="100" height="30" fill="#3c3836" stroke="#504945"/>
+            <text x="270" y="48" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">file2.sh</text>
+            <rect x="320" y="28" width="100" height="30" fill="#3c3836" stroke="#504945"/>
+            <text x="370" y="48" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">db_config</text>
+            <!-- Row Alice -->
+            <rect x="20" y="58" width="100" height="30" fill="#32302f" stroke="#504945"/>
+            <text x="70" y="78" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fe8019">Alice (owner)</text>
+            <rect x="120" y="58" width="100" height="30" fill="#32302f" stroke="#504945"/>
+            <text x="170" y="78" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#b8bb26">r,w,x</text>
+            <rect x="220" y="58" width="100" height="30" fill="#32302f" stroke="#504945"/>
+            <text x="270" y="78" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#b8bb26">r,w,x</text>
+            <rect x="320" y="58" width="100" height="30" fill="#32302f" stroke="#504945"/>
+            <text x="370" y="78" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#b8bb26">r,w</text>
+            <!-- Row Bob -->
+            <rect x="20" y="88" width="100" height="30" fill="#32302f" stroke="#504945"/>
+            <text x="70" y="108" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fe8019">Bob</text>
+            <rect x="120" y="88" width="100" height="30" fill="#32302f" stroke="#504945"/>
+            <text x="170" y="108" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">r</text>
+            <rect x="220" y="88" width="100" height="30" fill="#32302f" stroke="#504945"/>
+            <text x="270" y="108" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">r,x</text>
+            <rect x="320" y="88" width="100" height="30" fill="#32302f" stroke="#504945"/>
+            <text x="370" y="108" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fb4934">—</text>
+            <!-- Row Others -->
+            <rect x="20" y="118" width="100" height="30" fill="#32302f" stroke="#504945"/>
+            <text x="70" y="138" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fe8019">Others</text>
+            <rect x="120" y="118" width="100" height="30" fill="#32302f" stroke="#504945"/>
+            <text x="170" y="138" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#928374">r</text>
+            <rect x="220" y="118" width="100" height="30" fill="#32302f" stroke="#504945"/>
+            <text x="270" y="138" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fb4934">—</text>
+            <rect x="320" y="118" width="100" height="30" fill="#32302f" stroke="#504945"/>
+            <text x="370" y="138" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fb4934">—</text>
+            <text x="280" y="165" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#928374">Fig 10.1 — Access Control Matrix</text>
+          </svg>
+          <p class="diagram-caption">Fig 10.1 — Access Control Matrix showing subjects and objects</p>
+        </div>
+
+        <div class="ans-heading">File Encryption</div>
+        <ul class="ans-list">
+          <li>Data encrypted before storage; decrypted on legitimate access</li>
+          <li><strong>Symmetric:</strong> Same key to encrypt/decrypt (AES)</li>
+          <li><strong>Asymmetric:</strong> Public key encrypts, private key decrypts (RSA)</li>
+          <li>Used in: Windows EFS (Encrypting File System), Linux LUKS, macOS FileVault</li>
+        </ul>
+
+        <div class="ans-heading">Threats to File Security</div>
+        <ul class="ans-list">
+          <li><strong>Unauthorized Access:</strong> Privilege escalation attacks</li>
+          <li><strong>Malware:</strong> Viruses, ransomware corrupting/encrypting files</li>
+          <li><strong>Insider Threats:</strong> Authorized users misusing access</li>
+          <li><strong>Physical Theft:</strong> Stealing storage devices</li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="qa-card" id="q11">
+    <button class="qa-question" onclick="toggleQA(this)">
+      <span class="q-badge">Q11</span>
+      <span class="q-text">Explain the concept of File. Also explain File Organization and File Access Mechanisms in detail.</span>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-chevron"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    </button>
+    <div class="qa-answer">
+      <div class="answer-body">
+
+        <div class="def-box">
+          <div class="def-label">What is a File?</div>
+          A <strong>file</strong> is just a collection of data with a name that lives on your hard disk. It could be anything — a document, photo, video, or program. The OS keeps track of where the file is stored so you can open it anytime.
+        </div>
+
+        <div class="ans-heading">File Types</div>
+        <table class="ans-table">
+          <thead><tr><th>Type</th><th>Description</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td>Regular File</td><td>Contains user data (text or binary)</td><td>document.txt, image.jpg</td></tr>
+            <tr><td>Directory File</td><td>Contains list of files/subdirectories</td><td>/home, /etc</td></tr>
+            <tr><td>Special File</td><td>Represents devices, pipes, sockets</td><td>/dev/sda, /dev/null</td></tr>
+            <tr><td>Executable</td><td>Contains machine code for a program</td><td>a.out, bash</td></tr>
+          </tbody>
+        </table>
+
+        <div class="ans-heading">File Organization (Internal Structure)</div>
+
+        <div class="ans-subheading">1. Byte Stream / Unstructured</div>
+        <ul class="ans-list">
+          <li>OS sees file as just a bunch of bytes (letters, numbers, symbols). No hidden structure.</li>
+          <li>Your program decides what the bytes mean (is it text? image? video?)</li>
+          <li>Used in: Unix/Linux, Windows — most modern systems</li>
+          <li>Super flexible — programs can store anything they want</li>
+        </ul>
+
+        <div class="ans-subheading">2. Record-Oriented (Fixed Records)</div>
+        <ul class="ans-list">
+          <li>File breaks into equal-sized chunks (records) — like a table with rows of the same height</li>
+          <li>Easy to jump to any record: just multiply record number by record size</li>
+          <li>Old mainframe systems used this method</li>
+        </ul>
+
+        <div class="ans-subheading">3. Record-Oriented (Variable Records)</div>
+        <ul class="ans-list">
+          <li>Records have different sizes (like rows of different heights)</li>
+          <li>Each record says how big it is at the start</li>
+          <li>More flexible but harder to jump to a specific record — you have to count from the beginning</li>
+        </ul>
+
+        <div class="ans-subheading">4. Tree-Structured File</div>
+        <ul class="ans-list">
+          <li>File organized as a tree — like a filing system where you can search for records by key</li>
+          <li>Super fast to find something (uses special tree structures like B-trees)</li>
+          <li>Mainly used in mainframe databases</li>
+        </ul>
+
+        <div class="diagram-wrap">
+          <svg width="580" height="140" viewBox="0 0 580 140" xmlns="http://www.w3.org/2000/svg">
+            <text x="290" y="16" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#fabd2f" font-weight="700">File Organization Models</text>
+            <!-- Byte Stream -->
+            <text x="10" y="38" font-family="JetBrains Mono" font-size="9" fill="#a89984">Byte Stream</text>
+            <rect x="10" y="44" width="130" height="20" rx="3" fill="#32302f" stroke="#504945"/>
+            <text x="75" y="58" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#83a598">b y t e s t r e a m . . .</text>
+            <!-- Fixed Records -->
+            <text x="160" y="38" font-family="JetBrains Mono" font-size="9" fill="#a89984">Fixed Records</text>
+            <rect x="160" y="44" width="35" height="20" rx="2" fill="rgba(254,128,25,0.2)" stroke="#fe8019"/>
+            <text x="177" y="58" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fe8019">R1</text>
+            <rect x="196" y="44" width="35" height="20" rx="2" fill="rgba(254,128,25,0.2)" stroke="#fe8019"/>
+            <text x="213" y="58" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fe8019">R2</text>
+            <rect x="232" y="44" width="35" height="20" rx="2" fill="rgba(254,128,25,0.2)" stroke="#fe8019"/>
+            <text x="249" y="58" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fe8019">R3</text>
+            <!-- Variable Records -->
+            <text x="290" y="38" font-family="JetBrains Mono" font-size="9" fill="#a89984">Variable Records</text>
+            <rect x="290" y="44" width="25" height="20" rx="2" fill="rgba(184,187,38,0.2)" stroke="#b8bb26"/>
+            <text x="302" y="58" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#b8bb26">R1</text>
+            <rect x="316" y="44" width="45" height="20" rx="2" fill="rgba(184,187,38,0.2)" stroke="#b8bb26"/>
+            <text x="338" y="58" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#b8bb26">Record 2</text>
+            <rect x="362" y="44" width="30" height="20" rx="2" fill="rgba(184,187,38,0.2)" stroke="#b8bb26"/>
+            <text x="377" y="58" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#b8bb26">Rec3</text>
+            <!-- Tree -->
+            <text x="420" y="38" font-family="JetBrains Mono" font-size="9" fill="#a89984">Tree Structure</text>
+            <rect x="460" y="44" width="50" height="20" rx="3" fill="rgba(211,134,155,0.2)" stroke="#d3869b"/>
+            <text x="485" y="58" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#d3869b">Root</text>
+            <line x1="470" y1="64" x2="445" y2="84" stroke="#d3869b" stroke-width="1"/>
+            <line x1="500" y1="64" x2="520" y2="84" stroke="#d3869b" stroke-width="1"/>
+            <rect x="425" y="84" width="40" height="16" rx="2" fill="rgba(211,134,155,0.1)" stroke="#d3869b"/>
+            <text x="445" y="96" text-anchor="middle" font-family="JetBrains Mono" font-size="7" fill="#d3869b">key&lt;5</text>
+            <rect x="505" y="84" width="40" height="16" rx="2" fill="rgba(211,134,155,0.1)" stroke="#d3869b"/>
+            <text x="525" y="96" text-anchor="middle" font-family="JetBrains Mono" font-size="7" fill="#d3869b">key≥5</text>
+            <text x="290" y="130" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#928374">Fig 11.1 — File Organization Models</text>
+          </svg>
+          <p class="diagram-caption">Fig 11.1 — Different file organization structures</p>
+        </div>
+
+        <div class="ans-heading">File Access Mechanisms</div>
+        <p>Refer to Q8 for detailed explanation of Sequential, Direct, and Indexed Access. Summary:</p>
+        <ul class="ans-list">
+          <li><strong>Sequential Access:</strong> Read/write in order; pointer advances automatically</li>
+          <li><strong>Direct (Random) Access:</strong> Jump to any block using its number; used with fixed records</li>
+          <li><strong>Indexed Access:</strong> Maintain a separate index file; key → pointer → data record</li>
+        </ul>
+        <div class="tip-box"><strong>Exam Note:</strong> File organization affects which access methods are possible. Byte-stream files support sequential and direct. Record files also support indexed access. Tree-structured files support key-based access most efficiently.</div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="qa-card" id="q12">
+    <button class="qa-question" onclick="toggleQA(this)">
+      <span class="q-badge">Q12</span>
+      <span class="q-text">Explain File System Management. Also explain various file allocation methods and file access mechanisms.</span>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-chevron"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    </button>
+    <div class="qa-answer">
+      <div class="answer-body">
+
+        <div class="def-box">
+          <div class="def-label">What is File System Management?</div>
+          <strong>File System Management</strong> is the part of the OS that handles everything about files — creating them, deleting them, organizing them in folders, keeping track of free/used disk space, and making sure the right people can access the right files. It hides all the complicated disk details from the user.
+        </div>
+
+        <div class="ans-heading">Functions of File System Management</div>
+        <ol class="step-list">
+          <li><strong>File Creation &amp; Deletion:</strong> Allocating/freeing disk space and creating/removing directory entries</li>
+          <li><strong>Directory Management:</strong> Organizing files in directories for easy navigation and access</li>
+          <li><strong>Space Management:</strong> Tracking free and used disk blocks (using free-space lists or bitmaps)</li>
+          <li><strong>Access Control:</strong> Ensuring only authorized users access files in permitted ways</li>
+          <li><strong>Backup &amp; Recovery:</strong> Protecting data against hardware failure or accidental deletion</li>
+          <li><strong>Buffering &amp; Caching:</strong> Using memory buffers to speed up disk I/O operations</li>
+        </ol>
+
+        <div class="ans-heading">Free Space Management</div>
+        <div class="ans-subheading">1. Bitmap (Bit Vector)</div>
+        <div class="code-block">Block: 0  1  2  3  4  5  6  7  8  9
+Bits:  1  1  0  0  1  0  1  1  0  0
+       ↑used      ↑free</div>
+        <p>0 = free block, 1 = used block. Efficient to find free blocks; requires <code>disk_size/8</code> bytes for bitmap.</p>
+
+        <div class="ans-subheading">2. Linked Free List</div>
+        <ul class="ans-list">
+          <li>All free blocks linked together in a list</li>
+          <li>First free block pointer stored in a special disk location</li>
+          <li>Easy to find a free block (just take the head) but traversal is slow</li>
+        </ul>
+
+        <div class="ans-subheading">3. Grouping</div>
+        <ul class="ans-list">
+          <li>First free block stores n free block addresses; last address points to next group block</li>
+          <li>Efficient: provides quick access to many free blocks at once</li>
+        </ul>
+
+        <div class="ans-heading">File Allocation Methods (Summary)</div>
+        <p>See Q7 for full diagrams. Brief summary:</p>
+        <table class="ans-table">
+          <thead><tr><th>Method</th><th>How</th><th>Pros</th><th>Cons</th></tr></thead>
+          <tbody>
+            <tr><td>Contiguous</td><td>Adjacent blocks; dir stores start+len</td><td>Fast, simple, direct access</td><td>External fragmentation, pre-declaration needed</td></tr>
+            <tr><td>Linked</td><td>Blocks scattered; each has next-pointer</td><td>No fragmentation, dynamic</td><td>No direct access, pointer overhead</td></tr>
+            <tr><td>FAT</td><td>Linked but pointers in memory table</td><td>Faster than plain linked</td><td>FAT can be large for big disks</td></tr>
+            <tr><td>Indexed</td><td>Dedicated index block for all pointers</td><td>Direct access, no fragmentation</td><td>Index block overhead for small files</td></tr>
+            <tr><td>Multi-Indexed</td><td>Hierarchy of index blocks (inode)</td><td>Supports very large files</td><td>Multiple disk accesses for large files</td></tr>
+          </tbody>
+        </table>
+
+        <div class="ans-heading">File Access Mechanisms (Summary)</div>
+        <table class="ans-table">
+          <thead><tr><th>Access Type</th><th>How It Works</th><th>Best For</th></tr></thead>
+          <tbody>
+            <tr><td>Sequential</td><td>Read/write next record; pointer moves forward</td><td>Log files, stream processing</td></tr>
+            <tr><td>Direct/Random</td><td>Jump to any block using position number</td><td>Databases, large files</td></tr>
+            <tr><td>Indexed</td><td>Look up key in index file; follow pointer to data</td><td>Key-value stores, ISAM</td></tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="qa-card" id="q13">
+    <button class="qa-question" onclick="toggleQA(this)">
+      <span class="q-badge">Q13</span>
+      <span class="q-text">Discuss the organization of files including: Contiguous Allocation, Linked Allocation, and Indexed Allocation.</span>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-chevron"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    </button>
+    <div class="qa-answer">
+      <div class="answer-body">
+        <div class="note-box"><strong>Note:</strong> This question is covered comprehensively in Q7 with full diagrams and pro/con analysis for all three allocation methods. Below is a focused comparative discussion.</div>
+
+        <div class="ans-heading">Comparison of All Three Methods</div>
+
+        <div class="diagram-wrap">
+          <svg width="620" height="200" viewBox="0 0 620 200" xmlns="http://www.w3.org/2000/svg">
+            <text x="310" y="18" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#fabd2f" font-weight="700">Disk Block Organization Comparison</text>
+            <!-- Contiguous -->
+            <text x="10" y="38" font-family="JetBrains Mono" font-size="9" fill="#fe8019">Contiguous</text>
+            <rect x="10" y="45" width="35" height="25" rx="3" fill="rgba(254,128,25,0.3)" stroke="#fe8019"/>
+            <text x="27" y="61" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fe8019">1</text>
+            <rect x="47" y="45" width="35" height="25" rx="3" fill="rgba(254,128,25,0.3)" stroke="#fe8019"/>
+            <text x="64" y="61" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fe8019">2</text>
+            <rect x="84" y="45" width="35" height="25" rx="3" fill="rgba(254,128,25,0.3)" stroke="#fe8019"/>
+            <text x="101" y="61" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fe8019">3</text>
+            <rect x="121" y="45" width="35" height="25" rx="3" fill="#3c3836" stroke="#504945"/>
+            <text x="138" y="61" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#504945">X</text>
+            <rect x="158" y="45" width="35" height="25" rx="3" fill="#3c3836" stroke="#504945"/>
+            <text x="175" y="61" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#504945">X</text>
+            <text x="10" y="85" font-family="Recursive" font-size="11" fill="#a89984">→ Blocks adjacent; fast sequential &amp; random; may leave gaps</text>
+
+            <!-- Linked -->
+            <text x="10" y="110" font-family="JetBrains Mono" font-size="9" fill="#83a598">Linked</text>
+            <rect x="10" y="118" width="60" height="25" rx="3" fill="#32302f" stroke="#83a598"/>
+            <text x="40" y="134" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#83a598">data|→7</text>
+            <line x1="70" y1="130" x2="90" y2="130" stroke="#83a598" stroke-width="1.5"/>
+            <rect x="90" y="118" width="60" height="25" rx="3" fill="#32302f" stroke="#83a598"/>
+            <text x="120" y="134" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#83a598">data|→3</text>
+            <line x1="150" y1="130" x2="170" y2="130" stroke="#83a598" stroke-width="1.5"/>
+            <rect x="170" y="118" width="60" height="25" rx="3" fill="#32302f" stroke="#83a598"/>
+            <text x="200" y="134" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#83a598">data|null</text>
+            <text x="10" y="155" font-family="Recursive" font-size="11" fill="#a89984">→ Scattered blocks; pointer in each block; no fragmentation; slow random</text>
+
+            <!-- Indexed -->
+            <text x="330" y="110" font-family="JetBrains Mono" font-size="9" fill="#b8bb26">Indexed</text>
+            <rect x="330" y="118" width="60" height="60" rx="4" fill="#1d2021" stroke="#fabd2f"/>
+            <text x="360" y="135" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fabd2f">idx[</text>
+            <text x="360" y="148" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#b8bb26">3,7,11</text>
+            <text x="360" y="162" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fabd2f">]</text>
+            <line x1="390" y1="140" x2="420" y2="128" stroke="#b8bb26" stroke-width="1"/>
+            <rect x="420" y="118" width="30" height="20" rx="3" fill="rgba(184,187,38,0.15)" stroke="#b8bb26"/>
+            <text x="435" y="132" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#b8bb26">blk3</text>
+            <line x1="390" y1="148" x2="460" y2="148" stroke="#b8bb26" stroke-width="1"/>
+            <rect x="460" y="138" width="30" height="20" rx="3" fill="rgba(184,187,38,0.15)" stroke="#b8bb26"/>
+            <text x="475" y="152" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#b8bb26">blk7</text>
+            <line x1="390" y1="160" x2="420" y2="170" stroke="#b8bb26" stroke-width="1"/>
+            <rect x="420" y="160" width="30" height="20" rx="3" fill="rgba(184,187,38,0.15)" stroke="#b8bb26"/>
+            <text x="435" y="174" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#b8bb26">blk11</text>
+            <text x="330" y="192" font-family="Recursive" font-size="11" fill="#a89984">→ Index block holds all ptrs; direct access; overhead for small files</text>
+          </svg>
+          <p class="diagram-caption">Fig 13.1 — Side-by-side comparison of Contiguous, Linked, and Indexed allocation</p>
+        </div>
+
+        <table class="ans-table">
+          <thead><tr><th>Feature</th><th>Contiguous</th><th>Linked</th><th>Indexed</th></tr></thead>
+          <tbody>
+            <tr><td>Sequential Access</td><td>Excellent</td><td>Good</td><td>Good</td></tr>
+            <tr><td>Random Access</td><td>Excellent</td><td>Poor (O(n))</td><td>Good (O(1))</td></tr>
+            <tr><td>Fragmentation</td><td>External</td><td>None</td><td>Internal (index)</td></tr>
+            <tr><td>File Growth</td><td>Difficult</td><td>Easy</td><td>Easy (up to index limit)</td></tr>
+            <tr><td>Storage Overhead</td><td>Minimal</td><td>Pointer per block</td><td>One index block</td></tr>
+            <tr><td>Reliability</td><td>High</td><td>Low (pointer failure)</td><td>Medium</td></tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="qa-card" id="q14">
+    <button class="qa-question" onclick="toggleQA(this)">
+      <span class="q-badge">Q14</span>
+      <span class="q-text">Explain the structure and management of file directories including: Hierarchical Directory Structure and Flat Directory Structure.</span>
+      <span class="q-marks">7 Marks</span>
+      <span class="q-chevron"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    </button>
+    <div class="qa-answer">
+      <div class="answer-body">
+
+        <div class="def-box">
+          <div class="def-label">What is a Directory?</div>
+          A <strong>directory</strong> is a special file that works like a <strong>phone book for the disk</strong> — it maps file names to where those files actually live on disk (their location, size, permissions, etc.). Directories let you organize files neatly instead of throwing everything in one pile.
+        </div>
+
+        <div class="ans-heading">Directory Operations</div>
+        <ul class="ans-list">
+          <li>Search for file, Create file, Delete file, List directory</li>
+          <li>Rename file, Traverse file system, Open/Close directory</li>
+        </ul>
+
+        <div class="ans-heading">Types of Directory Structures</div>
+
+        <!-- Single Level -->
+        <div class="ans-subheading">1. Single-Level (Flat) Directory</div>
+        <div class="def-box">
+          <div class="def-label">Definition</div>
+          All files reside in a single directory shared by all users. There is only one directory for the entire system.
+        </div>
+
+        <div class="diagram-wrap">
+          <svg width="560" height="120" viewBox="0 0 560 120" xmlns="http://www.w3.org/2000/svg">
+            <text x="280" y="16" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#fabd2f" font-weight="700">Single-Level (Flat) Directory</text>
+            <!-- Directory box -->
+            <rect x="180" y="28" width="200" height="35" rx="5" fill="#32302f" stroke="#fabd2f" stroke-width="2"/>
+            <text x="280" y="50" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#fabd2f">Root Directory</text>
+            <!-- Files -->
+            <rect x="20" y="85" width="70" height="25" rx="4" fill="#32302f" stroke="#83a598"/>
+            <text x="55" y="101" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">file1.txt</text>
+            <rect x="100" y="85" width="70" height="25" rx="4" fill="#32302f" stroke="#83a598"/>
+            <text x="135" y="101" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">program.c</text>
+            <rect x="180" y="85" width="70" height="25" rx="4" fill="#32302f" stroke="#83a598"/>
+            <text x="215" y="101" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">data.csv</text>
+            <rect x="260" y="85" width="70" height="25" rx="4" fill="#32302f" stroke="#83a598"/>
+            <text x="295" y="101" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">photo.jpg</text>
+            <rect x="340" y="85" width="70" height="25" rx="4" fill="#32302f" stroke="#83a598"/>
+            <text x="375" y="101" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">notes.txt</text>
+            <!-- Lines -->
+            <line x1="55" y1="85" x2="220" y2="63" stroke="#504945" stroke-width="1"/>
+            <line x1="135" y1="85" x2="235" y2="63" stroke="#504945" stroke-width="1"/>
+            <line x1="215" y1="85" x2="270" y2="63" stroke="#504945" stroke-width="1"/>
+            <line x1="295" y1="85" x2="310" y2="63" stroke="#504945" stroke-width="1"/>
+            <line x1="375" y1="85" x2="350" y2="63" stroke="#504945" stroke-width="1"/>
+          </svg>
+          <p class="diagram-caption">Fig 14.1 — Single-Level Directory: All files in one directory</p>
+        </div>
+        <div class="pro-con-grid">
+          <div class="pro-box"><div class="pbox-label">Advantages</div><ul><li>Simple to implement</li><li>Easy to search (linear scan)</li></ul></div>
+          <div class="con-box"><div class="pbox-label">Disadvantages</div><ul><li>Naming conflicts (two users can't use same filename)</li><li>No organization; unmanageable with many files</li><li>All users share one space — no isolation</li></ul></div>
+        </div>
+
+        <!-- Two Level -->
+        <div class="ans-subheading">2. Two-Level Directory</div>
+        <ul class="ans-list">
+          <li>Each user has their own directory (UFD — User File Directory)</li>
+          <li>Master File Directory (MFD) contains each user's directory pointer</li>
+          <li>Users can have files with same name (isolated namespaces)</li>
+          <li>But: no sharing between users; no subdirectories</li>
+        </ul>
+
+        <!-- Hierarchical -->
+        <div class="ans-subheading">3. Hierarchical (Tree-Structured) Directory</div>
+        <div class="def-box">
+          <div class="def-label">Definition</div>
+          Files are organized in a <strong>tree structure</strong> with a single root at the top. Each directory can have files and sub-directories inside it — you can go as deep as needed. This is exactly how Windows, Linux, and macOS work today.
+        </div>
+
+        <div class="diagram-wrap">
+          <svg width="600" height="230" viewBox="0 0 600 230" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="a14" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 L1,3 Z" fill="#504945"/>
+              </marker>
+            </defs>
+            <text x="300" y="18" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#fabd2f" font-weight="700">Hierarchical (Tree-Structured) Directory</text>
+            <!-- Root -->
+            <rect x="250" y="28" width="100" height="30" rx="6" fill="#32302f" stroke="#fabd2f" stroke-width="2"/>
+            <text x="300" y="48" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#fabd2f">/ (root)</text>
+            <!-- Level 1 -->
+            <line x1="280" y1="58" x2="120" y2="88" stroke="#504945" stroke-width="1.5" marker-end="url(#a14)"/>
+            <line x1="300" y1="58" x2="300" y2="88" stroke="#504945" stroke-width="1.5" marker-end="url(#a14)"/>
+            <line x1="320" y1="58" x2="480" y2="88" stroke="#504945" stroke-width="1.5" marker-end="url(#a14)"/>
+            <rect x="60" y="88" width="80" height="28" rx="5" fill="#32302f" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="100" y="106" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fe8019">/home</text>
+            <rect x="260" y="88" width="80" height="28" rx="5" fill="#32302f" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="300" y="106" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fe8019">/etc</text>
+            <rect x="440" y="88" width="80" height="28" rx="5" fill="#32302f" stroke="#fe8019" stroke-width="1.5"/>
+            <text x="480" y="106" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fe8019">/usr</text>
+            <!-- Level 2 under /home -->
+            <line x1="90" y1="116" x2="50" y2="148" stroke="#504945" stroke-width="1.5" marker-end="url(#a14)"/>
+            <line x1="110" y1="116" x2="150" y2="148" stroke="#504945" stroke-width="1.5" marker-end="url(#a14)"/>
+            <rect x="10" y="148" width="70" height="25" rx="4" fill="#32302f" stroke="#83a598"/>
+            <text x="45" y="165" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">/home/alice</text>
+            <rect x="115" y="148" width="70" height="25" rx="4" fill="#32302f" stroke="#83a598"/>
+            <text x="150" y="165" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#83a598">/home/bob</text>
+            <!-- Files under alice -->
+            <line x1="35" y1="173" x2="20" y2="198" stroke="#504945" stroke-width="1"/>
+            <line x1="55" y1="173" x2="70" y2="198" stroke="#504945" stroke-width="1"/>
+            <rect x="5" y="198" width="30" height="20" rx="3" fill="#1d2021" stroke="#b8bb26"/>
+            <text x="20" y="212" text-anchor="middle" font-family="JetBrains Mono" font-size="7" fill="#b8bb26">a.txt</text>
+            <rect x="55" y="198" width="30" height="20" rx="3" fill="#1d2021" stroke="#b8bb26"/>
+            <text x="70" y="212" text-anchor="middle" font-family="JetBrains Mono" font-size="7" fill="#b8bb26">b.py</text>
+            <!-- Level 2 under /etc -->
+            <line x1="295" y1="116" x2="280" y2="148" stroke="#504945" stroke-width="1.5" marker-end="url(#a14)"/>
+            <line x1="305" y1="116" x2="320" y2="148" stroke="#504945" stroke-width="1.5" marker-end="url(#a14)"/>
+            <rect x="250" y="148" width="55" height="25" rx="4" fill="#1d2021" stroke="#b8bb26"/>
+            <text x="277" y="165" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#b8bb26">passwd</text>
+            <rect x="310" y="148" width="55" height="25" rx="4" fill="#1d2021" stroke="#b8bb26"/>
+            <text x="337" y="165" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#b8bb26">fstab</text>
+            <!-- Level 2 under /usr -->
+            <line x1="470" y1="116" x2="450" y2="148" stroke="#504945" stroke-width="1.5" marker-end="url(#a14)"/>
+            <line x1="490" y1="116" x2="510" y2="148" stroke="#504945" stroke-width="1.5" marker-end="url(#a14)"/>
+            <rect x="420" y="148" width="55" height="25" rx="4" fill="#32302f" stroke="#83a598"/>
+            <text x="447" y="165" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#83a598">/usr/bin</text>
+            <rect x="490" y="148" width="55" height="25" rx="4" fill="#32302f" stroke="#83a598"/>
+            <text x="517" y="165" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#83a598">/usr/lib</text>
+          </svg>
+          <p class="diagram-caption">Fig 14.2 — Hierarchical (Tree) Directory Structure: Linux filesystem example</p>
+        </div>
+
+        <div class="ans-subheading">Path Types</div>
+        <ul class="ans-list">
+          <li><strong>Absolute Path:</strong> Full path from root — <code>/home/alice/documents/report.pdf</code></li>
+          <li><strong>Relative Path:</strong> Path from current working directory — <code>../bob/shared.txt</code></li>
+          <li>Special entries: <code>.</code> (current directory), <code>..</code> (parent directory)</li>
+        </ul>
+
+        <div class="pro-con-grid">
+          <div class="pro-box"><div class="pbox-label">Advantages of Hierarchical</div><ul><li>Logical grouping of related files</li><li>Separate namespaces per user/project</li><li>Efficient search (tree traversal)</li><li>Widely used: Linux, Windows, macOS</li></ul></div>
+          <div class="con-box"><div class="pbox-label">Limitations</div><ul><li>Longer path names can be inconvenient</li><li>Deep trees take multiple disk accesses</li><li>Navigating complex hierarchies can be confusing</li></ul></div>
+        </div>
+
+        <div class="ans-subheading">4. Acyclic-Graph Directory</div>
+        <ul class="ans-list">
+          <li>An upgrade of the tree structure — allows a <strong>file/folder to have multiple parent folders</strong> (shared from two places)</li>
+          <li>Achieved using <strong>hard links</strong> or <strong>symbolic (soft) links</strong></li>
+          <li><strong>Hard link:</strong> Two directory entries pointing to the same actual file on disk. File is deleted only when ALL links to it are removed.</li>
+          <li><strong>Soft link (symlink):</strong> A shortcut file that points to another file's path. Can work across different drives/filesystems.</li>
+          <li><strong>Rule:</strong> No loops/cycles allowed — to prevent infinite loops when the OS scans directories</li>
+        </ul>
+
+        <table class="ans-table">
+          <thead><tr><th>Structure</th><th>Users</th><th>Subdirs</th><th>Sharing</th><th>Used In</th></tr></thead>
+          <tbody>
+            <tr><td>Single-Level (Flat)</td><td>1 (shared)</td><td>No</td><td>N/A</td><td>Early CP/M</td></tr>
+            <tr><td>Two-Level</td><td>Multiple</td><td>No</td><td>Limited</td><td>Early UNIX</td></tr>
+            <tr><td>Tree (Hierarchical)</td><td>Multiple</td><td>Yes</td><td>No native</td><td>Linux, Windows</td></tr>
+            <tr><td>Acyclic Graph</td><td>Multiple</td><td>Yes</td><td>Yes (links)</td><td>Modern UNIX/Linux</td></tr>
+          </tbody>
+        </table>
+
+        <div class="tip-box"><strong>Exam Note:</strong> Most modern OS (Linux, Windows, macOS) use <strong>tree-structured directories</strong> with <strong>symbolic/hard links</strong> for sharing — effectively an acyclic graph. Always mention both structures and their relationship in exam answers.</div>
+
+      </div>
+    </div>
+  </div>
+
+</section>
+</main>
+
+<script>
+  // ── Toggle Q&A ──
+  function toggleQA(btn) {
+    const card = btn.parentElement;
+    const isOpen = card.classList.contains('open');
+    // close all
+    document.querySelectorAll('.qa-card.open').forEach(c => c.classList.remove('open'));
+    if (!isOpen) {
+      card.classList.add('open');
+      setTimeout(() => {
+        const rect = card.getBoundingClientRect();
+        const scrollTop = window.pageYOffset + rect.top - 80;
+        window.scrollTo({ top: scrollTop, behavior: 'smooth' });
+      }, 100);
+    }
+    updateProgress();
+  }
+
+  // ── Sidebar nav toggle ──
+  function toggleNav(id) {
+    const el = document.getElementById(id);
+    const icon = document.getElementById('icon-' + id);
+    el.classList.toggle('open');
+    icon.style.transform = el.classList.contains('open') ? 'rotate(180deg)' : '';
+
+    // update active btn
+    document.querySelectorAll('.sidebar-unit-btn').forEach(b => b.classList.remove('active'));
+    const btn = el.previousElementSibling;
+    if (btn) btn.classList.add(el.classList.contains('open') ? 'active' : '');
+  }
+
+  // ── Hamburger ──
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sidebar-overlay').classList.toggle('open');
+  }
+
+  function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebar-overlay').classList.remove('open');
+  }
+
+  // ── Progress Bar ──
+  function updateProgress() {
+    const total = document.querySelectorAll('.qa-card').length;
+    const opened = new Set();
+    document.querySelectorAll('.qa-card.open, .qa-card[data-viewed]').forEach(c => opened.add(c.id));
+    // track viewed
+    document.querySelectorAll('.qa-card.open').forEach(c => c.setAttribute('data-viewed', '1'));
+    const viewed = document.querySelectorAll('.qa-card[data-viewed]').length;
+    const pct = Math.round((viewed / total) * 100);
+    document.getElementById('progress-bar-fill').style.width = pct + '%';
+    document.getElementById('progress-pct').textContent = pct + '%';
+  }
+
+  // ── Scroll progress ──
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const scrollTop = doc.scrollTop || document.body.scrollTop;
+    const scrollHeight = doc.scrollHeight - doc.clientHeight;
+    const pct = scrollHeight > 0 ? Math.round((scrollTop / scrollHeight) * 100) : 0;
+    // Only update if no cards opened (show scroll-based progress otherwise)
+    if (document.querySelectorAll('.qa-card[data-viewed]').length === 0) {
+      document.getElementById('progress-bar-fill').style.width = pct + '%';
+      document.getElementById('progress-pct').textContent = pct + '%';
+    }
+  });
+
+  // ── Active sidebar link on scroll ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        document.querySelectorAll('.nav-sub a').forEach(a => {
+          a.style.color = '';
+          if (a.getAttribute('href') === '#' + id) {
+            a.style.color = 'var(--yellow)';
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  document.querySelectorAll('.qa-card').forEach(card => observer.observe(card));
+
+  // Close sidebar on link click (mobile)
+  document.querySelectorAll('.nav-sub a').forEach(a => {
+    a.addEventListener('click', () => closeSidebar());
+  });
+</script>
+</body>
+</html>

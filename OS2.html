@@ -1,0 +1,2091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AKTU OS — Previous Year Questions | Operating Systems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Recursive:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ─── GRUVBOX DARK PALETTE ─────────────────────────────── */
+  :root {
+    --bg0-h:   #1d2021;
+    --bg0:     #282828;
+    --bg1:     #3c3836;
+    --bg2:     #504945;
+    --bg3:     #665c54;
+    --bg4:     #7c6f64;
+    --fg0:     #fbf1c7;
+    --fg1:     #ebdbb2;
+    --fg2:     #d5c4a1;
+    --fg3:     #bdae93;
+    --fg4:     #a89984;
+    --red:     #cc241d;
+    --red-b:   #fb4934;
+    --green:   #98971a;
+    --green-b: #b8bb26;
+    --yellow:  #d79921;
+    --yellow-b:#fabd2f;
+    --blue:    #458588;
+    --blue-b:  #83a598;
+    --purple:  #b16286;
+    --purple-b:#d3869b;
+    --aqua:    #689d6a;
+    --aqua-b:  #8ec07c;
+    --orange:  #d65d0e;
+    --orange-b:#fe8019;
+    --gray:    #928374;
+
+    --sidebar-w: 270px;
+    --topbar-h:  60px;
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --shadow:    0 4px 24px rgba(0,0,0,.45);
+    --transition: all .28s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* ─── RESET & BASE ──────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 15px; }
+  body {
+    font-family: 'Recursive', sans-serif;
+    background: var(--bg0-h);
+    color: var(--fg1);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── SCROLLBAR ─────────────────────────────────────────── */
+  ::-webkit-scrollbar { width: 7px; }
+  ::-webkit-scrollbar-track { background: var(--bg0); }
+  ::-webkit-scrollbar-thumb { background: var(--bg3); border-radius: 99px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--bg4); }
+
+  /* ─── TOP NAV ───────────────────────────────────────────── */
+  #topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--topbar-h);
+    background: rgba(29,32,33,.92);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--bg2);
+    display: flex; align-items: center; gap: 16px; padding: 0 20px;
+  }
+  #hamburger {
+    display: none; background: none; border: none;
+    cursor: pointer; padding: 6px; border-radius: var(--radius-sm);
+    color: var(--fg2); font-size: 22px; line-height:1;
+    transition: var(--transition);
+  }
+  #hamburger:hover { background: var(--bg1); color: var(--fg0); }
+  .topbar-brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem; font-weight: 700; color: var(--yellow-b);
+    letter-spacing: -.5px; white-space: nowrap;
+  }
+  .topbar-brand span { color: var(--fg4); font-weight: 400; }
+  .topbar-spacer { flex: 1; }
+  #progress-container {
+    display: flex; align-items: center; gap: 10px; font-size: .75rem;
+    color: var(--fg4); font-family: 'JetBrains Mono', monospace;
+  }
+  #progress-bar-wrap {
+    width: 130px; height: 6px;
+    background: var(--bg2); border-radius: 99px; overflow: hidden;
+  }
+  #progress-bar-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--green-b), var(--aqua-b));
+    border-radius: 99px; transition: width .5s ease;
+  }
+  #progress-label { color: var(--green-b); }
+  #unit-badge {
+    background: var(--bg1); border: 1px solid var(--bg3);
+    border-radius: var(--radius-sm); padding: 4px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .72rem; color: var(--aqua-b);
+    display: none;
+  }
+
+  /* ─── LAYOUT ────────────────────────────────────────────── */
+  #layout { display: flex; min-height: 100vh; padding-top: var(--topbar-h); }
+
+  /* ─── SIDEBAR ───────────────────────────────────────────── */
+  #sidebar {
+    position: fixed; top: var(--topbar-h); left: 0; bottom: 0;
+    width: var(--sidebar-w);
+    background: var(--bg0);
+    border-right: 1px solid var(--bg2);
+    overflow-y: auto; overflow-x: hidden;
+    transition: transform .32s cubic-bezier(.4,0,.2,1);
+    z-index: 90;
+  }
+  #sidebar-inner { padding: 18px 12px 40px; }
+  .sidebar-header {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem; font-weight: 700;
+    letter-spacing: 1.8px; text-transform: uppercase;
+    color: var(--fg4); padding: 4px 8px 10px;
+    border-bottom: 1px solid var(--bg2); margin-bottom: 10px;
+  }
+  .unit-nav-group { margin-bottom: 6px; }
+  .unit-nav-label {
+    display: block; padding: 9px 10px 9px 12px;
+    border-radius: var(--radius-sm);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .78rem; font-weight: 600;
+    color: var(--yellow-b);
+    cursor: pointer; user-select: none;
+    transition: var(--transition);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .unit-nav-label:hover { background: var(--bg1); }
+  .unit-nav-label .u-num {
+    background: var(--bg2); border-radius: 5px;
+    padding: 2px 6px; font-size: .65rem; color: var(--fg4);
+  }
+  .unit-nav-links { padding-left: 8px; padding-bottom: 4px; }
+  .nav-link {
+    display: block; padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    font-size: .75rem; color: var(--fg3);
+    text-decoration: none; cursor: pointer;
+    transition: var(--transition);
+    border-left: 2px solid transparent;
+    font-family: 'Recursive', sans-serif;
+    line-height: 1.3;
+  }
+  .nav-link:hover { background: var(--bg1); color: var(--fg1); border-left-color: var(--aqua-b); }
+  .nav-link.active { background: var(--bg1); color: var(--aqua-b); border-left-color: var(--aqua-b); font-weight: 600; }
+  .nav-link.answered { color: var(--green-b); }
+  .nav-link.answered::after { content: ' ✓'; font-size: .65rem; }
+  #sidebar-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.6); z-index: 85;
+  }
+
+  /* ─── MAIN CONTENT ──────────────────────────────────────── */
+  #main {
+    margin-left: var(--sidebar-w);
+    flex: 1; padding: 32px 28px 80px;
+    max-width: 960px;
+  }
+
+  /* ─── UNIT SECTIONS ─────────────────────────────────────── */
+  .unit-section {
+    margin-bottom: 60px;
+    scroll-margin-top: calc(var(--topbar-h) + 20px);
+  }
+  .unit-heading {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 28px; padding-bottom: 14px;
+    border-bottom: 2px solid var(--bg2);
+  }
+  .unit-num-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .75rem; font-weight: 700;
+    background: var(--yellow-b); color: var(--bg0);
+    padding: 4px 10px; border-radius: var(--radius-sm);
+    white-space: nowrap;
+  }
+  .unit-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.05rem; font-weight: 700;
+    color: var(--fg0);
+  }
+  .unit-q-count {
+    margin-left: auto; font-family: 'JetBrains Mono', monospace;
+    font-size: .7rem; color: var(--fg4);
+    background: var(--bg1); padding: 3px 9px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* ─── ACCORDION CARDS ───────────────────────────────────── */
+  .qa-card {
+    background: var(--bg0);
+    border: 1px solid var(--bg2);
+    border-radius: var(--radius-md);
+    margin-bottom: 14px;
+    overflow: hidden;
+    transition: border-color .25s, box-shadow .25s;
+  }
+  .qa-card:hover { border-color: var(--bg3); box-shadow: var(--shadow); }
+  .qa-card.open { border-color: var(--blue-b); box-shadow: 0 0 0 1px var(--blue)44; }
+  .qa-header {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px 18px; cursor: pointer; user-select: none;
+  }
+  .q-mark {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .65rem; font-weight: 700;
+    background: var(--bg2); color: var(--fg4);
+    padding: 3px 7px; border-radius: 5px;
+    white-space: nowrap; margin-top: 2px;
+    min-width: 30px; text-align: center;
+  }
+  .qa-card.open .q-mark { background: var(--blue); color: var(--fg0); }
+  .q-text {
+    flex: 1; font-size: .9rem; color: var(--fg2);
+    font-weight: 500; line-height: 1.5;
+  }
+  .qa-card.open .q-text { color: var(--fg0); }
+  .qa-chevron {
+    margin-left: auto; margin-top: 3px;
+    color: var(--fg4); transition: transform .3s ease;
+    flex-shrink: 0;
+  }
+  .qa-card.open .qa-chevron { transform: rotate(180deg); color: var(--blue-b); }
+  .qa-body {
+    max-height: 0; overflow: hidden;
+    transition: max-height .5s cubic-bezier(.4,0,.2,1), opacity .3s ease;
+    opacity: 0;
+  }
+  .qa-card.open .qa-body { opacity: 1; }
+  .qa-body-inner {
+    padding: 0 18px 22px 18px;
+    border-top: 1px solid var(--bg2);
+    padding-top: 18px;
+  }
+
+  /* ─── ANSWER CONTENT STYLES ─────────────────────────────── */
+  .ans-section { margin-bottom: 18px; }
+  .ans-h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .82rem; font-weight: 700;
+    color: var(--orange-b);
+    text-transform: uppercase; letter-spacing: .8px;
+    margin-bottom: 8px; margin-top: 18px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .ans-h2::before { content:''; display:inline-block; width:3px; height:14px; background:var(--orange-b); border-radius:2px; }
+  .ans-h3 {
+    font-family: 'Recursive', sans-serif;
+    font-size: .88rem; font-weight: 700;
+    color: var(--yellow-b); margin: 14px 0 6px;
+  }
+  .ans-p { font-size: .88rem; color: var(--fg2); margin-bottom: 10px; line-height: 1.75; }
+  .def-box {
+    background: var(--bg1); border-left: 4px solid var(--aqua-b);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 12px 16px; margin: 12px 0;
+    font-size: .87rem; color: var(--fg1); line-height: 1.65;
+  }
+  .def-box strong { color: var(--aqua-b); }
+  .key-box {
+    background: var(--bg1); border-left: 4px solid var(--yellow-b);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 12px 16px; margin: 12px 0;
+    font-size: .87rem; color: var(--fg1);
+  }
+  .note-box {
+    background: rgba(215,153,33,.08); border: 1px solid var(--yellow)66;
+    border-radius: var(--radius-sm); padding: 10px 14px;
+    margin: 12px 0; font-size: .83rem; color: var(--fg3);
+  }
+  .note-box strong { color: var(--yellow-b); }
+  .ans-ul { list-style: none; padding: 0; margin: 8px 0 12px; }
+  .ans-ul li {
+    padding: 4px 0 4px 20px; position: relative;
+    font-size: .87rem; color: var(--fg2); line-height: 1.6;
+  }
+  .ans-ul li::before {
+    content: '▸'; position: absolute; left: 4px;
+    color: var(--green-b); font-size: .75rem; top: 6px;
+  }
+  .ans-ol { padding-left: 20px; margin: 8px 0 12px; }
+  .ans-ol li {
+    padding: 4px 0; font-size: .87rem;
+    color: var(--fg2); line-height: 1.6;
+  }
+  .ans-ol li::marker { color: var(--orange-b); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+
+  /* ─── CODE BLOCK ────────────────────────────────────────── */
+  .code-block {
+    background: var(--bg0-h); border: 1px solid var(--bg2);
+    border-radius: var(--radius-sm); padding: 14px 16px;
+    margin: 12px 0; overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .78rem; color: var(--green-b); line-height: 1.7;
+  }
+
+  /* ─── COMPARISON TABLES ─────────────────────────────────── */
+  .tbl-wrap { overflow-x: auto; margin: 14px 0; }
+  .cmp-table {
+    width: 100%; border-collapse: collapse;
+    font-size: .82rem;
+  }
+  .cmp-table th {
+    background: var(--bg2);
+    color: var(--yellow-b);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .75rem; font-weight: 700;
+    padding: 10px 14px; text-align: left;
+    border: 1px solid var(--bg3);
+  }
+  .cmp-table td {
+    padding: 9px 14px;
+    border: 1px solid var(--bg2);
+    color: var(--fg2); vertical-align: top;
+    line-height: 1.5;
+  }
+  .cmp-table tr:nth-child(even) td { background: rgba(60,56,54,.4); }
+  .cmp-table tr:hover td { background: var(--bg1); }
+
+  /* ─── SVG DIAGRAM CONTAINER ─────────────────────────────── */
+  .diagram-wrap {
+    background: var(--bg0-h); border: 1px solid var(--bg2);
+    border-radius: var(--radius-md); padding: 20px;
+    margin: 16px 0; overflow-x: auto; text-align: center;
+  }
+  .diagram-caption {
+    text-align: center; font-size: .75rem; color: var(--fg4);
+    font-family: 'JetBrains Mono', monospace;
+    margin-top: 10px; letter-spacing: .5px;
+  }
+
+  /* ─── MARKS BADGE ───────────────────────────────────────── */
+  .marks-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(152,151,26,.15); border: 1px solid var(--green)66;
+    border-radius: var(--radius-sm); padding: 3px 9px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem; color: var(--green-b); margin-bottom: 12px;
+  }
+
+  /* ─── STEP LIST ─────────────────────────────────────────── */
+  .step-list { margin: 10px 0 14px; }
+  .step-item {
+    display: flex; gap: 12px; margin-bottom: 10px; align-items: flex-start;
+  }
+  .step-num {
+    min-width: 26px; height: 26px;
+    background: var(--blue); color: var(--fg0);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace; font-size: .7rem; font-weight: 700;
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .step-text { font-size: .87rem; color: var(--fg2); line-height: 1.65; }
+  .step-text strong { color: var(--fg1); }
+
+  /* ─── TAGS ──────────────────────────────────────────────── */
+  .tag {
+    display: inline-block; padding: 2px 8px;
+    border-radius: 4px; font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem; font-weight: 600; margin: 2px 3px 2px 0;
+  }
+  .tag-imp { background: rgba(204,36,29,.2); color: var(--red-b); border: 1px solid var(--red)44; }
+  .tag-def { background: rgba(104,157,106,.2); color: var(--aqua-b); border: 1px solid var(--aqua)44; }
+
+  /* ─── DIVIDER ────────────────────────────────────────────── */
+  .ans-divider { border: none; border-top: 1px solid var(--bg2); margin: 16px 0; }
+
+  /* ─── MOBILE ─────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    #sidebar { transform: translateX(-100%); }
+    #sidebar.open { transform: translateX(0); }
+    #sidebar-overlay.show { display: block; }
+    #hamburger { display: flex; }
+    #main { margin-left: 0; padding: 20px 14px 60px; }
+    #unit-badge { display: inline-block; }
+    .topbar-brand span { display: none; }
+    #progress-container { display: none; }
+    .unit-title { font-size: .9rem; }
+  }
+  @media (max-width: 480px) {
+    .qa-header { padding: 12px 14px; }
+    .qa-body-inner { padding: 14px; }
+    .cmp-table { font-size: .75rem; }
+    .unit-heading { flex-wrap: wrap; }
+    .unit-q-count { margin-left: 0; }
+  }
+
+  /* ─── ANIMATIONS ─────────────────────────────────────────── */
+  @keyframes fadeSlide {
+    from { opacity:0; transform: translateY(12px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+  .unit-section { animation: fadeSlide .4s ease both; }
+  .unit-section:nth-child(2) { animation-delay: .05s; }
+  .unit-section:nth-child(3) { animation-delay: .1s; }
+
+  /* ─── SEARCH BAR ─────────────────────────────────────────── */
+  #search-wrap { padding: 10px 12px; }
+  #search-input {
+    width: 100%; background: var(--bg1); border: 1px solid var(--bg3);
+    border-radius: var(--radius-sm); color: var(--fg1);
+    font-family: 'Recursive', sans-serif; font-size: .78rem;
+    padding: 8px 12px; outline: none; transition: var(--transition);
+  }
+  #search-input::placeholder { color: var(--fg4); }
+  #search-input:focus { border-color: var(--blue-b); box-shadow: 0 0 0 3px rgba(69,133,136,.2); }
+
+  /* ─── FOOTER ─────────────────────────────────────────────── */
+  .page-footer {
+    text-align: center; padding: 30px 0 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem; color: var(--fg4); letter-spacing: .5px;
+  }
+  .page-footer span { color: var(--yellow-b); }
+
+  /* ─── INLINE HIGHLIGHT ───────────────────────────────────── */
+  .hl { color: var(--yellow-b); font-weight: 600; }
+  .hl-r { color: var(--red-b); font-weight: 600; }
+  .hl-g { color: var(--green-b); font-weight: 600; }
+  .hl-b { color: var(--blue-b); font-weight: 600; }
+  .hl-p { color: var(--purple-b); font-weight: 600; }
+  .hl-a { color: var(--aqua-b); font-weight: 600; }
+  .hl-o { color: var(--orange-b); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- ═══ TOP BAR ═══ -->
+<nav id="topbar">
+  <button id="hamburger" aria-label="Toggle sidebar">☰</button>
+  <div class="topbar-brand">AKTU <span>/ Operating Systems</span></div>
+  <span id="unit-badge">Unit 1</span>
+  <div class="topbar-spacer"></div>
+  <div style="font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--aqua-b);background:rgba(104,157,106,.15);border:1px solid var(--aqua)66;border-radius:6px;padding:3px 10px;white-space:nowrap;">✓ Reviewed &amp; Simplified</div>
+  <div id="progress-container">
+    <span>Viewed</span>
+    <div id="progress-bar-wrap"><div id="progress-bar-fill"></div></div>
+    <span id="progress-label">0%</span>
+  </div>
+</nav>
+
+<!-- ═══ SIDEBAR OVERLAY ═══ -->
+<div id="sidebar-overlay"></div>
+
+<!-- ═══ LAYOUT ═══ -->
+<div id="layout">
+
+<!-- ─── SIDEBAR ─── -->
+<aside id="sidebar">
+  <div id="sidebar-inner">
+    <div class="sidebar-header">📖 Question Index</div>
+    <div id="search-wrap">
+      <input type="text" id="search-input" placeholder="Search questions…" autocomplete="off">
+    </div>
+    <div id="nav-tree"></div>
+  </div>
+</aside>
+
+<!-- ─── MAIN ─── -->
+<main id="main">
+
+<!-- ══════════════ UNIT 1 ══════════════ -->
+<section class="unit-section" id="unit1">
+  <div class="unit-heading">
+    <span class="unit-num-badge">UNIT 01</span>
+    <span class="unit-title">Introduction to Operating Systems</span>
+    <span class="unit-q-count">9 Questions · 2M each</span>
+  </div>
+
+  <!-- Q1.1 -->
+  <div class="qa-card" id="q1-1">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Define Operating System. List the objectives of an operating system.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <span class="marks-badge">★ 2 Marks | Frequently Asked</span>
+      <span class="tag tag-def">Definition</span>
+      <div class="ans-h2">Definition</div>
+      <div class="def-box">
+        <strong>Operating System (OS)</strong> is a <em>system software</em> that acts as an intermediary between the <strong>hardware</strong> of a computer and the <strong>user/application programs</strong>. It manages hardware resources and provides services for computer programs.
+        <br><br>
+        Simple definition: <em>"OS is a program that controls app execution and acts as a bridge between the user and the computer hardware."</em>
+      </div>
+      <div class="ans-h2">Objectives of an Operating System</div>
+      <ul class="ans-ul">
+        <li><strong>Convenience:</strong> Make the computer system user-friendly and easy to use.</li>
+        <li><strong>Efficiency:</strong> Allow computer system resources to be used in an efficient manner.</li>
+        <li><strong>Ability to Evolve:</strong> Allow new features to be added without breaking existing services.</li>
+        <li><strong>Resource Management:</strong> Manage CPU, memory, I/O devices, and files among competing processes.</li>
+        <li><strong>Security & Protection:</strong> Prevent unauthorized access and protect user data.</li>
+        <li><strong>Error Detection:</strong> Detect and handle errors in hardware and software.</li>
+        <li><strong>Accounting:</strong> Track resource usage by users for billing and optimization.</li>
+      </ul>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 560 260" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:560px">
+          <defs>
+            <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#83a598"/>
+            </marker>
+          </defs>
+          <!-- User layer -->
+          <rect x="30" y="20" width="500" height="44" rx="10" fill="#504945" stroke="#7c6f64" stroke-width="1.2"/>
+          <text x="280" y="40" text-anchor="middle" fill="#fabd2f" font-family="JetBrains Mono" font-size="11" font-weight="700">USER / APPLICATION PROGRAMS</text>
+          <text x="280" y="54" text-anchor="middle" fill="#a89984" font-family="JetBrains Mono" font-size="9">(Word Processor, Browser, Compiler, Games…)</text>
+          <!-- Arrow down -->
+          <line x1="280" y1="64" x2="280" y2="84" stroke="#83a598" stroke-width="2" marker-end="url(#arr)"/>
+          <!-- OS layer -->
+          <rect x="60" y="86" width="440" height="76" rx="10" fill="#3c3836" stroke="#458588" stroke-width="1.8"/>
+          <text x="280" y="110" text-anchor="middle" fill="#8ec07c" font-family="JetBrains Mono" font-size="12" font-weight="700">OPERATING SYSTEM</text>
+          <text x="120" y="130" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="9">CPU Mgmt</text>
+          <text x="200" y="130" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="9">Memory Mgmt</text>
+          <text x="290" y="130" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="9">File System</text>
+          <text x="385" y="130" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="9">I/O Mgmt</text>
+          <text x="470" y="130" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="9">Security</text>
+          <line x1="157" y1="118" x2="157" y2="140" stroke="#504945" stroke-width="1"/>
+          <line x1="248" y1="118" x2="248" y2="140" stroke="#504945" stroke-width="1"/>
+          <line x1="338" y1="118" x2="338" y2="140" stroke="#504945" stroke-width="1"/>
+          <line x1="425" y1="118" x2="425" y2="140" stroke="#504945" stroke-width="1"/>
+          <!-- Arrow down -->
+          <line x1="280" y1="162" x2="280" y2="182" stroke="#83a598" stroke-width="2" marker-end="url(#arr)"/>
+          <!-- Hardware layer -->
+          <rect x="30" y="184" width="500" height="44" rx="10" fill="#3c3836" stroke="#d65d0e" stroke-width="1.5"/>
+          <text x="280" y="204" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono" font-size="11" font-weight="700">HARDWARE</text>
+          <text x="280" y="218" text-anchor="middle" fill="#a89984" font-family="JetBrains Mono" font-size="9">(CPU · RAM · Disk · I/O Devices · Network)</text>
+          <text x="280" y="248" text-anchor="middle" fill="#7c6f64" font-family="JetBrains Mono" font-size="9">Fig: Layered Architecture — OS as Interface</text>
+        </svg>
+      </div>
+      <div class="note-box"><strong>AKTU Tip:</strong> Always draw the 3-layer diagram (User → OS → Hardware) for 2-mark definition questions. It instantly adds visual value.</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q1.2 -->
+  <div class="qa-card" id="q1-2">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Define Operating System and mention its major functions.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="def-box"><strong>OS</strong> is a <em>resource manager</em> and <em>interface</em>. It coordinates how hardware is used by programs and resolves conflicts so resources are shared fairly and efficiently.</div>
+      <div class="ans-h2">Major Functions</div>
+      <div class="tbl-wrap">
+        <table class="cmp-table">
+          <tr><th>Function</th><th>Description</th></tr>
+          <tr><td><span class="hl">Process Management</span></td><td>Creation, scheduling, synchronization, and termination of processes.</td></tr>
+          <tr><td><span class="hl-b">Memory Management</span></td><td>Allocation and deallocation of memory spaces to processes.</td></tr>
+          <tr><td><span class="hl-g">File System Management</span></td><td>Organizing, storing, naming, sharing, and protecting files.</td></tr>
+          <tr><td><span class="hl-o">I/O Management</span></td><td>Managing I/O devices via device drivers and buffering.</td></tr>
+          <tr><td><span class="hl-p">Security & Protection</span></td><td>Access control, authentication, and isolation of processes.</td></tr>
+          <tr><td><span class="hl-r">Error Detection</span></td><td>Detecting hardware/software errors and taking appropriate action.</td></tr>
+          <tr><td><span class="hl-a">Accounting</span></td><td>Tracking resources used by each user/process for billing/optimization.</td></tr>
+        </table>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q1.3 -->
+  <div class="qa-card" id="q1-3">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">What is the primary function of an operating system?</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="def-box">The <strong>primary function</strong> of an Operating System is to <strong>manage and coordinate hardware resources</strong> and provide a <strong>convenient interface</strong> for user programs to access these resources efficiently and safely.</div>
+      <div class="ans-h2">Two Core Primary Functions</div>
+      <ul class="ans-ul">
+        <li><span class="hl">Resource Manager:</span> OS distributes CPU time, memory, I/O devices, and file storage fairly among all running programs. It ensures no program hogs everything.</li>
+        <li><span class="hl-b">Extended Machine / Virtual Machine:</span> OS hides messy hardware details from the user. It gives a clean, simple interface (system calls) so programs can work without needing to know how the hardware works.</li>
+      </ul>
+      <div class="note-box"><strong>Simple Analogy:</strong> OS is like a <em>hotel manager</em> — it manages all rooms (resources), ensures guests (processes) get what they need, and resolves conflicts when two guests want the same room.</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q1.4 -->
+  <div class="qa-card" id="q1-4">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Briefly define the term Real Time Operating System.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="def-box"><strong>Real Time Operating System (RTOS)</strong> is an OS designed to process tasks within a strict <strong>time limit (deadline)</strong>. The system is correct only if it gives the right result AND gives it on time. Missing the deadline = failure (in hard RTOS).</div>
+      <div class="ans-h2">Types of RTOS</div>
+      <ul class="ans-ul">
+        <li><strong>Hard RTOS:</strong> Missing a deadline causes system failure. Example: Missile guidance, Airbag control systems.</li>
+        <li><strong>Soft RTOS:</strong> Missing a deadline degrades performance but does not cause failure. Example: Multimedia streaming, Online reservation systems.</li>
+      </ul>
+      <div class="ans-h2">Characteristics</div>
+      <ul class="ans-ul">
+        <li>Deterministic task scheduling</li>
+        <li>Fast interrupt response time</li>
+        <li>Small memory footprint</li>
+        <li>No virtual memory (usually)</li>
+        <li>Priority-based preemptive scheduling</li>
+      </ul>
+      <div class="ans-h2">Examples</div>
+      <div class="code-block">Hard RTOS: VxWorks, QNX, RTLinux
+Soft RTOS: Windows CE, Android RTOS variants
+Applications: Medical devices, Robotics, Aircraft control</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q1.5 -->
+  <div class="qa-card" id="q1-5">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Define a batch processing system.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="def-box"><strong>Batch Processing System</strong> is a type of OS where similar jobs are collected together into a <strong>batch</strong> and processed one after another without any user interaction. The user submits jobs, walks away, and picks up results later.</div>
+      <div class="ans-h2">Working Mechanism</div>
+      <div class="step-list">
+        <div class="step-item"><div class="step-num">1</div><div class="step-text">User submits multiple jobs on punch cards/tapes to the operator.</div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-text">Operator groups similar jobs into a <strong>batch</strong>.</div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-text">Batch is fed to the computer; executed sequentially without interruption.</div></div>
+        <div class="step-item"><div class="step-num">4</div><div class="step-text">Output is collected and returned to user after the entire batch is complete.</div></div>
+      </div>
+      <div class="ans-h2">Advantages & Disadvantages</div>
+      <div class="tbl-wrap">
+        <table class="cmp-table">
+          <tr><th>Advantages</th><th>Disadvantages</th></tr>
+          <tr><td>CPU is rarely idle; high throughput</td><td>No user interaction during processing</td></tr>
+          <tr><td>Good for large repetitive tasks</td><td>Debugging is difficult</td></tr>
+          <tr><td>Efficient use of resources</td><td>Long turnaround time possible</td></tr>
+        </table>
+      </div>
+      <div class="note-box"><strong>Example:</strong> Payroll processing, bank statement generation, electricity bill generation — all are classic batch processing applications.</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q1.6 -->
+  <div class="qa-card" id="q1-6">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Define a resident monitor.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="def-box"><strong>Resident Monitor</strong> is a small program that <strong>always stays in main memory (RAM)</strong> and decides which job runs next. It was the earliest form of an OS, used in old batch processing systems. It automatically loads and runs jobs one by one — no human operator needed between jobs.</div>
+      <div class="ans-h2">Structure</div>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 340 220" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:340px">
+          <!-- Memory block -->
+          <rect x="60" y="20" width="220" height="180" rx="8" fill="#3c3836" stroke="#7c6f64" stroke-width="1.5"/>
+          <!-- Resident Monitor region -->
+          <rect x="68" y="28" width="204" height="60" rx="5" fill="#458588" fill-opacity=".3" stroke="#83a598" stroke-width="1.2"/>
+          <text x="170" y="52" text-anchor="middle" fill="#8ec07c" font-family="JetBrains Mono" font-size="10" font-weight="700">RESIDENT MONITOR</text>
+          <text x="170" y="66" text-anchor="middle" fill="#a89984" font-family="JetBrains Mono" font-size="8">(Always in RAM)</text>
+          <text x="170" y="78" text-anchor="middle" fill="#a89984" font-family="JetBrains Mono" font-size="8">Job Sequencer · I/O Control · Error Handler</text>
+          <!-- Boundary line -->
+          <line x1="68" y1="92" x2="272" y2="92" stroke="#fabd2f" stroke-width="1" stroke-dasharray="4,3"/>
+          <text x="170" y="105" text-anchor="middle" fill="#fabd2f" font-family="JetBrains Mono" font-size="8">Boundary (Protected)</text>
+          <!-- User area -->
+          <rect x="68" y="110" width="204" height="82" rx="5" fill="#504945" fill-opacity=".5" stroke="#665c54" stroke-width="1"/>
+          <text x="170" y="140" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="10" font-weight="700">USER PROGRAM AREA</text>
+          <text x="170" y="156" text-anchor="middle" fill="#a89984" font-family="JetBrains Mono" font-size="8">Loaded and executed by</text>
+          <text x="170" y="168" text-anchor="middle" fill="#a89984" font-family="JetBrains Mono" font-size="8">the resident monitor</text>
+          <text x="170" y="210" text-anchor="middle" fill="#7c6f64" font-family="JetBrains Mono" font-size="8">Fig: Memory layout with Resident Monitor</text>
+        </svg>
+      </div>
+      <div class="ans-h2">Key Features</div>
+      <ul class="ans-ul">
+        <li><strong>Sequence Control:</strong> Automatically transfers control to next job</li>
+        <li><strong>I/O Control Routines:</strong> Handles standard I/O operations</li>
+        <li><strong>Interrupt Processing:</strong> Handles hardware interrupts</li>
+        <li><strong>Device Drivers:</strong> Basic routines for device management</li>
+      </ul>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q1.7 -->
+  <div class="qa-card" id="q1-7">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Explain the principal advantages of multiprogramming.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="def-box"><strong>Multiprogramming</strong> means keeping multiple programs in memory at the same time, so when one program is waiting for I/O, the CPU can run another program instead of sitting idle. This keeps the CPU busy as much as possible.</div>
+      <div class="ans-h2">Principal Advantages</div>
+      <ul class="ans-ul">
+        <li><span class="hl">High CPU Utilization:</span> When one process waits for I/O, another runs — so the CPU is rarely idle. Utilization jumps from ~20% (single program) to 90%+.</li>
+        <li><span class="hl-g">Increased Throughput:</span> More jobs are completed per unit of time since CPU is continuously busy.</li>
+        <li><span class="hl-b">Reduced Turnaround Time:</span> Average job waiting time decreases as CPU switching minimizes idle periods.</li>
+        <li><span class="hl-o">Better Resource Utilization:</span> Memory, CPU, I/O devices are all used more efficiently simultaneously.</li>
+        <li><span class="hl-p">User Responsiveness:</span> Multiple users can use the system concurrently (basis of time-sharing).</li>
+        <li><span class="hl-a">Cost Effectiveness:</span> Better return on hardware investment since resources stay active.</li>
+      </ul>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 520 160" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:520px">
+          <text x="10" y="18" fill="#fabd2f" font-family="JetBrains Mono" font-size="9" font-weight="700">WITHOUT Multiprogramming (CPU mostly idle)</text>
+          <rect x="10" y="24" width="80" height="20" rx="4" fill="#98971a" fill-opacity=".7"/><text x="50" y="37" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="8">Job A: CPU</text>
+          <rect x="90" y="24" width="120" height="20" rx="4" fill="#665c54" fill-opacity=".7"/><text x="150" y="37" text-anchor="middle" fill="#a89984" font-family="JetBrains Mono" font-size="8">Job A: I/O (CPU Idle)</text>
+          <rect x="210" y="24" width="60" height="20" rx="4" fill="#98971a" fill-opacity=".7"/><text x="240" y="37" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="8">Job A: CPU</text>
+          <rect x="270" y="24" width="100" height="20" rx="4" fill="#665c54" fill-opacity=".7"/><text x="320" y="37" text-anchor="middle" fill="#a89984" font-family="JetBrains Mono" font-size="8">Idle</text>
+          <line x1="10" y1="50" x2="510" y2="50" stroke="#665c54" stroke-width="1"/>
+          <text x="10" y="70" fill="#fabd2f" font-family="JetBrains Mono" font-size="9" font-weight="700">WITH Multiprogramming (CPU always busy)</text>
+          <rect x="10" y="76" width="70" height="16" rx="3" fill="#98971a" fill-opacity=".8"/><text x="45" y="87" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="7">Job A: CPU</text>
+          <rect x="80" y="76" width="90" height="16" rx="3" fill="#458588" fill-opacity=".8"/><text x="125" y="87" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="7">Job B: CPU</text>
+          <rect x="170" y="76" width="60" height="16" rx="3" fill="#b16286" fill-opacity=".8"/><text x="200" y="87" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="7">Job C: CPU</text>
+          <rect x="230" y="76" width="80" height="16" rx="3" fill="#98971a" fill-opacity=".8"/><text x="270" y="87" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="7">Job A: CPU</text>
+          <rect x="310" y="76" width="70" height="16" rx="3" fill="#458588" fill-opacity=".8"/><text x="345" y="87" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="7">Job B: CPU</text>
+          <rect x="380" y="76" width="80" height="16" rx="3" fill="#b16286" fill-opacity=".8"/><text x="420" y="87" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="7">Job C: CPU</text>
+          <!-- legend -->
+          <rect x="10" y="110" width="12" height="10" rx="2" fill="#98971a" fill-opacity=".8"/><text x="25" y="119" fill="#a89984" font-family="JetBrains Mono" font-size="8">Job A</text>
+          <rect x="70" y="110" width="12" height="10" rx="2" fill="#458588" fill-opacity=".8"/><text x="85" y="119" fill="#a89984" font-family="JetBrains Mono" font-size="8">Job B</text>
+          <rect x="130" y="110" width="12" height="10" rx="2" fill="#b16286" fill-opacity=".8"/><text x="145" y="119" fill="#a89984" font-family="JetBrains Mono" font-size="8">Job C</text>
+          <text x="260" y="150" text-anchor="middle" fill="#7c6f64" font-family="JetBrains Mono" font-size="8">Fig: CPU Timeline — Multiprogramming vs Single Programming</text>
+        </svg>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q1.8 -->
+  <div class="qa-card" id="q1-8">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Differentiate between Interactive and Batch Processing System.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="tbl-wrap">
+        <table class="cmp-table">
+          <tr><th>Parameter</th><th>Batch Processing</th><th>Interactive Processing</th></tr>
+          <tr><td>User Interaction</td><td>No interaction during execution</td><td>Continuous user interaction</td></tr>
+          <tr><td>Response Time</td><td>Hours to days</td><td>Milliseconds to seconds</td></tr>
+          <tr><td>Job Execution</td><td>Jobs run sequentially in a batch</td><td>Job runs immediately on user request</td></tr>
+          <tr><td>Error Correction</td><td>Error found only after job completion</td><td>Errors corrected in real time</td></tr>
+          <tr><td>CPU Utilization</td><td>High (no idle waiting)</td><td>Lower (waits for user input)</td></tr>
+          <tr><td>Example</td><td>Payroll, Report Generation</td><td>ATMs, Terminal sessions, GUI OS</td></tr>
+          <tr><td>Suitable For</td><td>Repetitive, large volume tasks</td><td>Short, user-driven tasks</td></tr>
+        </table>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q1.9 -->
+  <div class="qa-card" id="q1-9">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Differentiate between Multiprogramming and Time Sharing System.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="tbl-wrap">
+        <table class="cmp-table">
+          <tr><th>Parameter</th><th>Multiprogramming</th><th>Time Sharing</th></tr>
+          <tr><td>Objective</td><td>Maximize CPU utilization</td><td>Maximize user responsiveness</td></tr>
+          <tr><td>Switching</td><td>CPU switches on I/O wait</td><td>CPU switches on time quantum expiry</td></tr>
+          <tr><td>Time Quantum</td><td>No fixed time slice</td><td>Fixed time slice (quantum)</td></tr>
+          <tr><td>User Interaction</td><td>Not designed for interaction</td><td>Designed for interactive multiple users</td></tr>
+          <tr><td>Response Time</td><td>Can be long</td><td>Short, nearly real-time feel</td></tr>
+          <tr><td>Scheduling</td><td>Non-preemptive typically</td><td>Round-Robin (preemptive)</td></tr>
+          <tr><td>Example</td><td>Early IBM mainframes</td><td>UNIX, Linux multi-user systems</td></tr>
+        </table>
+      </div>
+      <div class="note-box"><strong>Key Insight:</strong> Time-Sharing is an <em>extension</em> of Multiprogramming. Both keep multiple jobs in memory, but Time-Sharing adds preemptive scheduling with time quanta so all users get a "fair share" of the CPU rapidly.</div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ UNIT 2 ══════════════ -->
+<section class="unit-section" id="unit2">
+  <div class="unit-heading">
+    <span class="unit-num-badge">UNIT 02</span>
+    <span class="unit-title">Concurrent Processes & Synchronization</span>
+    <span class="unit-q-count">5 Questions · 2M each</span>
+  </div>
+
+  <!-- Q2.1 -->
+  <div class="qa-card" id="q2-1">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">What is the use of inter process communication and context switching?</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="ans-h2">Inter-Process Communication (IPC)</div>
+      <div class="def-box"><strong>IPC</strong> is a set of methods that let processes <strong>talk to each other and coordinate</strong> their work. Without IPC, processes would be isolated — they couldn't share results or work together.</div>
+      <div class="ans-h3">Uses of IPC</div>
+      <ul class="ans-ul">
+        <li>Data transfer between cooperating processes (e.g., producer-consumer)</li>
+        <li>Sharing of data / shared memory among processes</li>
+        <li>Event notification — one process signals another</li>
+        <li>Synchronization to prevent race conditions</li>
+        <li>Remote Procedure Calls (RPC) in distributed systems</li>
+      </ul>
+      <div class="ans-h3">IPC Mechanisms</div>
+      <div class="code-block">Pipes (Named & Unnamed) | Message Queues | Shared Memory
+Semaphores | Sockets | Signals | Message Passing</div>
+      <hr class="ans-divider">
+      <div class="ans-h2">Context Switching</div>
+      <div class="def-box"><strong>Context Switching</strong> is when the OS <strong>saves the state of the currently running process</strong> (like a bookmark) and <strong>loads the saved state of another process</strong> so the CPU can run it. Think of it as the CPU pausing one task and resuming another.</div>
+      <div class="ans-h3">Uses of Context Switching</div>
+      <ul class="ans-ul">
+        <li>Enables <strong>multitasking</strong> — multiple processes share one CPU</li>
+        <li>Allows OS to preempt a running process and switch to another</li>
+        <li>Facilitates time-sharing among users</li>
+        <li>Supports multiprogramming by switching during I/O waits</li>
+      </ul>
+      <div class="ans-h3">What is Saved in Context?</div>
+      <div class="code-block">PCB (Process Control Block) stores:
+  ├── Program Counter (PC)
+  ├── CPU Registers
+  ├── Process State
+  ├── Memory Management Info
+  └── I/O Status</div>
+      <div class="note-box"><strong>AKTU Tip:</strong> Context switching has overhead — the CPU does no useful work during switching. This is called <em>pure overhead</em>.</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q2.2 -->
+  <div class="qa-card" id="q2-2">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Define Busy Waiting? How to overcome busy waiting using Semaphore operations.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="def-box"><strong>Busy Waiting</strong> (Spin-lock) is when a process <em>keeps looping and checking</em> a condition over and over until it becomes true. The process is using the CPU but doing no real work — it's just wasting CPU cycles by "spinning".</div>
+      <div class="code-block">// Example of Busy Waiting
+while (lock == 1) {
+    // do nothing — keep looping (wasting CPU)
+}
+// critical section after lock is 0</div>
+      <div class="ans-h3">Disadvantage of Busy Waiting</div>
+      <ul class="ans-ul">
+        <li>Wastes CPU time — CPU cycles consumed without useful work</li>
+        <li>Reduces system throughput and efficiency</li>
+        <li>Not suitable for long waits</li>
+      </ul>
+      <hr class="ans-divider">
+      <div class="ans-h2">Overcoming with Semaphores</div>
+      <div class="def-box">A <strong>Semaphore</strong> is an integer variable used for process synchronization. Instead of busy-waiting, a process that can't proceed simply <strong>goes to sleep (BLOCKED state)</strong> and is woken up later. It supports two atomic operations:<br>
+      <strong>wait(S)</strong> [also called P or down] — tries to enter; blocks if not allowed<br>
+      <strong>signal(S)</strong> [also called V or up] — signals that resource is free</div>
+      <div class="ans-h3">Semaphore Operations (Blocking Version)</div>
+      <div class="code-block">wait(S) {
+    S.value--;
+    if (S.value < 0) {
+        // Add process to S.waiting_queue
+        block();  // Process goes to BLOCKED state (NOT spinning!)
+    }
+}
+
+signal(S) {
+    S.value++;
+    if (S.value <= 0) {
+        // Remove a process from S.waiting_queue
+        wakeup(P);  // Move process to READY state
+    }
+}</div>
+      <div class="ans-h3">How Busy Waiting is Eliminated</div>
+      <ul class="ans-ul">
+        <li>Instead of looping, the process calls <strong>block()</strong> → enters BLOCKED state</li>
+        <li>OS removes it from CPU — CPU is free to run other processes</li>
+        <li>When resource is available, <strong>wakeup()</strong> is called → process moves to READY queue</li>
+        <li>No CPU cycles are wasted during waiting!</li>
+      </ul>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q2.3 -->
+  <div class="qa-card" id="q2-3">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">What do you mean by Concurrent Processes?</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="def-box"><strong>Concurrent Processes</strong> are two or more processes that are active at the same time in a system. Their execution overlaps in time — either truly running in parallel (on multiple CPUs) or taking turns very rapidly on one CPU.</div>
+      <div class="ans-h2">Types of Concurrency</div>
+      <ul class="ans-ul">
+        <li><span class="hl">Pseudo-Concurrency:</span> Single CPU rapidly switches between processes (illusion of parallel execution — time-sharing)</li>
+        <li><span class="hl-g">True Concurrency:</span> Multiple CPUs actually execute multiple processes simultaneously (multiprocessor systems)</li>
+      </ul>
+      <div class="ans-h2">Issues with Concurrent Processes</div>
+      <ul class="ans-ul">
+        <li><strong>Race Condition:</strong> Multiple processes access shared data and the outcome depends on execution order</li>
+        <li><strong>Mutual Exclusion:</strong> Only one process should access critical section at a time</li>
+        <li><strong>Deadlock:</strong> Circular waiting among processes</li>
+        <li><strong>Starvation:</strong> A process never gets to run</li>
+      </ul>
+      <div class="ans-h2">Benefits of Concurrency</div>
+      <ul class="ans-ul">
+        <li>Improved CPU utilization and throughput</li>
+        <li>Better user responsiveness</li>
+        <li>Resource sharing among processes</li>
+      </ul>
+      <div class="note-box"><strong>Example:</strong> In a web browser, the download manager, tab renderer, and JavaScript engine run as concurrent processes.</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q2.4 -->
+  <div class="qa-card" id="q2-4">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Define semaphore and its types.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="def-box"><strong>Semaphore</strong> is a synchronization tool invented by Dijkstra. It's an integer variable used to control access to shared resources — like a token system. Only one (or a limited number of) process(es) can enter the critical section at a time. It supports two atomic operations: <strong>wait(S)</strong> and <strong>signal(S)</strong>.</div>
+      <div class="ans-h2">Types of Semaphores</div>
+      <div class="ans-h3">1. Binary Semaphore (Mutex)</div>
+      <ul class="ans-ul">
+        <li>Value can only be <strong>0 or 1</strong></li>
+        <li>Works like a simple lock: 0 = locked, 1 = unlocked</li>
+        <li>Used for mutual exclusion in critical section</li>
+        <li>Also called <strong>Mutex Lock</strong></li>
+      </ul>
+      <div class="code-block">Binary Semaphore S = 1;
+
+// Process P1:
+wait(S);    // S becomes 0 (lock acquired)
+ // Critical Section
+signal(S);  // S becomes 1 (lock released)</div>
+      <div class="ans-h3">2. Counting Semaphore (General Semaphore)</div>
+      <ul class="ans-ul">
+        <li>Value can be any <strong>non-negative integer</strong></li>
+        <li>Used to control access to a resource with <strong>multiple instances</strong></li>
+        <li>Example: Allow at most 5 processes to use a printer pool</li>
+        <li>Initialized to the number of available resource instances</li>
+      </ul>
+      <div class="code-block">Counting Semaphore S = 5; // 5 identical resources available
+
+// Each process does:
+wait(S);        // S-- (use one resource instance)
+  // Use resource
+signal(S);      // S++ (release resource instance)</div>
+      <div class="tbl-wrap">
+        <table class="cmp-table">
+          <tr><th>Feature</th><th>Binary Semaphore</th><th>Counting Semaphore</th></tr>
+          <tr><td>Value Range</td><td>0 or 1 only</td><td>0 to N (any non-negative)</td></tr>
+          <tr><td>Use Case</td><td>Mutual Exclusion</td><td>Resource allocation (N instances)</td></tr>
+          <tr><td>Also Known As</td><td>Mutex</td><td>General Semaphore</td></tr>
+        </table>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q2.5 -->
+  <div class="qa-card" id="q2-5">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Define the principle of concurrency.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="def-box">The <strong>Principle of Concurrency</strong> says that multiple processes can be active at the same time in a system. These processes may share resources, work together, or compete for the same resource. The OS must handle all of this correctly and efficiently.</div>
+      <div class="ans-h2">Core Principles</div>
+      <ul class="ans-ul">
+        <li><span class="hl">Mutual Exclusion:</span> At most one process executes in the critical section at any time. Prevents simultaneous access to shared resources.</li>
+        <li><span class="hl-g">Progress:</span> If no process is in the critical section, a process that wishes to enter must be allowed to do so in finite time.</li>
+        <li><span class="hl-b">Bounded Waiting:</span> If a process wants to enter the critical section, it must get a turn within a limited number of tries by others. No process should wait forever.</li>
+        <li><span class="hl-o">No Busy Waiting (desirable):</span> Processes should not waste CPU cycles while waiting. They should block instead.</li>
+        <li><span class="hl-p">Fairness:</span> Every process should eventually get a chance to run — no indefinite postponement.</li>
+      </ul>
+      <div class="ans-h2">Problems Arising from Concurrency</div>
+      <div class="tbl-wrap">
+        <table class="cmp-table">
+          <tr><th>Problem</th><th>Description</th></tr>
+          <tr><td>Race Condition</td><td>Two processes access shared variable simultaneously; result depends on order</td></tr>
+          <tr><td>Deadlock</td><td>Circular wait — each process holds a resource needed by another</td></tr>
+          <tr><td>Starvation</td><td>A process is indefinitely denied resources it needs</td></tr>
+          <tr><td>Priority Inversion</td><td>Low priority process holds resource needed by high priority process</td></tr>
+        </table>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ UNIT 3 ══════════════ -->
+<section class="unit-section" id="unit3">
+  <div class="unit-heading">
+    <span class="unit-num-badge">UNIT 03</span>
+    <span class="unit-title">Processes, CPU Scheduling & Deadlocks</span>
+    <span class="unit-q-count">8 Questions · 2M each</span>
+  </div>
+
+  <!-- Q3.1 -->
+  <div class="qa-card" id="q3-1">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">What are the various scheduling criteria for CPU scheduling?</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="ans-h2">CPU Scheduling Criteria</div>
+      <div class="ans-p">The following criteria are used to compare and evaluate CPU scheduling algorithms. <em>Criteria marked ↑ should be maximized; ↓ should be minimized.</em></div>
+      <div class="tbl-wrap">
+        <table class="cmp-table">
+          <tr><th>Criterion</th><th>Goal</th><th>Definition</th></tr>
+          <tr><td><span class="hl-g">CPU Utilization ↑</span></td><td>MAXIMIZE</td><td>Keep CPU as busy as possible. Range: 40% (lightly loaded) to 90% (heavily loaded)</td></tr>
+          <tr><td><span class="hl-g">Throughput ↑</span></td><td>MAXIMIZE</td><td>Number of processes completing execution per unit time</td></tr>
+          <tr><td><span class="hl-r">Turnaround Time ↓</span></td><td>MINIMIZE</td><td>Total time from arrival to completion.<br>= Completion Time − Arrival Time</td></tr>
+          <tr><td><span class="hl-r">Waiting Time ↓</span></td><td>MINIMIZE</td><td>Total time a process spends waiting in the ready queue</td></tr>
+          <tr><td><span class="hl-r">Response Time ↓</span></td><td>MINIMIZE</td><td>Time from request submission to first response (important for interactive systems)</td></tr>
+        </table>
+      </div>
+      <div class="code-block">Turnaround Time  = Completion Time − Arrival Time
+Waiting Time     = Turnaround Time − Burst Time
+Response Time    = Time of first CPU response − Arrival Time</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q3.2 -->
+  <div class="qa-card" id="q3-2">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">What are the Performance Criteria in CPU Scheduling?</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="ans-p">Performance criteria in CPU scheduling measure how well an algorithm manages the CPU. These directly impact system efficiency and user experience.</div>
+      <ul class="ans-ul">
+        <li><span class="hl-g">CPU Utilization:</span> Percentage of time CPU is busy. Higher is better. Formula: (CPU Busy Time / Total Time) × 100%</li>
+        <li><span class="hl-g">Throughput:</span> Jobs per second/minute. Higher throughput = better system performance.</li>
+        <li><span class="hl-r">Turnaround Time:</span> Total time for process completion from arrival. TAT = CT − AT</li>
+        <li><span class="hl-r">Waiting Time:</span> Time in ready queue. WT = TAT − BT. Minimizing this is primary goal.</li>
+        <li><span class="hl-r">Response Time:</span> Time until first output is produced. Critical for interactive systems.</li>
+        <li><span class="hl-b">Fairness:</span> Each process gets fair share of CPU; no starvation of any process.</li>
+      </ul>
+      <div class="note-box"><strong>Trade-off:</strong> Algorithms optimizing one criterion may worsen another. E.g., SJF minimizes average waiting time but may starve long processes.</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q3.3 -->
+  <div class="qa-card" id="q3-3">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">What do we need Scheduling?</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="def-box">Scheduling is needed because in a multiprogramming system, <strong>many processes want the CPU at the same time</strong> but there's only one CPU. The OS must decide who gets it next — fairly and efficiently.</div>
+      <div class="ans-h2">Why Scheduling is Needed</div>
+      <ul class="ans-ul">
+        <li><span class="hl">CPU is Scarce:</span> Only one (or few) CPU cores exist but many processes need them — scheduling allocates CPU time fairly.</li>
+        <li><span class="hl-g">Maximize Utilization:</span> Without scheduling, CPU may be idle while processes wait in queue. Scheduling keeps CPU busy.</li>
+        <li><span class="hl-b">Multiprogramming Support:</span> Scheduling enables multiple programs to run "simultaneously" by rapidly switching between them.</li>
+        <li><span class="hl-o">Fairness:</span> Every process must get CPU time. Without scheduling, some processes might never run.</li>
+        <li><span class="hl-p">Priority Handling:</span> Some processes (OS services, real-time tasks) have higher urgency — scheduling can prioritize them.</li>
+        <li><span class="hl-r">Response Time:</span> Interactive users expect quick responses — scheduling minimizes wait and response time.</li>
+        <li><span class="hl-a">Process States:</span> Processes move between Ready, Running, Waiting states. Scheduler decides which ready process gets the CPU next.</li>
+      </ul>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q3.4 -->
+  <div class="qa-card" id="q3-4">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Describe the typical elements of the process control block.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="def-box"><strong>Process Control Block (PCB)</strong> is a data structure (like a file card) that the OS keeps for every process. It stores all information about a process — its state, what it was doing, and what resources it is using. Also called <strong>Process Descriptor</strong> or <strong>Task Control Block</strong>.</div>
+      <div class="ans-h2">Elements of PCB</div>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 320 380" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:320px">
+          <!-- PCB box -->
+          <rect x="40" y="10" width="240" height="340" rx="10" fill="#3c3836" stroke="#458588" stroke-width="1.8"/>
+          <!-- Title -->
+          <rect x="40" y="10" width="240" height="36" rx="10" fill="#458588"/>
+          <rect x="40" y="36" width="240" height="10" fill="#458588"/>
+          <text x="160" y="33" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="11" font-weight="700">PROCESS CONTROL BLOCK</text>
+          <!-- Fields -->
+          <rect x="52" y="58" width="216" height="30" rx="4" fill="#504945"/>
+          <text x="160" y="76" text-anchor="middle" fill="#fabd2f" font-family="JetBrains Mono" font-size="9" font-weight="700">Process ID (PID)</text>
+          <rect x="52" y="96" width="216" height="30" rx="4" fill="#504945"/>
+          <text x="160" y="114" text-anchor="middle" fill="#b8bb26" font-family="JetBrains Mono" font-size="9" font-weight="700">Process State (Ready/Running/Blocked)</text>
+          <rect x="52" y="134" width="216" height="30" rx="4" fill="#504945"/>
+          <text x="160" y="152" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="9" font-weight="700">Program Counter (PC)</text>
+          <rect x="52" y="172" width="216" height="30" rx="4" fill="#504945"/>
+          <text x="160" y="190" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono" font-size="9" font-weight="700">CPU Registers (AX, BX, SP, …)</text>
+          <rect x="52" y="210" width="216" height="30" rx="4" fill="#504945"/>
+          <text x="160" y="228" text-anchor="middle" fill="#d3869b" font-family="JetBrains Mono" font-size="9" font-weight="700">Memory Limits / Page Table Info</text>
+          <rect x="52" y="248" width="216" height="30" rx="4" fill="#504945"/>
+          <text x="160" y="266" text-anchor="middle" fill="#8ec07c" font-family="JetBrains Mono" font-size="9" font-weight="700">I/O Status (Open Files, Devices)</text>
+          <rect x="52" y="286" width="216" height="30" rx="4" fill="#504945"/>
+          <text x="160" y="304" text-anchor="middle" fill="#fb4934" font-family="JetBrains Mono" font-size="9" font-weight="700">Scheduling Info (Priority, Queue)</text>
+          <rect x="52" y="324" width="216" height="18" rx="4" fill="#504945"/>
+          <text x="160" y="336" text-anchor="middle" fill="#a89984" font-family="JetBrains Mono" font-size="8">Accounting Info (CPU time used)</text>
+          <text x="160" y="362" text-anchor="middle" fill="#7c6f64" font-family="JetBrains Mono" font-size="8">Fig: Process Control Block Structure</text>
+        </svg>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q3.5 -->
+  <div class="qa-card" id="q3-5">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Define process state.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="def-box">A <strong>Process State</strong> tells what the process is currently doing. Every process passes through different states during its life — from being created to completing. The OS uses these states to track and manage every process.</div>
+      <div class="ans-h2">Five Process States</div>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 580 220" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:580px">
+          <defs>
+            <marker id="a2" markerWidth="8" markerHeight="7" refX="6" refY="3.5" orient="auto">
+              <path d="M0,0 L0,7 L8,3.5 z" fill="#83a598"/>
+            </marker>
+          </defs>
+          <!-- NEW -->
+          <ellipse cx="60" cy="110" rx="45" ry="24" fill="#504945" stroke="#fabd2f" stroke-width="1.5"/>
+          <text x="60" y="114" text-anchor="middle" fill="#fabd2f" font-family="JetBrains Mono" font-size="9" font-weight="700">NEW</text>
+          <!-- READY -->
+          <ellipse cx="210" cy="60" rx="52" ry="24" fill="#3c3836" stroke="#b8bb26" stroke-width="1.5"/>
+          <text x="210" y="64" text-anchor="middle" fill="#b8bb26" font-family="JetBrains Mono" font-size="9" font-weight="700">READY</text>
+          <!-- RUNNING -->
+          <ellipse cx="370" cy="110" rx="52" ry="24" fill="#3c3836" stroke="#8ec07c" stroke-width="1.8"/>
+          <text x="370" y="114" text-anchor="middle" fill="#8ec07c" font-family="JetBrains Mono" font-size="9" font-weight="700">RUNNING</text>
+          <!-- WAITING -->
+          <ellipse cx="210" cy="160" rx="52" ry="24" fill="#3c3836" stroke="#fe8019" stroke-width="1.5"/>
+          <text x="210" y="164" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono" font-size="9" font-weight="700">WAITING</text>
+          <!-- TERMINATED -->
+          <ellipse cx="510" cy="110" rx="58" ry="24" fill="#504945" stroke="#fb4934" stroke-width="1.5"/>
+          <text x="510" y="114" text-anchor="middle" fill="#fb4934" font-family="JetBrains Mono" font-size="9" font-weight="700">TERMINATED</text>
+          <!-- Arrows -->
+          <!-- New → Ready -->
+          <path d="M100 95 Q155 55 158 64" fill="none" stroke="#83a598" stroke-width="1.5" marker-end="url(#a2)"/>
+          <text x="120" y="68" fill="#a89984" font-family="JetBrains Mono" font-size="7">admitted</text>
+          <!-- Ready → Running -->
+          <path d="M262 66 Q315 75 319 104" fill="none" stroke="#83a598" stroke-width="1.5" marker-end="url(#a2)"/>
+          <text x="295" y="78" fill="#a89984" font-family="JetBrains Mono" font-size="7">scheduler dispatch</text>
+          <!-- Running → Ready (preempt) -->
+          <path d="M321 98 Q270 80 263 72" fill="none" stroke="#83a598" stroke-width="1.5" marker-end="url(#a2)"/>
+          <text x="275" y="102" fill="#a89984" font-family="JetBrains Mono" font-size="7">interrupt/preempt</text>
+          <!-- Running → Waiting -->
+          <path d="M322 120 Q270 140 263 153" fill="none" stroke="#83a598" stroke-width="1.5" marker-end="url(#a2)"/>
+          <text x="278" y="147" fill="#a89984" font-family="JetBrains Mono" font-size="7">I/O request</text>
+          <!-- Waiting → Ready -->
+          <path d="M160 155 Q100 135 158 78" fill="none" stroke="#83a598" stroke-width="1.5" marker-end="url(#a2)"/>
+          <text x="95" y="125" fill="#a89984" font-family="JetBrains Mono" font-size="7">I/O complete</text>
+          <!-- Running → Terminated -->
+          <path d="M422 110 L453 110" fill="none" stroke="#83a598" stroke-width="1.5" marker-end="url(#a2)"/>
+          <text x="428" y="104" fill="#a89984" font-family="JetBrains Mono" font-size="7">exit</text>
+          <text x="290" y="210" text-anchor="middle" fill="#7c6f64" font-family="JetBrains Mono" font-size="8">Fig: Process State Transition Diagram</text>
+        </svg>
+      </div>
+      <div class="tbl-wrap">
+        <table class="cmp-table">
+          <tr><th>State</th><th>Description</th></tr>
+          <tr><td><span class="hl">New</span></td><td>Process is being created</td></tr>
+          <tr><td><span class="hl-g">Ready</span></td><td>Process is waiting to be assigned to CPU</td></tr>
+          <tr><td><span class="hl-a">Running</span></td><td>Instructions are being executed on CPU</td></tr>
+          <tr><td><span class="hl-o">Waiting/Blocked</span></td><td>Process waiting for I/O or event</td></tr>
+          <tr><td><span class="hl-r">Terminated</span></td><td>Process has finished execution</td></tr>
+        </table>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q3.6 -->
+  <div class="qa-card" id="q3-6">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Name one piece of process identification information.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="def-box">The most important piece of process identification information is the <strong>Process Identifier (PID)</strong>.</div>
+      <div class="ans-h2">Process ID (PID)</div>
+      <ul class="ans-ul">
+        <li>A <strong>unique integer number</strong> assigned by the OS to every new process at creation time</li>
+        <li>No two simultaneously existing processes can have the same PID</li>
+        <li>Used by OS to track, manage, schedule, and terminate processes</li>
+        <li>Stored in the PCB of the process</li>
+      </ul>
+      <div class="code-block">// In Linux:
+$ ps aux        → Lists all processes with their PIDs
+$ kill 1234     → Terminates process with PID = 1234
+$ getpid()      → System call to get PID of current process
+
+// Example:
+PID 1   → init / systemd (first process)
+PID 2   → kthreadd (kernel thread daemon)
+PID 1234 → your running program</div>
+      <div class="ans-h2">Other Process Identification Info</div>
+      <ul class="ans-ul">
+        <li><strong>Parent PID (PPID):</strong> PID of the parent process that created this process</li>
+        <li><strong>User ID (UID):</strong> Identifies which user owns the process</li>
+        <li><strong>Process Name:</strong> Name of the executable</li>
+      </ul>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q3.7 -->
+  <div class="qa-card" id="q3-7">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">What is a safe state and an unsafe state?</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="key-box">These concepts are central to the <strong>Banker's Algorithm</strong> for Deadlock Avoidance.</div>
+      <div class="ans-h2">Safe State</div>
+      <div class="def-box">A system is in a <strong>safe state</strong> if there is at least one <strong>safe sequence</strong> — a way to run all processes one by one such that each process can get all the resources it needs and finish successfully. If a safe sequence exists, <strong>deadlock cannot happen</strong>.</div>
+      <div class="code-block">Safe Sequence Example:
+Processes: P1, P2, P3  |  Available Resources: 3
+
+P2 needs 2 → gets them → runs → releases → Available = 5
+P1 needs 5 → gets them → runs → releases → Available = 8
+P3 needs 8 → gets them → runs → releases → Done!
+
+Safe Sequence: &lt;P2, P1, P3&gt; ✓ System is SAFE
+(All processes can finish — no deadlock possible)</div>
+      <div class="ans-h2">Unsafe State</div>
+      <div class="def-box">A system is in an <strong>unsafe state</strong> if no safe sequence exists — meaning there is a chance that processes could get stuck waiting for each other (deadlock). An unsafe state does NOT mean deadlock will definitely happen, but it's <em>possible</em>.</div>
+      <div class="tbl-wrap">
+        <table class="cmp-table">
+          <tr><th>Feature</th><th>Safe State</th><th>Unsafe State</th></tr>
+          <tr><td>Deadlock</td><td>Cannot occur</td><td>May occur</td></tr>
+          <tr><td>Safe Sequence</td><td>At least one exists</td><td>None exists</td></tr>
+          <tr><td>OS Action</td><td>Grant resource request</td><td>Deny resource request</td></tr>
+        </table>
+      </div>
+      <div class="note-box"><strong>Key Rule (Banker's Algorithm):</strong> OS grants a resource request only if the resulting state is <em>safe</em>. If it would lead to an unsafe state, the request is denied (process must wait).</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q3.8 -->
+  <div class="qa-card" id="q3-8">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Explain starvation problem and its solution.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="def-box"><strong>Starvation</strong> is a situation where a process keeps waiting but <em>never gets its turn</em>. This happens when higher-priority or shorter processes always jump ahead of it. The starving process may wait forever.</div>
+      <div class="ans-h2">When Does Starvation Occur?</div>
+      <ul class="ans-ul">
+        <li><strong>Priority Scheduling:</strong> A low-priority process is continuously bypassed by high-priority processes that keep arriving</li>
+        <li><strong>SJF Scheduling:</strong> A long process waits forever as shorter processes keep being admitted and served first</li>
+        <li><strong>Resource Allocation:</strong> A process cannot get all the resources it needs because others keep grabbing them</li>
+      </ul>
+      <div class="ans-h2">Solution: Aging</div>
+      <div class="def-box"><strong>Aging</strong> is the solution to starvation. The idea is simple: the longer a process waits, the higher its priority gets. Eventually it becomes high-priority enough to finally get the CPU.</div>
+      <div class="code-block">Aging Example:
+- Process P is created with priority = 10 (low)
+- Every 5 minutes, P's priority is increased by 1
+- After 50 minutes, P has priority = 1 (highest!)
+- P will now be selected for execution
+
+Result: No process can starve indefinitely.</div>
+      <div class="ans-h2">Other Solutions</div>
+      <ul class="ans-ul">
+        <li><strong>Round-Robin Scheduling:</strong> Every process gets a fixed time quantum — no starvation possible</li>
+        <li><strong>Fair Queuing:</strong> Each process gets an equal share of CPU bandwidth</li>
+        <li><strong>Deadline Scheduling:</strong> Every process given a deadline to complete; resources allocated accordingly</li>
+      </ul>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ UNIT 4 ══════════════ -->
+<section class="unit-section" id="unit4">
+  <div class="unit-heading">
+    <span class="unit-num-badge">UNIT 04</span>
+    <span class="unit-title">Memory Management</span>
+    <span class="unit-q-count">7 Questions · 2M each</span>
+  </div>
+
+  <!-- Q4.1 -->
+  <div class="qa-card" id="q4-1">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Write the difference between internal and external fragmentation.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="tbl-wrap">
+        <table class="cmp-table">
+          <tr><th>Parameter</th><th>Internal Fragmentation</th><th>External Fragmentation</th></tr>
+          <tr><td>Definition</td><td>Wasted space <em>inside</em> an allocated memory partition</td><td>Wasted space <em>outside</em> allocated partitions (free but scattered)</td></tr>
+          <tr><td>Cause</td><td>Process is smaller than the fixed-size partition allocated to it</td><td>Free memory is scattered in small non-contiguous chunks</td></tr>
+          <tr><td>Occurs In</td><td>Fixed partitioning, paging systems</td><td>Variable partitioning, segmentation systems</td></tr>
+          <tr><td>Location of Waste</td><td>Inside a partition</td><td>Between partitions</td></tr>
+          <tr><td>Solution</td><td>Use smaller page sizes or dynamic partitioning</td><td>Compaction, paging, or segmentation</td></tr>
+        </table>
+      </div>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 520 180" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:520px">
+          <!-- Internal Fragmentation -->
+          <text x="115" y="18" text-anchor="middle" fill="#fabd2f" font-family="JetBrains Mono" font-size="9" font-weight="700">INTERNAL FRAGMENTATION</text>
+          <rect x="20" y="26" width="190" height="140" rx="6" fill="#3c3836" stroke="#665c54" stroke-width="1"/>
+          <!-- Partition 1 filled -->
+          <rect x="28" y="34" width="174" height="34" rx="3" fill="#98971a" fill-opacity=".7"/>
+          <text x="115" y="55" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="8">Process A (30KB)</text>
+          <rect x="28" y="34" width="174" height="8" rx="3" fill="#cc241d" fill-opacity=".5"/>
+          <text x="115" y="42" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="6">Wasted (10KB)</text>
+          <!-- Partition 2 -->
+          <rect x="28" y="74" width="174" height="36" rx="3" fill="#458588" fill-opacity=".7"/>
+          <text x="115" y="96" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="8">Process B (32KB)</text>
+          <rect x="28" y="74" width="174" height="6" rx="3" fill="#cc241d" fill-opacity=".5"/>
+          <text x="115" y="80" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="6">Wasted (8KB)</text>
+          <!-- Partition 3 -->
+          <rect x="28" y="116" width="174" height="40" rx="3" fill="#b16286" fill-opacity=".7"/>
+          <text x="115" y="139" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="8">Process C (35KB)</text>
+          <rect x="28" y="116" width="174" height="8" rx="3" fill="#cc241d" fill-opacity=".5"/>
+          <text x="115" y="122" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="6">Wasted (5KB)</text>
+
+          <!-- External Fragmentation -->
+          <text x="385" y="18" text-anchor="middle" fill="#fabd2f" font-family="JetBrains Mono" font-size="9" font-weight="700">EXTERNAL FRAGMENTATION</text>
+          <rect x="290" y="26" width="190" height="140" rx="6" fill="#3c3836" stroke="#665c54" stroke-width="1"/>
+          <rect x="298" y="34" width="174" height="28" rx="3" fill="#98971a" fill-opacity=".7"/>
+          <text x="385" y="51" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="8">Process A (28KB)</text>
+          <rect x="298" y="66" width="174" height="14" rx="3" fill="#cc241d" fill-opacity=".4" stroke="#fb4934" stroke-width="1" stroke-dasharray="3,2"/>
+          <text x="385" y="76" text-anchor="middle" fill="#fb4934" font-family="JetBrains Mono" font-size="7">FREE 14KB (too small!)</text>
+          <rect x="298" y="84" width="174" height="30" rx="3" fill="#b16286" fill-opacity=".7"/>
+          <text x="385" y="102" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="8">Process B (30KB)</text>
+          <rect x="298" y="118" width="174" height="10" rx="3" fill="#cc241d" fill-opacity=".4" stroke="#fb4934" stroke-width="1" stroke-dasharray="3,2"/>
+          <text x="385" y="126" text-anchor="middle" fill="#fb4934" font-family="JetBrains Mono" font-size="7">FREE 10KB (scattered)</text>
+          <rect x="298" y="132" width="174" height="24" rx="3" fill="#458588" fill-opacity=".7"/>
+          <text x="385" y="147" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="8">Process C (24KB)</text>
+          <text x="260" y="178" text-anchor="middle" fill="#7c6f64" font-family="JetBrains Mono" font-size="7">Fig: Internal vs External Fragmentation</text>
+        </svg>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q4.2 -->
+  <div class="qa-card" id="q4-2">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">What are the disadvantages of single contiguous memory allocation?</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="def-box"><strong>Single Contiguous Memory Allocation</strong> is the simplest memory scheme — memory is split into just two areas: one for the OS and one for a single user process. Only <strong>one user process</strong> can be in memory at a time.</div>
+      <div class="ans-h2">Disadvantages</div>
+      <ul class="ans-ul">
+        <li><span class="hl-r">No Multiprogramming:</span> Only one user process can be in memory at a time. CPU is idle when this process does I/O — huge waste.</li>
+        <li><span class="hl-r">Low CPU Utilization:</span> CPU remains idle during I/O operations since no other process can use it. Utilization can drop below 20%.</li>
+        <li><span class="hl-r">Memory Waste:</span> If the process is smaller than available memory, the remaining memory is completely wasted (severe internal fragmentation).</li>
+        <li><span class="hl-r">No Memory Protection Between Users:</span> Since only one process runs, multi-user support is impossible.</li>
+        <li><span class="hl-r">Limited Program Size:</span> Program must fit entirely within the available user memory area. Large programs cannot run.</li>
+        <li><span class="hl-r">Poor Throughput:</span> System can only complete one job at a time, resulting in very low throughput.</li>
+        <li><span class="hl-r">No Virtual Memory:</span> No mechanism to run programs larger than physical RAM.</li>
+      </ul>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q4.3 -->
+  <div class="qa-card" id="q4-3">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">What is the main function of the memory-management unit?</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="def-box"><strong>Memory Management Unit (MMU)</strong> is a hardware chip that converts <strong>logical (virtual) addresses</strong> into <strong>physical addresses</strong> at runtime. It sits between the CPU and RAM and performs this translation automatically every time memory is accessed.</div>
+      <div class="ans-h2">Main Function</div>
+      <ul class="ans-ul">
+        <li><span class="hl">Address Translation:</span> Converts <em>logical addresses</em> generated by CPU into <em>physical addresses</em> for actual memory access. This is the primary function.</li>
+        <li><span class="hl-g">Memory Protection:</span> Checks if a process is accessing memory within its valid address range. Raises a protection fault if bounds are violated.</li>
+        <li><span class="hl-b">Base + Limit Register Translation:</span> Uses base register (starting physical address) and limit register (process size) to translate and check addresses.</li>
+        <li><span class="hl-o">Page Table Lookup:</span> In paging systems, MMU walks the page table to find the physical frame for each logical page.</li>
+        <li><span class="hl-p">TLB (Translation Lookaside Buffer):</span> A small, fast cache inside the MMU that stores recently used address translations — so the MMU doesn't have to search the full page table every time (much faster).</li>
+      </ul>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 500 110" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:500px">
+          <defs>
+            <marker id="a3" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+              <path d="M0,0 L0,7 L7,3.5 z" fill="#83a598"/>
+            </marker>
+          </defs>
+          <rect x="10" y="30" width="100" height="44" rx="8" fill="#504945" stroke="#7c6f64" stroke-width="1.2"/>
+          <text x="60" y="53" text-anchor="middle" fill="#fabd2f" font-family="JetBrains Mono" font-size="9" font-weight="700">CPU</text>
+          <text x="60" y="65" text-anchor="middle" fill="#a89984" font-family="JetBrains Mono" font-size="7">Logical Addr</text>
+          <line x1="110" y1="52" x2="168" y2="52" stroke="#83a598" stroke-width="1.5" marker-end="url(#a3)"/>
+          <text x="139" y="46" text-anchor="middle" fill="#a89984" font-family="JetBrains Mono" font-size="7">Logical</text>
+          <rect x="170" y="20" width="140" height="64" rx="8" fill="#3c3836" stroke="#458588" stroke-width="1.6"/>
+          <text x="240" y="47" text-anchor="middle" fill="#8ec07c" font-family="JetBrains Mono" font-size="9" font-weight="700">MMU</text>
+          <text x="240" y="59" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="7">Translate + Protect</text>
+          <text x="240" y="70" text-anchor="middle" fill="#83a598" font-family="JetBrains Mono" font-size="7">TLB + Page Table</text>
+          <line x1="310" y1="52" x2="368" y2="52" stroke="#83a598" stroke-width="1.5" marker-end="url(#a3)"/>
+          <text x="339" y="46" text-anchor="middle" fill="#a89984" font-family="JetBrains Mono" font-size="7">Physical</text>
+          <rect x="370" y="30" width="110" height="44" rx="8" fill="#504945" stroke="#fe8019" stroke-width="1.2"/>
+          <text x="425" y="53" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono" font-size="9" font-weight="700">RAM</text>
+          <text x="425" y="65" text-anchor="middle" fill="#a89984" font-family="JetBrains Mono" font-size="7">Physical Addr</text>
+          <text x="250" y="103" text-anchor="middle" fill="#7c6f64" font-family="JetBrains Mono" font-size="7">Fig: MMU Position in Memory Access Path</text>
+        </svg>
+      </div>
+      <div class="code-block">Physical Address = Base Register + Logical Address
+(if Logical Address < Limit Register → Valid; else → Segmentation Fault)</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q4.4 -->
+  <div class="qa-card" id="q4-4">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Explain the logical address space and physical address space diagrammatically.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="tbl-wrap">
+        <table class="cmp-table">
+          <tr><th>Parameter</th><th>Logical Address Space</th><th>Physical Address Space</th></tr>
+          <tr><td>Generated By</td><td>CPU during program execution</td><td>MMU after address translation</td></tr>
+          <tr><td>Also Called</td><td>Virtual Address</td><td>Real Address</td></tr>
+          <tr><td>Seen By</td><td>User/program (abstract view)</td><td>Hardware (actual RAM location)</td></tr>
+          <tr><td>Size</td><td>Can be larger than physical memory</td><td>Limited to actual installed RAM</td></tr>
+          <tr><td>Range</td><td>0 to (Max − 1) in process's view</td><td>Based on actual RAM addresses</td></tr>
+        </table>
+      </div>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 520 230" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:520px">
+          <defs>
+            <marker id="a4" markerWidth="7" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L7,3 z" fill="#fabd2f"/>
+            </marker>
+          </defs>
+          <!-- Logical Address Space -->
+          <text x="110" y="18" text-anchor="middle" fill="#8ec07c" font-family="JetBrains Mono" font-size="9" font-weight="700">LOGICAL ADDRESS SPACE</text>
+          <text x="110" y="29" text-anchor="middle" fill="#a89984" font-family="JetBrains Mono" font-size="7">(Process View — Virtual)</text>
+          <rect x="40" y="36" width="140" height="170" rx="6" fill="#3c3836" stroke="#8ec07c" stroke-width="1.5"/>
+          <!-- segments -->
+          <rect x="48" y="44" width="124" height="26" rx="3" fill="#98971a" fill-opacity=".7"/>
+          <text x="110" y="60" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="8">0x0000: Code</text>
+          <rect x="48" y="74" width="124" height="22" rx="3" fill="#458588" fill-opacity=".7"/>
+          <text x="110" y="89" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="8">0x1000: Data</text>
+          <rect x="48" y="100" width="124" height="20" rx="3" fill="#b16286" fill-opacity=".7"/>
+          <text x="110" y="114" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="8">0x2000: Heap ↓</text>
+          <rect x="48" y="166" width="124" height="30" rx="3" fill="#d65d0e" fill-opacity=".7"/>
+          <text x="110" y="184" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="8">0xFFFF: Stack ↑</text>
+          <text x="110" y="152" fill="none"/>
+          <!-- dots -->
+          <circle cx="110" cy="142" r="2" fill="#a89984"/><circle cx="110" cy="150" r="2" fill="#a89984"/><circle cx="110" cy="158" r="2" fill="#a89984"/>
+
+          <!-- MMU box -->
+          <rect x="210" y="95" width="90" height="40" rx="8" fill="#504945" stroke="#fabd2f" stroke-width="1.5"/>
+          <text x="255" y="113" text-anchor="middle" fill="#fabd2f" font-family="JetBrains Mono" font-size="9" font-weight="700">MMU</text>
+          <text x="255" y="126" text-anchor="middle" fill="#a89984" font-family="JetBrains Mono" font-size="7">Translate</text>
+
+          <!-- arrows -->
+          <line x1="180" y1="115" x2="210" y2="115" stroke="#fabd2f" stroke-width="1.5" marker-end="url(#a4)"/>
+          <line x1="300" y1="115" x2="330" y2="115" stroke="#fabd2f" stroke-width="1.5" marker-end="url(#a4)"/>
+
+          <!-- Physical Address Space -->
+          <text x="400" y="18" text-anchor="middle" fill="#fe8019" font-family="JetBrains Mono" font-size="9" font-weight="700">PHYSICAL ADDRESS SPACE</text>
+          <text x="400" y="29" text-anchor="middle" fill="#a89984" font-family="JetBrains Mono" font-size="7">(Actual RAM — Hardware)</text>
+          <rect x="330" y="36" width="140" height="170" rx="6" fill="#3c3836" stroke="#fe8019" stroke-width="1.5"/>
+          <!-- physical frames scattered -->
+          <rect x="338" y="44" width="124" height="20" rx="3" fill="#504945" stroke="#665c54"/>
+          <text x="400" y="58" text-anchor="middle" fill="#a89984" font-family="JetBrains Mono" font-size="7">Frame 0 — OS Kernel</text>
+          <rect x="338" y="68" width="124" height="20" rx="3" fill="#98971a" fill-opacity=".7"/>
+          <text x="400" y="82" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="7">Frame 3 — Code (P1)</text>
+          <rect x="338" y="92" width="124" height="20" rx="3" fill="#504945" stroke="#665c54"/>
+          <text x="400" y="106" text-anchor="middle" fill="#a89984" font-family="JetBrains Mono" font-size="7">Frame 4 — (Free)</text>
+          <rect x="338" y="116" width="124" height="20" rx="3" fill="#b16286" fill-opacity=".7"/>
+          <text x="400" y="130" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="7">Frame 7 — Heap (P1)</text>
+          <rect x="338" y="140" width="124" height="20" rx="3" fill="#458588" fill-opacity=".7"/>
+          <text x="400" y="154" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="7">Frame 9 — Data (P1)</text>
+          <rect x="338" y="164" width="124" height="32" rx="3" fill="#d65d0e" fill-opacity=".7"/>
+          <text x="400" y="183" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="7">Frame 15 — Stack(P1)</text>
+          <text x="260" y="220" text-anchor="middle" fill="#7c6f64" font-family="JetBrains Mono" font-size="7">Fig: Logical vs Physical Address Space with MMU Translation</text>
+        </svg>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q4.5 -->
+  <div class="qa-card" id="q4-5">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Explain in brief about the Multiprogramming with fixed partitions.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="def-box"><strong>Multiprogramming with Fixed Partitions (MFT)</strong> divides RAM into a <strong>fixed number of fixed-size slots (partitions)</strong> at startup. Each slot can hold exactly one process. This way, multiple processes can stay in memory at the same time.</div>
+      <div class="ans-h2">Working</div>
+      <div class="step-list">
+        <div class="step-item"><div class="step-num">1</div><div class="step-text">Memory is divided into <strong>N fixed partitions</strong> by the OS at startup. Sizes may vary (e.g., 100KB, 200KB, 200KB, 300KB).</div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-text">Each incoming process is assigned to the <strong>smallest available partition</strong> that is large enough to hold it.</div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-text">If no suitable partition is free, the process waits in a <strong>queue</strong>.</div></div>
+        <div class="step-item"><div class="step-num">4</div><div class="step-text">When a process finishes, its partition is freed and given to the next waiting process.</div></div>
+      </div>
+      <div class="ans-h2">Advantages & Disadvantages</div>
+      <div class="tbl-wrap">
+        <table class="cmp-table">
+          <tr><th>Advantages</th><th>Disadvantages</th></tr>
+          <tr><td>Simple to implement</td><td>Internal fragmentation (unused space within partition)</td></tr>
+          <tr><td>Enables multiprogramming</td><td>Partition sizes fixed — cannot adapt to process needs</td></tr>
+          <tr><td>Easy to manage</td><td>Limits number of active processes to number of partitions</td></tr>
+          <tr><td>Low overhead</td><td>Large processes may not fit in any partition</td></tr>
+        </table>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q4.6 -->
+  <div class="qa-card" id="q4-6">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Explain thrashing and locality of reference.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="ans-h2">Thrashing</div>
+      <div class="def-box"><strong>Thrashing</strong> is when a process spends more time <em>swapping pages in and out of memory</em> than actually running. It happens when the OS gives a process too few memory frames — the process keeps needing pages that were just swapped out, causing constant page faults and near-zero real work.</div>
+      <ul class="ans-ul">
+        <li>Process does not have enough frames to hold its active pages</li>
+        <li>Pages are continuously swapped out and needed again immediately</li>
+        <li>CPU utilization drops drastically as processes are mostly in I/O wait state</li>
+        <li>OS may add more processes thinking CPU is idle → makes thrashing even worse</li>
+      </ul>
+      <div class="ans-h3">Solution to Thrashing</div>
+      <ul class="ans-ul">
+        <li><strong>Working Set Model:</strong> Allocate at least enough frames for a process's working set</li>
+        <li><strong>Page Fault Frequency:</strong> Monitor and control page fault rate; add/remove frames dynamically</li>
+        <li><strong>Reduce Degree of Multiprogramming:</strong> Suspend some processes to free frames</li>
+      </ul>
+      <hr class="ans-divider">
+      <div class="ans-h2">Locality of Reference</div>
+      <div class="def-box"><strong>Locality of Reference</strong> is the observation that programs don't access memory randomly — they tend to use the <strong>same small set of addresses repeatedly</strong> over a short time. This is why caches and virtual memory work so well.</div>
+      <div class="ans-h3">Two Types</div>
+      <ul class="ans-ul">
+        <li><span class="hl">Temporal Locality:</span> If you used a memory location recently, you'll likely use it again soon. Example: A loop variable <code>i</code> is accessed many times in quick succession.</li>
+        <li><span class="hl-b">Spatial Locality:</span> If you access one memory location, you'll likely access nearby locations too. Example: When reading array[5], you'll probably read array[6] next.</li>
+      </ul>
+      <div class="note-box"><strong>Connection:</strong> Thrashing is prevented when each process is given frames covering its current <em>locality set</em> (working set). The Working Set Model directly exploits the principle of locality.</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q4.7 -->
+  <div class="qa-card" id="q4-7">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Distinguish between physical and logical addressing space of a process.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="tbl-wrap">
+        <table class="cmp-table">
+          <tr><th>Basis</th><th>Logical Address Space</th><th>Physical Address Space</th></tr>
+          <tr><td>Definition</td><td>Set of all logical addresses generated by a program</td><td>Set of all physical addresses corresponding to those logical addresses</td></tr>
+          <tr><td>Generated By</td><td>CPU / Compiler</td><td>MMU (hardware)</td></tr>
+          <tr><td>Visibility</td><td>Visible to user and programmer</td><td>Hidden from user; visible to OS and hardware only</td></tr>
+          <tr><td>Starting Address</td><td>Always starts at 0 (program's view)</td><td>Can start anywhere in physical RAM</td></tr>
+          <tr><td>Translation</td><td>Must be translated to physical address</td><td>Actual address in RAM — no further translation needed</td></tr>
+          <tr><td>Size Constraint</td><td>Limited by address space size (e.g., 2³² in 32-bit)</td><td>Limited by actual physical RAM installed</td></tr>
+          <tr><td>Security</td><td>Can be isolated per process for protection</td><td>Shared by all processes — managed by OS</td></tr>
+        </table>
+      </div>
+      <div class="code-block">Example:
+  Process A logical address 0x1000 → MMU → Physical 0x5A000
+  Process B logical address 0x1000 → MMU → Physical 0xC1000
+  
+Both use same logical address but map to DIFFERENT physical locations!
+This is the beauty of virtual memory — process isolation.</div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ UNIT 5 ══════════════ -->
+<section class="unit-section" id="unit5">
+  <div class="unit-heading">
+    <span class="unit-num-badge">UNIT 05</span>
+    <span class="unit-title">I/O Management & File System</span>
+    <span class="unit-q-count">6 Questions · 2M each</span>
+  </div>
+
+  <!-- Q5.1 -->
+  <div class="qa-card" id="q5-1">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Define seek time and latency time.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="ans-h2">Seek Time</div>
+      <div class="def-box"><strong>Seek Time</strong> is the time it takes for the disk's <em>read/write head</em> to move to the <strong>correct track (cylinder)</strong> where the data is stored. It is the biggest part of total disk access time.</div>
+      <ul class="ans-ul">
+        <li>Measured in milliseconds (ms)</li>
+        <li>Depends on distance between current track and target track</li>
+        <li>Modern disks: average seek time ≈ 3–10 ms</li>
+        <li>Goal of disk scheduling algorithms: <strong>minimize total seek time</strong></li>
+      </ul>
+      <hr class="ans-divider">
+      <div class="ans-h2">Latency Time (Rotational Latency)</div>
+      <div class="def-box"><strong>Rotational Latency (Latency Time)</strong> is the time the disk takes to <strong>rotate the correct sector</strong> under the read/write head after the head has reached the right track. It depends on how fast the disk spins (RPM).</div>
+      <ul class="ans-ul">
+        <li>Average latency = time for half rotation of disk</li>
+        <li>For 7200 RPM disk: one rotation = 60/7200 = 8.33 ms → avg latency ≈ 4.17 ms</li>
+        <li>For 15000 RPM disk: avg latency ≈ 2 ms</li>
+      </ul>
+      <div class="code-block">Total Disk Access Time = Seek Time + Rotational Latency + Transfer Time
+
+Example (7200 RPM):
+  Seek Time      = 8 ms
+  Latency        = 4.2 ms  (half of 8.33ms)
+  Transfer Time  = 0.5 ms
+  ─────────────────────────
+  Total          = 12.7 ms</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q5.2 -->
+  <div class="qa-card" id="q5-2">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Define SCAN and C-SCAN scheduling algorithms.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="ans-h2">SCAN Algorithm (Elevator Algorithm)</div>
+      <div class="def-box">In <strong>SCAN</strong>, the disk arm moves in one direction (say, toward higher cylinder numbers), serves all requests along the way, reaches the end, then <strong>turns around</strong> and serves requests while coming back. It works exactly like an elevator — that's why it's called the Elevator Algorithm.</div>
+      <div class="code-block">Example: Head at cylinder 50, moving toward higher
+Requests: 82, 170, 43, 140, 24, 16, 190
+
+Upward:   50 → 82 → 140 → 170 → 190 (end)
+Reverse:  190 → 43 → 24 → 16
+
+Total Head Movement: Calculated along this path</div>
+      <div class="ans-h3">Advantage of SCAN</div>
+      <ul class="ans-ul">
+        <li>No starvation — every request is served within one pass</li>
+        <li>More uniform service than SSTF</li>
+      </ul>
+      <hr class="ans-divider">
+      <div class="ans-h2">C-SCAN Algorithm (Circular SCAN)</div>
+      <div class="def-box"><strong>C-SCAN</strong> is a variation of SCAN. The head moves in one direction and serves requests, but when it reaches the end, it <strong>jumps straight back to cylinder 0</strong> (without serving anything on the way back) and starts again. This gives all requests a more equal waiting time.</div>
+      <div class="code-block">C-SCAN: Head at 50, moving upward
+Requests: 82, 170, 43, 140, 24, 16, 190
+
+Upward:   50 → 82 → 140 → 170 → 190 (end)
+Return:   Jump to 0 (no service on return)
+Restart:  0 → 16 → 24 → 43
+
+Result: More uniform waiting than SCAN</div>
+      <div class="tbl-wrap">
+        <table class="cmp-table">
+          <tr><th>Feature</th><th>SCAN</th><th>C-SCAN</th></tr>
+          <tr><td>Return Direction</td><td>Services requests on return too</td><td>No service on return (jumps to start)</td></tr>
+          <tr><td>Uniformity</td><td>Less uniform (inner tracks wait longer)</td><td>More uniform waiting times</td></tr>
+          <tr><td>Fairness</td><td>Good</td><td>Better</td></tr>
+        </table>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q5.3 -->
+  <div class="qa-card" id="q5-3">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">What do you mean by the I/O Buffering?</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="def-box"><strong>I/O Buffering</strong> is using a temporary memory area called a <strong>buffer</strong> to hold data while it moves between a device and an application. Since the CPU is much faster than I/O devices, the buffer lets the CPU continue working while data transfer happens in the background.</div>
+      <div class="ans-h2">Need for Buffering</div>
+      <ul class="ans-ul">
+        <li>CPU processes data much faster than I/O devices can supply/accept it</li>
+        <li>Without buffering, CPU must wait for each byte — very inefficient</li>
+        <li>Buffering allows CPU to continue processing while I/O occurs in background</li>
+      </ul>
+      <div class="ans-h2">Types of Buffering</div>
+      <div class="tbl-wrap">
+        <table class="cmp-table">
+          <tr><th>Type</th><th>Description</th></tr>
+          <tr><td><span class="hl">Single Buffer</span></td><td>OS allocates one buffer in kernel memory. While user reads buffer, kernel fills next from device.</td></tr>
+          <tr><td><span class="hl-g">Double Buffer</span></td><td>Two buffers alternate. While user reads buffer-1, kernel fills buffer-2. Reduces wait time significantly.</td></tr>
+          <tr><td><span class="hl-b">Circular Buffer</span></td><td>Ring of buffers used for continuous streaming data (audio, video). Most efficient for real-time I/O.</td></tr>
+          <tr><td><span class="hl-o">Spooling</span></td><td>Disk is used as a large buffer (e.g., print jobs are stored on disk first; the printer reads from disk at its own pace).</td></tr>
+        </table>
+      </div>
+      <div class="ans-h2">Benefits</div>
+      <ul class="ans-ul">
+        <li>Overlaps CPU computation with I/O operations (improved throughput)</li>
+        <li>Smooths out speed differences between producer and consumer</li>
+        <li>Prevents data loss when a device is not ready to receive data immediately</li>
+      </ul>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q5.4 -->
+  <div class="qa-card" id="q5-4">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Explain various operations associated with a file.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="def-box">A <strong>File</strong> is a named collection of related data stored on a disk (secondary storage). The OS provides system calls (operations) to create, access, and manage files.</div>
+      <div class="ans-h2">File Operations</div>
+      <div class="step-list">
+        <div class="step-item"><div class="step-num">1</div><div class="step-text"><strong>Create:</strong> OS allocates space on disk, creates a directory entry for the file with name, type, location, and size attributes.</div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-text"><strong>Open:</strong> Opens an existing file and returns a <em>file descriptor/handle</em>. File information is loaded into memory's open-file table.</div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-text"><strong>Read:</strong> Data is read from the file at the current file pointer position into a user buffer. Pointer advances after read.</div></div>
+        <div class="step-item"><div class="step-num">4</div><div class="step-text"><strong>Write:</strong> Data from user buffer is written to the file at current pointer position. File size may increase.</div></div>
+        <div class="step-item"><div class="step-num">5</div><div class="step-text"><strong>Seek (Reposition):</strong> Moves the file pointer to a specific position without reading/writing. Allows random access.</div></div>
+        <div class="step-item"><div class="step-num">6</div><div class="step-text"><strong>Close:</strong> Releases the file descriptor, flushes buffers to disk, and removes entry from open-file table.</div></div>
+        <div class="step-item"><div class="step-num">7</div><div class="step-text"><strong>Delete:</strong> Removes the directory entry and deallocates disk space. File data is logically erased.</div></div>
+        <div class="step-item"><div class="step-num">8</div><div class="step-text"><strong>Truncate:</strong> Resets file length to zero (or a specified length) while keeping attributes intact. Erases contents.</div></div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q5.5 -->
+  <div class="qa-card" id="q5-5">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Explain tree level directory structure.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="def-box"><strong>Tree-Structured Directory</strong> (also called Hierarchical Directory) organizes files and folders in a <strong>tree</strong> with one <em>root directory</em> at the top. Each folder can contain files and subfolders, forming a branching hierarchy — just like the folder structure on your computer.</div>
+      <div class="ans-h2">Structure</div>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 540 270" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:540px">
+          <!-- Root -->
+          <rect x="220" y="10" width="100" height="32" rx="7" fill="#458588" fill-opacity=".8" stroke="#83a598" stroke-width="1.5"/>
+          <text x="270" y="30" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="9" font-weight="700">/ (Root)</text>
+          <!-- L1 branches -->
+          <line x1="270" y1="42" x2="110" y2="82" stroke="#665c54" stroke-width="1.5"/>
+          <line x1="270" y1="42" x2="270" y2="82" stroke="#665c54" stroke-width="1.5"/>
+          <line x1="270" y1="42" x2="430" y2="82" stroke="#665c54" stroke-width="1.5"/>
+          <!-- /home -->
+          <rect x="60" y="82" width="100" height="28" rx="6" fill="#98971a" fill-opacity=".7" stroke="#b8bb26" stroke-width="1"/>
+          <text x="110" y="100" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="8" font-weight="700">/home</text>
+          <!-- /usr -->
+          <rect x="220" y="82" width="100" height="28" rx="6" fill="#98971a" fill-opacity=".7" stroke="#b8bb26" stroke-width="1"/>
+          <text x="270" y="100" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="8" font-weight="700">/usr</text>
+          <!-- /etc -->
+          <rect x="380" y="82" width="100" height="28" rx="6" fill="#98971a" fill-opacity=".7" stroke="#b8bb26" stroke-width="1"/>
+          <text x="430" y="100" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="8" font-weight="700">/etc</text>
+          <!-- L2 under /home -->
+          <line x1="110" y1="110" x2="60" y2="148" stroke="#665c54" stroke-width="1.2"/>
+          <line x1="110" y1="110" x2="150" y2="148" stroke="#665c54" stroke-width="1.2"/>
+          <rect x="20" y="148" width="80" height="26" rx="5" fill="#b16286" fill-opacity=".7" stroke="#d3869b" stroke-width="1"/>
+          <text x="60" y="165" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="8">/alice</text>
+          <rect x="110" y="148" width="80" height="26" rx="5" fill="#b16286" fill-opacity=".7" stroke="#d3869b" stroke-width="1"/>
+          <text x="150" y="165" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="8">/bob</text>
+          <!-- L2 under /usr -->
+          <line x1="270" y1="110" x2="230" y2="148" stroke="#665c54" stroke-width="1.2"/>
+          <line x1="270" y1="110" x2="310" y2="148" stroke="#665c54" stroke-width="1.2"/>
+          <rect x="190" y="148" width="80" height="26" rx="5" fill="#d65d0e" fill-opacity=".7" stroke="#fe8019" stroke-width="1"/>
+          <text x="230" y="165" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="8">/bin</text>
+          <rect x="280" y="148" width="80" height="26" rx="5" fill="#d65d0e" fill-opacity=".7" stroke="#fe8019" stroke-width="1"/>
+          <text x="320" y="165" text-anchor="middle" fill="#fbf1c7" font-family="JetBrains Mono" font-size="8">/lib</text>
+          <!-- L3 Files under /alice -->
+          <line x1="60" y1="174" x2="40" y2="210" stroke="#665c54" stroke-width="1"/>
+          <line x1="60" y1="174" x2="80" y2="210" stroke="#665c54" stroke-width="1"/>
+          <rect x="10" y="210" width="56" height="22" rx="4" fill="#504945" stroke="#7c6f64"/>
+          <text x="38" y="224" text-anchor="middle" fill="#8ec07c" font-family="JetBrains Mono" font-size="7">file1.txt</text>
+          <rect x="52" y="210" width="56" height="22" rx="4" fill="#504945" stroke="#7c6f64"/>
+          <text x="80" y="224" text-anchor="middle" fill="#8ec07c" font-family="JetBrains Mono" font-size="7">notes.doc</text>
+          <!-- /etc files -->
+          <line x1="430" y1="110" x2="430" y2="148" stroke="#665c54" stroke-width="1.2"/>
+          <rect x="385" y="148" width="90" height="26" rx="5" fill="#504945" stroke="#7c6f64"/>
+          <text x="430" y="165" text-anchor="middle" fill="#8ec07c" font-family="JetBrains Mono" font-size="7">passwd hosts</text>
+          <text x="270" y="258" text-anchor="middle" fill="#7c6f64" font-family="JetBrains Mono" font-size="8">Fig: Tree-Structured (Hierarchical) Directory</text>
+        </svg>
+      </div>
+      <div class="ans-h2">Key Features</div>
+      <ul class="ans-ul">
+        <li><strong>Path Names:</strong> Files accessed via absolute path (from root) like <code>/home/alice/file1.txt</code> or relative path</li>
+        <li><strong>Working Directory:</strong> Each process has a current working directory for relative paths</li>
+        <li><strong>No Naming Conflicts:</strong> Same filename can exist in different directories — no conflict</li>
+        <li><strong>Efficient Search:</strong> Only the relevant subfolder is searched — not the whole disk</li>
+        <li><strong>Example:</strong> UNIX/Linux, Windows NTFS all use tree-structured directories</li>
+      </ul>
+    </div>
+    </div>
+  </div>
+
+  <!-- Q5.6 -->
+  <div class="qa-card" id="q5-6">
+    <div class="qa-header">
+      <span class="q-mark">2M</span>
+      <span class="q-text">Define an I/O subsystem.</span>
+      <svg class="qa-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="qa-body">
+    <div class="qa-body-inner">
+      <div class="def-box">The <strong>I/O Subsystem</strong> is the part of the OS that manages all input and output operations. It hides the complexity of different hardware devices and gives programs a simple, uniform way to use any device — whether it's a keyboard, disk, or printer.</div>
+      <div class="ans-h2">Components of I/O Subsystem</div>
+      <ul class="ans-ul">
+        <li><span class="hl">Device Drivers:</span> Small programs that know how to talk to a specific hardware device. The OS sends a standard command; the driver converts it to device-specific instructions.</li>
+        <li><span class="hl-g">I/O Scheduler:</span> Orders I/O requests to minimize disk head movement and improve speed (uses algorithms like SCAN, C-SCAN).</li>
+        <li><span class="hl-b">Buffering:</span> A temporary memory area that holds data in transit — handles speed mismatch between the fast CPU and slow devices.</li>
+        <li><span class="hl-o">Caching:</span> Stores copies of frequently-read data in fast memory, so next time the same data is needed, it comes from cache instead of the slow device.</li>
+        <li><span class="hl-p">Spooling:</span> Saves output for slow devices (like a printer) onto disk first. The device reads from disk at its own pace — the program doesn't have to wait.</li>
+        <li><span class="hl-r">Error Handling:</span> Detects and handles I/O errors — retries the operation, reports the error, or stops gracefully.</li>
+        <li><span class="hl-a">Interrupt Handling:</span> When a device finishes its work, it sends an interrupt signal. The OS responds, processes the result, and continues other work.</li>
+      </ul>
+      <div class="ans-h2">Functions of I/O Subsystem</div>
+      <div class="tbl-wrap">
+        <table class="cmp-table">
+          <tr><th>Function</th><th>Description</th></tr>
+          <tr><td>Device Independence</td><td>Application uses same system calls regardless of device type</td></tr>
+          <tr><td>Uniform Naming</td><td>Devices named uniformly (e.g., /dev/sda in Linux)</td></tr>
+          <tr><td>Protection</td><td>Only OS can access hardware; user programs must go through OS</td></tr>
+          <tr><td>Performance</td><td>Uses buffering, caching, scheduling to maximize I/O throughput</td></tr>
+        </table>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<div class="page-footer">
+  AKTU OS Question Bank &nbsp;·&nbsp; <span>35 Questions</span> &nbsp;·&nbsp; Units 1–5
+  <br>Built for examination preparation · Dark Gruvbox Edition
+</div>
+
+</main>
+</div><!-- end layout -->
+
+<script>
+// ─── DATA: NAV STRUCTURE ─────────────────────────────────
+const units = [
+  {
+    id: 'unit1', label: 'Unit 1 — Introduction to OS',
+    qs: [
+      {id:'q1-1', t:'Define OS. List objectives.'},
+      {id:'q1-2', t:'OS definition and major functions.'},
+      {id:'q1-3', t:'Primary function of an OS.'},
+      {id:'q1-4', t:'Real Time Operating System.'},
+      {id:'q1-5', t:'Batch processing system.'},
+      {id:'q1-6', t:'Resident monitor.'},
+      {id:'q1-7', t:'Advantages of multiprogramming.'},
+      {id:'q1-8', t:'Interactive vs Batch processing.'},
+      {id:'q1-9', t:'Multiprogramming vs Time Sharing.'},
+    ]
+  },
+  {
+    id:'unit2', label:'Unit 2 — Concurrent Processes',
+    qs:[
+      {id:'q2-1', t:'IPC and Context Switching.'},
+      {id:'q2-2', t:'Busy Waiting & Semaphores.'},
+      {id:'q2-3', t:'Concurrent Processes.'},
+      {id:'q2-4', t:'Semaphore and its types.'},
+      {id:'q2-5', t:'Principle of Concurrency.'},
+    ]
+  },
+  {
+    id:'unit3', label:'Unit 3 — CPU Scheduling & Deadlocks',
+    qs:[
+      {id:'q3-1', t:'Scheduling criteria.'},
+      {id:'q3-2', t:'Performance criteria.'},
+      {id:'q3-3', t:'Why scheduling is needed.'},
+      {id:'q3-4', t:'Process Control Block elements.'},
+      {id:'q3-5', t:'Process state.'},
+      {id:'q3-6', t:'Process identification info.'},
+      {id:'q3-7', t:'Safe state and unsafe state.'},
+      {id:'q3-8', t:'Starvation and its solution.'},
+    ]
+  },
+  {
+    id:'unit4', label:'Unit 4 — Memory Management',
+    qs:[
+      {id:'q4-1', t:'Internal vs External fragmentation.'},
+      {id:'q4-2', t:'Disadvantages of single contiguous allocation.'},
+      {id:'q4-3', t:'Memory Management Unit function.'},
+      {id:'q4-4', t:'Logical vs Physical address space.'},
+      {id:'q4-5', t:'Multiprogramming with fixed partitions.'},
+      {id:'q4-6', t:'Thrashing and locality of reference.'},
+      {id:'q4-7', t:'Physical vs Logical addressing.'},
+    ]
+  },
+  {
+    id:'unit5', label:'Unit 5 — I/O & File System',
+    qs:[
+      {id:'q5-1', t:'Seek time and latency time.'},
+      {id:'q5-2', t:'SCAN and C-SCAN algorithms.'},
+      {id:'q5-3', t:'I/O Buffering.'},
+      {id:'q5-4', t:'File operations.'},
+      {id:'q5-5', t:'Tree level directory structure.'},
+      {id:'q5-6', t:'I/O subsystem.'},
+    ]
+  }
+];
+
+// ─── BUILD SIDEBAR NAV ───────────────────────────────────
+const navTree = document.getElementById('nav-tree');
+units.forEach(u => {
+  const group = document.createElement('div');
+  group.className = 'unit-nav-group';
+  group.innerHTML = `<span class="unit-nav-label"><span class="u-num">${u.id.replace('unit','U')}</span>${u.label.split('—')[1]||u.label}</span><div class="unit-nav-links" id="nav-${u.id}"></div>`;
+  navTree.appendChild(group);
+  const linksDiv = group.querySelector('.unit-nav-links');
+  u.qs.forEach(q => {
+    const a = document.createElement('span');
+    a.className = 'nav-link';
+    a.dataset.target = q.id;
+    a.textContent = q.t;
+    a.addEventListener('click', () => scrollToCard(q.id));
+    linksDiv.appendChild(a);
+  });
+});
+
+// ─── ACCORDION ───────────────────────────────────────────
+const allCards = document.querySelectorAll('.qa-card');
+let openedSet = new Set();
+
+allCards.forEach(card => {
+  const header = card.querySelector('.qa-header');
+  const body   = card.querySelector('.qa-body');
+  header.addEventListener('click', () => {
+    const isOpen = card.classList.contains('open');
+    if (isOpen) {
+      card.classList.remove('open');
+      body.style.maxHeight = '0px';
+    } else {
+      card.classList.add('open');
+      body.style.maxHeight = body.scrollHeight + 200 + 'px';
+      openedSet.add(card.id);
+      markAnswered(card.id);
+      updateProgress();
+    }
+  });
+});
+
+function markAnswered(id) {
+  const link = document.querySelector(`.nav-link[data-target="${id}"]`);
+  if (link) link.classList.add('answered');
+}
+
+function updateProgress() {
+  const total = allCards.length;
+  const done  = openedSet.size;
+  const pct   = Math.round((done / total) * 100);
+  document.getElementById('progress-bar-fill').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = pct + '%';
+}
+
+// ─── SCROLL TO CARD ──────────────────────────────────────
+function scrollToCard(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const top = el.getBoundingClientRect().top + window.pageYOffset - 80;
+  window.scrollTo({ top, behavior: 'smooth' });
+  setTimeout(() => {
+    if (!el.classList.contains('open')) {
+      el.querySelector('.qa-header').click();
+    }
+  }, 350);
+  closeSidebar();
+}
+
+// ─── INTERSECTION OBSERVER (active nav highlight) ────────
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+      const link = document.querySelector(`.nav-link[data-target="${id}"]`);
+      if (link) link.classList.add('active');
+      // update unit badge
+      const section = entry.target.closest('.unit-section');
+      if (section) {
+        const badge = section.querySelector('.unit-num-badge');
+        if (badge) document.getElementById('unit-badge').textContent = badge.textContent;
+      }
+    }
+  });
+}, { rootMargin: '-60px 0px -60% 0px', threshold: 0.05 });
+
+allCards.forEach(c => observer.observe(c));
+
+// ─── MOBILE SIDEBAR ──────────────────────────────────────
+const hamburger = document.getElementById('hamburger');
+const sidebar   = document.getElementById('sidebar');
+const overlay   = document.getElementById('sidebar-overlay');
+
+hamburger.addEventListener('click', () => {
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('show');
+});
+overlay.addEventListener('click', closeSidebar);
+function closeSidebar() {
+  sidebar.classList.remove('open');
+  overlay.classList.remove('show');
+}
+
+// ─── SEARCH ──────────────────────────────────────────────
+document.getElementById('search-input').addEventListener('input', function() {
+  const q = this.value.trim().toLowerCase();
+  document.querySelectorAll('.nav-link').forEach(link => {
+    const match = link.textContent.toLowerCase().includes(q);
+    link.style.display = (q === '' || match) ? 'block' : 'none';
+  });
+});
+
+// ─── SMOOTH OPEN AFTER LOAD ───────────────────────────────
+window.addEventListener('load', () => {
+  // slight delay for render
+  setTimeout(() => {
+    // re-calculate max heights after fonts load
+    allCards.forEach(c => {
+      if (c.classList.contains('open')) {
+        const body = c.querySelector('.qa-body');
+        body.style.maxHeight = body.scrollHeight + 200 + 'px';
+      }
+    });
+  }, 300);
+});
+</script>
+</body>
+</html>
